@@ -1,12 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:phosphor_flutter/phosphor_flutter.dart';
 
-import 'core/theme/app_colors.dart';
+import 'core/constants/icones.dart';
 import 'core/theme/app_theme.dart';
+import 'data/hive_init.dart';
+import 'data/repositories/categorie_repository.dart';
+import 'data/repositories/compte_repository.dart';
 
-void main() {
-  // ProviderScope doit englober toute l'app : c'est le conteneur qui garde
-  // en mémoire l'état de tous les providers Riverpod qu'on créera ensuite.
+Future<void> main() async {
+  // Nécessaire dès qu'on fait un travail asynchrone (ici : ouvrir Hive
+  // et écrire le seed) avant runApp() : ça prépare le moteur Flutter à
+  // recevoir des appels de plugins natifs avant que l'UI n'existe.
+  WidgetsFlutterBinding.ensureInitialized();
+  await initialiserHive();
   runApp(const ProviderScope(child: MyApp()));
 }
 
@@ -21,86 +28,53 @@ class MyApp extends StatelessWidget {
       theme: AppTheme.dark,
       darkTheme: AppTheme.dark,
       themeMode: ThemeMode.dark,
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: const BancDEssaiSeed(),
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
-
-  // This widget is the home page of your application. It is stateful, meaning
-  // that it has a State object (defined below) that contains fields that affect
-  // how it looks.
-
-  // This class is the configuration for the state. It holds the values (in this
-  // case the title) provided by the parent (in this case the App widget) and
-  // used by the build method of the State. Fields in a Widget subclass are
-  // always marked "final".
-
-  final String title;
-
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
-      _counter++;
-    });
-  }
+/// Écran temporaire pour vérifier que le seed (section 2.4) a bien
+/// peuplé les comptes et catégories par défaut. Sera remplacé par
+/// l'écran Capture à l'étape suivante.
+class BancDEssaiSeed extends StatelessWidget {
+  const BancDEssaiSeed({super.key});
 
   @override
   Widget build(BuildContext context) {
-    // This method is rerun every time setState is called, for instance as done
-    // by the _incrementCounter method above.
-    //
-    // The Flutter framework has been optimized to make rerunning build methods
-    // fast, so that you can just rebuild anything that needs updating rather
-    // than having to individually change instances of widgets.
-    // Cet écran est un banc d'essai temporaire pour valider le thème :
-    // il sera entièrement remplacé par l'écran Capture à l'étape suivante.
+    final comptes = CompteRepository().tous();
+    final categories = CategorieRepository().tous()..sort((a, b) => a.ordre.compareTo(b.ordre));
+
     return Scaffold(
-      appBar: AppBar(title: const Text('KUDI — aperçu du thème')),
-      body: Center(
-        child: Padding(
-          padding: const EdgeInsets.all(24),
-          child: Card(
-            child: Padding(
-              padding: const EdgeInsets.all(24),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Text('Solde du mois', style: Theme.of(context).textTheme.bodyMedium),
-                  const SizedBox(height: 8),
-                  Text('$_counter 000 F', style: Theme.of(context).textTheme.displayLarge),
-                  const SizedBox(height: 16),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      const Text('+45 000 F', style: TextStyle(color: AppColors.positive)),
-                      const Text('-12 500 F', style: TextStyle(color: AppColors.negative)),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ),
+      appBar: AppBar(title: const Text('KUDI — test du seed')),
+      body: ListView(
+        padding: const EdgeInsets.all(16),
+        children: [
+          Text('Comptes (${comptes.length})', style: Theme.of(context).textTheme.titleMedium),
+          const SizedBox(height: 8),
+          Wrap(spacing: 8, runSpacing: 8, children: comptes.map((c) => _PucePreview(libelle: c.libelle, iconeCode: c.iconeCode, couleurHex: c.couleurHex)).toList()),
+          const SizedBox(height: 24),
+          Text('Catégories (${categories.length})', style: Theme.of(context).textTheme.titleMedium),
+          const SizedBox(height: 8),
+          Wrap(spacing: 8, runSpacing: 8, children: categories.map((c) => _PucePreview(libelle: c.libelle, iconeCode: c.iconeCode, couleurHex: c.couleurHex)).toList()),
+        ],
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ),
+    );
+  }
+}
+
+class _PucePreview extends StatelessWidget {
+  const _PucePreview({required this.libelle, required this.iconeCode, required this.couleurHex});
+
+  final String libelle;
+  final String iconeCode;
+  final String couleurHex;
+
+  @override
+  Widget build(BuildContext context) {
+    final couleur = Color(int.parse(couleurHex.replaceFirst('#', '0xFF')));
+    return Chip(
+      avatar: PhosphorIcon(icones[iconeCode] ?? PhosphorIconsFill.question, color: couleur, size: 18),
+      label: Text(libelle),
     );
   }
 }

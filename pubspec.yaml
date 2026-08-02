@@ -67,6 +67,12 @@ dev_dependencies:
   # rules and activating additional ones.
   flutter_lints: ^6.0.0
 
+  # Génération de code : lit les annotations @HiveType/@HiveField de nos
+  # modèles et écrit les fichiers *.g.dart (sérialisation binaire), pour
+  # ne jamais écrire cette conversion à la main.
+  hive_ce_generator: ^1.10.1
+  build_runner: ^2.15.1
+
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 
