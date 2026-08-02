@@ -26,6 +26,21 @@ class _NoteEtDateState extends ConsumerState<NoteEtDate> {
   final _controleurNote = TextEditingController();
 
   @override
+  void initState() {
+    super.initState();
+    // Cas de l'écran Édition : le formulaire peut déjà contenir une
+    // note au tout premier affichage (pré-remplie depuis la
+    // transaction existante). On ne lit le provider qu'une fois ici :
+    // ensuite, la synchronisation reste TextField → provider (voir la
+    // note en tête de fichier).
+    final noteInitiale = ref.read(captureFormProvider).note;
+    if (noteInitiale.isNotEmpty) {
+      _controleurNote.text = noteInitiale;
+      _noteOuverte = true;
+    }
+  }
+
+  @override
   void dispose() {
     _controleurNote.dispose();
     super.dispose();

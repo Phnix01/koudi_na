@@ -4,16 +4,10 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:uuid/uuid.dart';
 
-import '../../core/theme/app_colors.dart';
-import '../../core/utils/formatters.dart';
 import '../../data/models/transaction.dart';
-import '../../data/models/type_mouvement.dart';
 import '../../logic/providers/capture_form_provider.dart';
 import '../../logic/providers/repositories_providers.dart';
-import '../widgets/grille_categories.dart';
-import '../widgets/note_et_date.dart';
-import '../widgets/pave_numerique.dart';
-import '../widgets/selecteur_compte.dart';
+import '../widgets/formulaire_transaction.dart';
 import '../widgets/solde_du_mois.dart';
 import 'mois_screen.dart';
 
@@ -34,7 +28,7 @@ class CaptureScreen extends ConsumerWidget {
       compteId: form.compteId,
       note: form.note.isEmpty ? null : form.note,
     );
-    await ref.read(transactionRepositoryProvider).ajouter(transaction);
+    await ref.read(transactionRepositoryProvider).enregistrer(transaction);
     // Le retour haptique remplace un dialogue de confirmation (section 3.3) :
     // aucune étape supplémentaire ne doit retarder la saisie suivante.
     HapticFeedback.lightImpact();
@@ -44,7 +38,6 @@ class CaptureScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final montant = ref.watch(captureFormProvider.select((form) => form.montant));
-    final type = ref.watch(captureFormProvider.select((form) => form.type));
     final categorieId = ref.watch(captureFormProvider.select((form) => form.categorieId));
     final peutEnregistrer = montant > 0 && categorieId != null;
 
@@ -66,47 +59,7 @@ class CaptureScreen extends ConsumerWidget {
                 ],
               ),
             ),
-            Expanded(
-              child: SingleChildScrollView(
-                padding: const EdgeInsets.symmetric(horizontal: 20),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    const SizedBox(height: 16),
-                    // SegmentedButton plutôt que deux boutons juxtaposés :
-                    // c'est le widget Material 3 dédié à un choix unique
-                    // parmi 2 à 4 options, avec l'accessibilité intégrée.
-                    Center(
-                      child: SegmentedButton<TypeMouvement>(
-                        segments: const [
-                          ButtonSegment(value: TypeMouvement.depense, label: Text('Dépense')),
-                          ButtonSegment(value: TypeMouvement.entree, label: Text('Entrée')),
-                        ],
-                        selected: {type},
-                        onSelectionChanged: (selection) {
-                          ref.read(captureFormProvider.notifier).choisirType(selection.first);
-                        },
-                      ),
-                    ),
-                    const SizedBox(height: 16),
-                    Text(formaterMontant(montant), textAlign: TextAlign.center, style: Theme.of(context).textTheme.displayLarge),
-                    const SizedBox(height: 16),
-                    const PaveNumerique(),
-                    const SizedBox(height: 24),
-                    Text('Catégorie', style: Theme.of(context).textTheme.bodySmall?.copyWith(color: AppColors.textMuted)),
-                    const SizedBox(height: 8),
-                    const GrilleCategories(),
-                    const SizedBox(height: 24),
-                    Text('Compte', style: Theme.of(context).textTheme.bodySmall?.copyWith(color: AppColors.textMuted)),
-                    const SizedBox(height: 8),
-                    const SelecteurCompte(),
-                    const SizedBox(height: 16),
-                    const NoteEtDate(),
-                    const SizedBox(height: 16),
-                  ],
-                ),
-              ),
-            ),
+            const Expanded(child: FormulaireTransaction()),
             Padding(
               padding: const EdgeInsets.fromLTRB(20, 8, 20, 20),
               child: ElevatedButton(

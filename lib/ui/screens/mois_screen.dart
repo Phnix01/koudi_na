@@ -13,12 +13,24 @@ import '../../data/models/transaction.dart';
 import '../../data/models/type_mouvement.dart';
 import '../../logic/providers/repositories_providers.dart';
 import '../../logic/services/calcul_solde.dart';
+import '../../logic/services/groupement_transactions.dart';
+import 'edition_transaction_screen.dart';
 
-/// Écran B en version simple (Phase 1, section 6) : liste des
-/// transactions du mois et leurs totaux. Le groupement par jour, les
-/// filtres et les barres 40/25/35 arriveront en Phase 2.
+/// Écran B en version simple (Phase 2, étape 1, section 6) : liste des
+/// transactions du mois groupées par jour, avec édition et suppression.
+/// La navigation entre les mois, les filtres et les barres 40/25/35
+/// arriveront dans les étapes suivantes.
 class MoisScreen extends ConsumerWidget {
   const MoisScreen({super.key});
+
+  String _libelleJour(DateTime jour) {
+    final maintenant = DateTime.now();
+    final aujourdHui = DateTime(maintenant.year, maintenant.month, maintenant.day);
+    final hier = aujourdHui.subtract(const Duration(days: 1));
+    if (jour == aujourdHui) return "Aujourd'hui";
+    if (jour == hier) return 'Hier';
+    return DateFormat('EEEE d MMMM', 'fr_FR').format(jour);
+  }
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -40,6 +52,7 @@ class MoisScreen extends ConsumerWidget {
           }).toList()..sort((a, b) => b.date.compareTo(a.date));
 
           final totaux = calculerTotauxDuMois(transactionsDuMois);
+          final journees = grouperParJour(transactionsDuMois);
 
           return Column(
             children: [
@@ -62,23 +75,78 @@ class MoisScreen extends ConsumerWidget {
                 ),
               ),
               Expanded(
-                child: transactionsDuMois.isEmpty
+                child: journees.isEmpty
                     ? Center(
                         child: Text(
                           'Aucune transaction ce mois-ci',
                           style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: AppColors.textMuted),
                         ),
                       )
-                    : ListView.separated(
-                        padding: const EdgeInsets.symmetric(horizontal: 16),
-                        itemCount: transactionsDuMois.length,
-                        separatorBuilder: (context, index) => const Divider(height: 1),
+                    : ListView.builder(
+                        itemCount: journees.length,
                         itemBuilder: (context, index) {
-                          final transaction = transactionsDuMois[index];
-                          return _LigneTransaction(
-                            transaction: transaction,
-                            categorie: categoriesParId[transaction.categorieId],
-                            compte: comptesParId[transaction.compteId],
+                          final journee = journees[index];
+                          return Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.fromLTRB(16, 16, 16, 4),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      _libelleJour(journee.jour),
+                                      style: Theme.of(context).textTheme.bodySmall?.copyWith(color: AppColors.textMuted),
+                                    ),
+                                    Text(
+                                      formaterMontant(journee.total),
+                                      style: TextStyle(color: journee.total >= 0 ? AppColors.positive : AppColors.negative),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              ...journee.transactions.map((transaction) {
+                                return Dismissible(
+                                  key: ValueKey(transaction.id),
+                                  direction: DismissDirection.endToStart,
+                                  background: Container(
+                                    color: AppColors.negative,
+                                    alignment: Alignment.centerRight,
+                                    padding: const EdgeInsets.only(right: 20),
+                                    child: const Icon(Icons.delete_outline, color: Colors.white),
+                                  ),
+                                  onDismissed: (_) async {
+                                    await ref.read(transactionRepositoryProvider).supprimer(transaction.id);
+                                    if (!context.mounted) return;
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(
+                                        content: const Text('Transaction supprimée'),
+                                        action: SnackBarAction(
+                                          label: 'Annuler',
+                                          onPressed: () {
+                                            ref.read(transactionRepositoryProvider).enregistrer(transaction);
+                                          },
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                  child: InkWell(
+                                    onTap: () => Navigator.of(context).push(
+                                      MaterialPageRoute(builder: (_) => EditionTransactionScreen(transaction: transaction)),
+                                    ),
+                                    child: Padding(
+                                      padding: const EdgeInsets.symmetric(horizontal: 16),
+                                      child: _LigneTransaction(
+                                        transaction: transaction,
+                                        categorie: categoriesParId[transaction.categorieId],
+                                        compte: comptesParId[transaction.compteId],
+                                      ),
+                                    ),
+                                  ),
+                                );
+                              }),
+                              const Divider(height: 1),
+                            ],
                           );
                         },
                       ),
@@ -142,7 +210,7 @@ class _LigneTransaction extends StatelessWidget {
         ),
       ),
       title: Text(categorie?.libelle ?? 'Catégorie supprimée'),
-      subtitle: Text('${compte?.libelle ?? 'Compte supprimé'} · ${DateFormat('d MMM', 'fr_FR').format(transaction.date)}'),
+      subtitle: Text(compte?.libelle ?? 'Compte supprimé'),
       trailing: Text(
         '${estEntree ? '+' : '-'}${formaterMontant(transaction.montant)}',
         style: TextStyle(color: estEntree ? AppColors.positive : AppColors.negative, fontWeight: FontWeight.w600),

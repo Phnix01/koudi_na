@@ -1,5 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../data/models/transaction.dart';
 import '../../data/models/type_mouvement.dart';
 import 'repositories_providers.dart';
 
@@ -58,6 +59,22 @@ class CaptureFormNotifier extends StateNotifier<CaptureFormState> {
           compteId: compteParDefautId,
           note: '',
           date: DateTime.now(),
+        ),
+      );
+
+  /// Pré-remplit le formulaire à partir d'une transaction existante,
+  /// pour l'écran d'édition. Le champ `note` de [Transaction] est
+  /// `String?` (jamais obligatoire, section 2.3) mais celui du
+  /// formulaire ne l'est pas : `null` devient simplement `''`.
+  CaptureFormNotifier.depuisTransaction(Transaction transaction)
+    : super(
+        CaptureFormState(
+          type: transaction.type,
+          montantSaisi: '${transaction.montant}',
+          categorieId: transaction.categorieId,
+          compteId: transaction.compteId,
+          note: transaction.note ?? '',
+          date: transaction.date,
         ),
       );
 
