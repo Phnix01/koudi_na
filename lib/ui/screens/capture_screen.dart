@@ -10,6 +10,7 @@ import '../../logic/providers/repositories_providers.dart';
 import '../widgets/formulaire_transaction.dart';
 import '../widgets/solde_du_mois.dart';
 import 'mois_screen.dart';
+import 'reglages_screen.dart';
 
 /// Écran A du cahier des charges : la capture, cœur de l'application.
 /// Parcours cible (section 4) : ouvrir → taper le montant → taper la
@@ -49,12 +50,17 @@ class CaptureScreen extends ConsumerWidget {
               padding: const EdgeInsets.only(top: 8),
               child: Row(
                 children: [
-                  const SizedBox(width: 48), // équilibre visuellement l'IconButton à droite
+                  const SizedBox(width: 96), // équilibre visuellement les deux IconButton à droite
                   const Expanded(child: SoldeDuMois()),
                   IconButton(
                     tooltip: 'Voir le mois',
                     icon: const PhosphorIcon(PhosphorIconsFill.listBullets),
                     onPressed: () => Navigator.of(context).push(MaterialPageRoute(builder: (_) => const MoisScreen())),
+                  ),
+                  IconButton(
+                    tooltip: 'Réglages',
+                    icon: const PhosphorIcon(PhosphorIconsFill.gearSix),
+                    onPressed: () => Navigator.of(context).push(MaterialPageRoute(builder: (_) => const ReglagesScreen())),
                   ),
                 ],
               ),

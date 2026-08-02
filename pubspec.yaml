@@ -61,6 +61,18 @@ dependencies:
   # ça — voir la note dans seed_initial.dart).
   uuid: ^4.6.0
 
+  # Convertit une liste de lignes Dart en texte CSV correctement échappé
+  # (virgules, guillemets, retours à la ligne dans les notes).
+  csv: ^8.0.0
+
+  # Donne accès à un dossier temporaire où écrire le fichier CSV avant
+  # de le partager (share_plus a besoin d'un chemin de fichier réel).
+  path_provider: ^2.1.6
+
+  # Ouvre la feuille de partage native (WhatsApp, mail, Drive...) pour
+  # le fichier CSV généré.
+  share_plus: ^13.3.0
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
