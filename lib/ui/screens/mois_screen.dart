@@ -12,20 +12,52 @@ import '../../data/models/compte.dart';
 import '../../data/models/transaction.dart';
 import '../../data/models/type_mouvement.dart';
 import '../../logic/providers/repositories_providers.dart';
+import '../../logic/services/calcul_piliers.dart';
 import '../../logic/services/calcul_solde.dart';
 import '../../logic/services/groupement_transactions.dart';
+import '../widgets/barres_piliers.dart';
+import '../widgets/filtres_mois.dart';
 import 'edition_transaction_screen.dart';
 
-/// Écran B en version simple (Phase 2, étape 1, section 6) : liste des
-/// transactions du mois groupées par jour, avec édition et suppression.
-/// La navigation entre les mois, les filtres et les barres 40/25/35
-/// arriveront dans les étapes suivantes.
-class MoisScreen extends ConsumerWidget {
+/// Écran B en version simple (Phase 2, étape 1-4, section 6) : liste des
+/// transactions du mois groupées par jour, avec édition, suppression,
+/// navigation entre les mois, filtres rapides et barres 40/25/35.
+class MoisScreen extends ConsumerStatefulWidget {
   const MoisScreen({super.key});
+
+  @override
+  ConsumerState<MoisScreen> createState() => _MoisScreenState();
+}
+
+class _MoisScreenState extends ConsumerState<MoisScreen> {
+  // Le mois affiché est un état purement local à cet écran (comme le
+  // repli de la note en Capture) : aucun autre écran n'a besoin de le
+  // connaître, donc setState suffit, pas de provider Riverpod.
+  late DateTime _moisAffiche = DateTime(
+    DateTime.now().year,
+    DateTime.now().month,
+  );
+
+  // Les filtres aussi : ils ne pilotent que l'affichage de cet écran.
+  TypeMouvement? _filtreType;
+  String? _filtreCategorieId;
+  String? _filtreCompteId;
+
+  void _moisPrecedent() => setState(
+    () => _moisAffiche = DateTime(_moisAffiche.year, _moisAffiche.month - 1),
+  );
+
+  void _moisSuivant() => setState(
+    () => _moisAffiche = DateTime(_moisAffiche.year, _moisAffiche.month + 1),
+  );
 
   String _libelleJour(DateTime jour) {
     final maintenant = DateTime.now();
-    final aujourdHui = DateTime(maintenant.year, maintenant.month, maintenant.day);
+    final aujourdHui = DateTime(
+      maintenant.year,
+      maintenant.month,
+      maintenant.day,
+    );
     final hier = aujourdHui.subtract(const Duration(days: 1));
     if (jour == aujourdHui) return "Aujourd'hui";
     if (jour == hier) return 'Hier';
@@ -33,125 +65,250 @@ class MoisScreen extends ConsumerWidget {
   }
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  Widget build(BuildContext context) {
     final transactionRepo = ref.watch(transactionRepositoryProvider);
     // Catégories et comptes changent rarement pendant qu'on regarde
-    // cette liste : un Map construit une fois par build suffit, pas
-    // besoin de les envelopper dans leur propre ValueListenableBuilder.
-    final categoriesParId = {for (final c in ref.watch(categorieRepositoryProvider).tous()) c.id: c};
-    final comptesParId = {for (final c in ref.watch(compteRepositoryProvider).tous()) c.id: c};
+    // cette liste : une seule lecture par build suffit, pas besoin de
+    // les envelopper dans leur propre ValueListenableBuilder.
+    final categories = ref.watch(categorieRepositoryProvider).tous();
+    final comptes = ref.watch(compteRepositoryProvider).tous();
+    final categoriesParId = {for (final c in categories) c.id: c};
+    final comptesParId = {for (final c in comptes) c.id: c};
 
     return Scaffold(
-      appBar: AppBar(title: Text(DateFormat('MMMM y', 'fr_FR').format(DateTime.now()))),
+      appBar: AppBar(
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            IconButton(
+              visualDensity: VisualDensity.compact,
+              icon: const Icon(Icons.chevron_left),
+              onPressed: _moisPrecedent,
+            ),
+            Text(DateFormat('MMMM y', 'fr_FR').format(_moisAffiche)),
+            IconButton(
+              visualDensity: VisualDensity.compact,
+              icon: const Icon(Icons.chevron_right),
+              onPressed: _moisSuivant,
+            ),
+          ],
+        ),
+      ),
       body: ValueListenableBuilder(
         valueListenable: transactionRepo.listenable(),
         builder: (context, _, _) {
-          final maintenant = DateTime.now();
-          final transactionsDuMois = transactionRepo.tous().where((t) {
-            return t.date.year == maintenant.year && t.date.month == maintenant.month;
+          final transactionsDuMoisComplet = transactionRepo.tous().where((t) {
+            return t.date.year == _moisAffiche.year &&
+                t.date.month == _moisAffiche.month;
+          }).toList();
+
+          final transactionsFiltrees = transactionsDuMoisComplet.where((t) {
+            if (_filtreType != null && t.type != _filtreType) return false;
+            if (_filtreCategorieId != null &&
+                t.categorieId != _filtreCategorieId) {
+              return false;
+            }
+            if (_filtreCompteId != null && t.compteId != _filtreCompteId) {
+              return false;
+            }
+            return true;
           }).toList()..sort((a, b) => b.date.compareTo(a.date));
 
-          final totaux = calculerTotauxDuMois(transactionsDuMois);
-          final journees = grouperParJour(transactionsDuMois);
+          // Les totaux et la liste reflètent les filtres actifs (filtrer
+          // par compte ne montre que le solde de ce compte) ; les barres
+          // 40/25/35, elles, portent toujours sur le mois entier — un
+          // filtre de navigation ne doit pas déformer l'image du budget.
+          final totaux = calculerTotauxDuMois(
+            transactionsFiltrees,
+            maintenant: _moisAffiche,
+          );
+          final journees = grouperParJour(transactionsFiltrees);
+          final progressionsPiliers = calculerProgressionPiliers(
+            transactionsDuMoisComplet,
+            categories,
+            maintenant: _moisAffiche,
+          );
 
-          return Column(
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(16),
-                child: Row(
-                  children: [
-                    Expanded(child: _TuileTotal(libelle: 'Entrées', valeur: totaux.entrees, couleur: AppColors.positive)),
-                    const SizedBox(width: 12),
-                    Expanded(child: _TuileTotal(libelle: 'Dépenses', valeur: totaux.depenses, couleur: AppColors.negative)),
-                    const SizedBox(width: 12),
-                    Expanded(
-                      child: _TuileTotal(
-                        libelle: 'Solde',
-                        valeur: totaux.solde,
-                        couleur: totaux.solde >= 0 ? AppColors.positive : AppColors.negative,
-                      ),
-                    ),
-                  ],
+          // Glissé vers la gauche → mois suivant, vers la droite → mois
+          // précédent (comme tourner les pages d'un calendrier).
+          return GestureDetector(
+            onHorizontalDragEnd: (details) {
+              final vitesse = details.primaryVelocity ?? 0;
+              if (vitesse < -200) _moisSuivant();
+              if (vitesse > 200) _moisPrecedent();
+            },
+            child: Column(
+              children: [
+                const SizedBox(height: 8),
+                FiltresMois(
+                  type: _filtreType,
+                  categorieSelectionnee: categoriesParId[_filtreCategorieId],
+                  compteSelectionne: comptesParId[_filtreCompteId],
+                  categories: categories,
+                  comptes: comptes,
+                  onTypeChange: (t) => setState(() => _filtreType = t),
+                  onCategorieChange: (c) =>
+                      setState(() => _filtreCategorieId = c?.id),
+                  onCompteChange: (c) =>
+                      setState(() => _filtreCompteId = c?.id),
                 ),
-              ),
-              Expanded(
-                child: journees.isEmpty
-                    ? Center(
-                        child: Text(
-                          'Aucune transaction ce mois-ci',
-                          style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: AppColors.textMuted),
+                Padding(
+                  padding: const EdgeInsets.all(16),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: _TuileTotal(
+                          libelle: 'Entrées',
+                          valeur: totaux.entrees,
+                          couleur: AppColors.positive,
                         ),
-                      )
-                    : ListView.builder(
-                        itemCount: journees.length,
-                        itemBuilder: (context, index) {
-                          final journee = journees[index];
-                          return Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.fromLTRB(16, 16, 16, 4),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Text(
-                                      _libelleJour(journee.jour),
-                                      style: Theme.of(context).textTheme.bodySmall?.copyWith(color: AppColors.textMuted),
-                                    ),
-                                    Text(
-                                      formaterMontant(journee.total),
-                                      style: TextStyle(color: journee.total >= 0 ? AppColors.positive : AppColors.negative),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              ...journee.transactions.map((transaction) {
-                                return Dismissible(
-                                  key: ValueKey(transaction.id),
-                                  direction: DismissDirection.endToStart,
-                                  background: Container(
-                                    color: AppColors.negative,
-                                    alignment: Alignment.centerRight,
-                                    padding: const EdgeInsets.only(right: 20),
-                                    child: const Icon(Icons.delete_outline, color: Colors.white),
+                      ),
+                      const SizedBox(width: 12),
+                      Expanded(
+                        child: _TuileTotal(
+                          libelle: 'Dépenses',
+                          valeur: totaux.depenses,
+                          couleur: AppColors.negative,
+                        ),
+                      ),
+                      const SizedBox(width: 12),
+                      Expanded(
+                        child: _TuileTotal(
+                          libelle: 'Solde',
+                          valeur: totaux.solde,
+                          couleur: totaux.solde >= 0
+                              ? AppColors.positive
+                              : AppColors.negative,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                BarresPiliers(progressions: progressionsPiliers),
+                const SizedBox(height: 8),
+                Expanded(
+                  child: journees.isEmpty
+                      ? Center(
+                          child: Text(
+                            _filtreType != null ||
+                                    _filtreCategorieId != null ||
+                                    _filtreCompteId != null
+                                ? 'Aucune transaction pour ces filtres'
+                                : 'Aucune transaction ce mois-ci',
+                            style: Theme.of(context).textTheme.bodyMedium
+                                ?.copyWith(color: AppColors.textMuted),
+                          ),
+                        )
+                      : ListView.builder(
+                          itemCount: journees.length,
+                          itemBuilder: (context, index) {
+                            final journee = journees[index];
+                            return Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.fromLTRB(
+                                    16,
+                                    16,
+                                    16,
+                                    4,
                                   ),
-                                  onDismissed: (_) async {
-                                    await ref.read(transactionRepositoryProvider).supprimer(transaction.id);
-                                    if (!context.mounted) return;
-                                    ScaffoldMessenger.of(context).showSnackBar(
-                                      SnackBar(
-                                        content: const Text('Transaction supprimée'),
-                                        action: SnackBarAction(
-                                          label: 'Annuler',
-                                          onPressed: () {
-                                            ref.read(transactionRepositoryProvider).enregistrer(transaction);
-                                          },
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text(
+                                        _libelleJour(journee.jour),
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodySmall
+                                            ?.copyWith(
+                                              color: AppColors.textMuted,
+                                            ),
+                                      ),
+                                      Text(
+                                        formaterMontant(journee.total),
+                                        style: TextStyle(
+                                          color: journee.total >= 0
+                                              ? AppColors.positive
+                                              : AppColors.negative,
                                         ),
                                       ),
-                                    );
-                                  },
-                                  child: InkWell(
-                                    onTap: () => Navigator.of(context).push(
-                                      MaterialPageRoute(builder: (_) => EditionTransactionScreen(transaction: transaction)),
-                                    ),
-                                    child: Padding(
-                                      padding: const EdgeInsets.symmetric(horizontal: 16),
-                                      child: _LigneTransaction(
-                                        transaction: transaction,
-                                        categorie: categoriesParId[transaction.categorieId],
-                                        compte: comptesParId[transaction.compteId],
+                                    ],
+                                  ),
+                                ),
+                                ...journee.transactions.map((transaction) {
+                                  return Dismissible(
+                                    key: ValueKey(transaction.id),
+                                    direction: DismissDirection.endToStart,
+                                    background: Container(
+                                      color: AppColors.negative,
+                                      alignment: Alignment.centerRight,
+                                      padding: const EdgeInsets.only(right: 20),
+                                      child: const Icon(
+                                        Icons.delete_outline,
+                                        color: Colors.white,
                                       ),
                                     ),
-                                  ),
-                                );
-                              }),
-                              const Divider(height: 1),
-                            ],
-                          );
-                        },
-                      ),
-              ),
-            ],
+                                    onDismissed: (_) async {
+                                      await ref
+                                          .read(transactionRepositoryProvider)
+                                          .supprimer(transaction.id);
+                                      if (!context.mounted) return;
+                                      ScaffoldMessenger.of(
+                                        context,
+                                      ).showSnackBar(
+                                        SnackBar(
+                                          content: const Text(
+                                            'Transaction supprimée',
+                                          ),
+                                          action: SnackBarAction(
+                                            label: 'Annuler',
+                                            onPressed: () {
+                                              ref
+                                                  .read(
+                                                    transactionRepositoryProvider,
+                                                  )
+                                                  .enregistrer(transaction);
+                                            },
+                                          ),
+                                        ),
+                                      );
+                                    },
+                                    child: InkWell(
+                                      onTap: () => Navigator.of(context).push(
+                                        MaterialPageRoute(
+                                          builder: (_) =>
+                                              EditionTransactionScreen(
+                                                transaction: transaction,
+                                              ),
+                                        ),
+                                      ),
+                                      child: Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                          horizontal: 16,
+                                        ),
+                                        child: _LigneTransaction(
+                                          transaction: transaction,
+                                          categorie:
+                                              categoriesParId[transaction
+                                                  .categorieId],
+                                          compte:
+                                              comptesParId[transaction
+                                                  .compteId],
+                                        ),
+                                      ),
+                                    ),
+                                  );
+                                }),
+                                const Divider(height: 1),
+                              ],
+                            );
+                          },
+                        ),
+                ),
+              ],
+            ),
           );
         },
       ),
@@ -160,7 +317,11 @@ class MoisScreen extends ConsumerWidget {
 }
 
 class _TuileTotal extends StatelessWidget {
-  const _TuileTotal({required this.libelle, required this.valeur, required this.couleur});
+  const _TuileTotal({
+    required this.libelle,
+    required this.valeur,
+    required this.couleur,
+  });
 
   final String libelle;
   final int valeur;
@@ -173,12 +334,20 @@ class _TuileTotal extends StatelessWidget {
         padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 8),
         child: Column(
           children: [
-            Text(libelle, style: Theme.of(context).textTheme.bodySmall?.copyWith(color: AppColors.textMuted)),
+            Text(
+              libelle,
+              style: Theme.of(
+                context,
+              ).textTheme.bodySmall?.copyWith(color: AppColors.textMuted),
+            ),
             const SizedBox(height: 4),
             Text(
               formaterMontant(valeur),
               textAlign: TextAlign.center,
-              style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: couleur, fontWeight: FontWeight.w700),
+              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                color: couleur,
+                fontWeight: FontWeight.w700,
+              ),
             ),
           ],
         ),
@@ -188,7 +357,11 @@ class _TuileTotal extends StatelessWidget {
 }
 
 class _LigneTransaction extends StatelessWidget {
-  const _LigneTransaction({required this.transaction, required this.categorie, required this.compte});
+  const _LigneTransaction({
+    required this.transaction,
+    required this.categorie,
+    required this.compte,
+  });
 
   final Transaction transaction;
   final Categorie? categorie;
@@ -197,14 +370,18 @@ class _LigneTransaction extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final estEntree = transaction.type == TypeMouvement.entree;
-    final couleurCategorie = categorie != null ? depuisHex(categorie!.couleurHex) : AppColors.textMuted;
+    final couleurCategorie = categorie != null
+        ? depuisHex(categorie!.couleurHex)
+        : AppColors.textMuted;
 
     return ListTile(
       contentPadding: EdgeInsets.zero,
       leading: CircleAvatar(
         backgroundColor: couleurCategorie.withValues(alpha: 0.18),
         child: PhosphorIcon(
-          categorie != null ? (icones[categorie!.iconeCode] ?? PhosphorIconsFill.question) : PhosphorIconsFill.question,
+          categorie != null
+              ? (icones[categorie!.iconeCode] ?? PhosphorIconsFill.question)
+              : PhosphorIconsFill.question,
           color: couleurCategorie,
           size: 20,
         ),
@@ -213,7 +390,10 @@ class _LigneTransaction extends StatelessWidget {
       subtitle: Text(compte?.libelle ?? 'Compte supprimé'),
       trailing: Text(
         '${estEntree ? '+' : '-'}${formaterMontant(transaction.montant)}',
-        style: TextStyle(color: estEntree ? AppColors.positive : AppColors.negative, fontWeight: FontWeight.w600),
+        style: TextStyle(
+          color: estEntree ? AppColors.positive : AppColors.negative,
+          fontWeight: FontWeight.w600,
+        ),
       ),
     );
   }

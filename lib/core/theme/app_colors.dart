@@ -14,6 +14,10 @@ abstract final class AppColors {
 
   static const positive = Color(0xFF2ECC71);
   static const negative = Color(0xFFE74C3C);
+  // Pas dans les tokens de la section 3.1 : ajouté pour l'état "proche
+  // de la cible" des barres 40/25/35 (section 4, écran B), entre le vert
+  // et le rouge.
+  static const avertissement = Color(0xFFF2994A);
 
   static const textPrimary = Color(0xFFF2F5F8);
   static const textMuted = Color(0xFF8A97A6);
