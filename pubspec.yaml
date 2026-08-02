@@ -56,6 +56,11 @@ dependencies:
   # Jeu d'icônes pour la grille de catégories de l'écran Capture.
   phosphor_flutter: ^2.1.0
 
+  # Génère un identifiant unique pour chaque transaction créée par
+  # l'utilisateur (les entrées du seed utilisent des slugs fixes, pas
+  # ça — voir la note dans seed_initial.dart).
+  uuid: ^4.6.0
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
