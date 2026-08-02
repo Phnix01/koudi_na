@@ -12,7 +12,20 @@ import '../../logic/providers/capture_form_provider.dart';
 class PaveNumerique extends ConsumerWidget {
   const PaveNumerique({super.key});
 
-  static const _touches = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '000', '0', '⌫'];
+  static const _touches = [
+    '1',
+    '2',
+    '3',
+    '4',
+    '5',
+    '6',
+    '7',
+    '8',
+    '9',
+    '000',
+    '0',
+    '⌫',
+  ];
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -59,10 +72,18 @@ class _ToucheNumerique extends StatelessWidget {
         onTap: onTap,
         child: Center(
           child: estEffacer
-              ? const Icon(Icons.backspace_outlined, color: AppColors.textPrimary, size: 20)
+              ? const Icon(
+                  Icons.backspace_outlined,
+                  color: AppColors.textPrimary,
+                  size: 20,
+                )
               : Text(
                   libelle,
-                  style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w600, color: AppColors.textPrimary),
+                  style: const TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.w600,
+                    color: AppColors.textPrimary,
+                  ),
                 ),
         ),
       ),

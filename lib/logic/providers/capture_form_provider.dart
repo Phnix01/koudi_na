@@ -85,19 +85,28 @@ class CaptureFormNotifier extends StateNotifier<CaptureFormState> {
   }
 
   void ajouterChiffre(String chiffre) {
-    if (state.montantSaisi.isEmpty && int.parse(chiffre) == 0) return; // pas de zéro non significatif
+    if (state.montantSaisi.isEmpty && int.parse(chiffre) == 0) {
+      return; // pas de zéro non significatif
+    }
     if (state.montantSaisi.length + chiffre.length > _chiffresMax) return;
     state = state.copyWith(montantSaisi: state.montantSaisi + chiffre);
   }
 
   void effacerDernierChiffre() {
     if (state.montantSaisi.isEmpty) return;
-    state = state.copyWith(montantSaisi: state.montantSaisi.substring(0, state.montantSaisi.length - 1));
+    state = state.copyWith(
+      montantSaisi: state.montantSaisi.substring(
+        0,
+        state.montantSaisi.length - 1,
+      ),
+    );
   }
 
-  void choisirCategorie(String categorieId) => state = state.copyWith(categorieId: categorieId);
+  void choisirCategorie(String categorieId) =>
+      state = state.copyWith(categorieId: categorieId);
 
-  void choisirCompte(String compteId) => state = state.copyWith(compteId: compteId);
+  void choisirCompte(String compteId) =>
+      state = state.copyWith(compteId: compteId);
 
   void changerNote(String note) => state = state.copyWith(note: note);
 
@@ -106,12 +115,18 @@ class CaptureFormNotifier extends StateNotifier<CaptureFormState> {
   /// Après un enregistrement réussi : on garde le type et le compte
   /// (probablement réutilisés pour la saisie suivante), le reste repart à zéro.
   void reinitialiserApresEnregistrement() {
-    state = state.copyWith(montantSaisi: '', note: '', date: DateTime.now(), effacerCategorie: true);
+    state = state.copyWith(
+      montantSaisi: '',
+      note: '',
+      date: DateTime.now(),
+      effacerCategorie: true,
+    );
   }
 }
 
-final captureFormProvider = StateNotifierProvider<CaptureFormNotifier, CaptureFormState>((ref) {
-  final comptes = ref.watch(compteRepositoryProvider).tous();
-  final compteParDefaut = comptes.isNotEmpty ? comptes.first.id : '';
-  return CaptureFormNotifier(compteParDefautId: compteParDefaut);
-});
+final captureFormProvider =
+    StateNotifierProvider<CaptureFormNotifier, CaptureFormState>((ref) {
+      final comptes = ref.watch(compteRepositoryProvider).tous();
+      final compteParDefaut = comptes.isNotEmpty ? comptes.first.id : '';
+      return CaptureFormNotifier(compteParDefautId: compteParDefaut);
+    });

@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:hive_ce_flutter/hive_flutter.dart';
 
 import '../../core/constants/hive_boxes.dart';
@@ -12,5 +13,10 @@ class CategorieRepository {
 
   bool get estVide => _box.isEmpty;
 
-  Future<void> ajouter(Categorie categorie) => _box.put(categorie.id, categorie);
+  /// `put` avec la même clé écrase l'existant : sert à la fois à la
+  /// création (nouvel id) et à la modification (id existant).
+  Future<void> enregistrer(Categorie categorie) =>
+      _box.put(categorie.id, categorie);
+
+  ValueListenable<Box<Categorie>> listenable() => _box.listenable();
 }

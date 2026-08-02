@@ -16,5 +16,10 @@ Future<void> partagerCsv(String contenuCsv, String nomFichier) async {
   // encoding: utf8 transforme le caractère BOM (U+FEFF) ajouté par
   // genererCsvTransactions en ses 3 octets EF BB BF réels sur le disque.
   await fichier.writeAsString(contenuCsv, encoding: utf8);
-  await SharePlus.instance.share(ShareParams(files: [XFile(fichier.path)], text: 'Export KUDI — $nomFichier'));
+  await SharePlus.instance.share(
+    ShareParams(
+      files: [XFile(fichier.path)],
+      text: 'Export KUDI — $nomFichier',
+    ),
+  );
 }

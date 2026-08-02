@@ -9,7 +9,10 @@ typedef TotauxMois = ({int entrees, int depenses, int solde});
 /// Totaux du mois en cours : entrées, dépenses, solde (sections 4 et 6).
 /// Fonction pure — aucun accès à Hive ici — pour rester facilement
 /// testable indépendamment du stockage.
-TotauxMois calculerTotauxDuMois(List<Transaction> transactions, {DateTime? maintenant}) {
+TotauxMois calculerTotauxDuMois(
+  List<Transaction> transactions, {
+  DateTime? maintenant,
+}) {
   final reference = maintenant ?? DateTime.now();
   var entrees = 0;
   var depenses = 0;

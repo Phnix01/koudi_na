@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:hive_ce_flutter/hive_flutter.dart';
 
 import '../../core/constants/hive_boxes.dart';
@@ -12,5 +13,9 @@ class CompteRepository {
 
   bool get estVide => _box.isEmpty;
 
-  Future<void> ajouter(Compte compte) => _box.put(compte.id, compte);
+  /// `put` avec la même clé écrase l'existant : sert à la fois à la
+  /// création (nouvel id) et à la modification (id existant).
+  Future<void> enregistrer(Compte compte) => _box.put(compte.id, compte);
+
+  ValueListenable<Box<Compte>> listenable() => _box.listenable();
 }

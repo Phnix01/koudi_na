@@ -48,7 +48,9 @@ class _NoteEtDateState extends ConsumerState<NoteEtDate> {
 
   bool _estAujourdHui(DateTime date) {
     final maintenant = DateTime.now();
-    return date.year == maintenant.year && date.month == maintenant.month && date.day == maintenant.day;
+    return date.year == maintenant.year &&
+        date.month == maintenant.month &&
+        date.day == maintenant.day;
   }
 
   @override
@@ -71,8 +73,15 @@ class _NoteEtDateState extends ConsumerState<NoteEtDate> {
           children: [
             TextButton.icon(
               onPressed: () => setState(() => _noteOuverte = !_noteOuverte),
-              icon: PhosphorIcon(_noteOuverte ? PhosphorIconsFill.minusCircle : PhosphorIconsFill.plusCircle, size: 16),
-              label: Text(_noteOuverte ? 'Retirer la note' : 'Ajouter une note'),
+              icon: PhosphorIcon(
+                _noteOuverte
+                    ? PhosphorIconsFill.minusCircle
+                    : PhosphorIconsFill.plusCircle,
+                size: 16,
+              ),
+              label: Text(
+                _noteOuverte ? 'Retirer la note' : 'Ajouter une note',
+              ),
             ),
             const Spacer(),
             TextButton.icon(
@@ -88,7 +97,11 @@ class _NoteEtDateState extends ConsumerState<NoteEtDate> {
                 }
               },
               icon: const Icon(Icons.calendar_today, size: 14),
-              label: Text(_estAujourdHui(date) ? "Aujourd'hui" : DateFormat('d MMM', 'fr_FR').format(date)),
+              label: Text(
+                _estAujourdHui(date)
+                    ? "Aujourd'hui"
+                    : DateFormat('d MMM', 'fr_FR').format(date),
+              ),
             ),
           ],
         ),
@@ -99,7 +112,8 @@ class _NoteEtDateState extends ConsumerState<NoteEtDate> {
               controller: _controleurNote,
               style: const TextStyle(color: AppColors.textPrimary),
               decoration: const InputDecoration(hintText: 'Note (optionnel)'),
-              onChanged: (valeur) => ref.read(captureFormProvider.notifier).changerNote(valeur),
+              onChanged: (valeur) =>
+                  ref.read(captureFormProvider.notifier).changerNote(valeur),
             ),
           ),
       ],

@@ -25,7 +25,9 @@ class SoldeDuMois extends ConsumerWidget {
           children: [
             Text(
               'Solde du mois',
-              style: Theme.of(context).textTheme.bodySmall?.copyWith(color: AppColors.textMuted),
+              style: Theme.of(
+                context,
+              ).textTheme.bodySmall?.copyWith(color: AppColors.textMuted),
             ),
             // Le compteur défile de 0 à sa valeur en 600 ms (section 3.2) :
             // TweenAnimationBuilder rejoue cette interpolation à chaque
@@ -36,9 +38,9 @@ class SoldeDuMois extends ConsumerWidget {
               builder: (context, valeur, _) {
                 return Text(
                   formaterMontant(valeur),
-                  style: Theme.of(
-                    context,
-                  ).textTheme.displaySmall?.copyWith(color: solde >= 0 ? AppColors.positive : AppColors.negative),
+                  style: Theme.of(context).textTheme.displaySmall?.copyWith(
+                    color: solde >= 0 ? AppColors.positive : AppColors.negative,
+                  ),
                 );
               },
             ),

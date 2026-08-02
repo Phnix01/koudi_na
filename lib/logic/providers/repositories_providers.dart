@@ -10,4 +10,6 @@ import '../../data/repositories/transaction_repository.dart';
 /// substituer un faux repository dans les tests sans toucher à l'UI.
 final categorieRepositoryProvider = Provider((ref) => CategorieRepository());
 final compteRepositoryProvider = Provider((ref) => CompteRepository());
-final transactionRepositoryProvider = Provider((ref) => TransactionRepository());
+final transactionRepositoryProvider = Provider(
+  (ref) => TransactionRepository(),
+);

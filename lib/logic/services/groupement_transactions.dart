@@ -3,7 +3,11 @@ import '../../data/models/type_mouvement.dart';
 
 /// Un jour du mois avec ses transactions et leur total signé
 /// (entrées positives, dépenses négatives) — section 4, écran B.
-typedef JourneeTransactions = ({DateTime jour, List<Transaction> transactions, int total});
+typedef JourneeTransactions = ({
+  DateTime jour,
+  List<Transaction> transactions,
+  int total,
+});
 
 /// Regroupe des transactions par jour, du plus récent au plus ancien.
 /// Fonction pure — aucun accès à Hive ici — pour rester facilement
@@ -11,7 +15,11 @@ typedef JourneeTransactions = ({DateTime jour, List<Transaction> transactions, i
 List<JourneeTransactions> grouperParJour(List<Transaction> transactions) {
   final parJour = <DateTime, List<Transaction>>{};
   for (final transaction in transactions) {
-    final jour = DateTime(transaction.date.year, transaction.date.month, transaction.date.day);
+    final jour = DateTime(
+      transaction.date.year,
+      transaction.date.month,
+      transaction.date.day,
+    );
     parJour.putIfAbsent(jour, () => []).add(transaction);
   }
 

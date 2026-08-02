@@ -15,7 +15,8 @@ class TransactionRepository {
   /// donc aussi bien à la création (nouvel id) qu'à la modification
   /// (id d'une transaction déjà enregistrée) ou à l'annulation d'une
   /// suppression (on remet l'objet supprimé tel quel).
-  Future<void> enregistrer(Transaction transaction) => _box.put(transaction.id, transaction);
+  Future<void> enregistrer(Transaction transaction) =>
+      _box.put(transaction.id, transaction);
 
   Future<void> supprimer(String id) => _box.delete(id);
 

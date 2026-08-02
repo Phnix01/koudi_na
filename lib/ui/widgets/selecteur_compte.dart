@@ -14,8 +14,14 @@ class SelecteurCompte extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final compteSelectionneId = ref.watch(captureFormProvider.select((form) => form.compteId));
-    final comptes = ref.watch(compteRepositoryProvider).tous().where((c) => c.actif).toList();
+    final compteSelectionneId = ref.watch(
+      captureFormProvider.select((form) => form.compteId),
+    );
+    final comptes = ref
+        .watch(compteRepositoryProvider)
+        .tous()
+        .where((c) => c.actif)
+        .toList();
 
     return SizedBox(
       height: 40,
@@ -26,10 +32,14 @@ class SelecteurCompte extends ConsumerWidget {
         itemBuilder: (context, index) {
           final compte = comptes[index];
           return ChoiceChip(
-            avatar: PhosphorIcon(icones[compte.iconeCode] ?? PhosphorIconsFill.question, size: 16),
+            avatar: PhosphorIcon(
+              icones[compte.iconeCode] ?? PhosphorIconsFill.question,
+              size: 16,
+            ),
             label: Text(compte.libelle),
             selected: compte.id == compteSelectionneId,
-            onSelected: (_) => ref.read(captureFormProvider.notifier).choisirCompte(compte.id),
+            onSelected: (_) =>
+                ref.read(captureFormProvider.notifier).choisirCompte(compte.id),
           );
         },
       ),

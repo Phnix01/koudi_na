@@ -23,7 +23,11 @@ class EditionTransactionScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ProviderScope(
-      overrides: [captureFormProvider.overrideWith((ref) => CaptureFormNotifier.depuisTransaction(transaction))],
+      overrides: [
+        captureFormProvider.overrideWith(
+          (ref) => CaptureFormNotifier.depuisTransaction(transaction),
+        ),
+      ],
       child: _CorpsEdition(transactionOriginale: transaction),
     );
   }
@@ -57,20 +61,32 @@ class _CorpsEdition extends ConsumerWidget {
         title: const Text('Supprimer cette transaction ?'),
         content: const Text('Cette action est irréversible.'),
         actions: [
-          TextButton(onPressed: () => Navigator.of(context).pop(false), child: const Text('Annuler')),
-          TextButton(onPressed: () => Navigator.of(context).pop(true), child: const Text('Supprimer')),
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(false),
+            child: const Text('Annuler'),
+          ),
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(true),
+            child: const Text('Supprimer'),
+          ),
         ],
       ),
     );
     if (confirme != true) return;
-    await ref.read(transactionRepositoryProvider).supprimer(transactionOriginale.id);
+    await ref
+        .read(transactionRepositoryProvider)
+        .supprimer(transactionOriginale.id);
     if (context.mounted) Navigator.of(context).pop();
   }
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final montant = ref.watch(captureFormProvider.select((form) => form.montant));
-    final categorieId = ref.watch(captureFormProvider.select((form) => form.categorieId));
+    final montant = ref.watch(
+      captureFormProvider.select((form) => form.montant),
+    );
+    final categorieId = ref.watch(
+      captureFormProvider.select((form) => form.categorieId),
+    );
     final peutEnregistrer = montant > 0 && categorieId != null;
 
     return Scaffold(
@@ -91,7 +107,9 @@ class _CorpsEdition extends ConsumerWidget {
             Padding(
               padding: const EdgeInsets.fromLTRB(20, 8, 20, 20),
               child: ElevatedButton(
-                onPressed: peutEnregistrer ? () => _enregistrer(ref, context) : null,
+                onPressed: peutEnregistrer
+                    ? () => _enregistrer(ref, context)
+                    : null,
                 child: const Text('Enregistrer les modifications'),
               ),
             ),

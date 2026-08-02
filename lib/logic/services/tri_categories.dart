@@ -15,7 +15,8 @@ List<Categorie> trierCategoriesParFrequence(
   final compteurs = <String, int>{};
   for (final transaction in transactions) {
     if (transaction.date.isAfter(depuis)) {
-      compteurs[transaction.categorieId] = (compteurs[transaction.categorieId] ?? 0) + 1;
+      compteurs[transaction.categorieId] =
+          (compteurs[transaction.categorieId] ?? 0) + 1;
     }
   }
 

@@ -27,15 +27,30 @@ abstract final class AppTheme {
 
     // Inter pour le texte courant, appliqué à tout le TextTheme de base.
     final baseText = GoogleFonts.interTextTheme(ThemeData.dark().textTheme)
-        .apply(bodyColor: AppColors.textPrimary, displayColor: AppColors.textPrimary);
+        .apply(
+          bodyColor: AppColors.textPrimary,
+          displayColor: AppColors.textPrimary,
+        );
 
     // Les montants sont l'élément que l'œil doit repérer en premier :
     // ils utilisent Sora (plus de caractère) et remplacent uniquement les
     // styles "display", jamais le texte courant.
     final textTheme = baseText.copyWith(
-      displayLarge: GoogleFonts.sora(fontSize: 48, fontWeight: FontWeight.w700, color: AppColors.textPrimary),
-      displayMedium: GoogleFonts.sora(fontSize: 34, fontWeight: FontWeight.w700, color: AppColors.textPrimary),
-      displaySmall: GoogleFonts.sora(fontSize: 26, fontWeight: FontWeight.w600, color: AppColors.textPrimary),
+      displayLarge: GoogleFonts.sora(
+        fontSize: 48,
+        fontWeight: FontWeight.w700,
+        color: AppColors.textPrimary,
+      ),
+      displayMedium: GoogleFonts.sora(
+        fontSize: 34,
+        fontWeight: FontWeight.w700,
+        color: AppColors.textPrimary,
+      ),
+      displaySmall: GoogleFonts.sora(
+        fontSize: 26,
+        fontWeight: FontWeight.w600,
+        color: AppColors.textPrimary,
+      ),
     );
 
     return ThemeData(
@@ -53,12 +68,17 @@ abstract final class AppTheme {
         color: AppColors.surface,
         elevation: 0,
         margin: EdgeInsets.zero,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(AppSpacing.radius)),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(AppSpacing.radius),
+        ),
       ),
       inputDecorationTheme: InputDecorationTheme(
         filled: true,
         fillColor: AppColors.surfaceHigh,
-        contentPadding: const EdgeInsets.symmetric(horizontal: AppSpacing.s16, vertical: AppSpacing.s12),
+        contentPadding: const EdgeInsets.symmetric(
+          horizontal: AppSpacing.s16,
+          vertical: AppSpacing.s12,
+        ),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(AppSpacing.radius),
           borderSide: BorderSide.none,
@@ -70,7 +90,9 @@ abstract final class AppTheme {
           backgroundColor: AppColors.primary,
           foregroundColor: AppColors.bg,
           padding: const EdgeInsets.symmetric(vertical: AppSpacing.s16),
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(AppSpacing.radius)),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(AppSpacing.radius),
+          ),
           textStyle: const TextStyle(fontWeight: FontWeight.w600, fontSize: 16),
         ),
       ),
@@ -79,11 +101,17 @@ abstract final class AppTheme {
         selectedColor: AppColors.primary,
         labelStyle: const TextStyle(color: AppColors.textPrimary),
         secondaryLabelStyle: const TextStyle(color: AppColors.bg),
-        padding: const EdgeInsets.symmetric(horizontal: AppSpacing.s12, vertical: AppSpacing.s8),
+        padding: const EdgeInsets.symmetric(
+          horizontal: AppSpacing.s12,
+          vertical: AppSpacing.s8,
+        ),
         shape: const StadiumBorder(),
         side: BorderSide.none,
       ),
-      dividerTheme: const DividerThemeData(color: AppColors.surfaceHigh, thickness: 1),
+      dividerTheme: const DividerThemeData(
+        color: AppColors.surfaceHigh,
+        thickness: 1,
+      ),
     );
   }
 }

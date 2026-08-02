@@ -38,8 +38,12 @@ class CaptureScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final montant = ref.watch(captureFormProvider.select((form) => form.montant));
-    final categorieId = ref.watch(captureFormProvider.select((form) => form.categorieId));
+    final montant = ref.watch(
+      captureFormProvider.select((form) => form.montant),
+    );
+    final categorieId = ref.watch(
+      captureFormProvider.select((form) => form.categorieId),
+    );
     final peutEnregistrer = montant > 0 && categorieId != null;
 
     return Scaffold(
@@ -50,17 +54,23 @@ class CaptureScreen extends ConsumerWidget {
               padding: const EdgeInsets.only(top: 8),
               child: Row(
                 children: [
-                  const SizedBox(width: 96), // équilibre visuellement les deux IconButton à droite
+                  const SizedBox(
+                    width: 96,
+                  ), // équilibre visuellement les deux IconButton à droite
                   const Expanded(child: SoldeDuMois()),
                   IconButton(
                     tooltip: 'Voir le mois',
                     icon: const PhosphorIcon(PhosphorIconsFill.listBullets),
-                    onPressed: () => Navigator.of(context).push(MaterialPageRoute(builder: (_) => const MoisScreen())),
+                    onPressed: () => Navigator.of(context).push(
+                      MaterialPageRoute(builder: (_) => const MoisScreen()),
+                    ),
                   ),
                   IconButton(
                     tooltip: 'Réglages',
                     icon: const PhosphorIcon(PhosphorIconsFill.gearSix),
-                    onPressed: () => Navigator.of(context).push(MaterialPageRoute(builder: (_) => const ReglagesScreen())),
+                    onPressed: () => Navigator.of(context).push(
+                      MaterialPageRoute(builder: (_) => const ReglagesScreen()),
+                    ),
                   ),
                 ],
               ),

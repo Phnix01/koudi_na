@@ -20,16 +20,24 @@ class GrilleCategories extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final type = ref.watch(captureFormProvider.select((form) => form.type));
-    final categorieSelectionneeId = ref.watch(captureFormProvider.select((form) => form.categorieId));
+    final categorieSelectionneeId = ref.watch(
+      captureFormProvider.select((form) => form.categorieId),
+    );
     final categorieRepo = ref.watch(categorieRepositoryProvider);
     final transactionRepo = ref.watch(transactionRepositoryProvider);
 
-    final categories = categorieRepo.tous().where((c) => c.type == type && c.active).toList();
+    final categories = categorieRepo
+        .tous()
+        .where((c) => c.type == type && c.active)
+        .toList();
 
     return ValueListenableBuilder(
       valueListenable: transactionRepo.listenable(),
       builder: (context, _, _) {
-        final categoriesTriees = trierCategoriesParFrequence(categories, transactionRepo.tous());
+        final categoriesTriees = trierCategoriesParFrequence(
+          categories,
+          transactionRepo.tous(),
+        );
         return GridView.builder(
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),
@@ -45,7 +53,9 @@ class GrilleCategories extends ConsumerWidget {
             return _TuileCategorie(
               categorie: categorie,
               selectionnee: categorie.id == categorieSelectionneeId,
-              onTap: () => ref.read(captureFormProvider.notifier).choisirCategorie(categorie.id),
+              onTap: () => ref
+                  .read(captureFormProvider.notifier)
+                  .choisirCategorie(categorie.id),
             );
           },
         );
@@ -55,7 +65,11 @@ class GrilleCategories extends ConsumerWidget {
 }
 
 class _TuileCategorie extends StatelessWidget {
-  const _TuileCategorie({required this.categorie, required this.selectionnee, required this.onTap});
+  const _TuileCategorie({
+    required this.categorie,
+    required this.selectionnee,
+    required this.onTap,
+  });
 
   final Categorie categorie;
   final bool selectionnee;
@@ -77,7 +91,9 @@ class _TuileCategorie extends StatelessWidget {
             decoration: BoxDecoration(
               color: selectionnee ? couleur : couleur.withValues(alpha: 0.18),
               shape: BoxShape.circle,
-              border: selectionnee ? Border.all(color: couleur, width: 2) : null,
+              border: selectionnee
+                  ? Border.all(color: couleur, width: 2)
+                  : null,
             ),
             child: Center(
               child: PhosphorIcon(
@@ -93,7 +109,10 @@ class _TuileCategorie extends StatelessWidget {
             textAlign: TextAlign.center,
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
-            style: TextStyle(fontSize: 11, color: selectionnee ? AppColors.textPrimary : AppColors.textMuted),
+            style: TextStyle(
+              fontSize: 11,
+              color: selectionnee ? AppColors.textPrimary : AppColors.textMuted,
+            ),
           ),
         ],
       ),

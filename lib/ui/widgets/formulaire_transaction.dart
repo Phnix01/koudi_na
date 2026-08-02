@@ -21,7 +21,9 @@ class FormulaireTransaction extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final montant = ref.watch(captureFormProvider.select((form) => form.montant));
+    final montant = ref.watch(
+      captureFormProvider.select((form) => form.montant),
+    );
     final type = ref.watch(captureFormProvider.select((form) => form.type));
 
     return SingleChildScrollView(
@@ -36,25 +38,47 @@ class FormulaireTransaction extends ConsumerWidget {
           Center(
             child: SegmentedButton<TypeMouvement>(
               segments: const [
-                ButtonSegment(value: TypeMouvement.depense, label: Text('Dépense')),
-                ButtonSegment(value: TypeMouvement.entree, label: Text('Entrée')),
+                ButtonSegment(
+                  value: TypeMouvement.depense,
+                  label: Text('Dépense'),
+                ),
+                ButtonSegment(
+                  value: TypeMouvement.entree,
+                  label: Text('Entrée'),
+                ),
               ],
               selected: {type},
               onSelectionChanged: (selection) {
-                ref.read(captureFormProvider.notifier).choisirType(selection.first);
+                ref
+                    .read(captureFormProvider.notifier)
+                    .choisirType(selection.first);
               },
             ),
           ),
           const SizedBox(height: 16),
-          Text(formaterMontant(montant), textAlign: TextAlign.center, style: Theme.of(context).textTheme.displayLarge),
+          Text(
+            formaterMontant(montant),
+            textAlign: TextAlign.center,
+            style: Theme.of(context).textTheme.displayLarge,
+          ),
           const SizedBox(height: 16),
           const PaveNumerique(),
           const SizedBox(height: 24),
-          Text('Catégorie', style: Theme.of(context).textTheme.bodySmall?.copyWith(color: AppColors.textMuted)),
+          Text(
+            'Catégorie',
+            style: Theme.of(
+              context,
+            ).textTheme.bodySmall?.copyWith(color: AppColors.textMuted),
+          ),
           const SizedBox(height: 8),
           const GrilleCategories(),
           const SizedBox(height: 24),
-          Text('Compte', style: Theme.of(context).textTheme.bodySmall?.copyWith(color: AppColors.textMuted)),
+          Text(
+            'Compte',
+            style: Theme.of(
+              context,
+            ).textTheme.bodySmall?.copyWith(color: AppColors.textMuted),
+          ),
           const SizedBox(height: 8),
           const SelecteurCompte(),
           const SizedBox(height: 16),
