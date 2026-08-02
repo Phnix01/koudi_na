@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:uuid/uuid.dart';
 
 import '../../core/theme/app_colors.dart';
@@ -14,6 +15,7 @@ import '../widgets/note_et_date.dart';
 import '../widgets/pave_numerique.dart';
 import '../widgets/selecteur_compte.dart';
 import '../widgets/solde_du_mois.dart';
+import 'mois_screen.dart';
 
 /// Écran A du cahier des charges : la capture, cœur de l'application.
 /// Parcours cible (section 4) : ouvrir → taper le montant → taper la
@@ -50,7 +52,20 @@ class CaptureScreen extends ConsumerWidget {
       body: SafeArea(
         child: Column(
           children: [
-            const Padding(padding: EdgeInsets.only(top: 8), child: SoldeDuMois()),
+            Padding(
+              padding: const EdgeInsets.only(top: 8),
+              child: Row(
+                children: [
+                  const SizedBox(width: 48), // équilibre visuellement l'IconButton à droite
+                  const Expanded(child: SoldeDuMois()),
+                  IconButton(
+                    tooltip: 'Voir le mois',
+                    icon: const PhosphorIcon(PhosphorIconsFill.listBullets),
+                    onPressed: () => Navigator.of(context).push(MaterialPageRoute(builder: (_) => const MoisScreen())),
+                  ),
+                ],
+              ),
+            ),
             Expanded(
               child: SingleChildScrollView(
                 padding: const EdgeInsets.symmetric(horizontal: 20),

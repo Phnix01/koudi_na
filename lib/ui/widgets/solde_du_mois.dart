@@ -20,7 +20,7 @@ class SoldeDuMois extends ConsumerWidget {
     return ValueListenableBuilder(
       valueListenable: transactionRepo.listenable(),
       builder: (context, _, _) {
-        final solde = calculerSoldeDuMois(transactionRepo.tous());
+        final solde = calculerTotauxDuMois(transactionRepo.tous()).solde;
         return Column(
           children: [
             Text(
