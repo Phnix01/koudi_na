@@ -1,7 +1,8 @@
 {
   "permissions": {
     "allow": [
-      "Bash(pkill -f \"web-port=8776\")"
+      "Bash(pkill -f \"web-port=8776\")",
+      "Bash(pkill -f \"web-port=8777\")"
     ]
   }
 }

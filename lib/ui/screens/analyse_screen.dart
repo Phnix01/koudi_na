@@ -3,18 +3,22 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
 import '../../core/theme/app_colors.dart';
+import '../../core/utils/couleur_utils.dart';
 import '../../core/utils/formatters.dart';
 import '../../logic/providers/repositories_providers.dart';
+import '../../logic/services/comparaison_mensuelle.dart';
 import '../../logic/services/evolution_mensuelle.dart';
 import '../../logic/services/indicateurs_analyse.dart';
 import '../../logic/services/repartition_categories.dart';
+import '../widgets/graphique_comparaison.dart';
 import '../widgets/graphique_evolution_mensuelle.dart';
 import '../widgets/graphique_repartition.dart';
 
 /// Écran C, en construction (section 5) : les indicateurs calculés
-/// (section 5.2) et les deux premiers des sept graphiques (évolution
-/// mensuelle, répartition des dépenses). Les cinq autres visualisations
-/// et les observations automatiques arriveront dans les étapes suivantes.
+/// (section 5.2) et trois des sept graphiques (évolution mensuelle,
+/// répartition des dépenses, comparaison mensuelle + Top 5). Les
+/// quatre autres visualisations et les observations automatiques
+/// arriveront dans les étapes suivantes.
 class AnalyseScreen extends ConsumerWidget {
   const AnalyseScreen({super.key});
 
@@ -40,6 +44,11 @@ class AnalyseScreen extends ConsumerWidget {
             toutesLesTransactions,
             categories,
           );
+          final comparaison = calculerComparaisonMensuelle(
+            toutesLesTransactions,
+            categories,
+          );
+          final top5 = comparaison.take(5).toList();
 
           return ListView(
             padding: const EdgeInsets.all(16),
@@ -76,6 +85,40 @@ class AnalyseScreen extends ConsumerWidget {
                       ),
                       const SizedBox(height: 12),
                       GraphiqueRepartition(parts: repartition),
+                    ],
+                  ),
+                ),
+              ),
+              const SizedBox(height: 12),
+              Card(
+                child: Padding(
+                  padding: const EdgeInsets.all(16),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Top 5 des catégories (ce mois vs le mois dernier)',
+                        style: Theme.of(context).textTheme.titleMedium,
+                      ),
+                      const SizedBox(height: 4),
+                      Row(
+                        children: [
+                          const _PastilleLegende(
+                            couleur: AppColors.textMuted,
+                            libelle: 'Mois dernier',
+                          ),
+                          const SizedBox(width: 16),
+                          Text(
+                            'Ce mois : couleur de la catégorie',
+                            style: Theme.of(context).textTheme.bodySmall
+                                ?.copyWith(color: AppColors.textMuted),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 12),
+                      GraphiqueComparaison(comparaisons: top5),
+                      const SizedBox(height: 12),
+                      for (final ligne in top5) _LigneTop5(comparaison: ligne),
                     ],
                   ),
                 ),
@@ -203,6 +246,82 @@ class _CarteIndicateur extends StatelessWidget {
             ],
           ],
         ),
+      ),
+    );
+  }
+}
+
+class _PastilleLegende extends StatelessWidget {
+  const _PastilleLegende({required this.couleur, required this.libelle});
+
+  final Color couleur;
+  final String libelle;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Container(
+          width: 10,
+          height: 10,
+          decoration: BoxDecoration(color: couleur, shape: BoxShape.circle),
+        ),
+        const SizedBox(width: 6),
+        Text(
+          libelle,
+          style: Theme.of(
+            context,
+          ).textTheme.bodySmall?.copyWith(color: AppColors.textMuted),
+        ),
+      ],
+    );
+  }
+}
+
+class _LigneTop5 extends StatelessWidget {
+  const _LigneTop5({required this.comparaison});
+
+  final ComparaisonCategorie comparaison;
+
+  @override
+  Widget build(BuildContext context) {
+    final couleurCategorie = depuisHex(comparaison.categorie.couleurHex);
+    final variation = comparaison.variationPourcent;
+    // Pour une dépense, une hausse est un signal négatif (rouge), une
+    // baisse un signal positif (vert) — l'inverse de ce qu'on ferait
+    // pour une entrée.
+    final couleurVariation = variation == null
+        ? AppColors.textMuted
+        : (variation > 0 ? AppColors.negative : AppColors.positive);
+    final texteVariation = variation == null
+        ? 'Nouveau'
+        : '${variation > 0 ? '+' : ''}${variation.round()} %';
+
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 6),
+      child: Row(
+        children: [
+          Container(
+            width: 10,
+            height: 10,
+            decoration: BoxDecoration(
+              color: couleurCategorie,
+              shape: BoxShape.circle,
+            ),
+          ),
+          const SizedBox(width: 8),
+          Expanded(child: Text(comparaison.categorie.libelle)),
+          Text(formaterMontant(comparaison.moisCourant)),
+          const SizedBox(width: 12),
+          Text(
+            texteVariation,
+            style: TextStyle(
+              color: couleurVariation,
+              fontWeight: FontWeight.w600,
+            ),
+          ),
+        ],
       ),
     );
   }
