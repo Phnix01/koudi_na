@@ -8,21 +8,24 @@ import '../../core/utils/formatters.dart';
 import '../../logic/providers/repositories_providers.dart';
 import '../../logic/services/comparaison_mensuelle.dart';
 import '../../logic/services/evolution_mensuelle.dart';
-import '../../logic/services/indicateurs_analyse.dart';
 import '../../logic/services/habitudes_hebdomadaires.dart';
+import '../../logic/services/indicateurs_analyse.dart';
 import '../../logic/services/repartition_categories.dart';
 import '../../logic/services/rythme_mois.dart';
+import '../../logic/services/trajectoire_epargne.dart';
 import '../widgets/graphique_comparaison.dart';
 import '../widgets/graphique_evolution_mensuelle.dart';
 import '../widgets/graphique_repartition.dart';
 import '../widgets/graphique_rythme.dart';
+import '../widgets/graphique_trajectoire_epargne.dart';
 import '../widgets/heatmap_habitudes.dart';
 
 /// Écran C, en construction (section 5) : les indicateurs calculés
-/// (section 5.2) et cinq des sept graphiques (évolution mensuelle,
+/// (section 5.2) et six des sept graphiques (évolution mensuelle,
 /// répartition des dépenses, comparaison mensuelle + Top 5, rythme du
-/// mois, habitudes hebdomadaires). Les deux autres visualisations et
-/// les observations automatiques arriveront dans les étapes suivantes.
+/// mois, habitudes hebdomadaires, trajectoire d'épargne). L'équilibre
+/// des piliers et les observations automatiques arriveront dans les
+/// étapes suivantes.
 class AnalyseScreen extends ConsumerWidget {
   const AnalyseScreen({super.key});
 
@@ -56,6 +59,11 @@ class AnalyseScreen extends ConsumerWidget {
           final rythme = calculerRythmeMois(toutesLesTransactions);
           final habitudes = calculerHabitudesHebdomadaires(
             toutesLesTransactions,
+          );
+          final trajectoire = calculerTrajectoireEpargne(
+            toutesLesTransactions,
+            categories,
+            comptes,
           );
 
           return ListView(
@@ -161,6 +169,31 @@ class AnalyseScreen extends ConsumerWidget {
                       ),
                       const SizedBox(height: 12),
                       HeatmapHabitudes(grille: habitudes),
+                    ],
+                  ),
+                ),
+              ),
+              const SizedBox(height: 12),
+              Card(
+                child: Padding(
+                  padding: const EdgeInsets.all(16),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        "Trajectoire d'épargne",
+                        style: Theme.of(context).textTheme.titleMedium,
+                      ),
+                      const SizedBox(height: 12),
+                      GraphiqueTrajectoireEpargne(trajectoire: trajectoire),
+                      if (trajectoire.objectif == 0) ...[
+                        const SizedBox(height: 8),
+                        Text(
+                          "Aucun objectif réglé : ouvre Réglages → Comptes → ton compte Épargne pour en fixer un.",
+                          style: Theme.of(context).textTheme.bodySmall
+                              ?.copyWith(color: AppColors.textMuted),
+                        ),
+                      ],
                     ],
                   ),
                 ),

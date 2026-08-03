@@ -27,6 +27,11 @@ class _CompteEditionScreenState extends ConsumerState<CompteEditionScreen> {
   late final _controleurSolde = TextEditingController(
     text: '${widget.compte?.soldeInitial ?? 0}',
   );
+  late final _controleurObjectif = TextEditingController(
+    text: widget.compte?.objectifMontant == null
+        ? ''
+        : '${widget.compte!.objectifMontant}',
+  );
   late TypeCompte _type = widget.compte?.type ?? TypeCompte.especes;
   late String _iconeCode = widget.compte?.iconeCode ?? 'wallet';
   late String _couleurHex = widget.compte?.couleurHex ?? '#00C2A8';
@@ -36,6 +41,7 @@ class _CompteEditionScreenState extends ConsumerState<CompteEditionScreen> {
   void dispose() {
     _controleurLibelle.dispose();
     _controleurSolde.dispose();
+    _controleurObjectif.dispose();
     super.dispose();
   }
 
@@ -57,7 +63,10 @@ class _CompteEditionScreenState extends ConsumerState<CompteEditionScreen> {
       ..iconeCode = _iconeCode
       ..couleurHex = _couleurHex
       ..soldeInitial = int.tryParse(_controleurSolde.text) ?? 0
-      ..actif = _actif;
+      ..actif = _actif
+      ..objectifMontant = _type == TypeCompte.epargne
+          ? int.tryParse(_controleurObjectif.text)
+          : null;
 
     await ref.read(compteRepositoryProvider).enregistrer(compte);
     if (mounted) Navigator.of(context).pop();
@@ -113,6 +122,18 @@ class _CompteEditionScreenState extends ConsumerState<CompteEditionScreen> {
               );
             }).toList(),
           ),
+          if (_type == TypeCompte.epargne) ...[
+            const SizedBox(height: 20),
+            TextField(
+              controller: _controleurObjectif,
+              keyboardType: TextInputType.number,
+              decoration: const InputDecoration(
+                labelText: "Objectif d'épargne (FCFA, optionnel)",
+                helperText:
+                    'Utilisé comme ligne de repère dans le graphique "Trajectoire d\'épargne"',
+              ),
+            ),
+          ],
           const SizedBox(height: 20),
           Text('Icône', style: Theme.of(context).textTheme.bodySmall),
           const SizedBox(height: 8),

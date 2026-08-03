@@ -30,6 +30,7 @@ class Compte extends HiveObject {
     required this.couleurHex,
     this.soldeInitial = 0,
     this.actif = true,
+    this.objectifMontant,
   });
 
   @HiveField(0)
@@ -53,4 +54,11 @@ class Compte extends HiveObject {
 
   @HiveField(6)
   bool actif;
+
+  /// Objectif d'épargne à long terme (section 4, écran D), utilisé
+  /// comme ligne de référence dans le graphique "Trajectoire d'épargne"
+  /// (section 5.1). `null` : pas d'objectif fixé, seulement pertinent
+  /// pour un compte de type [TypeCompte.epargne].
+  @HiveField(7)
+  int? objectifMontant;
 }

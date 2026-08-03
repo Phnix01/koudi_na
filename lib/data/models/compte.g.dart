@@ -24,13 +24,14 @@ class CompteAdapter extends TypeAdapter<Compte> {
       couleurHex: fields[4] as String,
       soldeInitial: fields[5] == null ? 0 : (fields[5] as num).toInt(),
       actif: fields[6] == null ? true : fields[6] as bool,
+      objectifMontant: (fields[7] as num?)?.toInt(),
     );
   }
 
   @override
   void write(BinaryWriter writer, Compte obj) {
     writer
-      ..writeByte(7)
+      ..writeByte(8)
       ..writeByte(0)
       ..write(obj.id)
       ..writeByte(1)
@@ -44,7 +45,9 @@ class CompteAdapter extends TypeAdapter<Compte> {
       ..writeByte(5)
       ..write(obj.soldeInitial)
       ..writeByte(6)
-      ..write(obj.actif);
+      ..write(obj.actif)
+      ..writeByte(7)
+      ..write(obj.objectifMontant);
   }
 
   @override
