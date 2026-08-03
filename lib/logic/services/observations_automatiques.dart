@@ -24,9 +24,18 @@ List<String> genererObservations(
   final reference = maintenant ?? DateTime.now();
   final observations = <String>[];
 
-  final comparaison = calculerComparaisonMensuelle(transactions, categories, maintenant: reference);
-  final hausses = comparaison.where((c) => c.variationPourcent != null && c.variationPourcent! >= 20).toList()
-    ..sort((a, b) => b.variationPourcent!.compareTo(a.variationPourcent!));
+  final comparaison = calculerComparaisonMensuelle(
+    transactions,
+    categories,
+    maintenant: reference,
+  );
+  final hausses =
+      comparaison
+          .where(
+            (c) => c.variationPourcent != null && c.variationPourcent! >= 20,
+          )
+          .toList()
+        ..sort((a, b) => b.variationPourcent!.compareTo(a.variationPourcent!));
   if (hausses.isNotEmpty) {
     final plusForteHausse = hausses.first;
     observations.add(
@@ -34,15 +43,29 @@ List<String> genererObservations(
     );
   }
 
-  final indicateurs = calculerIndicateurs(transactions, categories, comptes, maintenant: reference);
+  final indicateurs = calculerIndicateurs(
+    transactions,
+    categories,
+    comptes,
+    maintenant: reference,
+  );
   if (indicateurs.projectionDepasseEntrees) {
-    final depassement = indicateurs.projectionFinDeMois - indicateurs.entreesMois;
-    observations.add("Au rythme actuel, tu dépasseras tes entrées de ${formaterMontant(depassement)} d'ici la fin du mois.");
+    final depassement =
+        indicateurs.projectionFinDeMois - indicateurs.entreesMois;
+    observations.add(
+      "Au rythme actuel, tu dépasseras tes entrées de ${formaterMontant(depassement)} d'ici la fin du mois.",
+    );
   }
 
-  final moisConsecutifs = _moisConsecutifsObjectifEpargne(transactions, categories, reference);
+  final moisConsecutifs = _moisConsecutifsObjectifEpargne(
+    transactions,
+    categories,
+    reference,
+  );
   if (moisConsecutifs >= 2) {
-    observations.add("Tu as respecté ton objectif d'épargne $moisConsecutifs mois de suite.");
+    observations.add(
+      "Tu as respecté ton objectif d'épargne $moisConsecutifs mois de suite.",
+    );
   }
 
   if (indicateurs.autonomieFinanciereMois > 0) {
@@ -57,11 +80,19 @@ List<String> genererObservations(
 /// Compte, en remontant depuis le mois de référence, combien de mois
 /// consécutifs le pilier épargne a atteint sa cible (40 % des entrées
 /// par défaut) — s'arrête au premier mois manqué.
-int _moisConsecutifsObjectifEpargne(List<Transaction> transactions, List<Categorie> categories, DateTime reference) {
+int _moisConsecutifsObjectifEpargne(
+  List<Transaction> transactions,
+  List<Categorie> categories,
+  DateTime reference,
+) {
   var compte = 0;
   for (var i = 0; i < 12; i++) {
     final mois = DateTime(reference.year, reference.month - i);
-    final progression = calculerProgressionPiliers(transactions, categories, maintenant: mois);
+    final progression = calculerProgressionPiliers(
+      transactions,
+      categories,
+      maintenant: mois,
+    );
     final epargne = progression.firstWhere((p) => p.pilier == Pilier.epargne);
     if (epargne.objectifMontant > 0 && epargne.progression >= 1.0) {
       compte++;

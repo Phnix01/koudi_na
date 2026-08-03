@@ -73,12 +73,19 @@ class AnalyseScreen extends ConsumerWidget {
             toutesLesTransactions,
             categories,
           );
-          final observations = genererObservations(toutesLesTransactions, categories, comptes);
+          final observations = genererObservations(
+            toutesLesTransactions,
+            categories,
+            comptes,
+          );
 
           return ListView(
             padding: const EdgeInsets.all(16),
             children: [
-              if (observations.isNotEmpty) ...[ObservationsAutomatiques(observations: observations), const SizedBox(height: 12)],
+              if (observations.isNotEmpty) ...[
+                ObservationsAutomatiques(observations: observations),
+                const SizedBox(height: 12),
+              ],
               Card(
                 child: Padding(
                   padding: const EdgeInsets.fromLTRB(8, 16, 16, 8),

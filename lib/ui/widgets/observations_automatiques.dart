@@ -16,7 +16,10 @@ class ObservationsAutomatiques extends StatelessWidget {
     if (observations.isEmpty) return const SizedBox.shrink();
 
     return Card(
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20), side: const BorderSide(color: AppColors.accent)),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(20),
+        side: const BorderSide(color: AppColors.accent),
+      ),
       child: Padding(
         padding: const EdgeInsets.all(16),
         child: Column(
@@ -30,7 +33,11 @@ class ObservationsAutomatiques extends StatelessWidget {
                   children: [
                     const Padding(
                       padding: EdgeInsets.only(top: 3),
-                      child: PhosphorIcon(PhosphorIconsFill.sparkle, size: 14, color: AppColors.accent),
+                      child: PhosphorIcon(
+                        PhosphorIconsFill.sparkle,
+                        size: 14,
+                        color: AppColors.accent,
+                      ),
                     ),
                     const SizedBox(width: 8),
                     Expanded(child: Text(observation)),

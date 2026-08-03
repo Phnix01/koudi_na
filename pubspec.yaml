@@ -77,6 +77,10 @@ dependencies:
   # sept visualisations (LineChart, PieChart, BarChart...) en dépendent.
   fl_chart: ^1.2.0
 
+  # Anime l'apparition des cartes en cascade (section 3.2) : évite
+  # d'écrire à la main un AnimationController par carte.
+  flutter_animate: ^4.5.2
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
