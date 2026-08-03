@@ -7,12 +7,14 @@ import '../../core/utils/formatters.dart';
 import '../../logic/providers/repositories_providers.dart';
 import '../../logic/services/evolution_mensuelle.dart';
 import '../../logic/services/indicateurs_analyse.dart';
+import '../../logic/services/repartition_categories.dart';
 import '../widgets/graphique_evolution_mensuelle.dart';
+import '../widgets/graphique_repartition.dart';
 
 /// Écran C, en construction (section 5) : les indicateurs calculés
-/// (section 5.2) et le premier des sept graphiques (évolution
-/// mensuelle). Les six autres visualisations et les observations
-/// automatiques arriveront dans les étapes suivantes.
+/// (section 5.2) et les deux premiers des sept graphiques (évolution
+/// mensuelle, répartition des dépenses). Les cinq autres visualisations
+/// et les observations automatiques arriveront dans les étapes suivantes.
 class AnalyseScreen extends ConsumerWidget {
   const AnalyseScreen({super.key});
 
@@ -34,6 +36,10 @@ class AnalyseScreen extends ConsumerWidget {
             comptes,
           );
           final evolution = calculerEvolutionMensuelle(toutesLesTransactions);
+          final repartition = calculerRepartitionDepenses(
+            toutesLesTransactions,
+            categories,
+          );
 
           return ListView(
             padding: const EdgeInsets.all(16),
@@ -53,6 +59,23 @@ class AnalyseScreen extends ConsumerWidget {
                       ),
                       const SizedBox(height: 12),
                       GraphiqueEvolutionMensuelle(points: evolution),
+                    ],
+                  ),
+                ),
+              ),
+              const SizedBox(height: 12),
+              Card(
+                child: Padding(
+                  padding: const EdgeInsets.all(16),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Répartition des dépenses (ce mois)',
+                        style: Theme.of(context).textTheme.titleMedium,
+                      ),
+                      const SizedBox(height: 12),
+                      GraphiqueRepartition(parts: repartition),
                     ],
                   ),
                 ),
