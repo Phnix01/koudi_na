@@ -56,10 +56,12 @@ class FormulaireTransaction extends ConsumerWidget {
             ),
           ),
           const SizedBox(height: 16),
-          Text(
-            formaterMontant(montant),
-            textAlign: TextAlign.center,
-            style: Theme.of(context).textTheme.displayLarge,
+          // FittedBox : au-delà de quelques millions de F, le montant
+          // rétrécit pour tenir sur une ligne plutôt que de passer à
+          // la ligne au milieu du chiffre.
+          FittedBox(
+            fit: BoxFit.scaleDown,
+            child: Text(formaterMontant(montant), style: Theme.of(context).textTheme.displayLarge, maxLines: 1),
           ),
           const SizedBox(height: 16),
           const PaveNumerique(),

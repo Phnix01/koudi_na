@@ -18,8 +18,13 @@ class MontantAnime extends StatelessWidget {
     return TweenAnimationBuilder<int>(
       tween: IntTween(begin: 0, end: valeur),
       duration: const Duration(milliseconds: 600),
-      builder: (context, valeurAnimee, _) =>
-          Text(formaterMontant(valeurAnimee), style: style),
+      // FittedBox : si le montant est trop large pour l'espace
+      // disponible (un gros chiffre dans une petite carte), il rétrécit
+      // pour tenir sur une ligne plutôt que de passer à la ligne.
+      builder: (context, valeurAnimee, _) => FittedBox(
+        fit: BoxFit.scaleDown,
+        child: Text(formaterMontant(valeurAnimee), style: style, maxLines: 1),
+      ),
     );
   }
 }
