@@ -4,6 +4,7 @@ import '../../core/theme/app_colors.dart';
 import '../../data/models/categorie.dart';
 import '../../data/models/compte.dart';
 import '../../data/models/type_mouvement.dart';
+import 'feuille_selection.dart';
 
 /// Trois puces de filtre rapide (section 4, écran B) : type, catégorie,
 /// compte. Chacune ouvre une feuille de sélection à choix unique ;
@@ -38,7 +39,7 @@ class FiltresMois extends StatelessWidget {
   Future<void> _choisirType(BuildContext context) async {
     final choix = await showModalBottomSheet<TypeMouvement>(
       context: context,
-      builder: (context) => _FeuilleSelection<TypeMouvement>(
+      builder: (context) => FeuilleSelection<TypeMouvement>(
         titre: 'Type',
         options: const [TypeMouvement.depense, TypeMouvement.entree],
         libelleDe: (t) => t == TypeMouvement.depense ? 'Dépense' : 'Entrée',
@@ -51,7 +52,7 @@ class FiltresMois extends StatelessWidget {
   Future<void> _choisirCategorie(BuildContext context) async {
     final choix = await showModalBottomSheet<Categorie>(
       context: context,
-      builder: (context) => _FeuilleSelection<Categorie>(
+      builder: (context) => FeuilleSelection<Categorie>(
         titre: 'Catégorie',
         options: categories,
         libelleDe: (c) => c.libelle,
@@ -64,7 +65,7 @@ class FiltresMois extends StatelessWidget {
   Future<void> _choisirCompte(BuildContext context) async {
     final choix = await showModalBottomSheet<Compte>(
       context: context,
-      builder: (context) => _FeuilleSelection<Compte>(
+      builder: (context) => FeuilleSelection<Compte>(
         titre: 'Compte',
         options: comptes,
         libelleDe: (c) => c.libelle,
@@ -140,52 +141,6 @@ class _ChipFiltre extends StatelessWidget {
       side: BorderSide.none,
       labelStyle: TextStyle(
         color: actif ? AppColors.primary : AppColors.textPrimary,
-      ),
-    );
-  }
-}
-
-/// Feuille de choix unique générique : sert aux trois filtres sans
-/// tripler la même mise en page. `estSelectionne` compare par id plutôt
-/// que par identité d'objet — indispensable pour Catégorie/Compte, dont
-/// deux instances peuvent représenter la même donnée sans être `==`.
-class _FeuilleSelection<T> extends StatelessWidget {
-  const _FeuilleSelection({
-    required this.titre,
-    required this.options,
-    required this.libelleDe,
-    required this.estSelectionne,
-  });
-
-  final String titre;
-  final List<T> options;
-  final String Function(T) libelleDe;
-  final bool Function(T) estSelectionne;
-
-  @override
-  Widget build(BuildContext context) {
-    return SafeArea(
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(16),
-            child: Text(titre, style: Theme.of(context).textTheme.titleMedium),
-          ),
-          ListTile(
-            title: const Text('Tous'),
-            onTap: () => Navigator.of(context).pop(),
-          ),
-          ...options.map((option) {
-            return ListTile(
-              title: Text(libelleDe(option)),
-              trailing: estSelectionne(option)
-                  ? const Icon(Icons.check, color: AppColors.primary)
-                  : null,
-              onTap: () => Navigator.of(context).pop(option),
-            );
-          }),
-        ],
       ),
     );
   }

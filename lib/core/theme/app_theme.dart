@@ -89,6 +89,11 @@ abstract final class AppTheme {
         style: ElevatedButton.styleFrom(
           backgroundColor: AppColors.primary,
           foregroundColor: AppColors.bg,
+          // Sans ces deux lignes, Flutter applique son style désactivé
+          // par défaut (gris sur gris, quasi invisible sur fond sombre) :
+          // on le remplace par un contraste qui reste lisible.
+          disabledBackgroundColor: AppColors.surfaceHigh,
+          disabledForegroundColor: AppColors.textMuted,
           padding: const EdgeInsets.symmetric(vertical: AppSpacing.s16),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(AppSpacing.radius),

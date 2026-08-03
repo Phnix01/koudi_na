@@ -61,7 +61,11 @@ class FormulaireTransaction extends ConsumerWidget {
           // la ligne au milieu du chiffre.
           FittedBox(
             fit: BoxFit.scaleDown,
-            child: Text(formaterMontant(montant), style: Theme.of(context).textTheme.displayLarge, maxLines: 1),
+            child: Text(
+              formaterMontant(montant),
+              style: Theme.of(context).textTheme.displayLarge,
+              maxLines: 1,
+            ),
           ),
           const SizedBox(height: 16),
           const PaveNumerique(),

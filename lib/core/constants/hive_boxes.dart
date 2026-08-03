@@ -4,4 +4,5 @@ abstract final class HiveBoxes {
   static const transactions = 'transactions';
   static const categories = 'categories';
   static const comptes = 'comptes';
+  static const recurrences = 'recurrences';
 }

@@ -6,6 +6,7 @@ import 'package:hive_ce/hive_ce.dart';
 import 'package:koudi_na/data/models/categorie.dart';
 import 'package:koudi_na/data/models/compte.dart';
 import 'package:koudi_na/data/models/pilier.dart';
+import 'package:koudi_na/data/models/recurrence.dart';
 import 'package:koudi_na/data/models/transaction.dart';
 import 'package:koudi_na/data/models/type_mouvement.dart';
 
@@ -14,6 +15,7 @@ extension HiveRegistrar on HiveInterface {
     registerAdapter(CategorieAdapter());
     registerAdapter(CompteAdapter());
     registerAdapter(PilierAdapter());
+    registerAdapter(RecurrenceAdapter());
     registerAdapter(TransactionAdapter());
     registerAdapter(TypeCompteAdapter());
     registerAdapter(TypeMouvementAdapter());
@@ -25,6 +27,7 @@ extension IsolatedHiveRegistrar on IsolatedHiveInterface {
     registerAdapter(CategorieAdapter());
     registerAdapter(CompteAdapter());
     registerAdapter(PilierAdapter());
+    registerAdapter(RecurrenceAdapter());
     registerAdapter(TransactionAdapter());
     registerAdapter(TypeCompteAdapter());
     registerAdapter(TypeMouvementAdapter());
