@@ -13,6 +13,7 @@ import '../../logic/services/equilibre_piliers.dart';
 import '../../logic/services/evolution_mensuelle.dart';
 import '../../logic/services/habitudes_hebdomadaires.dart';
 import '../../logic/services/indicateurs_analyse.dart';
+import '../../logic/services/observations_automatiques.dart';
 import '../../logic/services/repartition_categories.dart';
 import '../../logic/services/rythme_mois.dart';
 import '../../logic/services/trajectoire_epargne.dart';
@@ -23,11 +24,12 @@ import '../widgets/graphique_repartition.dart';
 import '../widgets/graphique_rythme.dart';
 import '../widgets/graphique_trajectoire_epargne.dart';
 import '../widgets/heatmap_habitudes.dart';
+import '../widgets/observations_automatiques.dart';
 
-/// Écran C (section 5) : les indicateurs calculés (section 5.2) et les
-/// sept graphiques de la section 5.1. Les observations automatiques
-/// (section 5.3) et le polissage visuel arriveront dans les étapes
-/// suivantes.
+/// Écran C (section 5) : les indicateurs calculés (section 5.2), les
+/// sept graphiques (section 5.1) et les observations automatiques
+/// (section 5.3). Le polissage visuel général arrivera dans la
+/// dernière étape de la Phase 3.
 class AnalyseScreen extends ConsumerWidget {
   const AnalyseScreen({super.key});
 
@@ -71,10 +73,12 @@ class AnalyseScreen extends ConsumerWidget {
             toutesLesTransactions,
             categories,
           );
+          final observations = genererObservations(toutesLesTransactions, categories, comptes);
 
           return ListView(
             padding: const EdgeInsets.all(16),
             children: [
+              if (observations.isNotEmpty) ...[ObservationsAutomatiques(observations: observations), const SizedBox(height: 12)],
               Card(
                 child: Padding(
                   padding: const EdgeInsets.fromLTRB(8, 16, 16, 8),

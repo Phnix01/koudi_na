@@ -25,6 +25,10 @@ typedef IndicateursAnalyse = ({
   /// Vrai si la projection dépasse les entrées du mois.
   bool projectionDepasseEntrees,
 
+  /// Entrées du mois en cours — exposé pour que d'autres calculs
+  /// (observations automatiques) n'aient pas à le recalculer.
+  int entreesMois,
+
   /// Jours écoulés ce mois-ci sans aucune dépense enregistrée.
   int joursSansDepense,
 
@@ -123,6 +127,7 @@ IndicateursAnalyse calculerIndicateurs(
     depenseMoyenneJournaliereHistorique: depenseMoyenneJournaliereHistorique,
     projectionFinDeMois: projectionFinDeMois,
     projectionDepasseEntrees: projectionFinDeMois > entreesMois,
+    entreesMois: entreesMois,
     joursSansDepense: joursSansDepense,
     autonomieFinanciereMois: autonomieFinanciereMois,
   );
