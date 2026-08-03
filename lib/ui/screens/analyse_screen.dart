@@ -2,11 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
+import '../../core/constants/couleurs_piliers.dart';
 import '../../core/theme/app_colors.dart';
 import '../../core/utils/couleur_utils.dart';
 import '../../core/utils/formatters.dart';
+import '../../data/models/pilier.dart';
 import '../../logic/providers/repositories_providers.dart';
 import '../../logic/services/comparaison_mensuelle.dart';
+import '../../logic/services/equilibre_piliers.dart';
 import '../../logic/services/evolution_mensuelle.dart';
 import '../../logic/services/habitudes_hebdomadaires.dart';
 import '../../logic/services/indicateurs_analyse.dart';
@@ -14,18 +17,17 @@ import '../../logic/services/repartition_categories.dart';
 import '../../logic/services/rythme_mois.dart';
 import '../../logic/services/trajectoire_epargne.dart';
 import '../widgets/graphique_comparaison.dart';
+import '../widgets/graphique_equilibre_piliers.dart';
 import '../widgets/graphique_evolution_mensuelle.dart';
 import '../widgets/graphique_repartition.dart';
 import '../widgets/graphique_rythme.dart';
 import '../widgets/graphique_trajectoire_epargne.dart';
 import '../widgets/heatmap_habitudes.dart';
 
-/// Écran C, en construction (section 5) : les indicateurs calculés
-/// (section 5.2) et six des sept graphiques (évolution mensuelle,
-/// répartition des dépenses, comparaison mensuelle + Top 5, rythme du
-/// mois, habitudes hebdomadaires, trajectoire d'épargne). L'équilibre
-/// des piliers et les observations automatiques arriveront dans les
-/// étapes suivantes.
+/// Écran C (section 5) : les indicateurs calculés (section 5.2) et les
+/// sept graphiques de la section 5.1. Les observations automatiques
+/// (section 5.3) et le polissage visuel arriveront dans les étapes
+/// suivantes.
 class AnalyseScreen extends ConsumerWidget {
   const AnalyseScreen({super.key});
 
@@ -64,6 +66,10 @@ class AnalyseScreen extends ConsumerWidget {
             toutesLesTransactions,
             categories,
             comptes,
+          );
+          final equilibre = calculerEquilibrePiliers(
+            toutesLesTransactions,
+            categories,
           );
 
           return ListView(
@@ -194,6 +200,42 @@ class AnalyseScreen extends ConsumerWidget {
                               ?.copyWith(color: AppColors.textMuted),
                         ),
                       ],
+                    ],
+                  ),
+                ),
+              ),
+              const SizedBox(height: 12),
+              Card(
+                child: Padding(
+                  padding: const EdgeInsets.all(16),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Équilibre des piliers (6 mois)',
+                        style: Theme.of(context).textTheme.titleMedium,
+                      ),
+                      const SizedBox(height: 4),
+                      Row(
+                        children: [
+                          _PastilleLegende(
+                            couleur: couleursPiliers[Pilier.epargne]!,
+                            libelle: 'Épargne',
+                          ),
+                          const SizedBox(width: 12),
+                          _PastilleLegende(
+                            couleur: couleursPiliers[Pilier.famille]!,
+                            libelle: 'Famille',
+                          ),
+                          const SizedBox(width: 12),
+                          _PastilleLegende(
+                            couleur: couleursPiliers[Pilier.vie]!,
+                            libelle: 'Vie',
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 12),
+                      GraphiqueEquilibrePiliers(mois: equilibre),
                     ],
                   ),
                 ),

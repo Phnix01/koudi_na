@@ -7,7 +7,11 @@
       "Bash(pkill -f \"web-port=8778\")",
       "Bash(tee /tmp/flutter_run_web15.log)",
       "Bash(pkill -f \"web-port=8779\")",
-      "Bash(tee /tmp/flutter_run_web16.log)"
+      "Bash(tee /tmp/flutter_run_web16.log)",
+      "Bash(tee /tmp/flutter_run_web17.log)",
+      "Bash(pkill -f \"web-port=8781\")",
+      "Bash(tee /tmp/flutter_run_web18.log)",
+      "Bash(pkill -f \"web-port=8782\")"
     ]
   }
 }
