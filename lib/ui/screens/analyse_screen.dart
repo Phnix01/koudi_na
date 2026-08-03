@@ -10,15 +10,17 @@ import '../../logic/services/comparaison_mensuelle.dart';
 import '../../logic/services/evolution_mensuelle.dart';
 import '../../logic/services/indicateurs_analyse.dart';
 import '../../logic/services/repartition_categories.dart';
+import '../../logic/services/rythme_mois.dart';
 import '../widgets/graphique_comparaison.dart';
 import '../widgets/graphique_evolution_mensuelle.dart';
 import '../widgets/graphique_repartition.dart';
+import '../widgets/graphique_rythme.dart';
 
 /// Écran C, en construction (section 5) : les indicateurs calculés
-/// (section 5.2) et trois des sept graphiques (évolution mensuelle,
-/// répartition des dépenses, comparaison mensuelle + Top 5). Les
-/// quatre autres visualisations et les observations automatiques
-/// arriveront dans les étapes suivantes.
+/// (section 5.2) et quatre des sept graphiques (évolution mensuelle,
+/// répartition des dépenses, comparaison mensuelle + Top 5, rythme du
+/// mois). Les trois autres visualisations et les observations
+/// automatiques arriveront dans les étapes suivantes.
 class AnalyseScreen extends ConsumerWidget {
   const AnalyseScreen({super.key});
 
@@ -49,6 +51,7 @@ class AnalyseScreen extends ConsumerWidget {
             categories,
           );
           final top5 = comparaison.take(5).toList();
+          final rythme = calculerRythmeMois(toutesLesTransactions);
 
           return ListView(
             padding: const EdgeInsets.all(16),
@@ -119,6 +122,23 @@ class AnalyseScreen extends ConsumerWidget {
                       GraphiqueComparaison(comparaisons: top5),
                       const SizedBox(height: 12),
                       for (final ligne in top5) _LigneTop5(comparaison: ligne),
+                    ],
+                  ),
+                ),
+              ),
+              const SizedBox(height: 12),
+              Card(
+                child: Padding(
+                  padding: const EdgeInsets.all(16),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Rythme du mois',
+                        style: Theme.of(context).textTheme.titleMedium,
+                      ),
+                      const SizedBox(height: 12),
+                      GraphiqueRythme(rythme: rythme),
                     ],
                   ),
                 ),

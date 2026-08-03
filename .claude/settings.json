@@ -2,7 +2,9 @@
   "permissions": {
     "allow": [
       "Bash(pkill -f \"web-port=8776\")",
-      "Bash(pkill -f \"web-port=8777\")"
+      "Bash(pkill -f \"web-port=8777\")",
+      "Bash(tee /tmp/flutter_run_web14.log)",
+      "Bash(pkill -f \"web-port=8778\")"
     ]
   }
 }
