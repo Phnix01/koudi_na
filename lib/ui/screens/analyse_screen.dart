@@ -9,18 +9,20 @@ import '../../logic/providers/repositories_providers.dart';
 import '../../logic/services/comparaison_mensuelle.dart';
 import '../../logic/services/evolution_mensuelle.dart';
 import '../../logic/services/indicateurs_analyse.dart';
+import '../../logic/services/habitudes_hebdomadaires.dart';
 import '../../logic/services/repartition_categories.dart';
 import '../../logic/services/rythme_mois.dart';
 import '../widgets/graphique_comparaison.dart';
 import '../widgets/graphique_evolution_mensuelle.dart';
 import '../widgets/graphique_repartition.dart';
 import '../widgets/graphique_rythme.dart';
+import '../widgets/heatmap_habitudes.dart';
 
 /// Écran C, en construction (section 5) : les indicateurs calculés
-/// (section 5.2) et quatre des sept graphiques (évolution mensuelle,
+/// (section 5.2) et cinq des sept graphiques (évolution mensuelle,
 /// répartition des dépenses, comparaison mensuelle + Top 5, rythme du
-/// mois). Les trois autres visualisations et les observations
-/// automatiques arriveront dans les étapes suivantes.
+/// mois, habitudes hebdomadaires). Les deux autres visualisations et
+/// les observations automatiques arriveront dans les étapes suivantes.
 class AnalyseScreen extends ConsumerWidget {
   const AnalyseScreen({super.key});
 
@@ -52,6 +54,9 @@ class AnalyseScreen extends ConsumerWidget {
           );
           final top5 = comparaison.take(5).toList();
           final rythme = calculerRythmeMois(toutesLesTransactions);
+          final habitudes = calculerHabitudesHebdomadaires(
+            toutesLesTransactions,
+          );
 
           return ListView(
             padding: const EdgeInsets.all(16),
@@ -139,6 +144,23 @@ class AnalyseScreen extends ConsumerWidget {
                       ),
                       const SizedBox(height: 12),
                       GraphiqueRythme(rythme: rythme),
+                    ],
+                  ),
+                ),
+              ),
+              const SizedBox(height: 12),
+              Card(
+                child: Padding(
+                  padding: const EdgeInsets.all(16),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Habitudes hebdomadaires (90 derniers jours)',
+                        style: Theme.of(context).textTheme.titleMedium,
+                      ),
+                      const SizedBox(height: 12),
+                      HeatmapHabitudes(grille: habitudes),
                     ],
                   ),
                 ),
