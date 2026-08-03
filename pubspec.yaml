@@ -73,6 +73,10 @@ dependencies:
   # le fichier CSV généré.
   share_plus: ^13.3.0
 
+  # Bibliothèque de graphiques pour l'écran Analyse (section 5.1) : les
+  # sept visualisations (LineChart, PieChart, BarChart...) en dépendent.
+  fl_chart: ^1.2.0
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

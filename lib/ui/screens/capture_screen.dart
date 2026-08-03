@@ -9,6 +9,7 @@ import '../../logic/providers/capture_form_provider.dart';
 import '../../logic/providers/repositories_providers.dart';
 import '../widgets/formulaire_transaction.dart';
 import '../widgets/solde_du_mois.dart';
+import 'analyse_screen.dart';
 import 'mois_screen.dart';
 import 'reglages_screen.dart';
 
@@ -55,9 +56,16 @@ class CaptureScreen extends ConsumerWidget {
               child: Row(
                 children: [
                   const SizedBox(
-                    width: 96,
-                  ), // équilibre visuellement les deux IconButton à droite
+                    width: 144,
+                  ), // équilibre visuellement les trois IconButton à droite
                   const Expanded(child: SoldeDuMois()),
+                  IconButton(
+                    tooltip: 'Analyse',
+                    icon: const PhosphorIcon(PhosphorIconsFill.chartLineUp),
+                    onPressed: () => Navigator.of(context).push(
+                      MaterialPageRoute(builder: (_) => const AnalyseScreen()),
+                    ),
+                  ),
                   IconButton(
                     tooltip: 'Voir le mois',
                     icon: const PhosphorIcon(PhosphorIconsFill.listBullets),
