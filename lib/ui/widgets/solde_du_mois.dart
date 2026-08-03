@@ -25,13 +25,15 @@ class SoldeDuMois extends ConsumerWidget {
           children: [
             Text(
               'Solde du mois',
-              style: Theme.of(context).textTheme.bodySmall?.copyWith(color: AppColors.textMuted),
+              style: Theme.of(
+                context,
+              ).textTheme.bodySmall?.copyWith(color: AppColors.textMuted),
             ),
             MontantAnime(
               valeur: solde,
-              style: Theme.of(
-                context,
-              ).textTheme.displaySmall?.copyWith(color: solde >= 0 ? AppColors.positive : AppColors.negative),
+              style: Theme.of(context).textTheme.displaySmall?.copyWith(
+                color: solde >= 0 ? AppColors.positive : AppColors.negative,
+              ),
             ),
           ],
         );

@@ -279,7 +279,11 @@ class _MoisScreenState extends ConsumerState<MoisScreen> {
                                     },
                                     child: InkWell(
                                       onTap: () => Navigator.of(context).push(
-                                        routeAnimee(EditionTransactionScreen(transaction: transaction)),
+                                        routeAnimee(
+                                          EditionTransactionScreen(
+                                            transaction: transaction,
+                                          ),
+                                        ),
                                       ),
                                       child: Padding(
                                         padding: const EdgeInsets.symmetric(

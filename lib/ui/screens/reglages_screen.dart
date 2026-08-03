@@ -76,14 +76,18 @@ class _ReglagesScreenState extends ConsumerState<ReglagesScreen> {
                   leading: const Icon(Icons.category_outlined),
                   title: const Text('Catégories'),
                   trailing: const Icon(Icons.chevron_right),
-                  onTap: () => Navigator.of(context).push(routeAnimee(const CategoriesScreen())),
+                  onTap: () => Navigator.of(
+                    context,
+                  ).push(routeAnimee(const CategoriesScreen())),
                 ),
                 const Divider(height: 1),
                 ListTile(
                   leading: const Icon(Icons.account_balance_wallet_outlined),
                   title: const Text('Comptes'),
                   trailing: const Icon(Icons.chevron_right),
-                  onTap: () => Navigator.of(context).push(routeAnimee(const ComptesScreen())),
+                  onTap: () => Navigator.of(
+                    context,
+                  ).push(routeAnimee(const ComptesScreen())),
                 ),
               ],
             ),

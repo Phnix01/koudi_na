@@ -54,7 +54,9 @@ class _CategoriesScreenState extends ConsumerState<CategoriesScreen> {
     return Scaffold(
       appBar: AppBar(title: const Text('Catégories')),
       floatingActionButton: FloatingActionButton(
-        onPressed: () => Navigator.of(context).push(routeAnimee(CategorieEditionScreen(typeParDefaut: _type))),
+        onPressed: () => Navigator.of(
+          context,
+        ).push(routeAnimee(CategorieEditionScreen(typeParDefaut: _type))),
         child: const Icon(Icons.add),
       ),
       body: ValueListenableBuilder(
@@ -158,9 +160,14 @@ class _LigneCategorie extends ConsumerWidget {
       trailing: categorie.active
           ? const Icon(Icons.chevron_right)
           : const Icon(Icons.visibility_off_outlined, size: 18),
-      onTap: () => Navigator.of(
-        context,
-      ).push(routeAnimee(CategorieEditionScreen(categorie: categorie, typeParDefaut: categorie.type))),
+      onTap: () => Navigator.of(context).push(
+        routeAnimee(
+          CategorieEditionScreen(
+            categorie: categorie,
+            typeParDefaut: categorie.type,
+          ),
+        ),
+      ),
     );
   }
 

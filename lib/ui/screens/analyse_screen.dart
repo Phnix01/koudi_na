@@ -293,7 +293,8 @@ class AnalyseScreen extends ConsumerWidget {
                   Expanded(
                     child: _CarteIndicateur(
                       titre: 'Dépense moy. / jour (historique)',
-                      valeurMontant: indicateurs.depenseMoyenneJournaliereHistorique,
+                      valeurMontant:
+                          indicateurs.depenseMoyenneJournaliereHistorique,
                     ),
                   ),
                 ],
@@ -328,7 +329,10 @@ class _CarteIndicateur extends StatelessWidget {
     this.description,
     this.accent = false,
     this.alerte = false,
-  }) : assert(valeur != null || valeurMontant != null, 'fournir valeur ou valeurMontant');
+  }) : assert(
+         valeur != null || valeurMontant != null,
+         'fournir valeur ou valeurMontant',
+       );
 
   final String titre;
 
@@ -349,7 +353,10 @@ class _CarteIndicateur extends StatelessWidget {
     final couleurValeur = alerte
         ? AppColors.negative
         : (accent ? AppColors.accent : AppColors.textPrimary);
-    final styleValeur = Theme.of(context).textTheme.displaySmall?.copyWith(color: couleurValeur, fontSize: accent ? 28 : 22);
+    final styleValeur = Theme.of(context).textTheme.displaySmall?.copyWith(
+      color: couleurValeur,
+      fontSize: accent ? 28 : 22,
+    );
     return Card(
       shape: accent
           ? RoundedRectangleBorder(
@@ -369,7 +376,9 @@ class _CarteIndicateur extends StatelessWidget {
               ).textTheme.bodySmall?.copyWith(color: AppColors.textMuted),
             ),
             const SizedBox(height: 6),
-            valeurMontant != null ? MontantAnime(valeur: valeurMontant!, style: styleValeur) : Text(valeur!, style: styleValeur),
+            valeurMontant != null
+                ? MontantAnime(valeur: valeurMontant!, style: styleValeur)
+                : Text(valeur!, style: styleValeur),
             if (description != null) ...[
               const SizedBox(height: 6),
               Text(

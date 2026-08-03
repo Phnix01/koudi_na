@@ -63,17 +63,23 @@ class CaptureScreen extends ConsumerWidget {
                   IconButton(
                     tooltip: 'Analyse',
                     icon: const PhosphorIcon(PhosphorIconsFill.chartLineUp),
-                    onPressed: () => Navigator.of(context).push(routeAnimee(const AnalyseScreen())),
+                    onPressed: () => Navigator.of(
+                      context,
+                    ).push(routeAnimee(const AnalyseScreen())),
                   ),
                   IconButton(
                     tooltip: 'Voir le mois',
                     icon: const PhosphorIcon(PhosphorIconsFill.listBullets),
-                    onPressed: () => Navigator.of(context).push(routeAnimee(const MoisScreen())),
+                    onPressed: () => Navigator.of(
+                      context,
+                    ).push(routeAnimee(const MoisScreen())),
                   ),
                   IconButton(
                     tooltip: 'Réglages',
                     icon: const PhosphorIcon(PhosphorIconsFill.gearSix),
-                    onPressed: () => Navigator.of(context).push(routeAnimee(const ReglagesScreen())),
+                    onPressed: () => Navigator.of(
+                      context,
+                    ).push(routeAnimee(const ReglagesScreen())),
                   ),
                 ],
               ),

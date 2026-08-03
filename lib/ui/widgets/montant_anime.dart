@@ -18,7 +18,8 @@ class MontantAnime extends StatelessWidget {
     return TweenAnimationBuilder<int>(
       tween: IntTween(begin: 0, end: valeur),
       duration: const Duration(milliseconds: 600),
-      builder: (context, valeurAnimee, _) => Text(formaterMontant(valeurAnimee), style: style),
+      builder: (context, valeurAnimee, _) =>
+          Text(formaterMontant(valeurAnimee), style: style),
     );
   }
 }

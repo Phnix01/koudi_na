@@ -37,6 +37,7 @@ class GraphiqueRepartition extends StatelessWidget {
             alignment: Alignment.center,
             children: [
               PieChart(
+                duration: const Duration(milliseconds: 400),
                 PieChartData(
                   sections: [
                     for (final part in parts)

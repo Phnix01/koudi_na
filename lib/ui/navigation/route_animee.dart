@@ -14,7 +14,10 @@ Route<T> routeAnimee<T>(Widget page) {
       return FadeTransition(
         opacity: fondu,
         child: SlideTransition(
-          position: Tween<Offset>(begin: const Offset(0, 0.03), end: Offset.zero).animate(fondu),
+          position: Tween<Offset>(
+            begin: const Offset(0, 0.03),
+            end: Offset.zero,
+          ).animate(fondu),
           child: child,
         ),
       );
