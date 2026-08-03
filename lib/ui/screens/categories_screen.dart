@@ -9,6 +9,7 @@ import '../../data/models/categorie.dart';
 import '../../data/models/pilier.dart';
 import '../../data/models/type_mouvement.dart';
 import '../../logic/providers/repositories_providers.dart';
+import '../navigation/route_animee.dart';
 import 'categorie_edition_screen.dart';
 
 /// Gestion des catégories (section 4, écran D) : création, modification,
@@ -53,11 +54,7 @@ class _CategoriesScreenState extends ConsumerState<CategoriesScreen> {
     return Scaffold(
       appBar: AppBar(title: const Text('Catégories')),
       floatingActionButton: FloatingActionButton(
-        onPressed: () => Navigator.of(context).push(
-          MaterialPageRoute(
-            builder: (_) => CategorieEditionScreen(typeParDefaut: _type),
-          ),
-        ),
+        onPressed: () => Navigator.of(context).push(routeAnimee(CategorieEditionScreen(typeParDefaut: _type))),
         child: const Icon(Icons.add),
       ),
       body: ValueListenableBuilder(
@@ -161,14 +158,9 @@ class _LigneCategorie extends ConsumerWidget {
       trailing: categorie.active
           ? const Icon(Icons.chevron_right)
           : const Icon(Icons.visibility_off_outlined, size: 18),
-      onTap: () => Navigator.of(context).push(
-        MaterialPageRoute(
-          builder: (_) => CategorieEditionScreen(
-            categorie: categorie,
-            typeParDefaut: categorie.type,
-          ),
-        ),
-      ),
+      onTap: () => Navigator.of(
+        context,
+      ).push(routeAnimee(CategorieEditionScreen(categorie: categorie, typeParDefaut: categorie.type))),
     );
   }
 

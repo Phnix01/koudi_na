@@ -15,8 +15,10 @@ import '../../logic/providers/repositories_providers.dart';
 import '../../logic/services/calcul_piliers.dart';
 import '../../logic/services/calcul_solde.dart';
 import '../../logic/services/groupement_transactions.dart';
+import '../navigation/route_animee.dart';
 import '../widgets/barres_piliers.dart';
 import '../widgets/filtres_mois.dart';
+import '../widgets/montant_anime.dart';
 import 'edition_transaction_screen.dart';
 
 /// Écran B en version simple (Phase 2, étape 1-4, section 6) : liste des
@@ -277,12 +279,7 @@ class _MoisScreenState extends ConsumerState<MoisScreen> {
                                     },
                                     child: InkWell(
                                       onTap: () => Navigator.of(context).push(
-                                        MaterialPageRoute(
-                                          builder: (_) =>
-                                              EditionTransactionScreen(
-                                                transaction: transaction,
-                                              ),
-                                        ),
+                                        routeAnimee(EditionTransactionScreen(transaction: transaction)),
                                       ),
                                       child: Padding(
                                         padding: const EdgeInsets.symmetric(
@@ -341,9 +338,8 @@ class _TuileTotal extends StatelessWidget {
               ).textTheme.bodySmall?.copyWith(color: AppColors.textMuted),
             ),
             const SizedBox(height: 4),
-            Text(
-              formaterMontant(valeur),
-              textAlign: TextAlign.center,
+            MontantAnime(
+              valeur: valeur,
               style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                 color: couleur,
                 fontWeight: FontWeight.w700,

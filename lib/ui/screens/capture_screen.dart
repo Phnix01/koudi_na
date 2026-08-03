@@ -7,6 +7,7 @@ import 'package:uuid/uuid.dart';
 import '../../data/models/transaction.dart';
 import '../../logic/providers/capture_form_provider.dart';
 import '../../logic/providers/repositories_providers.dart';
+import '../navigation/route_animee.dart';
 import '../widgets/formulaire_transaction.dart';
 import '../widgets/solde_du_mois.dart';
 import 'analyse_screen.dart';
@@ -62,23 +63,17 @@ class CaptureScreen extends ConsumerWidget {
                   IconButton(
                     tooltip: 'Analyse',
                     icon: const PhosphorIcon(PhosphorIconsFill.chartLineUp),
-                    onPressed: () => Navigator.of(context).push(
-                      MaterialPageRoute(builder: (_) => const AnalyseScreen()),
-                    ),
+                    onPressed: () => Navigator.of(context).push(routeAnimee(const AnalyseScreen())),
                   ),
                   IconButton(
                     tooltip: 'Voir le mois',
                     icon: const PhosphorIcon(PhosphorIconsFill.listBullets),
-                    onPressed: () => Navigator.of(context).push(
-                      MaterialPageRoute(builder: (_) => const MoisScreen()),
-                    ),
+                    onPressed: () => Navigator.of(context).push(routeAnimee(const MoisScreen())),
                   ),
                   IconButton(
                     tooltip: 'Réglages',
                     icon: const PhosphorIcon(PhosphorIconsFill.gearSix),
-                    onPressed: () => Navigator.of(context).push(
-                      MaterialPageRoute(builder: (_) => const ReglagesScreen()),
-                    ),
+                    onPressed: () => Navigator.of(context).push(routeAnimee(const ReglagesScreen())),
                   ),
                 ],
               ),

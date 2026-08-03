@@ -7,6 +7,7 @@ import '../../core/theme/app_colors.dart';
 import '../../core/utils/couleur_utils.dart';
 import '../../core/utils/formatters.dart';
 import '../../logic/providers/repositories_providers.dart';
+import '../navigation/route_animee.dart';
 import 'compte_edition_screen.dart';
 
 /// Gestion des comptes, avec solde initial (section 4, écran D). Pas de
@@ -22,9 +23,7 @@ class ComptesScreen extends ConsumerWidget {
     return Scaffold(
       appBar: AppBar(title: const Text('Comptes')),
       floatingActionButton: FloatingActionButton(
-        onPressed: () => Navigator.of(
-          context,
-        ).push(MaterialPageRoute(builder: (_) => const CompteEditionScreen())),
+        onPressed: () => Navigator.of(context).push(routeAnimee(const CompteEditionScreen())),
         child: const Icon(Icons.add),
       ),
       body: ValueListenableBuilder(
@@ -59,11 +58,7 @@ class ComptesScreen extends ConsumerWidget {
                 trailing: compte.actif
                     ? const Icon(Icons.chevron_right)
                     : const Icon(Icons.visibility_off_outlined, size: 18),
-                onTap: () => Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (_) => CompteEditionScreen(compte: compte),
-                  ),
-                ),
+                onTap: () => Navigator.of(context).push(routeAnimee(CompteEditionScreen(compte: compte))),
               );
             }).toList(),
           );
