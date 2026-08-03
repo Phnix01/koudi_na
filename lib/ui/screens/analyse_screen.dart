@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
@@ -24,6 +25,7 @@ import '../widgets/graphique_repartition.dart';
 import '../widgets/graphique_rythme.dart';
 import '../widgets/graphique_trajectoire_epargne.dart';
 import '../widgets/heatmap_habitudes.dart';
+import '../widgets/montant_anime.dart';
 import '../widgets/observations_automatiques.dart';
 
 /// Écran C (section 5) : les indicateurs calculés (section 5.2), les
@@ -284,18 +286,14 @@ class AnalyseScreen extends ConsumerWidget {
                   Expanded(
                     child: _CarteIndicateur(
                       titre: 'Dépense moy. / jour (ce mois)',
-                      valeur: formaterMontant(
-                        indicateurs.depenseMoyenneJournaliereMois,
-                      ),
+                      valeurMontant: indicateurs.depenseMoyenneJournaliereMois,
                     ),
                   ),
                   const SizedBox(width: 12),
                   Expanded(
                     child: _CarteIndicateur(
                       titre: 'Dépense moy. / jour (historique)',
-                      valeur: formaterMontant(
-                        indicateurs.depenseMoyenneJournaliereHistorique,
-                      ),
+                      valeurMontant: indicateurs.depenseMoyenneJournaliereHistorique,
                     ),
                   ),
                 ],
@@ -303,13 +301,18 @@ class AnalyseScreen extends ConsumerWidget {
               const SizedBox(height: 12),
               _CarteIndicateur(
                 titre: 'Projection fin de mois',
-                valeur: formaterMontant(indicateurs.projectionFinDeMois),
+                valeurMontant: indicateurs.projectionFinDeMois,
                 description: indicateurs.projectionDepasseEntrees
                     ? 'Au rythme actuel, tu dépasseras tes entrées ce mois-ci'
                     : null,
                 alerte: indicateurs.projectionDepasseEntrees,
               ),
-            ],
+              // Cascade d'entrée (section 3.2) : chaque carte apparaît
+              // 40 ms après la précédente plutôt que toutes en même
+              // temps — .animate(interval:) répète la même chaîne
+              // d'effets sur chaque enfant de la liste, en décalant
+              // son départ à chaque fois.
+            ].animate(interval: 40.ms).fadeIn(duration: 300.ms).slideY(begin: 0.06, end: 0, curve: Curves.easeOut),
           );
         },
       ),
@@ -320,14 +323,23 @@ class AnalyseScreen extends ConsumerWidget {
 class _CarteIndicateur extends StatelessWidget {
   const _CarteIndicateur({
     required this.titre,
-    required this.valeur,
+    this.valeur,
+    this.valeurMontant,
     this.description,
     this.accent = false,
     this.alerte = false,
-  });
+  }) : assert(valeur != null || valeurMontant != null, 'fournir valeur ou valeurMontant');
 
   final String titre;
-  final String valeur;
+
+  /// Pour un texte déjà formaté (pourcentage, "X mois", nombre de jours).
+  final String? valeur;
+
+  /// Pour un montant FCFA brut : passe par [MontantAnime], qui défile de
+  /// 0 à sa valeur (section 3.2) — réservé aux "montants agrégés",
+  /// contrairement à [valeur] qui peut représenter autre chose qu'une
+  /// somme d'argent.
+  final int? valeurMontant;
   final String? description;
   final bool accent;
   final bool alerte;
@@ -337,6 +349,7 @@ class _CarteIndicateur extends StatelessWidget {
     final couleurValeur = alerte
         ? AppColors.negative
         : (accent ? AppColors.accent : AppColors.textPrimary);
+    final styleValeur = Theme.of(context).textTheme.displaySmall?.copyWith(color: couleurValeur, fontSize: accent ? 28 : 22);
     return Card(
       shape: accent
           ? RoundedRectangleBorder(
@@ -356,13 +369,7 @@ class _CarteIndicateur extends StatelessWidget {
               ).textTheme.bodySmall?.copyWith(color: AppColors.textMuted),
             ),
             const SizedBox(height: 6),
-            Text(
-              valeur,
-              style: Theme.of(context).textTheme.displaySmall?.copyWith(
-                color: couleurValeur,
-                fontSize: accent ? 28 : 22,
-              ),
-            ),
+            valeurMontant != null ? MontantAnime(valeur: valeurMontant!, style: styleValeur) : Text(valeur!, style: styleValeur),
             if (description != null) ...[
               const SizedBox(height: 6),
               Text(

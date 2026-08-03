@@ -38,6 +38,7 @@ class GraphiqueComparaison extends StatelessWidget {
     return SizedBox(
       height: 220,
       child: BarChart(
+        duration: const Duration(milliseconds: 400),
         BarChartData(
           maxY: plusGrandeValeur == 0 ? 10 : plusGrandeValeur * 1.2,
           alignment: BarChartAlignment.spaceAround,

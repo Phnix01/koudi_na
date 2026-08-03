@@ -18,6 +18,7 @@ class GraphiqueTrajectoireEpargne extends StatelessWidget {
     return SizedBox(
       height: 220,
       child: LineChart(
+        duration: const Duration(milliseconds: 400),
         LineChartData(
           minY: 0,
           gridData: FlGridData(

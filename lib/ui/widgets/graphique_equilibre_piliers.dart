@@ -39,6 +39,7 @@ class GraphiqueEquilibrePiliers extends StatelessWidget {
     return SizedBox(
       height: 220,
       child: BarChart(
+        duration: const Duration(milliseconds: 400),
         BarChartData(
           maxY: maxTotal == 0 ? 10 : maxTotal * 1.1,
           alignment: BarChartAlignment.spaceAround,
