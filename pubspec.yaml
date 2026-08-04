@@ -71,7 +71,7 @@ dependencies:
 
   # Ouvre la feuille de partage native (WhatsApp, mail, Drive...) pour
   # le fichier CSV généré.
-  share_plus: ^13.3.0
+  share_plus: ^12.0.2
 
   # Bibliothèque de graphiques pour l'écran Analyse (section 5.1) : les
   # sept visualisations (LineChart, PieChart, BarChart...) en dépendent.
@@ -80,6 +80,10 @@ dependencies:
   # Anime l'apparition des cartes en cascade (section 3.2) : évite
   # d'écrire à la main un AnimationController par carte.
   flutter_animate: ^4.5.2
+
+  # Ouvre le sélecteur de fichiers natif pour choisir le CSV à importer
+  # (section 4, écran D, Phase 4).
+  file_picker: ^11.0.3
 
 dev_dependencies:
   flutter_test:

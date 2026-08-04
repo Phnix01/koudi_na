@@ -1,19 +1,24 @@
+import 'dart:convert';
+import 'dart:io';
+
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
 import '../../logic/providers/repositories_providers.dart';
 import '../../logic/services/export_csv.dart';
+import '../../logic/services/import_csv.dart';
 import '../../logic/services/partage_csv.dart';
 import '../navigation/route_animee.dart';
 import 'categories_screen.dart';
 import 'comptes_screen.dart';
 import 'recurrences_screen.dart';
 
-/// Écran D (section 4) : gestion des catégories et des comptes, export
-/// CSV. Le réglage des pourcentages 40/25/35 et la bascule de thème ne
-/// font pas partie du périmètre Phase 2 (section 6) — ils viendront
-/// avec le reste du polissage en Phase 3/4.
+/// Écran D (section 4) : gestion des catégories, des comptes et des
+/// récurrences, export et import CSV. Le réglage des pourcentages
+/// 40/25/35 et la bascule de thème ne font pas partie du périmètre
+/// couvert jusqu'ici (sections 6, Phases 2-4).
 class ReglagesScreen extends ConsumerStatefulWidget {
   const ReglagesScreen({super.key});
 
@@ -23,6 +28,7 @@ class ReglagesScreen extends ConsumerStatefulWidget {
 
 class _ReglagesScreenState extends ConsumerState<ReglagesScreen> {
   bool _exportEnCours = false;
+  bool _importEnCours = false;
 
   Future<void> _exporter({required bool moisCourantSeulement}) async {
     setState(() => _exportEnCours = true);
@@ -59,6 +65,83 @@ class _ReglagesScreenState extends ConsumerState<ReglagesScreen> {
     } finally {
       if (mounted) setState(() => _exportEnCours = false);
     }
+  }
+
+  Future<void> _importer() async {
+    final resultat = await FilePicker.pickFiles(
+      type: FileType.custom,
+      allowedExtensions: ['csv'],
+    );
+    if (resultat == null || resultat.files.isEmpty) return;
+
+    setState(() => _importEnCours = true);
+    try {
+      final fichier = resultat.files.first;
+      // Sur le web, le contenu arrive déjà en mémoire (`bytes`) ; sur
+      // mobile/desktop, seul un chemin de fichier est fourni, à lire
+      // via dart:io — les deux cas doivent être gérés.
+      final contenu = fichier.bytes != null
+          ? utf8.decode(fichier.bytes!, allowMalformed: true)
+          : (fichier.path != null
+                ? await File(fichier.path!).readAsString()
+                : null);
+
+      if (contenu == null) {
+        _afficherMessage('Impossible de lire ce fichier.');
+        return;
+      }
+
+      final categories = ref.read(categorieRepositoryProvider).tous();
+      final comptes = ref.read(compteRepositoryProvider).tous();
+      final resultatImport = parserCsvTransactions(
+        contenu,
+        categories,
+        comptes,
+      );
+
+      if (!mounted) return;
+      final confirme = await showDialog<bool>(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: const Text('Importer ce fichier ?'),
+          content: Text(
+            '${resultatImport.transactions.length} transaction(s) seront ajoutées.'
+            '${resultatImport.lignesIgnorees > 0 ? '\n${resultatImport.lignesIgnorees} ligne(s) ignorée(s) (catégorie, compte ou montant introuvable).' : ''}'
+            '\n\nCet import ajoute ces transactions sans vérifier les doublons : réimporter le même fichier deux fois crée deux copies.',
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(false),
+              child: const Text('Annuler'),
+            ),
+            TextButton(
+              onPressed: resultatImport.transactions.isEmpty
+                  ? null
+                  : () => Navigator.of(context).pop(true),
+              child: const Text('Importer'),
+            ),
+          ],
+        ),
+      );
+      if (confirme != true) return;
+
+      final repo = ref.read(transactionRepositoryProvider);
+      for (final transaction in resultatImport.transactions) {
+        await repo.enregistrer(transaction);
+      }
+      _afficherMessage(
+        '${resultatImport.transactions.length} transaction(s) importée(s).',
+      );
+    } finally {
+      if (mounted) setState(() => _importEnCours = false);
+    }
+  }
+
+  void _afficherMessage(String message) {
+    if (!mounted) return;
+    ScaffoldMessenger.of(
+      context,
+    ).showSnackBar(SnackBar(content: Text(message)));
   }
 
   @override
@@ -130,6 +213,20 @@ class _ReglagesScreenState extends ConsumerState<ReglagesScreen> {
                       : () => _exporter(moisCourantSeulement: false),
                 ),
               ],
+            ),
+          ),
+          const SizedBox(height: 24),
+          Text('Import', style: Theme.of(context).textTheme.titleMedium),
+          const SizedBox(height: 8),
+          Card(
+            child: ListTile(
+              leading: const Icon(Icons.upload_file_outlined),
+              title: const Text('Importer un CSV'),
+              subtitle: const Text('Reprendre un export KUDI (mêmes colonnes)'),
+              trailing: _importEnCours
+                  ? const _IndicateurChargement()
+                  : const Icon(Icons.chevron_right),
+              onTap: _importEnCours ? null : _importer,
             ),
           ),
         ],

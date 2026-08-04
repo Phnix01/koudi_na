@@ -20,7 +20,9 @@
       "Bash(xxd lib/core/utils/formatters.dart)",
       "Bash(tee /tmp/flutter_run_web22.log)",
       "Bash(tee /tmp/flutter_run_web23.log)",
-      "Bash(pkill -f \"web-port=8787\")"
+      "Bash(pkill -f \"web-port=8787\")",
+      "Bash(tee /tmp/flutter_run_web24.log)",
+      "Bash(pkill -f \"web-port=8788\")"
     ]
   }
 }
