@@ -12,7 +12,8 @@ class RecurrenceRepository {
 
   List<Recurrence> tous() => _box.values.toList();
 
-  Future<void> enregistrer(Recurrence recurrence) => _box.put(recurrence.id, recurrence);
+  Future<void> enregistrer(Recurrence recurrence) =>
+      _box.put(recurrence.id, recurrence);
 
   Future<void> supprimer(String id) => _box.delete(id);
 

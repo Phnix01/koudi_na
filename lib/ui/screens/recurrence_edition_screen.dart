@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:uuid/uuid.dart';
 
+import '../../data/models/categorie.dart';
 import '../../data/models/compte.dart';
 import '../../data/models/recurrence.dart';
 import '../../data/models/type_mouvement.dart';
@@ -16,16 +17,24 @@ class RecurrenceEditionScreen extends ConsumerStatefulWidget {
   final Recurrence? recurrence;
 
   @override
-  ConsumerState<RecurrenceEditionScreen> createState() => _RecurrenceEditionScreenState();
+  ConsumerState<RecurrenceEditionScreen> createState() =>
+      _RecurrenceEditionScreenState();
 }
 
-class _RecurrenceEditionScreenState extends ConsumerState<RecurrenceEditionScreen> {
-  late final _controleurLibelle = TextEditingController(text: widget.recurrence?.libelle ?? '');
-  late final _controleurMontant = TextEditingController(text: '${widget.recurrence?.montant ?? ''}');
-  late final _controleurJour = TextEditingController(text: '${widget.recurrence?.jourDuMois ?? 1}');
+class _RecurrenceEditionScreenState
+    extends ConsumerState<RecurrenceEditionScreen> {
+  late final _controleurLibelle = TextEditingController(
+    text: widget.recurrence?.libelle ?? '',
+  );
+  late final _controleurMontant = TextEditingController(
+    text: '${widget.recurrence?.montant ?? ''}',
+  );
+  late final _controleurJour = TextEditingController(
+    text: '${widget.recurrence?.jourDuMois ?? 1}',
+  );
   late TypeMouvement _type = widget.recurrence?.type ?? TypeMouvement.depense;
-  String? _categorieId = widget.recurrence?.categorieId;
-  String? _compteId = widget.recurrence?.compteId;
+  late String? _categorieId = widget.recurrence?.categorieId;
+  late String? _compteId = widget.recurrence?.compteId;
   late bool _active = widget.recurrence?.active ?? true;
 
   @override
@@ -42,22 +51,23 @@ class _RecurrenceEditionScreenState extends ConsumerState<RecurrenceEditionScree
       _categorieId != null &&
       _compteId != null;
 
-  Future<void> _choisirCategorie(List<dynamic> categoriesBrutes) async {
-    final categories = categoriesBrutes.cast<dynamic>();
+  Future<void> _choisirCategorie(List<Categorie> categories) async {
     // Filtrées par type : une récurrence de dépense ne propose que des
     // catégories de dépense, comme à l'écran Capture.
-    final categoriesFiltrees = categories.where((c) => c.type == _type).toList();
-    final choix = await showModalBottomSheet(
+    final categoriesFiltrees = categories
+        .where((c) => c.type == _type)
+        .toList();
+    final choix = await showModalBottomSheet<Categorie>(
       context: context,
-      builder: (context) => FeuilleSelection(
+      builder: (context) => FeuilleSelection<Categorie>(
         titre: 'Catégorie',
         options: categoriesFiltrees,
-        libelleDe: (dynamic c) => c.libelle as String,
-        estSelectionne: (dynamic c) => c.id == _categorieId,
+        libelleDe: (c) => c.libelle,
+        estSelectionne: (c) => c.id == _categorieId,
         avecOptionTous: false,
       ),
     );
-    if (choix != null) setState(() => _categorieId = choix.id as String);
+    if (choix != null) setState(() => _categorieId = choix.id);
   }
 
   Future<void> _choisirCompte(List<Compte> comptes) async {
@@ -77,7 +87,15 @@ class _RecurrenceEditionScreenState extends ConsumerState<RecurrenceEditionScree
   Future<void> _enregistrer() async {
     final recurrence =
         widget.recurrence ??
-        Recurrence(id: const Uuid().v4(), libelle: '', type: _type, montant: 0, categorieId: '', compteId: '', jourDuMois: 1);
+        Recurrence(
+          id: const Uuid().v4(),
+          libelle: '',
+          type: _type,
+          montant: 0,
+          categorieId: '',
+          compteId: '',
+          jourDuMois: 1,
+        );
     recurrence
       ..libelle = _controleurLibelle.text.trim()
       ..type = _type
@@ -94,18 +112,32 @@ class _RecurrenceEditionScreenState extends ConsumerState<RecurrenceEditionScree
   @override
   Widget build(BuildContext context) {
     final categories = ref.watch(categorieRepositoryProvider).tous();
-    final comptes = ref.watch(compteRepositoryProvider).tous().where((c) => c.actif).toList();
-    final categorieChoisie = categories.where((c) => c.id == _categorieId).firstOrNull;
+    final comptes = ref
+        .watch(compteRepositoryProvider)
+        .tous()
+        .where((c) => c.actif)
+        .toList();
+    final categorieChoisie = categories
+        .where((c) => c.id == _categorieId)
+        .firstOrNull;
     final compteChoisi = comptes.where((c) => c.id == _compteId).firstOrNull;
 
     return Scaffold(
-      appBar: AppBar(title: Text(widget.recurrence == null ? 'Nouvelle récurrence' : 'Modifier la récurrence')),
+      appBar: AppBar(
+        title: Text(
+          widget.recurrence == null
+              ? 'Nouvelle récurrence'
+              : 'Modifier la récurrence',
+        ),
+      ),
       body: ListView(
         padding: const EdgeInsets.all(20),
         children: [
           TextField(
             controller: _controleurLibelle,
-            decoration: const InputDecoration(labelText: 'Libellé (ex: Loyer, Salaire)'),
+            decoration: const InputDecoration(
+              labelText: 'Libellé (ex: Loyer, Salaire)',
+            ),
             onChanged: (_) => setState(() {}),
           ),
           const SizedBox(height: 20),
@@ -119,13 +151,20 @@ class _RecurrenceEditionScreenState extends ConsumerState<RecurrenceEditionScree
           Center(
             child: SegmentedButton<TypeMouvement>(
               segments: const [
-                ButtonSegment(value: TypeMouvement.depense, label: Text('Dépense')),
-                ButtonSegment(value: TypeMouvement.entree, label: Text('Entrée')),
+                ButtonSegment(
+                  value: TypeMouvement.depense,
+                  label: Text('Dépense'),
+                ),
+                ButtonSegment(
+                  value: TypeMouvement.entree,
+                  label: Text('Entrée'),
+                ),
               ],
               selected: {_type},
               onSelectionChanged: (selection) => setState(() {
                 _type = selection.first;
-                _categorieId = null; // la liste de catégories change avec le type
+                _categorieId =
+                    null; // la liste de catégories change avec le type
               }),
             ),
           ),
@@ -154,12 +193,17 @@ class _RecurrenceEditionScreenState extends ConsumerState<RecurrenceEditionScree
           SwitchListTile(
             contentPadding: EdgeInsets.zero,
             title: const Text('Active'),
-            subtitle: const Text('Une récurrence désactivée ne génère plus de transaction'),
+            subtitle: const Text(
+              'Une récurrence désactivée ne génère plus de transaction',
+            ),
             value: _active,
             onChanged: (valeur) => setState(() => _active = valeur),
           ),
           const SizedBox(height: 24),
-          ElevatedButton(onPressed: _peutEnregistrer ? _enregistrer : null, child: const Text('Enregistrer')),
+          ElevatedButton(
+            onPressed: _peutEnregistrer ? _enregistrer : null,
+            child: const Text('Enregistrer'),
+          ),
         ],
       ),
     );

@@ -16,18 +16,29 @@ Future<void> genererTransactionsRecurrentesSiNecessaire({
   final reference = maintenant ?? DateTime.now();
   final toutesLesTransactions = transactions.tous();
   final recurrencesDejaGenereesCeMoisCi = toutesLesTransactions
-      .where((t) => t.recurrenteId != null && t.date.year == reference.year && t.date.month == reference.month)
+      .where(
+        (t) =>
+            t.recurrenteId != null &&
+            t.date.year == reference.year &&
+            t.date.month == reference.month,
+      )
       .map((t) => t.recurrenteId)
       .toSet();
 
-  final dernierJourDuMois = DateTime(reference.year, reference.month + 1, 0).day;
+  final dernierJourDuMois = DateTime(
+    reference.year,
+    reference.month + 1,
+    0,
+  ).day;
 
   for (final recurrence in recurrences.tous()) {
     if (!recurrence.active) continue;
     if (recurrencesDejaGenereesCeMoisCi.contains(recurrence.id)) continue;
 
     final jour = recurrence.jourDuMois.clamp(1, dernierJourDuMois);
-    if (jour > reference.day) continue; // le jour n'est pas encore arrivé ce mois-ci
+    if (jour > reference.day) {
+      continue; // le jour n'est pas encore arrivé ce mois-ci
+    }
 
     await transactions.enregistrer(
       Transaction(

@@ -8,6 +8,7 @@ import '../../logic/services/partage_csv.dart';
 import '../navigation/route_animee.dart';
 import 'categories_screen.dart';
 import 'comptes_screen.dart';
+import 'recurrences_screen.dart';
 
 /// Écran D (section 4) : gestion des catégories et des comptes, export
 /// CSV. Le réglage des pourcentages 40/25/35 et la bascule de thème ne
@@ -88,6 +89,15 @@ class _ReglagesScreenState extends ConsumerState<ReglagesScreen> {
                   onTap: () => Navigator.of(
                     context,
                   ).push(routeAnimee(const ComptesScreen())),
+                ),
+                const Divider(height: 1),
+                ListTile(
+                  leading: const Icon(Icons.repeat),
+                  title: const Text('Récurrences'),
+                  trailing: const Icon(Icons.chevron_right),
+                  onTap: () => Navigator.of(
+                    context,
+                  ).push(routeAnimee(const RecurrencesScreen())),
                 ),
               ],
             ),

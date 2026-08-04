@@ -38,11 +38,17 @@ class FeuilleSelection<T> extends StatelessWidget {
             padding: const EdgeInsets.all(16),
             child: Text(titre, style: Theme.of(context).textTheme.titleMedium),
           ),
-          if (avecOptionTous) ListTile(title: const Text('Tous'), onTap: () => Navigator.of(context).pop()),
+          if (avecOptionTous)
+            ListTile(
+              title: const Text('Tous'),
+              onTap: () => Navigator.of(context).pop(),
+            ),
           ...options.map((option) {
             return ListTile(
               title: Text(libelleDe(option)),
-              trailing: estSelectionne(option) ? const Icon(Icons.check, color: AppColors.primary) : null,
+              trailing: estSelectionne(option)
+                  ? const Icon(Icons.check, color: AppColors.primary)
+                  : null,
               onTap: () => Navigator.of(context).pop(option),
             );
           }),

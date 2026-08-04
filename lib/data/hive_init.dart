@@ -26,7 +26,13 @@ Future<void> initialiserHive() async {
   await Hive.openBox<Compte>(HiveBoxes.comptes);
   await Hive.openBox<Recurrence>(HiveBoxes.recurrences);
 
-  await seedSiPremierLancement(comptes: CompteRepository(), categories: CategorieRepository());
+  await seedSiPremierLancement(
+    comptes: CompteRepository(),
+    categories: CategorieRepository(),
+  );
 
-  await genererTransactionsRecurrentesSiNecessaire(recurrences: RecurrenceRepository(), transactions: TransactionRepository());
+  await genererTransactionsRecurrentesSiNecessaire(
+    recurrences: RecurrenceRepository(),
+    transactions: TransactionRepository(),
+  );
 }
