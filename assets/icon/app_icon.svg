@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="1024" height="1024" viewBox="0 0 1024 1024">
+  <!-- KUDI : un K assemblé de trois piliers (Épargne, Famille, Vie) -->
+  <rect width="1024" height="1024" fill="#0B0F14"/>
+  <rect x="299.2" y="265.6" width="123.2" height="492.8" fill="#00C2A8"/>
+  <polygon points="551.2,265.6 724.8,265.6 489.6,498.6 449.3,498.6 449.3,367.5" fill="#EC7FA9"/>
+  <polygon points="449.3,525.4 489.6,525.4 724.8,758.4 551.2,758.4 449.3,656.5" fill="#3498DB"/>
+</svg>
