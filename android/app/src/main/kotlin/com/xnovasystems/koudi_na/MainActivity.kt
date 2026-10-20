@@ -1,4 +1,4 @@
-package com.example.koudi_na
+package com.xnovasystems.koudi_na
 
 import io.flutter.embedding.android.FlutterActivity
 
