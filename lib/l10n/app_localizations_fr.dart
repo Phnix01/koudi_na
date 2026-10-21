@@ -433,4 +433,41 @@ class AppLocalizationsFr extends AppLocalizations {
   String obsAutonomie(String mois) {
     return 'Ton épargne couvre désormais $mois mois de dépenses.';
   }
+
+  @override
+  String get onboardingPasser => 'Passer';
+
+  @override
+  String get onboardingSuivant => 'Continuer';
+
+  @override
+  String get onboardingCommencer => 'Noter ma première dépense';
+
+  @override
+  String get onboardingTitre1 => 'Sache où va chaque franc';
+
+  @override
+  String get onboardingCorps1 =>
+      'Le pain, la moto, la recharge téléphone : ton argent part par petites sorties. Note-les dans Koudi Na et ton mois se lit franc par franc.';
+
+  @override
+  String get onboardingTitre2 => 'Un montant, une catégorie, c\'est noté';
+
+  @override
+  String get onboardingCorps2 =>
+      '2 500 F, Transport, enregistré : avant que le taxi redémarre. Cash, banque ou mobile money, chaque franc atterrit au bon endroit. Rien à ressaisir le soir.';
+
+  @override
+  String get onboardingTitre3 => '40/25/35 : ton revenu déjà réparti';
+
+  @override
+  String get onboardingCorps3 =>
+      'Épargne 40 %, Famille 25 %, Vie 35 % : la répartition est décidée d\'avance. Chaque barre compare le réel à l\'objectif. Un regard suffit, zéro calcul.';
+
+  @override
+  String get onboardingTitre4 => 'Tes chiffres restent dans ta poche';
+
+  @override
+  String get onboardingCorps4 =>
+      'Tout vit sur ton téléphone, sans inscription ni serveur. Ça marche sans réseau, au marché comme au village. Toi seul lis tes chiffres. Ta première dépense t\'attend.';
 }

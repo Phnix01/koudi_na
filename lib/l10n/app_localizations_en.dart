@@ -430,4 +430,41 @@ class AppLocalizationsEn extends AppLocalizations {
   String obsAutonomie(String mois) {
     return 'Your savings now cover $mois months of spending.';
   }
+
+  @override
+  String get onboardingPasser => 'Skip';
+
+  @override
+  String get onboardingSuivant => 'Continue';
+
+  @override
+  String get onboardingCommencer => 'Log my first expense';
+
+  @override
+  String get onboardingTitre1 => 'Know where every franc goes';
+
+  @override
+  String get onboardingCorps1 =>
+      'Bread, a moto ride, phone top-up: money leaves in small pieces. Log them in Koudi Na and see your whole month, franc by franc.';
+
+  @override
+  String get onboardingTitre2 => 'One amount, one category, saved';
+
+  @override
+  String get onboardingCorps2 =>
+      '2,500 F, Transport, saved: before the taxi pulls away. Cash, bank or mobile money, every franc lands in the right place. Nothing to type up tonight.';
+
+  @override
+  String get onboardingTitre3 => '40/25/35: your income, already split';
+
+  @override
+  String get onboardingCorps3 =>
+      'Savings 40%, Family 25%, Living 35%: the split is decided before you spend. Each bar shows where you stand against the target. One glance, nothing to calculate.';
+
+  @override
+  String get onboardingTitre4 => 'Your numbers stay in your pocket';
+
+  @override
+  String get onboardingCorps4 =>
+      'Everything lives on your phone, no sign-up, no server. Works without signal, at the market or the village. Only you read your numbers. Your first expense is waiting.';
 }

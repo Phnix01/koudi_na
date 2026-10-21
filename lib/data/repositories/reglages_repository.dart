@@ -7,6 +7,7 @@ import '../../core/constants/hive_boxes.dart';
 /// pas un objet à sérialiser.
 class ReglagesRepository {
   static const _cleLangue = 'langue';
+  static const _cleOnboardingTermine = 'onboarding_termine';
 
   Box<String> get _box => Hive.box<String>(HiveBoxes.reglages);
 
@@ -16,4 +17,11 @@ class ReglagesRepository {
 
   Future<void> enregistrerLangue(String? code) =>
       code == null ? _box.delete(_cleLangue) : _box.put(_cleLangue, code);
+
+  /// Vrai une fois que l'utilisateur a passé l'onboarding : il ne doit
+  /// le voir qu'au tout premier lancement.
+  bool get onboardingTermine => _box.get(_cleOnboardingTermine) == 'oui';
+
+  Future<void> marquerOnboardingTermine() =>
+      _box.put(_cleOnboardingTermine, 'oui');
 }

@@ -7,6 +7,7 @@ import 'data/hive_init.dart';
 import 'l10n/l10n.dart';
 import 'logic/providers/langue_provider.dart';
 import 'ui/screens/capture_screen.dart';
+import 'ui/screens/onboarding_screen.dart';
 
 Future<void> main() async {
   // Nécessaire dès qu'on fait un travail asynchrone (ici : ouvrir Hive,
@@ -30,6 +31,11 @@ class MyApp extends ConsumerWidget {
     // Changer la langue dans Réglages reconstruit MaterialApp avec la
     // nouvelle locale : tous les écrans ouverts se retraduisent.
     final locale = ref.watch(localeProvider);
+    // L'onboarding ne s'affiche qu'au tout premier lancement ; ensuite
+    // l'app s'ouvre directement sur la Capture, son cœur (section 4).
+    final onboardingTermine = ref
+        .read(reglagesRepositoryProvider)
+        .onboardingTermine;
 
     return MaterialApp(
       onGenerateTitle: (context) => context.l10n.appTitre,
@@ -40,7 +46,9 @@ class MyApp extends ConsumerWidget {
       theme: AppTheme.dark,
       darkTheme: AppTheme.dark,
       themeMode: ThemeMode.dark,
-      home: const CaptureScreen(),
+      home: onboardingTermine
+          ? const CaptureScreen()
+          : const OnboardingScreen(),
     );
   }
 }

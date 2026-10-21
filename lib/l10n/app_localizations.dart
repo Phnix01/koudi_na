@@ -835,6 +835,72 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'Ton épargne couvre désormais {mois} mois de dépenses.'**
   String obsAutonomie(String mois);
+
+  /// No description provided for @onboardingPasser.
+  ///
+  /// In fr, this message translates to:
+  /// **'Passer'**
+  String get onboardingPasser;
+
+  /// No description provided for @onboardingSuivant.
+  ///
+  /// In fr, this message translates to:
+  /// **'Continuer'**
+  String get onboardingSuivant;
+
+  /// No description provided for @onboardingCommencer.
+  ///
+  /// In fr, this message translates to:
+  /// **'Noter ma première dépense'**
+  String get onboardingCommencer;
+
+  /// No description provided for @onboardingTitre1.
+  ///
+  /// In fr, this message translates to:
+  /// **'Sache où va chaque franc'**
+  String get onboardingTitre1;
+
+  /// No description provided for @onboardingCorps1.
+  ///
+  /// In fr, this message translates to:
+  /// **'Le pain, la moto, la recharge téléphone : ton argent part par petites sorties. Note-les dans Koudi Na et ton mois se lit franc par franc.'**
+  String get onboardingCorps1;
+
+  /// No description provided for @onboardingTitre2.
+  ///
+  /// In fr, this message translates to:
+  /// **'Un montant, une catégorie, c\'est noté'**
+  String get onboardingTitre2;
+
+  /// No description provided for @onboardingCorps2.
+  ///
+  /// In fr, this message translates to:
+  /// **'2 500 F, Transport, enregistré : avant que le taxi redémarre. Cash, banque ou mobile money, chaque franc atterrit au bon endroit. Rien à ressaisir le soir.'**
+  String get onboardingCorps2;
+
+  /// No description provided for @onboardingTitre3.
+  ///
+  /// In fr, this message translates to:
+  /// **'40/25/35 : ton revenu déjà réparti'**
+  String get onboardingTitre3;
+
+  /// No description provided for @onboardingCorps3.
+  ///
+  /// In fr, this message translates to:
+  /// **'Épargne 40 %, Famille 25 %, Vie 35 % : la répartition est décidée d\'avance. Chaque barre compare le réel à l\'objectif. Un regard suffit, zéro calcul.'**
+  String get onboardingCorps3;
+
+  /// No description provided for @onboardingTitre4.
+  ///
+  /// In fr, this message translates to:
+  /// **'Tes chiffres restent dans ta poche'**
+  String get onboardingTitre4;
+
+  /// No description provided for @onboardingCorps4.
+  ///
+  /// In fr, this message translates to:
+  /// **'Tout vit sur ton téléphone, sans inscription ni serveur. Ça marche sans réseau, au marché comme au village. Toi seul lis tes chiffres. Ta première dépense t\'attend.'**
+  String get onboardingCorps4;
 }
 
 class _AppLocalizationsDelegate
