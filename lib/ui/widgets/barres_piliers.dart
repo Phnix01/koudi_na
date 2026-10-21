@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 
 import '../../core/theme/app_colors.dart';
 import '../../core/utils/formatters.dart';
-import '../../data/models/pilier.dart';
 import '../../logic/services/calcul_piliers.dart';
+import '../../l10n/l10n.dart';
 
 /// Les trois barres de la règle 40/25/35 (section 4, écran B) : réel
 /// contre cible pour chaque pilier, vert si respecté, orange si proche,
@@ -23,7 +23,7 @@ class BarresPiliers extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'Règle 40/25/35',
+              context.l10n.regle402535,
               style: Theme.of(context).textTheme.titleMedium,
             ),
             const SizedBox(height: 12),
@@ -49,17 +49,6 @@ class _BarrePilier extends StatelessWidget {
     return AppColors.positive;
   }
 
-  String get _libellePilier {
-    switch (progression.pilier) {
-      case Pilier.epargne:
-        return 'Épargne';
-      case Pilier.famille:
-        return 'Famille';
-      case Pilier.vie:
-        return 'Vie';
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -68,7 +57,10 @@ class _BarrePilier extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text(_libellePilier, style: Theme.of(context).textTheme.bodyMedium),
+            Text(
+              context.l10n.libellePilier(progression.pilier),
+              style: Theme.of(context).textTheme.bodyMedium,
+            ),
             Text(
               '${formaterMontant(progression.montantReel)} / ${formaterMontant(progression.objectifMontant)}',
               style: const TextStyle(color: AppColors.textMuted, fontSize: 12),

@@ -6,6 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
+import '../../l10n/l10n.dart';
+import '../../logic/providers/langue_provider.dart';
 import '../../logic/providers/repositories_providers.dart';
 import '../../logic/services/export_csv.dart';
 import '../../logic/services/import_csv.dart';
@@ -15,8 +17,13 @@ import 'categories_screen.dart';
 import 'comptes_screen.dart';
 import 'recurrences_screen.dart';
 
-/// Écran D (section 4) : gestion des catégories, des comptes et des
-/// récurrences, export et import CSV. Le réglage des pourcentages
+/// Valeur du segment « Système » dans le sélecteur de langue : le
+/// provider stocke `null` pour ce cas, mais un `SegmentedButton` est
+/// plus simple à écrire avec une valeur non nulle.
+const _langueSysteme = 'systeme';
+
+/// Écran D (section 4) : langue, gestion des catégories, des comptes et
+/// des récurrences, export et import CSV. Le réglage des pourcentages
 /// 40/25/35 et la bascule de thème ne font pas partie du périmètre
 /// couvert jusqu'ici (sections 6, Phases 2-4).
 class ReglagesScreen extends ConsumerStatefulWidget {
@@ -31,6 +38,7 @@ class _ReglagesScreenState extends ConsumerState<ReglagesScreen> {
   bool _importEnCours = false;
 
   Future<void> _exporter({required bool moisCourantSeulement}) async {
+    final l10n = context.l10n;
     setState(() => _exportEnCours = true);
     try {
       final categoriesParId = {
@@ -57,17 +65,24 @@ class _ReglagesScreenState extends ConsumerState<ReglagesScreen> {
         transactions,
         categoriesParId,
         comptesParId,
+        langue: ref.read(localeProvider).languageCode,
       );
       final suffixe = moisCourantSeulement
           ? DateFormat('yyyy-MM').format(DateTime.now())
           : 'tout';
-      await partagerCsv(csv, 'kudi_$suffixe.csv');
+      final nomFichier = 'koudi_na_$suffixe.csv';
+      await partagerCsv(
+        csv,
+        nomFichier,
+        texte: l10n.exportPartageTexte(nomFichier),
+      );
     } finally {
       if (mounted) setState(() => _exportEnCours = false);
     }
   }
 
   Future<void> _importer() async {
+    final l10n = context.l10n;
     final resultat = await FilePicker.pickFiles(
       type: FileType.custom,
       allowedExtensions: ['csv'],
@@ -87,7 +102,7 @@ class _ReglagesScreenState extends ConsumerState<ReglagesScreen> {
                 : null);
 
       if (contenu == null) {
-        _afficherMessage('Impossible de lire ce fichier.');
+        _afficherMessage(l10n.fichierIllisible);
         return;
       }
 
@@ -103,22 +118,22 @@ class _ReglagesScreenState extends ConsumerState<ReglagesScreen> {
       final confirme = await showDialog<bool>(
         context: context,
         builder: (context) => AlertDialog(
-          title: const Text('Importer ce fichier ?'),
+          title: Text(l10n.importerTitre),
           content: Text(
-            '${resultatImport.transactions.length} transaction(s) seront ajoutées.'
-            '${resultatImport.lignesIgnorees > 0 ? '\n${resultatImport.lignesIgnorees} ligne(s) ignorée(s) (catégorie, compte ou montant introuvable).' : ''}'
-            '\n\nCet import ajoute ces transactions sans vérifier les doublons : réimporter le même fichier deux fois crée deux copies.',
+            '${l10n.importResume(resultatImport.transactions.length)}'
+            '${resultatImport.lignesIgnorees > 0 ? '\n${l10n.importIgnorees(resultatImport.lignesIgnorees)}' : ''}'
+            '\n\n${l10n.importDoublonsAvertissement}',
           ),
           actions: [
             TextButton(
               onPressed: () => Navigator.of(context).pop(false),
-              child: const Text('Annuler'),
+              child: Text(l10n.annuler),
             ),
             TextButton(
               onPressed: resultatImport.transactions.isEmpty
                   ? null
                   : () => Navigator.of(context).pop(true),
-              child: const Text('Importer'),
+              child: Text(l10n.importer),
             ),
           ],
         ),
@@ -129,9 +144,7 @@ class _ReglagesScreenState extends ConsumerState<ReglagesScreen> {
       for (final transaction in resultatImport.transactions) {
         await repo.enregistrer(transaction);
       }
-      _afficherMessage(
-        '${resultatImport.transactions.length} transaction(s) importée(s).',
-      );
+      _afficherMessage(l10n.importTermine(resultatImport.transactions.length));
     } finally {
       if (mounted) setState(() => _importEnCours = false);
     }
@@ -146,19 +159,51 @@ class _ReglagesScreenState extends ConsumerState<ReglagesScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
+    final langueChoisie = ref.watch(langueProvider) ?? _langueSysteme;
+
     return Scaffold(
-      appBar: AppBar(title: const Text('Réglages')),
+      appBar: AppBar(title: Text(l10n.reglages)),
       body: ListView(
         padding: const EdgeInsets.all(16),
         children: [
-          Text('Données', style: Theme.of(context).textTheme.titleMedium),
+          Text(l10n.langue, style: Theme.of(context).textTheme.titleMedium),
+          const SizedBox(height: 8),
+          Card(
+            child: Padding(
+              padding: const EdgeInsets.all(12),
+              child: SegmentedButton<String>(
+                // Les noms de langues restent dans leur propre langue
+                // (« Français », « English ») : c'est ainsi qu'un
+                // utilisateur perdu dans une langue qu'il ne lit pas
+                // retrouve la sienne.
+                segments: [
+                  ButtonSegment(
+                    value: _langueSysteme,
+                    label: Text(l10n.langueSysteme),
+                  ),
+                  const ButtonSegment(value: 'fr', label: Text('Français')),
+                  const ButtonSegment(value: 'en', label: Text('English')),
+                ],
+                selected: {langueChoisie},
+                onSelectionChanged: (selection) {
+                  final code = selection.first;
+                  ref
+                      .read(langueProvider.notifier)
+                      .choisir(code == _langueSysteme ? null : code);
+                },
+              ),
+            ),
+          ),
+          const SizedBox(height: 24),
+          Text(l10n.donnees, style: Theme.of(context).textTheme.titleMedium),
           const SizedBox(height: 8),
           Card(
             child: Column(
               children: [
                 ListTile(
                   leading: const Icon(Icons.category_outlined),
-                  title: const Text('Catégories'),
+                  title: Text(l10n.categories),
                   trailing: const Icon(Icons.chevron_right),
                   onTap: () => Navigator.of(
                     context,
@@ -167,7 +212,7 @@ class _ReglagesScreenState extends ConsumerState<ReglagesScreen> {
                 const Divider(height: 1),
                 ListTile(
                   leading: const Icon(Icons.account_balance_wallet_outlined),
-                  title: const Text('Comptes'),
+                  title: Text(l10n.comptes),
                   trailing: const Icon(Icons.chevron_right),
                   onTap: () => Navigator.of(
                     context,
@@ -176,7 +221,7 @@ class _ReglagesScreenState extends ConsumerState<ReglagesScreen> {
                 const Divider(height: 1),
                 ListTile(
                   leading: const Icon(Icons.repeat),
-                  title: const Text('Récurrences'),
+                  title: Text(l10n.recurrences),
                   trailing: const Icon(Icons.chevron_right),
                   onTap: () => Navigator.of(
                     context,
@@ -186,14 +231,14 @@ class _ReglagesScreenState extends ConsumerState<ReglagesScreen> {
             ),
           ),
           const SizedBox(height: 24),
-          Text('Export', style: Theme.of(context).textTheme.titleMedium),
+          Text(l10n.export, style: Theme.of(context).textTheme.titleMedium),
           const SizedBox(height: 8),
           Card(
             child: Column(
               children: [
                 ListTile(
                   leading: const Icon(Icons.calendar_today_outlined),
-                  title: const Text('Exporter le mois courant'),
+                  title: Text(l10n.exporterMoisCourant),
                   trailing: _exportEnCours
                       ? const _IndicateurChargement()
                       : const Icon(Icons.chevron_right),
@@ -204,7 +249,7 @@ class _ReglagesScreenState extends ConsumerState<ReglagesScreen> {
                 const Divider(height: 1),
                 ListTile(
                   leading: const Icon(Icons.folder_outlined),
-                  title: const Text('Exporter toutes les transactions'),
+                  title: Text(l10n.exporterTout),
                   trailing: _exportEnCours
                       ? const _IndicateurChargement()
                       : const Icon(Icons.chevron_right),
@@ -216,13 +261,13 @@ class _ReglagesScreenState extends ConsumerState<ReglagesScreen> {
             ),
           ),
           const SizedBox(height: 24),
-          Text('Import', style: Theme.of(context).textTheme.titleMedium),
+          Text(l10n.import, style: Theme.of(context).textTheme.titleMedium),
           const SizedBox(height: 8),
           Card(
             child: ListTile(
               leading: const Icon(Icons.upload_file_outlined),
-              title: const Text('Importer un CSV'),
-              subtitle: const Text('Reprendre un export KUDI (mêmes colonnes)'),
+              title: Text(l10n.importerCsv),
+              subtitle: Text(l10n.importerCsvSousTitre),
               trailing: _importEnCours
                   ? const _IndicateurChargement()
                   : const Icon(Icons.chevron_right),

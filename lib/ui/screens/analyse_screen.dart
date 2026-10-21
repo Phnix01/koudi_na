@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:intl/intl.dart';
 
 import '../../core/constants/couleurs_piliers.dart';
 import '../../core/theme/app_colors.dart';
@@ -27,6 +26,7 @@ import '../widgets/graphique_trajectoire_epargne.dart';
 import '../widgets/heatmap_habitudes.dart';
 import '../widgets/montant_anime.dart';
 import '../widgets/observations_automatiques.dart';
+import '../../l10n/l10n.dart';
 
 /// Écran C (section 5) : les indicateurs calculés (section 5.2), les
 /// sept graphiques (section 5.1) et les observations automatiques
@@ -42,10 +42,11 @@ class AnalyseScreen extends ConsumerWidget {
     final comptes = ref.watch(compteRepositoryProvider).tous();
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Analyse')),
+      appBar: AppBar(title: Text(context.l10n.analyse)),
       body: ValueListenableBuilder(
         valueListenable: transactionRepo.listenable(),
         builder: (context, _, _) {
+          final l10n = context.l10n;
           final toutesLesTransactions = transactionRepo.tous();
           final indicateurs = calculerIndicateurs(
             toutesLesTransactions,
@@ -79,241 +80,253 @@ class AnalyseScreen extends ConsumerWidget {
             toutesLesTransactions,
             categories,
             comptes,
+            l10n,
           );
 
           return ListView(
             padding: const EdgeInsets.all(16),
-            children: [
-              if (observations.isNotEmpty) ...[
-                ObservationsAutomatiques(observations: observations),
-                const SizedBox(height: 12),
-              ],
-              Card(
-                child: Padding(
-                  padding: const EdgeInsets.fromLTRB(8, 16, 16, 8),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(left: 8),
-                        child: Text(
-                          'Évolution sur 12 mois',
-                          style: Theme.of(context).textTheme.titleMedium,
-                        ),
-                      ),
-                      const SizedBox(height: 12),
-                      GraphiqueEvolutionMensuelle(points: evolution),
-                    ],
-                  ),
-                ),
-              ),
-              const SizedBox(height: 12),
-              Card(
-                child: Padding(
-                  padding: const EdgeInsets.all(16),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'Répartition des dépenses (ce mois)',
-                        style: Theme.of(context).textTheme.titleMedium,
-                      ),
-                      const SizedBox(height: 12),
-                      GraphiqueRepartition(parts: repartition),
-                    ],
-                  ),
-                ),
-              ),
-              const SizedBox(height: 12),
-              Card(
-                child: Padding(
-                  padding: const EdgeInsets.all(16),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'Top 5 des catégories (ce mois vs le mois dernier)',
-                        style: Theme.of(context).textTheme.titleMedium,
-                      ),
-                      const SizedBox(height: 4),
-                      Row(
-                        children: [
-                          const _PastilleLegende(
-                            couleur: AppColors.textMuted,
-                            libelle: 'Mois dernier',
-                          ),
-                          const SizedBox(width: 16),
-                          Text(
-                            'Ce mois : couleur de la catégorie',
-                            style: Theme.of(context).textTheme.bodySmall
-                                ?.copyWith(color: AppColors.textMuted),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 12),
-                      GraphiqueComparaison(comparaisons: top5),
-                      const SizedBox(height: 12),
-                      for (final ligne in top5) _LigneTop5(comparaison: ligne),
-                    ],
-                  ),
-                ),
-              ),
-              const SizedBox(height: 12),
-              Card(
-                child: Padding(
-                  padding: const EdgeInsets.all(16),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'Rythme du mois',
-                        style: Theme.of(context).textTheme.titleMedium,
-                      ),
-                      const SizedBox(height: 12),
-                      GraphiqueRythme(rythme: rythme),
-                    ],
-                  ),
-                ),
-              ),
-              const SizedBox(height: 12),
-              Card(
-                child: Padding(
-                  padding: const EdgeInsets.all(16),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'Habitudes hebdomadaires (90 derniers jours)',
-                        style: Theme.of(context).textTheme.titleMedium,
-                      ),
-                      const SizedBox(height: 12),
-                      HeatmapHabitudes(grille: habitudes),
-                    ],
-                  ),
-                ),
-              ),
-              const SizedBox(height: 12),
-              Card(
-                child: Padding(
-                  padding: const EdgeInsets.all(16),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        "Trajectoire d'épargne",
-                        style: Theme.of(context).textTheme.titleMedium,
-                      ),
-                      const SizedBox(height: 12),
-                      GraphiqueTrajectoireEpargne(trajectoire: trajectoire),
-                      if (trajectoire.objectif == 0) ...[
-                        const SizedBox(height: 8),
-                        Text(
-                          "Aucun objectif réglé : ouvre Réglages → Comptes → ton compte Épargne pour en fixer un.",
-                          style: Theme.of(context).textTheme.bodySmall
-                              ?.copyWith(color: AppColors.textMuted),
-                        ),
+            children:
+                [
+                      if (observations.isNotEmpty) ...[
+                        ObservationsAutomatiques(observations: observations),
+                        const SizedBox(height: 12),
                       ],
-                    ],
-                  ),
-                ),
-              ),
-              const SizedBox(height: 12),
-              Card(
-                child: Padding(
-                  padding: const EdgeInsets.all(16),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'Équilibre des piliers (6 mois)',
-                        style: Theme.of(context).textTheme.titleMedium,
+                      Card(
+                        child: Padding(
+                          padding: const EdgeInsets.fromLTRB(8, 16, 16, 8),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.only(left: 8),
+                                child: Text(
+                                  l10n.evolution12Mois,
+                                  style: Theme.of(
+                                    context,
+                                  ).textTheme.titleMedium,
+                                ),
+                              ),
+                              const SizedBox(height: 12),
+                              GraphiqueEvolutionMensuelle(points: evolution),
+                            ],
+                          ),
+                        ),
                       ),
-                      const SizedBox(height: 4),
+                      const SizedBox(height: 12),
+                      Card(
+                        child: Padding(
+                          padding: const EdgeInsets.all(16),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                l10n.repartitionDepensesMois,
+                                style: Theme.of(context).textTheme.titleMedium,
+                              ),
+                              const SizedBox(height: 12),
+                              GraphiqueRepartition(parts: repartition),
+                            ],
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: 12),
+                      Card(
+                        child: Padding(
+                          padding: const EdgeInsets.all(16),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                l10n.top5Titre,
+                                style: Theme.of(context).textTheme.titleMedium,
+                              ),
+                              const SizedBox(height: 4),
+                              Row(
+                                children: [
+                                  _PastilleLegende(
+                                    couleur: AppColors.textMuted,
+                                    libelle: l10n.moisDernier,
+                                  ),
+                                  const SizedBox(width: 16),
+                                  Text(
+                                    l10n.ceMoisCouleurCategorie,
+                                    style: Theme.of(context).textTheme.bodySmall
+                                        ?.copyWith(color: AppColors.textMuted),
+                                  ),
+                                ],
+                              ),
+                              const SizedBox(height: 12),
+                              GraphiqueComparaison(comparaisons: top5),
+                              const SizedBox(height: 12),
+                              for (final ligne in top5)
+                                _LigneTop5(comparaison: ligne),
+                            ],
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: 12),
+                      Card(
+                        child: Padding(
+                          padding: const EdgeInsets.all(16),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                l10n.rythmeDuMois,
+                                style: Theme.of(context).textTheme.titleMedium,
+                              ),
+                              const SizedBox(height: 12),
+                              GraphiqueRythme(rythme: rythme),
+                            ],
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: 12),
+                      Card(
+                        child: Padding(
+                          padding: const EdgeInsets.all(16),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                l10n.habitudesHebdo90,
+                                style: Theme.of(context).textTheme.titleMedium,
+                              ),
+                              const SizedBox(height: 12),
+                              HeatmapHabitudes(grille: habitudes),
+                            ],
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: 12),
+                      Card(
+                        child: Padding(
+                          padding: const EdgeInsets.all(16),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                l10n.trajectoireEpargne,
+                                style: Theme.of(context).textTheme.titleMedium,
+                              ),
+                              const SizedBox(height: 12),
+                              GraphiqueTrajectoireEpargne(
+                                trajectoire: trajectoire,
+                              ),
+                              if (trajectoire.objectif == 0) ...[
+                                const SizedBox(height: 8),
+                                Text(
+                                  l10n.aucunObjectifRegle,
+                                  style: Theme.of(context).textTheme.bodySmall
+                                      ?.copyWith(color: AppColors.textMuted),
+                                ),
+                              ],
+                            ],
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: 12),
+                      Card(
+                        child: Padding(
+                          padding: const EdgeInsets.all(16),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                l10n.equilibrePiliers6Mois,
+                                style: Theme.of(context).textTheme.titleMedium,
+                              ),
+                              const SizedBox(height: 4),
+                              Row(
+                                children: [
+                                  _PastilleLegende(
+                                    couleur: couleursPiliers[Pilier.epargne]!,
+                                    libelle: l10n.pilierEpargne,
+                                  ),
+                                  const SizedBox(width: 12),
+                                  _PastilleLegende(
+                                    couleur: couleursPiliers[Pilier.famille]!,
+                                    libelle: l10n.pilierFamille,
+                                  ),
+                                  const SizedBox(width: 12),
+                                  _PastilleLegende(
+                                    couleur: couleursPiliers[Pilier.vie]!,
+                                    libelle: l10n.pilierVie,
+                                  ),
+                                ],
+                              ),
+                              const SizedBox(height: 12),
+                              GraphiqueEquilibrePiliers(mois: equilibre),
+                            ],
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: 12),
+                      _CarteIndicateur(
+                        titre: l10n.autonomieFinanciere,
+                        valeur: l10n.autonomieValeur(
+                          formaterDecimal(indicateurs.autonomieFinanciereMois),
+                        ),
+                        description: l10n.autonomieDescription,
+                        accent: true,
+                      ),
+                      const SizedBox(height: 12),
                       Row(
                         children: [
-                          _PastilleLegende(
-                            couleur: couleursPiliers[Pilier.epargne]!,
-                            libelle: 'Épargne',
+                          Expanded(
+                            child: _CarteIndicateur(
+                              titre: l10n.tauxEpargne,
+                              valeur:
+                                  '${(indicateurs.tauxEpargne * 100).round()} %',
+                            ),
                           ),
                           const SizedBox(width: 12),
-                          _PastilleLegende(
-                            couleur: couleursPiliers[Pilier.famille]!,
-                            libelle: 'Famille',
-                          ),
-                          const SizedBox(width: 12),
-                          _PastilleLegende(
-                            couleur: couleursPiliers[Pilier.vie]!,
-                            libelle: 'Vie',
+                          Expanded(
+                            child: _CarteIndicateur(
+                              titre: l10n.joursSansDepense,
+                              valeur: '${indicateurs.joursSansDepense}',
+                            ),
                           ),
                         ],
                       ),
                       const SizedBox(height: 12),
-                      GraphiqueEquilibrePiliers(mois: equilibre),
-                    ],
-                  ),
-                ),
-              ),
-              const SizedBox(height: 12),
-              _CarteIndicateur(
-                titre: 'Autonomie financière',
-                valeur:
-                    '${NumberFormat('0.0', 'fr_FR').format(indicateurs.autonomieFinanciereMois)} mois',
-                description:
-                    "Nombre de mois de dépenses moyennes que couvre ton épargne actuelle",
-                accent: true,
-              ),
-              const SizedBox(height: 12),
-              Row(
-                children: [
-                  Expanded(
-                    child: _CarteIndicateur(
-                      titre: "Taux d'épargne",
-                      valeur: '${(indicateurs.tauxEpargne * 100).round()} %',
-                    ),
-                  ),
-                  const SizedBox(width: 12),
-                  Expanded(
-                    child: _CarteIndicateur(
-                      titre: 'Jours sans dépense',
-                      valeur: '${indicateurs.joursSansDepense}',
-                    ),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 12),
-              Row(
-                children: [
-                  Expanded(
-                    child: _CarteIndicateur(
-                      titre: 'Dépense moy. / jour (ce mois)',
-                      valeurMontant: indicateurs.depenseMoyenneJournaliereMois,
-                    ),
-                  ),
-                  const SizedBox(width: 12),
-                  Expanded(
-                    child: _CarteIndicateur(
-                      titre: 'Dépense moy. / jour (historique)',
-                      valeurMontant:
-                          indicateurs.depenseMoyenneJournaliereHistorique,
-                    ),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 12),
-              _CarteIndicateur(
-                titre: 'Projection fin de mois',
-                valeurMontant: indicateurs.projectionFinDeMois,
-                description: indicateurs.projectionDepasseEntrees
-                    ? 'Au rythme actuel, tu dépasseras tes entrées ce mois-ci'
-                    : null,
-                alerte: indicateurs.projectionDepasseEntrees,
-              ),
-              // Cascade d'entrée (section 3.2) : chaque carte apparaît
-              // 40 ms après la précédente plutôt que toutes en même
-              // temps — .animate(interval:) répète la même chaîne
-              // d'effets sur chaque enfant de la liste, en décalant
-              // son départ à chaque fois.
-            ].animate(interval: 40.ms).fadeIn(duration: 300.ms).slideY(begin: 0.06, end: 0, curve: Curves.easeOut),
+                      Row(
+                        children: [
+                          Expanded(
+                            child: _CarteIndicateur(
+                              titre: l10n.depenseMoyJourMois,
+                              valeurMontant:
+                                  indicateurs.depenseMoyenneJournaliereMois,
+                            ),
+                          ),
+                          const SizedBox(width: 12),
+                          Expanded(
+                            child: _CarteIndicateur(
+                              titre: l10n.depenseMoyJourHistorique,
+                              valeurMontant: indicateurs
+                                  .depenseMoyenneJournaliereHistorique,
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 12),
+                      _CarteIndicateur(
+                        titre: l10n.projectionFinDeMois,
+                        valeurMontant: indicateurs.projectionFinDeMois,
+                        description: indicateurs.projectionDepasseEntrees
+                            ? l10n.projectionDepasseEntrees
+                            : null,
+                        alerte: indicateurs.projectionDepasseEntrees,
+                      ),
+                      // Cascade d'entrée (section 3.2) : chaque carte apparaît
+                      // 40 ms après la précédente plutôt que toutes en même
+                      // temps — .animate(interval:) répète la même chaîne
+                      // d'effets sur chaque enfant de la liste, en décalant
+                      // son départ à chaque fois.
+                    ]
+                    .animate(interval: 40.ms)
+                    .fadeIn(duration: 300.ms)
+                    .slideY(begin: 0.06, end: 0, curve: Curves.easeOut),
           );
         },
       ),
@@ -439,7 +452,7 @@ class _LigneTop5 extends StatelessWidget {
         ? AppColors.textMuted
         : (variation > 0 ? AppColors.negative : AppColors.positive);
     final texteVariation = variation == null
-        ? 'Nouveau'
+        ? context.l10n.nouveau
         : '${variation > 0 ? '+' : ''}${variation.round()} %';
 
     return Padding(

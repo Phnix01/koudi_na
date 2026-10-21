@@ -5,4 +5,8 @@ abstract final class HiveBoxes {
   static const categories = 'categories';
   static const comptes = 'comptes';
   static const recurrences = 'recurrences';
+
+  /// Préférences simples (langue...) : une Box de chaînes, clé → valeur,
+  /// sans modèle Hive dédié.
+  static const reglages = 'reglages';
 }

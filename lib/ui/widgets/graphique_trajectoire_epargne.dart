@@ -4,6 +4,7 @@ import 'package:intl/intl.dart';
 
 import '../../core/theme/app_colors.dart';
 import '../../logic/services/trajectoire_epargne.dart';
+import '../../l10n/l10n.dart';
 
 /// Graphique 6 de la section 5.1 : épargne cumulée sur 12 mois, avec
 /// une ligne de repère à l'objectif réglé sur le compte Épargne (même
@@ -60,7 +61,7 @@ class GraphiqueTrajectoireEpargne extends StatelessWidget {
                           color: AppColors.accent,
                           fontSize: 10,
                         ),
-                        labelResolver: (_) => 'Objectif',
+                        labelResolver: (_) => context.l10n.objectif,
                       ),
                     ),
                   ],
@@ -102,7 +103,7 @@ class GraphiqueTrajectoireEpargne extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.only(top: 8),
       child: Text(
-        DateFormat('MMM', 'fr_FR').format(trajectoire.points[index].mois),
+        DateFormat.MMM().format(trajectoire.points[index].mois),
         style: const TextStyle(color: AppColors.textMuted, fontSize: 10),
       ),
     );

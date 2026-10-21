@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../core/theme/app_colors.dart';
+import '../../l10n/l10n.dart';
 
 /// Feuille de choix unique générique : ouverte via `showModalBottomSheet`,
 /// elle sert à tout endroit où l'utilisateur choisit un élément dans une
@@ -40,7 +41,7 @@ class FeuilleSelection<T> extends StatelessWidget {
           ),
           if (avecOptionTous)
             ListTile(
-              title: const Text('Tous'),
+              title: Text(context.l10n.tous),
               onTap: () => Navigator.of(context).pop(),
             ),
           ...options.map((option) {

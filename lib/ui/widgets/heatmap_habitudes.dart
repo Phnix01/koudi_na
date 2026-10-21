@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart' hide TextDirection;
 
 import '../../core/theme/app_colors.dart';
+import '../../l10n/l10n.dart';
 import '../../logic/services/habitudes_hebdomadaires.dart';
 
 /// Graphique 5 de la section 5.1 : une grille 7×4 où la couleur de
@@ -15,7 +17,8 @@ import '../../logic/services/habitudes_hebdomadaires.dart';
 /// (`drawRRect`, du texte via [TextPainter]...), au lieu de composer
 /// des widgets. C'est le bon outil quand la forme voulue n'existe dans
 /// aucune bibliothèque, mais c'est plus bas niveau : pas de `Theme.of`,
-/// pas de mise en page automatique, tout se calcule à la main.
+/// pas de `context.l10n`, tout se calcule à la main — d'où les libellés
+/// traduits ici, dans le widget, et passés au peintre.
 class HeatmapHabitudes extends StatelessWidget {
   const HeatmapHabitudes({super.key, required this.grille});
 
@@ -23,17 +26,32 @@ class HeatmapHabitudes extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
+
     if (grille.maxMontant == 0) {
       return SizedBox(
         height: 160,
         child: Center(
           child: Text(
-            'Pas assez de données sur les 90 derniers jours',
-            style: TextStyle(color: AppColors.textMuted),
+            l10n.pasAssezDonnees90Jours,
+            style: const TextStyle(color: AppColors.textMuted),
           ),
         ),
       );
     }
+
+    // Noms de jours abrégés dans la langue courante, lundi en premier :
+    // le 1er janvier 2024 était un lundi, on en déduit les six suivants.
+    final formatJour = DateFormat.E();
+    final jours = [
+      for (var i = 0; i < 7; i++) formatJour.format(DateTime(2024, 1, 1 + i)),
+    ];
+    final moments = [
+      l10n.momentMatin,
+      l10n.momentApresMidi,
+      l10n.momentSoir,
+      l10n.momentNuit,
+    ];
 
     // CustomPaint a besoin de contraintes fermes : sans ce SizedBox
     // explicite, un Canvas sans dimension imposée se réduirait à zéro
@@ -41,32 +59,42 @@ class HeatmapHabitudes extends StatelessWidget {
     return SizedBox(
       width: double.infinity,
       height: 200,
-      child: CustomPaint(painter: _PeintreHeatmap(grille: grille)),
+      child: CustomPaint(
+        painter: _PeintreHeatmap(
+          grille: grille,
+          jours: jours,
+          moments: moments,
+        ),
+      ),
     );
   }
 }
 
 class _PeintreHeatmap extends CustomPainter {
-  _PeintreHeatmap({required this.grille});
+  _PeintreHeatmap({
+    required this.grille,
+    required this.jours,
+    required this.moments,
+  });
 
   final GrilleHabitudes grille;
+  final List<String> jours;
+  final List<String> moments;
 
-  static const _jours = ['Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam', 'Dim'];
-  static const _moments = ['Matin', 'Aprèm', 'Soir', 'Nuit'];
-  static const _largeurLabelJour = 32.0;
+  static const _largeurLabelJour = 36.0;
   static const _hauteurLabelMoment = 20.0;
 
   @override
   void paint(Canvas canvas, Size size) {
-    final largeurCellule = (size.width - _largeurLabelJour) / _moments.length;
-    final hauteurCellule = (size.height - _hauteurLabelMoment) / _jours.length;
+    final largeurCellule = (size.width - _largeurLabelJour) / moments.length;
+    final hauteurCellule = (size.height - _hauteurLabelMoment) / jours.length;
     final stylePeinture = Paint();
     const styleLabel = TextStyle(color: AppColors.textMuted, fontSize: 10);
 
-    for (var m = 0; m < _moments.length; m++) {
+    for (var m = 0; m < moments.length; m++) {
       _dessinerTexteCentre(
         canvas,
-        _moments[m],
+        moments[m],
         Offset(
           _largeurLabelJour + m * largeurCellule + largeurCellule / 2,
           _hauteurLabelMoment / 2,
@@ -75,10 +103,10 @@ class _PeintreHeatmap extends CustomPainter {
       );
     }
 
-    for (var j = 0; j < _jours.length; j++) {
+    for (var j = 0; j < jours.length; j++) {
       _dessinerTexteCentre(
         canvas,
-        _jours[j],
+        jours[j],
         Offset(
           _largeurLabelJour / 2,
           _hauteurLabelMoment + j * hauteurCellule + hauteurCellule / 2,
@@ -86,7 +114,7 @@ class _PeintreHeatmap extends CustomPainter {
         styleLabel,
       );
 
-      for (var m = 0; m < _moments.length; m++) {
+      for (var m = 0; m < moments.length; m++) {
         final montant = grille.montants[j][m];
         final intensite = montant / grille.maxMontant;
         // Interpole entre "case vide" et "rouge dépense" selon l'intensité :

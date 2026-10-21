@@ -97,7 +97,7 @@ class GraphiqueEvolutionMensuelle extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.only(top: 8),
       child: Text(
-        DateFormat('MMM', 'fr_FR').format(points[index].mois),
+        DateFormat.MMM().format(points[index].mois),
         style: const TextStyle(color: AppColors.textMuted, fontSize: 10),
       ),
     );

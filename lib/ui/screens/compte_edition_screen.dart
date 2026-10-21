@@ -7,6 +7,7 @@ import '../../data/models/compte.dart';
 import '../../logic/providers/repositories_providers.dart';
 import '../widgets/selecteur_couleur.dart';
 import '../widgets/selecteur_icone.dart';
+import '../../l10n/l10n.dart';
 
 /// Création ou modification d'un compte, avec solde initial (section 4,
 /// écran D). `compte` nul → création ; sinon, édition du compte fourni.
@@ -72,25 +73,13 @@ class _CompteEditionScreenState extends ConsumerState<CompteEditionScreen> {
     if (mounted) Navigator.of(context).pop();
   }
 
-  String _libelleType(TypeCompte type) {
-    switch (type) {
-      case TypeCompte.especes:
-        return 'Espèces';
-      case TypeCompte.banque:
-        return 'Banque';
-      case TypeCompte.mobileMoney:
-        return 'Mobile Money';
-      case TypeCompte.epargne:
-        return 'Épargne';
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          widget.compte == null ? 'Nouveau compte' : 'Modifier le compte',
+          widget.compte == null ? l10n.nouveauCompte : l10n.modifierCompte,
         ),
       ),
       body: ListView(
@@ -98,25 +87,23 @@ class _CompteEditionScreenState extends ConsumerState<CompteEditionScreen> {
         children: [
           TextField(
             controller: _controleurLibelle,
-            decoration: const InputDecoration(labelText: 'Libellé'),
+            decoration: InputDecoration(labelText: l10n.libelle),
             onChanged: (_) => setState(() {}),
           ),
           const SizedBox(height: 20),
           TextField(
             controller: _controleurSolde,
             keyboardType: TextInputType.number,
-            decoration: const InputDecoration(
-              labelText: 'Solde initial (FCFA)',
-            ),
+            decoration: InputDecoration(labelText: l10n.soldeInitialFcfa),
           ),
           const SizedBox(height: 20),
-          Text('Type', style: Theme.of(context).textTheme.bodySmall),
+          Text(l10n.type, style: Theme.of(context).textTheme.bodySmall),
           const SizedBox(height: 8),
           Wrap(
             spacing: 8,
             children: TypeCompte.values.map((type) {
               return ChoiceChip(
-                label: Text(_libelleType(type)),
+                label: Text(l10n.libelleTypeCompte(type)),
                 selected: _type == type,
                 onSelected: (_) => setState(() => _type = type),
               );
@@ -127,15 +114,14 @@ class _CompteEditionScreenState extends ConsumerState<CompteEditionScreen> {
             TextField(
               controller: _controleurObjectif,
               keyboardType: TextInputType.number,
-              decoration: const InputDecoration(
-                labelText: "Objectif d'épargne (FCFA, optionnel)",
-                helperText:
-                    'Utilisé comme ligne de repère dans le graphique "Trajectoire d\'épargne"',
+              decoration: InputDecoration(
+                labelText: l10n.objectifEpargneFcfa,
+                helperText: l10n.objectifEpargneAide,
               ),
             ),
           ],
           const SizedBox(height: 20),
-          Text('Icône', style: Theme.of(context).textTheme.bodySmall),
+          Text(l10n.icone, style: Theme.of(context).textTheme.bodySmall),
           const SizedBox(height: 8),
           SelecteurIcone(
             iconeSelectionnee: _iconeCode,
@@ -143,7 +129,7 @@ class _CompteEditionScreenState extends ConsumerState<CompteEditionScreen> {
             onChange: (cle) => setState(() => _iconeCode = cle),
           ),
           const SizedBox(height: 20),
-          Text('Couleur', style: Theme.of(context).textTheme.bodySmall),
+          Text(l10n.couleur, style: Theme.of(context).textTheme.bodySmall),
           const SizedBox(height: 8),
           SelecteurCouleur(
             couleurSelectionnee: _couleurHex,
@@ -152,17 +138,15 @@ class _CompteEditionScreenState extends ConsumerState<CompteEditionScreen> {
           const SizedBox(height: 20),
           SwitchListTile(
             contentPadding: EdgeInsets.zero,
-            title: const Text('Actif'),
-            subtitle: const Text(
-              'Un compte désactivé disparaît de la saisie, sans effacer son historique',
-            ),
+            title: Text(l10n.actif),
+            subtitle: Text(l10n.compteDesactiveExplication),
             value: _actif,
             onChanged: (valeur) => setState(() => _actif = valeur),
           ),
           const SizedBox(height: 24),
           ElevatedButton(
             onPressed: _peutEnregistrer ? _enregistrer : null,
-            child: const Text('Enregistrer'),
+            child: Text(l10n.enregistrer),
           ),
         ],
       ),

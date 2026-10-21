@@ -4,6 +4,7 @@ import '../../core/theme/app_colors.dart';
 import '../../data/models/categorie.dart';
 import '../../data/models/compte.dart';
 import '../../data/models/type_mouvement.dart';
+import '../../l10n/l10n.dart';
 import 'feuille_selection.dart';
 
 /// Trois puces de filtre rapide (section 4, écran B) : type, catégorie,
@@ -40,9 +41,9 @@ class FiltresMois extends StatelessWidget {
     final choix = await showModalBottomSheet<TypeMouvement>(
       context: context,
       builder: (context) => FeuilleSelection<TypeMouvement>(
-        titre: 'Type',
+        titre: context.l10n.type,
         options: const [TypeMouvement.depense, TypeMouvement.entree],
-        libelleDe: (t) => t == TypeMouvement.depense ? 'Dépense' : 'Entrée',
+        libelleDe: context.l10n.libelleTypeMouvement,
         estSelectionne: (t) => t == type,
       ),
     );
@@ -53,7 +54,7 @@ class FiltresMois extends StatelessWidget {
     final choix = await showModalBottomSheet<Categorie>(
       context: context,
       builder: (context) => FeuilleSelection<Categorie>(
-        titre: 'Catégorie',
+        titre: context.l10n.categorie,
         options: categories,
         libelleDe: (c) => c.libelle,
         estSelectionne: (c) => c.id == categorieSelectionnee?.id,
@@ -66,7 +67,7 @@ class FiltresMois extends StatelessWidget {
     final choix = await showModalBottomSheet<Compte>(
       context: context,
       builder: (context) => FeuilleSelection<Compte>(
-        titre: 'Compte',
+        titre: context.l10n.compte,
         options: comptes,
         libelleDe: (c) => c.libelle,
         estSelectionne: (c) => c.id == compteSelectionne?.id,
@@ -85,20 +86,20 @@ class FiltresMois extends StatelessWidget {
         children: [
           _ChipFiltre(
             libelle: type == null
-                ? 'Type'
-                : (type == TypeMouvement.depense ? 'Dépense' : 'Entrée'),
+                ? context.l10n.type
+                : context.l10n.libelleTypeMouvement(type!),
             actif: type != null,
             onTap: () => _choisirType(context),
           ),
           const SizedBox(width: 8),
           _ChipFiltre(
-            libelle: categorieSelectionnee?.libelle ?? 'Catégorie',
+            libelle: categorieSelectionnee?.libelle ?? context.l10n.categorie,
             actif: categorieSelectionnee != null,
             onTap: () => _choisirCategorie(context),
           ),
           const SizedBox(width: 8),
           _ChipFiltre(
-            libelle: compteSelectionne?.libelle ?? 'Compte',
+            libelle: compteSelectionne?.libelle ?? context.l10n.compte,
             actif: compteSelectionne != null,
             onTap: () => _choisirCompte(context),
           ),
@@ -110,7 +111,7 @@ class FiltresMois extends StatelessWidget {
                 onCategorieChange(null);
                 onCompteChange(null);
               },
-              child: const Text('Réinitialiser'),
+              child: Text(context.l10n.reinitialiser),
             ),
           ],
         ],

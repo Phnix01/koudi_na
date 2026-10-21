@@ -10,6 +10,7 @@ import '../../logic/providers/repositories_providers.dart';
 import '../navigation/route_animee.dart';
 import '../widgets/formulaire_transaction.dart';
 import '../widgets/solde_du_mois.dart';
+import '../../l10n/l10n.dart';
 import 'analyse_screen.dart';
 import 'mois_screen.dart';
 import 'reglages_screen.dart';
@@ -47,6 +48,7 @@ class CaptureScreen extends ConsumerWidget {
       captureFormProvider.select((form) => form.categorieId),
     );
     final peutEnregistrer = montant > 0 && categorieId != null;
+    final l10n = context.l10n;
 
     return Scaffold(
       body: SafeArea(
@@ -61,21 +63,21 @@ class CaptureScreen extends ConsumerWidget {
                   ), // équilibre visuellement les trois IconButton à droite
                   const Expanded(child: SoldeDuMois()),
                   IconButton(
-                    tooltip: 'Analyse',
+                    tooltip: l10n.tooltipAnalyse,
                     icon: const PhosphorIcon(PhosphorIconsFill.chartLineUp),
                     onPressed: () => Navigator.of(
                       context,
                     ).push(routeAnimee(const AnalyseScreen())),
                   ),
                   IconButton(
-                    tooltip: 'Voir le mois',
+                    tooltip: l10n.tooltipVoirLeMois,
                     icon: const PhosphorIcon(PhosphorIconsFill.listBullets),
                     onPressed: () => Navigator.of(
                       context,
                     ).push(routeAnimee(const MoisScreen())),
                   ),
                   IconButton(
-                    tooltip: 'Réglages',
+                    tooltip: l10n.tooltipReglages,
                     icon: const PhosphorIcon(PhosphorIconsFill.gearSix),
                     onPressed: () => Navigator.of(
                       context,
@@ -89,7 +91,7 @@ class CaptureScreen extends ConsumerWidget {
               padding: const EdgeInsets.fromLTRB(20, 8, 20, 20),
               child: ElevatedButton(
                 onPressed: peutEnregistrer ? () => _enregistrer(ref) : null,
-                child: const Text('Enregistrer'),
+                child: Text(l10n.enregistrer),
               ),
             ),
           ],

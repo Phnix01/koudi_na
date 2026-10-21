@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import '../../core/theme/app_colors.dart';
 import '../../core/utils/couleur_utils.dart';
 import '../../logic/services/comparaison_mensuelle.dart';
+import '../../l10n/l10n.dart';
 
 /// Graphique 3 de la section 5.1 : barres groupées, ce mois contre le
 /// mois précédent, catégorie par catégorie. `comparaisons` doit déjà
@@ -21,7 +22,7 @@ class GraphiqueComparaison extends StatelessWidget {
         height: 160,
         child: Center(
           child: Text(
-            'Pas assez de données pour comparer',
+            context.l10n.pasAssezDonneesComparer,
             style: TextStyle(color: AppColors.textMuted),
           ),
         ),

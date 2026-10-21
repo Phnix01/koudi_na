@@ -5,6 +5,7 @@ import '../../core/theme/app_colors.dart';
 import '../../core/utils/couleur_utils.dart';
 import '../../core/utils/formatters.dart';
 import '../../logic/services/repartition_categories.dart';
+import '../../l10n/l10n.dart';
 
 /// Graphique 2 de la section 5.1 : anneau des dépenses du mois par
 /// catégorie, avec le total au centre.
@@ -22,7 +23,7 @@ class GraphiqueRepartition extends StatelessWidget {
         height: 160,
         child: Center(
           child: Text(
-            'Aucune dépense ce mois-ci',
+            context.l10n.aucuneDepenseMois,
             style: TextStyle(color: AppColors.textMuted),
           ),
         ),
@@ -57,9 +58,12 @@ class GraphiqueRepartition extends StatelessWidget {
               Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  const Text(
-                    'Total',
-                    style: TextStyle(color: AppColors.textMuted, fontSize: 12),
+                  Text(
+                    context.l10n.total,
+                    style: const TextStyle(
+                      color: AppColors.textMuted,
+                      fontSize: 12,
+                    ),
                   ),
                   Text(
                     formaterMontant(_total),

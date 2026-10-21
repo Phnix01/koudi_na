@@ -6,6 +6,7 @@ import '../../data/models/transaction.dart';
 import '../../logic/providers/capture_form_provider.dart';
 import '../../logic/providers/repositories_providers.dart';
 import '../widgets/formulaire_transaction.dart';
+import '../../l10n/l10n.dart';
 
 /// Écran d'édition : réutilise [FormulaireTransaction] tel quel, sans y
 /// toucher. Le tour de passe-passe est le `ProviderScope` ci-dessous :
@@ -58,16 +59,16 @@ class _CorpsEdition extends ConsumerWidget {
     final confirme = await showDialog<bool>(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('Supprimer cette transaction ?'),
-        content: const Text('Cette action est irréversible.'),
+        title: Text(context.l10n.supprimerTransactionTitre),
+        content: Text(context.l10n.actionIrreversible),
         actions: [
           TextButton(
             onPressed: () => Navigator.of(context).pop(false),
-            child: const Text('Annuler'),
+            child: Text(context.l10n.annuler),
           ),
           TextButton(
             onPressed: () => Navigator.of(context).pop(true),
-            child: const Text('Supprimer'),
+            child: Text(context.l10n.supprimer),
           ),
         ],
       ),
@@ -91,10 +92,10 @@ class _CorpsEdition extends ConsumerWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Modifier'),
+        title: Text(context.l10n.modifier),
         actions: [
           IconButton(
-            tooltip: 'Supprimer',
+            tooltip: context.l10n.supprimer,
             icon: const Icon(Icons.delete_outline),
             onPressed: () => _supprimer(ref, context),
           ),
@@ -110,7 +111,7 @@ class _CorpsEdition extends ConsumerWidget {
                 onPressed: peutEnregistrer
                     ? () => _enregistrer(ref, context)
                     : null,
-                child: const Text('Enregistrer les modifications'),
+                child: Text(context.l10n.enregistrerModifications),
               ),
             ),
           ],

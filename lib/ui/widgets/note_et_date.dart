@@ -5,6 +5,7 @@ import 'package:phosphor_flutter/phosphor_flutter.dart';
 
 import '../../core/theme/app_colors.dart';
 import '../../logic/providers/capture_form_provider.dart';
+import '../../l10n/l10n.dart';
 
 /// Note optionnelle (repliée par défaut) et date de la transaction
 /// (section 4). Le champ note utilise un `TextEditingController` local
@@ -80,7 +81,9 @@ class _NoteEtDateState extends ConsumerState<NoteEtDate> {
                 size: 16,
               ),
               label: Text(
-                _noteOuverte ? 'Retirer la note' : 'Ajouter une note',
+                _noteOuverte
+                    ? context.l10n.retirerNote
+                    : context.l10n.ajouterNote,
               ),
             ),
             const Spacer(),
@@ -99,8 +102,8 @@ class _NoteEtDateState extends ConsumerState<NoteEtDate> {
               icon: const Icon(Icons.calendar_today, size: 14),
               label: Text(
                 _estAujourdHui(date)
-                    ? "Aujourd'hui"
-                    : DateFormat('d MMM', 'fr_FR').format(date),
+                    ? context.l10n.aujourdHui
+                    : DateFormat.MMMd().format(date),
               ),
             ),
           ],
@@ -111,7 +114,9 @@ class _NoteEtDateState extends ConsumerState<NoteEtDate> {
             child: TextField(
               controller: _controleurNote,
               style: const TextStyle(color: AppColors.textPrimary),
-              decoration: const InputDecoration(hintText: 'Note (optionnel)'),
+              decoration: InputDecoration(
+                hintText: context.l10n.noteOptionnelle,
+              ),
               onChanged: (valeur) =>
                   ref.read(captureFormProvider.notifier).changerNote(valeur),
             ),

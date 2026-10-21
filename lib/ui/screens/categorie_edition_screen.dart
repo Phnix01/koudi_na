@@ -9,6 +9,7 @@ import '../../data/models/type_mouvement.dart';
 import '../../logic/providers/repositories_providers.dart';
 import '../widgets/selecteur_couleur.dart';
 import '../widgets/selecteur_icone.dart';
+import '../../l10n/l10n.dart';
 
 /// Création ou modification d'une catégorie (section 4, écran D).
 /// `categorie` nul → création ; sinon, édition de la catégorie fournie.
@@ -70,12 +71,13 @@ class _CategorieEditionScreenState
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
     return Scaffold(
       appBar: AppBar(
         title: Text(
           widget.categorie == null
-              ? 'Nouvelle catégorie'
-              : 'Modifier la catégorie',
+              ? l10n.nouvelleCategorie
+              : l10n.modifierCategorie,
         ),
       ),
       body: ListView(
@@ -83,20 +85,20 @@ class _CategorieEditionScreenState
         children: [
           TextField(
             controller: _controleurLibelle,
-            decoration: const InputDecoration(labelText: 'Libellé'),
+            decoration: InputDecoration(labelText: l10n.libelle),
             onChanged: (_) => setState(() {}),
           ),
           const SizedBox(height: 20),
           Center(
             child: SegmentedButton<TypeMouvement>(
-              segments: const [
+              segments: [
                 ButtonSegment(
                   value: TypeMouvement.depense,
-                  label: Text('Dépense'),
+                  label: Text(context.l10n.depense),
                 ),
                 ButtonSegment(
                   value: TypeMouvement.entree,
-                  label: Text('Entrée'),
+                  label: Text(context.l10n.entree),
                 ),
               ],
               selected: {_type},
@@ -107,16 +109,18 @@ class _CategorieEditionScreenState
           if (_type == TypeMouvement.depense) ...[
             const SizedBox(height: 20),
             Text(
-              'Pilier (règle 40/25/35)',
+              l10n.pilierRegle,
               style: Theme.of(context).textTheme.bodySmall,
             ),
             const SizedBox(height: 8),
             Center(
               child: SegmentedButton<Pilier?>(
-                segments: const [
-                  ButtonSegment(value: Pilier.epargne, label: Text('Épargne')),
-                  ButtonSegment(value: Pilier.famille, label: Text('Famille')),
-                  ButtonSegment(value: Pilier.vie, label: Text('Vie')),
+                segments: [
+                  for (final pilier in Pilier.values)
+                    ButtonSegment(
+                      value: pilier,
+                      label: Text(l10n.libellePilier(pilier)),
+                    ),
                 ],
                 selected: {_pilier ?? Pilier.vie},
                 onSelectionChanged: (selection) =>
@@ -125,7 +129,7 @@ class _CategorieEditionScreenState
             ),
           ],
           const SizedBox(height: 20),
-          Text('Icône', style: Theme.of(context).textTheme.bodySmall),
+          Text(l10n.icone, style: Theme.of(context).textTheme.bodySmall),
           const SizedBox(height: 8),
           SelecteurIcone(
             iconeSelectionnee: _iconeCode,
@@ -133,7 +137,7 @@ class _CategorieEditionScreenState
             onChange: (cle) => setState(() => _iconeCode = cle),
           ),
           const SizedBox(height: 20),
-          Text('Couleur', style: Theme.of(context).textTheme.bodySmall),
+          Text(l10n.couleur, style: Theme.of(context).textTheme.bodySmall),
           const SizedBox(height: 8),
           SelecteurCouleur(
             couleurSelectionnee: _couleurHex,
@@ -142,17 +146,15 @@ class _CategorieEditionScreenState
           const SizedBox(height: 20),
           SwitchListTile(
             contentPadding: EdgeInsets.zero,
-            title: const Text('Active'),
-            subtitle: const Text(
-              'Une catégorie désactivée disparaît de la saisie, sans effacer son historique',
-            ),
+            title: Text(l10n.active),
+            subtitle: Text(l10n.categorieDesactiveeExplication),
             value: _active,
             onChanged: (valeur) => setState(() => _active = valeur),
           ),
           const SizedBox(height: 24),
           ElevatedButton(
             onPressed: _peutEnregistrer ? _enregistrer : null,
-            child: const Text('Enregistrer'),
+            child: Text(l10n.enregistrer),
           ),
         ],
       ),

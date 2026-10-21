@@ -1,0 +1,199 @@
+{
+  "@@locale": "en",
+
+  "appTitre": "Koudi Na",
+
+  "enregistrer": "Save",
+  "enregistrerModifications": "Save changes",
+  "annuler": "Cancel",
+  "supprimer": "Delete",
+  "modifier": "Edit",
+  "tous": "All",
+  "reinitialiser": "Reset",
+  "aChoisir": "Choose",
+  "nouveau": "New",
+  "total": "Total",
+  "objectif": "Goal",
+
+  "depense": "Expense",
+  "entree": "Income",
+  "depenses": "Expenses",
+  "entrees": "Income",
+  "solde": "Balance",
+  "soldeDuMois": "This month's balance",
+  "type": "Type",
+  "categorie": "Category",
+  "categories": "Categories",
+  "compte": "Account",
+  "comptes": "Accounts",
+  "recurrences": "Recurring",
+  "libelle": "Name",
+  "icone": "Icon",
+  "couleur": "Color",
+
+  "pilierEpargne": "Savings",
+  "pilierFamille": "Family",
+  "pilierVie": "Living",
+  "regle402535": "40/25/35 rule",
+  "pilierRegle": "Pillar (40/25/35 rule)",
+
+  "typeCompteEspeces": "Cash",
+  "typeCompteBanque": "Bank",
+  "typeCompteMobileMoney": "Mobile Money",
+  "typeCompteEpargne": "Savings",
+
+  "tooltipAnalyse": "Insights",
+  "tooltipVoirLeMois": "View month",
+  "tooltipReglages": "Settings",
+
+  "aujourdHui": "Today",
+  "hier": "Yesterday",
+  "aucuneTransactionFiltres": "No transactions match these filters",
+  "aucuneTransactionMois": "No transactions this month",
+  "transactionSupprimee": "Transaction deleted",
+  "categorieSupprimee": "Deleted category",
+  "compteSupprime": "Deleted account",
+
+  "supprimerTransactionTitre": "Delete this transaction?",
+  "actionIrreversible": "This cannot be undone.",
+
+  "desactivees": "Disabled",
+  "nouvelleCategorie": "New category",
+  "modifierCategorie": "Edit category",
+  "active": "Enabled",
+  "actif": "Enabled",
+  "categorieDesactiveeExplication": "A disabled category is hidden when adding transactions, but its history is kept",
+
+  "soldeInitialValeur": "Opening balance: {montant}",
+  "@soldeInitialValeur": {
+    "placeholders": {
+      "montant": {"type": "String"}
+    }
+  },
+  "nouveauCompte": "New account",
+  "modifierCompte": "Edit account",
+  "soldeInitialFcfa": "Opening balance (FCFA)",
+  "objectifEpargneFcfa": "Savings goal (FCFA, optional)",
+  "objectifEpargneAide": "Shown as a reference line in the \"Savings trajectory\" chart",
+  "compteDesactiveExplication": "A disabled account is hidden when adding transactions, but its history is kept",
+
+  "aucuneRecurrence": "No recurring transactions yet",
+  "recurrenceSousTitre": "{categorie} · on the {jour} of each month",
+  "@recurrenceSousTitre": {
+    "placeholders": {
+      "categorie": {"type": "String"},
+      "jour": {"type": "int"}
+    }
+  },
+  "nouvelleRecurrence": "New recurring transaction",
+  "modifierRecurrence": "Edit recurring transaction",
+  "libelleExemple": "Name (e.g. Rent, Salary)",
+  "montantFcfa": "Amount (FCFA)",
+  "jourDuMois": "Day of month (1-31)",
+  "recurrenceDesactiveeExplication": "A disabled recurring transaction no longer generates anything",
+
+  "reglages": "Settings",
+  "donnees": "Data",
+  "export": "Export",
+  "exporterMoisCourant": "Export current month",
+  "exporterTout": "Export all transactions",
+  "exportPartageTexte": "Koudi Na export — {nomFichier}",
+  "@exportPartageTexte": {
+    "placeholders": {
+      "nomFichier": {"type": "String"}
+    }
+  },
+  "import": "Import",
+  "importerCsv": "Import a CSV",
+  "importerCsvSousTitre": "Restore a Koudi Na export (same columns)",
+  "fichierIllisible": "This file could not be read.",
+  "importerTitre": "Import this file?",
+  "importResume": "{nombre, plural, =0{No transactions will be added.} =1{1 transaction will be added.} other{{nombre} transactions will be added.}}",
+  "@importResume": {
+    "placeholders": {
+      "nombre": {"type": "int"}
+    }
+  },
+  "importIgnorees": "{nombre, plural, =1{1 line skipped (unknown category, account or amount).} other{{nombre} lines skipped (unknown category, account or amount).}}",
+  "@importIgnorees": {
+    "placeholders": {
+      "nombre": {"type": "int"}
+    }
+  },
+  "importDoublonsAvertissement": "This import adds the transactions without checking for duplicates: importing the same file twice creates two copies.",
+  "importer": "Import",
+  "importTermine": "{nombre, plural, =1{1 transaction imported.} other{{nombre} transactions imported.}}",
+  "@importTermine": {
+    "placeholders": {
+      "nombre": {"type": "int"}
+    }
+  },
+  "langue": "Language",
+  "langueSysteme": "System",
+
+  "analyse": "Insights",
+  "evolution12Mois": "12-month trend",
+  "repartitionDepensesMois": "Spending breakdown (this month)",
+  "top5Titre": "Top 5 categories (this month vs last month)",
+  "moisDernier": "Last month",
+  "ceMoisCouleurCategorie": "This month: category color",
+  "rythmeDuMois": "Monthly pace",
+  "habitudesHebdo90": "Weekly habits (last 90 days)",
+  "trajectoireEpargne": "Savings trajectory",
+  "aucunObjectifRegle": "No goal set: open Settings → Accounts → your Savings account to set one.",
+  "equilibrePiliers6Mois": "Pillar balance (6 months)",
+  "autonomieFinanciere": "Financial runway",
+  "autonomieValeur": "{mois} months",
+  "@autonomieValeur": {
+    "placeholders": {
+      "mois": {"type": "String"}
+    }
+  },
+  "autonomieDescription": "Number of months of average spending your current savings cover",
+  "tauxEpargne": "Savings rate",
+  "joursSansDepense": "No-spend days",
+  "depenseMoyJourMois": "Avg. spend / day (this month)",
+  "depenseMoyJourHistorique": "Avg. spend / day (all time)",
+  "projectionFinDeMois": "End-of-month projection",
+  "projectionDepasseEntrees": "At the current pace, you will exceed your income this month",
+
+  "pasAssezDonnees": "Not enough data",
+  "pasAssezDonneesComparer": "Not enough data to compare",
+  "pasAssezDonnees90Jours": "Not enough data over the last 90 days",
+  "aucuneDepenseMois": "No expenses this month",
+  "entreesDuMois": "Month's income",
+  "momentMatin": "Morning",
+  "momentApresMidi": "Afternoon",
+  "momentSoir": "Evening",
+  "momentNuit": "Night",
+
+  "retirerNote": "Remove note",
+  "ajouterNote": "Add a note",
+  "noteOptionnelle": "Note (optional)",
+
+  "obsHausse": "Your {categorie} spending is up {pourcent}% this month.",
+  "@obsHausse": {
+    "placeholders": {
+      "categorie": {"type": "String"},
+      "pourcent": {"type": "int"}
+    }
+  },
+  "obsDepassement": "At the current pace, you will exceed your income by {montant} before the end of the month.",
+  "@obsDepassement": {
+    "placeholders": {
+      "montant": {"type": "String"}
+    }
+  },
+  "obsObjectifEpargne": "{mois, plural, other{You have met your savings goal {mois} months in a row.}}",
+  "@obsObjectifEpargne": {
+    "placeholders": {
+      "mois": {"type": "int"}
+    }
+  },
+  "obsAutonomie": "Your savings now cover {mois} months of spending.",
+  "@obsAutonomie": {
+    "placeholders": {
+      "mois": {"type": "String"}
+    }
+  }
+}

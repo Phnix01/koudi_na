@@ -8,6 +8,7 @@ import '../../data/models/recurrence.dart';
 import '../../data/models/type_mouvement.dart';
 import '../../logic/providers/repositories_providers.dart';
 import '../widgets/feuille_selection.dart';
+import '../../l10n/l10n.dart';
 
 /// Création ou modification d'une transaction récurrente (Phase 4,
 /// section 2.3). `recurrence` nul → création ; sinon, édition.
@@ -60,7 +61,7 @@ class _RecurrenceEditionScreenState
     final choix = await showModalBottomSheet<Categorie>(
       context: context,
       builder: (context) => FeuilleSelection<Categorie>(
-        titre: 'Catégorie',
+        titre: context.l10n.categorie,
         options: categoriesFiltrees,
         libelleDe: (c) => c.libelle,
         estSelectionne: (c) => c.id == _categorieId,
@@ -74,7 +75,7 @@ class _RecurrenceEditionScreenState
     final choix = await showModalBottomSheet<Compte>(
       context: context,
       builder: (context) => FeuilleSelection<Compte>(
-        titre: 'Compte',
+        titre: context.l10n.compte,
         options: comptes,
         libelleDe: (c) => c.libelle,
         estSelectionne: (c) => c.id == _compteId,
@@ -121,13 +122,14 @@ class _RecurrenceEditionScreenState
         .where((c) => c.id == _categorieId)
         .firstOrNull;
     final compteChoisi = comptes.where((c) => c.id == _compteId).firstOrNull;
+    final l10n = context.l10n;
 
     return Scaffold(
       appBar: AppBar(
         title: Text(
           widget.recurrence == null
-              ? 'Nouvelle récurrence'
-              : 'Modifier la récurrence',
+              ? l10n.nouvelleRecurrence
+              : l10n.modifierRecurrence,
         ),
       ),
       body: ListView(
@@ -135,29 +137,27 @@ class _RecurrenceEditionScreenState
         children: [
           TextField(
             controller: _controleurLibelle,
-            decoration: const InputDecoration(
-              labelText: 'Libellé (ex: Loyer, Salaire)',
-            ),
+            decoration: InputDecoration(labelText: l10n.libelleExemple),
             onChanged: (_) => setState(() {}),
           ),
           const SizedBox(height: 20),
           TextField(
             controller: _controleurMontant,
             keyboardType: TextInputType.number,
-            decoration: const InputDecoration(labelText: 'Montant (FCFA)'),
+            decoration: InputDecoration(labelText: l10n.montantFcfa),
             onChanged: (_) => setState(() {}),
           ),
           const SizedBox(height: 20),
           Center(
             child: SegmentedButton<TypeMouvement>(
-              segments: const [
+              segments: [
                 ButtonSegment(
                   value: TypeMouvement.depense,
-                  label: Text('Dépense'),
+                  label: Text(context.l10n.depense),
                 ),
                 ButtonSegment(
                   value: TypeMouvement.entree,
-                  label: Text('Entrée'),
+                  label: Text(context.l10n.entree),
                 ),
               ],
               selected: {_type},
@@ -171,15 +171,15 @@ class _RecurrenceEditionScreenState
           const SizedBox(height: 20),
           ListTile(
             contentPadding: EdgeInsets.zero,
-            title: const Text('Catégorie'),
-            subtitle: Text(categorieChoisie?.libelle ?? 'À choisir'),
+            title: Text(l10n.categorie),
+            subtitle: Text(categorieChoisie?.libelle ?? l10n.aChoisir),
             trailing: const Icon(Icons.chevron_right),
             onTap: () => _choisirCategorie(categories),
           ),
           ListTile(
             contentPadding: EdgeInsets.zero,
-            title: const Text('Compte'),
-            subtitle: Text(compteChoisi?.libelle ?? 'À choisir'),
+            title: Text(l10n.compte),
+            subtitle: Text(compteChoisi?.libelle ?? l10n.aChoisir),
             trailing: const Icon(Icons.chevron_right),
             onTap: () => _choisirCompte(comptes),
           ),
@@ -187,22 +187,20 @@ class _RecurrenceEditionScreenState
           TextField(
             controller: _controleurJour,
             keyboardType: TextInputType.number,
-            decoration: const InputDecoration(labelText: 'Jour du mois (1-31)'),
+            decoration: InputDecoration(labelText: l10n.jourDuMois),
           ),
           const SizedBox(height: 20),
           SwitchListTile(
             contentPadding: EdgeInsets.zero,
-            title: const Text('Active'),
-            subtitle: const Text(
-              'Une récurrence désactivée ne génère plus de transaction',
-            ),
+            title: Text(l10n.active),
+            subtitle: Text(l10n.recurrenceDesactiveeExplication),
             value: _active,
             onChanged: (valeur) => setState(() => _active = valeur),
           ),
           const SizedBox(height: 24),
           ElevatedButton(
             onPressed: _peutEnregistrer ? _enregistrer : null,
-            child: const Text('Enregistrer'),
+            child: Text(l10n.enregistrer),
           ),
         ],
       ),

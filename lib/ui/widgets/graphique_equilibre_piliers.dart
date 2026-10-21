@@ -6,6 +6,7 @@ import '../../core/constants/couleurs_piliers.dart';
 import '../../core/theme/app_colors.dart';
 import '../../data/models/pilier.dart';
 import '../../logic/services/equilibre_piliers.dart';
+import '../../l10n/l10n.dart';
 
 /// Graphique 7 de la section 5.1 : une barre empilée par mois (6 mois),
 /// chaque segment représentant un pilier. `rodStackItems` est
@@ -24,7 +25,7 @@ class GraphiqueEquilibrePiliers extends StatelessWidget {
         height: 160,
         child: Center(
           child: Text(
-            'Pas assez de données',
+            context.l10n.pasAssezDonnees,
             style: TextStyle(color: AppColors.textMuted),
           ),
         ),
@@ -110,7 +111,7 @@ class GraphiqueEquilibrePiliers extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.only(top: 8),
       child: Text(
-        DateFormat('MMM', 'fr_FR').format(mois[index].mois),
+        DateFormat.MMM().format(mois[index].mois),
         style: const TextStyle(color: AppColors.textMuted, fontSize: 10),
       ),
     );

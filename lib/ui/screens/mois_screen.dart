@@ -19,6 +19,7 @@ import '../navigation/route_animee.dart';
 import '../widgets/barres_piliers.dart';
 import '../widgets/filtres_mois.dart';
 import '../widgets/montant_anime.dart';
+import '../../l10n/l10n.dart';
 import 'edition_transaction_screen.dart';
 
 /// Écran B en version simple (Phase 2, étape 1-4, section 6) : liste des
@@ -53,7 +54,7 @@ class _MoisScreenState extends ConsumerState<MoisScreen> {
     () => _moisAffiche = DateTime(_moisAffiche.year, _moisAffiche.month + 1),
   );
 
-  String _libelleJour(DateTime jour) {
+  String _libelleJour(BuildContext context, DateTime jour) {
     final maintenant = DateTime.now();
     final aujourdHui = DateTime(
       maintenant.year,
@@ -61,9 +62,9 @@ class _MoisScreenState extends ConsumerState<MoisScreen> {
       maintenant.day,
     );
     final hier = aujourdHui.subtract(const Duration(days: 1));
-    if (jour == aujourdHui) return "Aujourd'hui";
-    if (jour == hier) return 'Hier';
-    return DateFormat('EEEE d MMMM', 'fr_FR').format(jour);
+    if (jour == aujourdHui) return context.l10n.aujourdHui;
+    if (jour == hier) return context.l10n.hier;
+    return DateFormat.MMMMEEEEd().format(jour);
   }
 
   @override
@@ -76,6 +77,7 @@ class _MoisScreenState extends ConsumerState<MoisScreen> {
     final comptes = ref.watch(compteRepositoryProvider).tous();
     final categoriesParId = {for (final c in categories) c.id: c};
     final comptesParId = {for (final c in comptes) c.id: c};
+    final l10n = context.l10n;
 
     return Scaffold(
       appBar: AppBar(
@@ -87,7 +89,7 @@ class _MoisScreenState extends ConsumerState<MoisScreen> {
               icon: const Icon(Icons.chevron_left),
               onPressed: _moisPrecedent,
             ),
-            Text(DateFormat('MMMM y', 'fr_FR').format(_moisAffiche)),
+            Text(DateFormat.yMMMM().format(_moisAffiche)),
             IconButton(
               visualDensity: VisualDensity.compact,
               icon: const Icon(Icons.chevron_right),
@@ -160,7 +162,7 @@ class _MoisScreenState extends ConsumerState<MoisScreen> {
                     children: [
                       Expanded(
                         child: _TuileTotal(
-                          libelle: 'Entrées',
+                          libelle: l10n.entrees,
                           valeur: totaux.entrees,
                           couleur: AppColors.positive,
                         ),
@@ -168,7 +170,7 @@ class _MoisScreenState extends ConsumerState<MoisScreen> {
                       const SizedBox(width: 12),
                       Expanded(
                         child: _TuileTotal(
-                          libelle: 'Dépenses',
+                          libelle: l10n.depenses,
                           valeur: totaux.depenses,
                           couleur: AppColors.negative,
                         ),
@@ -176,7 +178,7 @@ class _MoisScreenState extends ConsumerState<MoisScreen> {
                       const SizedBox(width: 12),
                       Expanded(
                         child: _TuileTotal(
-                          libelle: 'Solde',
+                          libelle: l10n.solde,
                           valeur: totaux.solde,
                           couleur: totaux.solde >= 0
                               ? AppColors.positive
@@ -195,8 +197,8 @@ class _MoisScreenState extends ConsumerState<MoisScreen> {
                             _filtreType != null ||
                                     _filtreCategorieId != null ||
                                     _filtreCompteId != null
-                                ? 'Aucune transaction pour ces filtres'
-                                : 'Aucune transaction ce mois-ci',
+                                ? l10n.aucuneTransactionFiltres
+                                : l10n.aucuneTransactionMois,
                             style: Theme.of(context).textTheme.bodyMedium
                                 ?.copyWith(color: AppColors.textMuted),
                           ),
@@ -220,7 +222,7 @@ class _MoisScreenState extends ConsumerState<MoisScreen> {
                                         MainAxisAlignment.spaceBetween,
                                     children: [
                                       Text(
-                                        _libelleJour(journee.jour),
+                                        _libelleJour(context, journee.jour),
                                         style: Theme.of(context)
                                             .textTheme
                                             .bodySmall
@@ -261,11 +263,11 @@ class _MoisScreenState extends ConsumerState<MoisScreen> {
                                         context,
                                       ).showSnackBar(
                                         SnackBar(
-                                          content: const Text(
-                                            'Transaction supprimée',
+                                          content: Text(
+                                            l10n.transactionSupprimee,
                                           ),
                                           action: SnackBarAction(
-                                            label: 'Annuler',
+                                            label: l10n.annuler,
                                             onPressed: () {
                                               ref
                                                   .read(
@@ -386,8 +388,8 @@ class _LigneTransaction extends StatelessWidget {
           size: 20,
         ),
       ),
-      title: Text(categorie?.libelle ?? 'Catégorie supprimée'),
-      subtitle: Text(compte?.libelle ?? 'Compte supprimé'),
+      title: Text(categorie?.libelle ?? context.l10n.categorieSupprimee),
+      subtitle: Text(compte?.libelle ?? context.l10n.compteSupprime),
       trailing: Text(
         '${estEntree ? '+' : '-'}${formaterMontant(transaction.montant)}',
         style: TextStyle(

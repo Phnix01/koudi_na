@@ -1,24 +1,25 @@
-import 'package:intl/intl.dart';
-
 import '../../core/utils/formatters.dart';
 import '../../data/models/categorie.dart';
 import '../../data/models/compte.dart';
 import '../../data/models/pilier.dart';
 import '../../data/models/transaction.dart';
+import '../../l10n/app_localizations.dart';
 import 'calcul_piliers.dart';
 import 'comparaison_mensuelle.dart';
 import 'indicateurs_analyse.dart';
 
-/// Génère de courtes phrases d'observation en français (section 5.3) :
-/// aucune IA, aucun réseau, juste des comparaisons de seuils sur les
-/// calculs déjà faits ailleurs (comparaison mensuelle, indicateurs,
-/// règle 40/25/35). Contrairement aux autres services de ce dossier,
-/// celui-ci produit directement des chaînes prêtes à afficher — c'est
-/// tout son rôle, pas un détail d'implémentation à cacher à l'appelant.
+/// Génère de courtes phrases d'observation (section 5.3) : aucune IA,
+/// aucun réseau, juste des comparaisons de seuils sur les calculs déjà
+/// faits ailleurs (comparaison mensuelle, indicateurs, règle 40/25/35).
+/// Contrairement aux autres services de ce dossier, celui-ci produit
+/// directement des chaînes prêtes à afficher — c'est tout son rôle,
+/// pas un détail d'implémentation à cacher à l'appelant. Les phrases
+/// viennent de [l10n], dans la langue courante de l'application.
 List<String> genererObservations(
   List<Transaction> transactions,
   List<Categorie> categories,
-  List<Compte> comptes, {
+  List<Compte> comptes,
+  AppLocalizations l10n, {
   DateTime? maintenant,
 }) {
   final reference = maintenant ?? DateTime.now();
@@ -39,7 +40,10 @@ List<String> genererObservations(
   if (hausses.isNotEmpty) {
     final plusForteHausse = hausses.first;
     observations.add(
-      'Tes dépenses en ${plusForteHausse.categorie.libelle} ont augmenté de ${plusForteHausse.variationPourcent!.round()} % ce mois-ci.',
+      l10n.obsHausse(
+        plusForteHausse.categorie.libelle,
+        plusForteHausse.variationPourcent!.round(),
+      ),
     );
   }
 
@@ -52,9 +56,7 @@ List<String> genererObservations(
   if (indicateurs.projectionDepasseEntrees) {
     final depassement =
         indicateurs.projectionFinDeMois - indicateurs.entreesMois;
-    observations.add(
-      "Au rythme actuel, tu dépasseras tes entrées de ${formaterMontant(depassement)} d'ici la fin du mois.",
-    );
+    observations.add(l10n.obsDepassement(formaterMontant(depassement)));
   }
 
   final moisConsecutifs = _moisConsecutifsObjectifEpargne(
@@ -63,14 +65,12 @@ List<String> genererObservations(
     reference,
   );
   if (moisConsecutifs >= 2) {
-    observations.add(
-      "Tu as respecté ton objectif d'épargne $moisConsecutifs mois de suite.",
-    );
+    observations.add(l10n.obsObjectifEpargne(moisConsecutifs));
   }
 
   if (indicateurs.autonomieFinanciereMois > 0) {
     observations.add(
-      'Ton épargne couvre désormais ${NumberFormat('0.0', 'fr_FR').format(indicateurs.autonomieFinanciereMois)} mois de dépenses.',
+      l10n.obsAutonomie(formaterDecimal(indicateurs.autonomieFinanciereMois)),
     );
   }
 

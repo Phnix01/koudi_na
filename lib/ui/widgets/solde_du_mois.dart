@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../core/theme/app_colors.dart';
 import '../../logic/providers/repositories_providers.dart';
 import '../../logic/services/calcul_solde.dart';
+import '../../l10n/l10n.dart';
 import 'montant_anime.dart';
 
 /// Solde du mois, discret en haut de l'écran Capture (section 4). Ce
@@ -24,7 +25,7 @@ class SoldeDuMois extends ConsumerWidget {
         return Column(
           children: [
             Text(
-              'Solde du mois',
+              context.l10n.soldeDuMois,
               style: Theme.of(
                 context,
               ).textTheme.bodySmall?.copyWith(color: AppColors.textMuted),

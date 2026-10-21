@@ -10,192 +10,253 @@ import '../repositories/compte_repository.dart';
 /// l'avance, pas des créations utilisateur — la génération d'UUID
 /// n'interviendra qu'à l'écran Capture, pour les vraies transactions.
 ///
+/// Les libellés existent en français et en anglais : le seed se fait
+/// dans la langue de l'utilisateur au premier lancement, puis ces
+/// libellés lui appartiennent (modifiables dans Réglages) et ne sont
+/// plus retraduits si la langue change ensuite.
+///
 /// Répartition par pilier (règle 40/25/35) : c'est un choix par défaut,
 /// pas une règle du cahier des charges — l'utilisateur peut le changer
 /// librement dans Réglages, aucune catégorie n'est figée dans le code.
-final List<Compte> comptesInitiaux = [
+const Map<String, Map<String, String>> _libelles = {
+  'fr': {
+    'compte-especes': 'Espèces',
+    'compte-banque': 'Compte bancaire',
+    'compte-mobile-money': 'Mobile Money',
+    'compte-epargne': 'Épargne',
+    'cat-nourriture': 'Nourriture',
+    'cat-transport': 'Transport',
+    'cat-data-telecom': 'Data & Télécom',
+    'cat-loyer-charges': 'Loyer & Charges',
+    'cat-soutien-familial': 'Soutien familial',
+    'cat-epargne': 'Épargne',
+    'cat-projets-investissement': 'Projets & Investissement',
+    'cat-formation-livres': 'Formation & Livres',
+    'cat-sante': 'Santé',
+    'cat-habillement': 'Habillement',
+    'cat-sadaqa-deen': 'Sadaqa & Deen',
+    'cat-divers': 'Divers',
+    'cat-salaire': 'Salaire',
+    'cat-prestations-contrats': 'Prestations & Contrats',
+    'cat-freelance': 'Freelance',
+    'cat-business': 'Business',
+    'cat-autres-entrees': 'Autres entrées',
+  },
+  'en': {
+    'compte-especes': 'Cash',
+    'compte-banque': 'Bank account',
+    'compte-mobile-money': 'Mobile Money',
+    'compte-epargne': 'Savings',
+    'cat-nourriture': 'Food',
+    'cat-transport': 'Transport',
+    'cat-data-telecom': 'Data & Telecom',
+    'cat-loyer-charges': 'Rent & Utilities',
+    'cat-soutien-familial': 'Family support',
+    'cat-epargne': 'Savings',
+    'cat-projets-investissement': 'Projects & Investment',
+    'cat-formation-livres': 'Training & Books',
+    'cat-sante': 'Health',
+    'cat-habillement': 'Clothing',
+    'cat-sadaqa-deen': 'Sadaqa & Deen',
+    'cat-divers': 'Miscellaneous',
+    'cat-salaire': 'Salary',
+    'cat-prestations-contrats': 'Services & Contracts',
+    'cat-freelance': 'Freelance',
+    'cat-business': 'Business',
+    'cat-autres-entrees': 'Other income',
+  },
+};
+
+String _libelle(String langue, String id) =>
+    (_libelles[langue] ?? _libelles['fr']!)[id]!;
+
+List<Compte> comptesInitiaux(String langue) => [
   Compte(
     id: 'compte-especes',
-    libelle: 'Espèces',
+    libelle: _libelle(langue, 'compte-especes'),
     type: TypeCompte.especes,
     iconeCode: 'coins',
     couleurHex: '#2ECC71',
   ),
   Compte(
     id: 'compte-banque',
-    libelle: 'Compte bancaire',
+    libelle: _libelle(langue, 'compte-banque'),
     type: TypeCompte.banque,
     iconeCode: 'bank',
     couleurHex: '#3498DB',
   ),
   Compte(
     id: 'compte-mobile-money',
-    libelle: 'Mobile Money',
+    libelle: _libelle(langue, 'compte-mobile-money'),
     type: TypeCompte.mobileMoney,
     iconeCode: 'deviceMobile',
     couleurHex: '#C9971E',
   ),
   Compte(
     id: 'compte-epargne',
-    libelle: 'Épargne',
+    libelle: _libelle(langue, 'compte-epargne'),
     type: TypeCompte.epargne,
     iconeCode: 'vault',
     couleurHex: '#00C2A8',
   ),
 ];
 
-final List<Categorie> categoriesInitiales = [
-  // Dépenses
-  Categorie(
+/// (id, icône, couleur, pilier, ordre) de chaque catégorie de dépense
+/// de départ ; le pilier `null` n'existe que pour les entrées.
+typedef _DefCategorie = ({
+  String id,
+  String icone,
+  String couleur,
+  Pilier? pilier,
+  int ordre,
+});
+
+const List<_DefCategorie> _depensesInitiales = [
+  (
     id: 'cat-nourriture',
-    libelle: 'Nourriture',
-    type: TypeMouvement.depense,
-    iconeCode: 'bowlFood',
-    couleurHex: '#F5A623',
+    icone: 'bowlFood',
+    couleur: '#F5A623',
     pilier: Pilier.vie,
     ordre: 0,
   ),
-  Categorie(
+  (
     id: 'cat-transport',
-    libelle: 'Transport',
-    type: TypeMouvement.depense,
-    iconeCode: 'car',
-    couleurHex: '#4A90D9',
+    icone: 'car',
+    couleur: '#4A90D9',
     pilier: Pilier.vie,
     ordre: 1,
   ),
-  Categorie(
+  (
     id: 'cat-data-telecom',
-    libelle: 'Data & Télécom',
-    type: TypeMouvement.depense,
-    iconeCode: 'wifiHigh',
-    couleurHex: '#9B59B6',
+    icone: 'wifiHigh',
+    couleur: '#9B59B6',
     pilier: Pilier.vie,
     ordre: 2,
   ),
-  Categorie(
+  (
     id: 'cat-loyer-charges',
-    libelle: 'Loyer & Charges',
-    type: TypeMouvement.depense,
-    iconeCode: 'house',
-    couleurHex: '#E74C3C',
+    icone: 'house',
+    couleur: '#E74C3C',
     pilier: Pilier.vie,
     ordre: 3,
   ),
-  Categorie(
+  (
     id: 'cat-soutien-familial',
-    libelle: 'Soutien familial',
-    type: TypeMouvement.depense,
-    iconeCode: 'usersThree',
-    couleurHex: '#EC7FA9',
+    icone: 'usersThree',
+    couleur: '#EC7FA9',
     pilier: Pilier.famille,
     ordre: 4,
   ),
-  Categorie(
+  (
     id: 'cat-epargne',
-    libelle: 'Épargne',
-    type: TypeMouvement.depense,
-    iconeCode: 'piggyBank',
-    couleurHex: '#00C2A8',
+    icone: 'piggyBank',
+    couleur: '#00C2A8',
     pilier: Pilier.epargne,
     ordre: 5,
   ),
-  Categorie(
+  (
     id: 'cat-projets-investissement',
-    libelle: 'Projets & Investissement',
-    type: TypeMouvement.depense,
-    iconeCode: 'rocketLaunch',
-    couleurHex: '#16A085',
+    icone: 'rocketLaunch',
+    couleur: '#16A085',
     pilier: Pilier.epargne,
     ordre: 6,
   ),
-  Categorie(
+  (
     id: 'cat-formation-livres',
-    libelle: 'Formation & Livres',
-    type: TypeMouvement.depense,
-    iconeCode: 'bookOpen',
-    couleurHex: '#5DADE2',
+    icone: 'bookOpen',
+    couleur: '#5DADE2',
     pilier: Pilier.vie,
     ordre: 7,
   ),
-  Categorie(
+  (
     id: 'cat-sante',
-    libelle: 'Santé',
-    type: TypeMouvement.depense,
-    iconeCode: 'heartbeat',
-    couleurHex: '#FF6B6B',
+    icone: 'heartbeat',
+    couleur: '#FF6B6B',
     pilier: Pilier.vie,
     ordre: 8,
   ),
-  Categorie(
+  (
     id: 'cat-habillement',
-    libelle: 'Habillement',
-    type: TypeMouvement.depense,
-    iconeCode: 'tShirt',
-    couleurHex: '#F1C40F',
+    icone: 'tShirt',
+    couleur: '#F1C40F',
     pilier: Pilier.vie,
     ordre: 9,
   ),
-  Categorie(
+  (
     id: 'cat-sadaqa-deen',
-    libelle: 'Sadaqa & Deen',
-    type: TypeMouvement.depense,
-    iconeCode: 'mosque',
-    couleurHex: '#C9971E',
+    icone: 'mosque',
+    couleur: '#C9971E',
     pilier: Pilier.famille,
     ordre: 10,
   ),
-  Categorie(
+  (
     id: 'cat-divers',
-    libelle: 'Divers',
-    type: TypeMouvement.depense,
-    iconeCode: 'dotsThreeOutline',
-    couleurHex: '#8A97A6',
+    icone: 'dotsThreeOutline',
+    couleur: '#8A97A6',
     pilier: Pilier.vie,
     ordre: 11,
   ),
+];
 
-  // Entrées — pas de pilier : seules les dépenses alimentent la règle 40/25/35.
-  Categorie(
+// Entrées — pas de pilier : seules les dépenses alimentent la règle 40/25/35.
+const List<_DefCategorie> _entreesInitiales = [
+  (
     id: 'cat-salaire',
-    libelle: 'Salaire',
-    type: TypeMouvement.entree,
-    iconeCode: 'wallet',
-    couleurHex: '#2ECC71',
+    icone: 'wallet',
+    couleur: '#2ECC71',
+    pilier: null,
     ordre: 0,
   ),
-  Categorie(
+  (
     id: 'cat-prestations-contrats',
-    libelle: 'Prestations & Contrats',
-    type: TypeMouvement.entree,
-    iconeCode: 'fileText',
-    couleurHex: '#3498DB',
+    icone: 'fileText',
+    couleur: '#3498DB',
+    pilier: null,
     ordre: 1,
   ),
-  Categorie(
+  (
     id: 'cat-freelance',
-    libelle: 'Freelance',
-    type: TypeMouvement.entree,
-    iconeCode: 'laptop',
-    couleurHex: '#9B59B6',
+    icone: 'laptop',
+    couleur: '#9B59B6',
+    pilier: null,
     ordre: 2,
   ),
-  Categorie(
+  (
     id: 'cat-business',
-    libelle: 'Business',
-    type: TypeMouvement.entree,
-    iconeCode: 'storefront',
-    couleurHex: '#F39C12',
+    icone: 'storefront',
+    couleur: '#F39C12',
+    pilier: null,
     ordre: 3,
   ),
-  Categorie(
+  (
     id: 'cat-autres-entrees',
-    libelle: 'Autres entrées',
-    type: TypeMouvement.entree,
-    iconeCode: 'plusCircle',
-    couleurHex: '#8A97A6',
+    icone: 'plusCircle',
+    couleur: '#8A97A6',
+    pilier: null,
     ordre: 4,
   ),
+];
+
+List<Categorie> categoriesInitiales(String langue) => [
+  for (final d in _depensesInitiales)
+    Categorie(
+      id: d.id,
+      libelle: _libelle(langue, d.id),
+      type: TypeMouvement.depense,
+      iconeCode: d.icone,
+      couleurHex: d.couleur,
+      pilier: d.pilier,
+      ordre: d.ordre,
+    ),
+  for (final d in _entreesInitiales)
+    Categorie(
+      id: d.id,
+      libelle: _libelle(langue, d.id),
+      type: TypeMouvement.entree,
+      iconeCode: d.icone,
+      couleurHex: d.couleur,
+      ordre: d.ordre,
+    ),
 ];
 
 /// Peuple les Box "comptes" et "categories" si elles sont vides.
@@ -204,14 +265,15 @@ final List<Categorie> categoriesInitiales = [
 Future<void> seedSiPremierLancement({
   required CompteRepository comptes,
   required CategorieRepository categories,
+  required String langue,
 }) async {
   if (comptes.estVide) {
-    for (final compte in comptesInitiaux) {
+    for (final compte in comptesInitiaux(langue)) {
       await comptes.enregistrer(compte);
     }
   }
   if (categories.estVide) {
-    for (final categorie in categoriesInitiales) {
+    for (final categorie in categoriesInitiales(langue)) {
       await categories.enregistrer(categorie);
     }
   }

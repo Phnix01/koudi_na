@@ -8,6 +8,7 @@ import '../../core/utils/couleur_utils.dart';
 import '../../core/utils/formatters.dart';
 import '../../logic/providers/repositories_providers.dart';
 import '../navigation/route_animee.dart';
+import '../../l10n/l10n.dart';
 import 'compte_edition_screen.dart';
 
 /// Gestion des comptes, avec solde initial (section 4, écran D). Pas de
@@ -21,7 +22,7 @@ class ComptesScreen extends ConsumerWidget {
     final repo = ref.watch(compteRepositoryProvider);
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Comptes')),
+      appBar: AppBar(title: Text(context.l10n.comptes)),
       floatingActionButton: FloatingActionButton(
         onPressed: () => Navigator.of(
           context,
@@ -55,7 +56,9 @@ class ComptesScreen extends ConsumerWidget {
                   ),
                 ),
                 subtitle: Text(
-                  'Solde initial : ${formaterMontant(compte.soldeInitial)}',
+                  context.l10n.soldeInitialValeur(
+                    formaterMontant(compte.soldeInitial),
+                  ),
                 ),
                 trailing: compte.actif
                     ? const Icon(Icons.chevron_right)

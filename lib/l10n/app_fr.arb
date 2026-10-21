@@ -1,0 +1,199 @@
+{
+  "@@locale": "fr",
+
+  "appTitre": "Koudi Na",
+
+  "enregistrer": "Enregistrer",
+  "enregistrerModifications": "Enregistrer les modifications",
+  "annuler": "Annuler",
+  "supprimer": "Supprimer",
+  "modifier": "Modifier",
+  "tous": "Tous",
+  "reinitialiser": "Réinitialiser",
+  "aChoisir": "À choisir",
+  "nouveau": "Nouveau",
+  "total": "Total",
+  "objectif": "Objectif",
+
+  "depense": "Dépense",
+  "entree": "Entrée",
+  "depenses": "Dépenses",
+  "entrees": "Entrées",
+  "solde": "Solde",
+  "soldeDuMois": "Solde du mois",
+  "type": "Type",
+  "categorie": "Catégorie",
+  "categories": "Catégories",
+  "compte": "Compte",
+  "comptes": "Comptes",
+  "recurrences": "Récurrences",
+  "libelle": "Libellé",
+  "icone": "Icône",
+  "couleur": "Couleur",
+
+  "pilierEpargne": "Épargne",
+  "pilierFamille": "Famille",
+  "pilierVie": "Vie",
+  "regle402535": "Règle 40/25/35",
+  "pilierRegle": "Pilier (règle 40/25/35)",
+
+  "typeCompteEspeces": "Espèces",
+  "typeCompteBanque": "Banque",
+  "typeCompteMobileMoney": "Mobile Money",
+  "typeCompteEpargne": "Épargne",
+
+  "tooltipAnalyse": "Analyse",
+  "tooltipVoirLeMois": "Voir le mois",
+  "tooltipReglages": "Réglages",
+
+  "aujourdHui": "Aujourd'hui",
+  "hier": "Hier",
+  "aucuneTransactionFiltres": "Aucune transaction pour ces filtres",
+  "aucuneTransactionMois": "Aucune transaction ce mois-ci",
+  "transactionSupprimee": "Transaction supprimée",
+  "categorieSupprimee": "Catégorie supprimée",
+  "compteSupprime": "Compte supprimé",
+
+  "supprimerTransactionTitre": "Supprimer cette transaction ?",
+  "actionIrreversible": "Cette action est irréversible.",
+
+  "desactivees": "Désactivées",
+  "nouvelleCategorie": "Nouvelle catégorie",
+  "modifierCategorie": "Modifier la catégorie",
+  "active": "Active",
+  "actif": "Actif",
+  "categorieDesactiveeExplication": "Une catégorie désactivée disparaît de la saisie, sans effacer son historique",
+
+  "soldeInitialValeur": "Solde initial : {montant}",
+  "@soldeInitialValeur": {
+    "placeholders": {
+      "montant": {"type": "String"}
+    }
+  },
+  "nouveauCompte": "Nouveau compte",
+  "modifierCompte": "Modifier le compte",
+  "soldeInitialFcfa": "Solde initial (FCFA)",
+  "objectifEpargneFcfa": "Objectif d'épargne (FCFA, optionnel)",
+  "objectifEpargneAide": "Utilisé comme ligne de repère dans le graphique « Trajectoire d'épargne »",
+  "compteDesactiveExplication": "Un compte désactivé disparaît de la saisie, sans effacer son historique",
+
+  "aucuneRecurrence": "Aucune récurrence pour l'instant",
+  "recurrenceSousTitre": "{categorie} · le {jour} de chaque mois",
+  "@recurrenceSousTitre": {
+    "placeholders": {
+      "categorie": {"type": "String"},
+      "jour": {"type": "int"}
+    }
+  },
+  "nouvelleRecurrence": "Nouvelle récurrence",
+  "modifierRecurrence": "Modifier la récurrence",
+  "libelleExemple": "Libellé (ex : Loyer, Salaire)",
+  "montantFcfa": "Montant (FCFA)",
+  "jourDuMois": "Jour du mois (1-31)",
+  "recurrenceDesactiveeExplication": "Une récurrence désactivée ne génère plus de transaction",
+
+  "reglages": "Réglages",
+  "donnees": "Données",
+  "export": "Export",
+  "exporterMoisCourant": "Exporter le mois courant",
+  "exporterTout": "Exporter toutes les transactions",
+  "exportPartageTexte": "Export Koudi Na — {nomFichier}",
+  "@exportPartageTexte": {
+    "placeholders": {
+      "nomFichier": {"type": "String"}
+    }
+  },
+  "import": "Import",
+  "importerCsv": "Importer un CSV",
+  "importerCsvSousTitre": "Reprendre un export Koudi Na (mêmes colonnes)",
+  "fichierIllisible": "Impossible de lire ce fichier.",
+  "importerTitre": "Importer ce fichier ?",
+  "importResume": "{nombre, plural, =0{Aucune transaction ne sera ajoutée.} =1{1 transaction sera ajoutée.} other{{nombre} transactions seront ajoutées.}}",
+  "@importResume": {
+    "placeholders": {
+      "nombre": {"type": "int"}
+    }
+  },
+  "importIgnorees": "{nombre, plural, =1{1 ligne ignorée (catégorie, compte ou montant introuvable).} other{{nombre} lignes ignorées (catégorie, compte ou montant introuvable).}}",
+  "@importIgnorees": {
+    "placeholders": {
+      "nombre": {"type": "int"}
+    }
+  },
+  "importDoublonsAvertissement": "Cet import ajoute ces transactions sans vérifier les doublons : réimporter le même fichier deux fois crée deux copies.",
+  "importer": "Importer",
+  "importTermine": "{nombre, plural, =1{1 transaction importée.} other{{nombre} transactions importées.}}",
+  "@importTermine": {
+    "placeholders": {
+      "nombre": {"type": "int"}
+    }
+  },
+  "langue": "Langue",
+  "langueSysteme": "Système",
+
+  "analyse": "Analyse",
+  "evolution12Mois": "Évolution sur 12 mois",
+  "repartitionDepensesMois": "Répartition des dépenses (ce mois)",
+  "top5Titre": "Top 5 des catégories (ce mois vs le mois dernier)",
+  "moisDernier": "Mois dernier",
+  "ceMoisCouleurCategorie": "Ce mois : couleur de la catégorie",
+  "rythmeDuMois": "Rythme du mois",
+  "habitudesHebdo90": "Habitudes hebdomadaires (90 derniers jours)",
+  "trajectoireEpargne": "Trajectoire d'épargne",
+  "aucunObjectifRegle": "Aucun objectif réglé : ouvre Réglages → Comptes → ton compte Épargne pour en fixer un.",
+  "equilibrePiliers6Mois": "Équilibre des piliers (6 mois)",
+  "autonomieFinanciere": "Autonomie financière",
+  "autonomieValeur": "{mois} mois",
+  "@autonomieValeur": {
+    "placeholders": {
+      "mois": {"type": "String"}
+    }
+  },
+  "autonomieDescription": "Nombre de mois de dépenses moyennes que couvre ton épargne actuelle",
+  "tauxEpargne": "Taux d'épargne",
+  "joursSansDepense": "Jours sans dépense",
+  "depenseMoyJourMois": "Dépense moy. / jour (ce mois)",
+  "depenseMoyJourHistorique": "Dépense moy. / jour (historique)",
+  "projectionFinDeMois": "Projection fin de mois",
+  "projectionDepasseEntrees": "Au rythme actuel, tu dépasseras tes entrées ce mois-ci",
+
+  "pasAssezDonnees": "Pas assez de données",
+  "pasAssezDonneesComparer": "Pas assez de données pour comparer",
+  "pasAssezDonnees90Jours": "Pas assez de données sur les 90 derniers jours",
+  "aucuneDepenseMois": "Aucune dépense ce mois-ci",
+  "entreesDuMois": "Entrées du mois",
+  "momentMatin": "Matin",
+  "momentApresMidi": "Aprèm",
+  "momentSoir": "Soir",
+  "momentNuit": "Nuit",
+
+  "retirerNote": "Retirer la note",
+  "ajouterNote": "Ajouter une note",
+  "noteOptionnelle": "Note (optionnel)",
+
+  "obsHausse": "Tes dépenses en {categorie} ont augmenté de {pourcent} % ce mois-ci.",
+  "@obsHausse": {
+    "placeholders": {
+      "categorie": {"type": "String"},
+      "pourcent": {"type": "int"}
+    }
+  },
+  "obsDepassement": "Au rythme actuel, tu dépasseras tes entrées de {montant} d'ici la fin du mois.",
+  "@obsDepassement": {
+    "placeholders": {
+      "montant": {"type": "String"}
+    }
+  },
+  "obsObjectifEpargne": "{mois, plural, other{Tu as respecté ton objectif d'épargne {mois} mois de suite.}}",
+  "@obsObjectifEpargne": {
+    "placeholders": {
+      "mois": {"type": "int"}
+    }
+  },
+  "obsAutonomie": "Ton épargne couvre désormais {mois} mois de dépenses.",
+  "@obsAutonomie": {
+    "placeholders": {
+      "mois": {"type": "String"}
+    }
+  }
+}

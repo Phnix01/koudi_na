@@ -90,12 +90,12 @@ BEGIN
         BLOCK "040904e4"
         BEGIN
             VALUE "CompanyName", "XNOVA Systems" "\0"
-            VALUE "FileDescription", "koudi_na" "\0"
+            VALUE "FileDescription", "Koudi Na" "\0"
             VALUE "FileVersion", VERSION_AS_STRING "\0"
             VALUE "InternalName", "koudi_na" "\0"
             VALUE "LegalCopyright", "Copyright (C) 2026 XNOVA Systems. All rights reserved." "\0"
             VALUE "OriginalFilename", "koudi_na.exe" "\0"
-            VALUE "ProductName", "koudi_na" "\0"
+            VALUE "ProductName", "Koudi Na" "\0"
             VALUE "ProductVersion", VERSION_AS_STRING "\0"
         END
     END

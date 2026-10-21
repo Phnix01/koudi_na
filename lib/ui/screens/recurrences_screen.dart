@@ -5,6 +5,7 @@ import '../../core/theme/app_colors.dart';
 import '../../core/utils/formatters.dart';
 import '../../logic/providers/repositories_providers.dart';
 import '../navigation/route_animee.dart';
+import '../../l10n/l10n.dart';
 import 'recurrence_edition_screen.dart';
 
 /// Gestion des transactions récurrentes (Phase 4, section 2.3) :
@@ -22,7 +23,7 @@ class RecurrencesScreen extends ConsumerWidget {
     };
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Récurrences')),
+      appBar: AppBar(title: Text(context.l10n.recurrences)),
       floatingActionButton: FloatingActionButton(
         onPressed: () => Navigator.of(
           context,
@@ -38,7 +39,7 @@ class RecurrencesScreen extends ConsumerWidget {
           if (recurrences.isEmpty) {
             return Center(
               child: Text(
-                "Aucune récurrence pour l'instant",
+                context.l10n.aucuneRecurrence,
                 style: Theme.of(
                   context,
                 ).textTheme.bodyMedium?.copyWith(color: AppColors.textMuted),
@@ -65,7 +66,10 @@ class RecurrencesScreen extends ConsumerWidget {
                   ),
                 ),
                 subtitle: Text(
-                  '${categorie?.libelle ?? 'Catégorie supprimée'} · le ${recurrence.jourDuMois} de chaque mois',
+                  context.l10n.recurrenceSousTitre(
+                    categorie?.libelle ?? context.l10n.categorieSupprimee,
+                    recurrence.jourDuMois,
+                  ),
                 ),
                 trailing: Text(
                   formaterMontant(recurrence.montant),

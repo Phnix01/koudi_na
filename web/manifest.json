@@ -1,11 +1,11 @@
 {
-    "name": "koudi_na",
-    "short_name": "koudi_na",
+    "name": "Koudi Na",
+    "short_name": "Koudi Na",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0B0F14",
     "theme_color": "#00C2A8",
-    "description": "A new Flutter project.",
+    "description": "Suivi des dépenses personnelles selon la règle 40/25/35.",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [

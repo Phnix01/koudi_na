@@ -6,10 +6,10 @@ import '../../core/constants/icones.dart';
 import '../../core/theme/app_colors.dart';
 import '../../core/utils/couleur_utils.dart';
 import '../../data/models/categorie.dart';
-import '../../data/models/pilier.dart';
 import '../../data/models/type_mouvement.dart';
 import '../../logic/providers/repositories_providers.dart';
 import '../navigation/route_animee.dart';
+import '../../l10n/l10n.dart';
 import 'categorie_edition_screen.dart';
 
 /// Gestion des catégories (section 4, écran D) : création, modification,
@@ -52,7 +52,7 @@ class _CategoriesScreenState extends ConsumerState<CategoriesScreen> {
     final repo = ref.watch(categorieRepositoryProvider);
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Catégories')),
+      appBar: AppBar(title: Text(context.l10n.categories)),
       floatingActionButton: FloatingActionButton(
         onPressed: () => Navigator.of(
           context,
@@ -72,14 +72,14 @@ class _CategoriesScreenState extends ConsumerState<CategoriesScreen> {
               Padding(
                 padding: const EdgeInsets.all(16),
                 child: SegmentedButton<TypeMouvement>(
-                  segments: const [
+                  segments: [
                     ButtonSegment(
                       value: TypeMouvement.depense,
-                      label: Text('Dépense'),
+                      label: Text(context.l10n.depense),
                     ),
                     ButtonSegment(
                       value: TypeMouvement.entree,
-                      label: Text('Entrée'),
+                      label: Text(context.l10n.entree),
                     ),
                   ],
                   selected: {_type},
@@ -107,7 +107,7 @@ class _CategoriesScreenState extends ConsumerState<CategoriesScreen> {
                       Padding(
                         padding: const EdgeInsets.fromLTRB(16, 16, 16, 4),
                         child: Text(
-                          'Désactivées',
+                          context.l10n.desactivees,
                           style: Theme.of(context).textTheme.bodySmall
                               ?.copyWith(color: AppColors.textMuted),
                         ),
@@ -155,7 +155,7 @@ class _LigneCategorie extends ConsumerWidget {
         ),
       ),
       subtitle: categorie.pilier != null
-          ? Text(_libellePilier(categorie.pilier!))
+          ? Text(context.l10n.libellePilier(categorie.pilier!))
           : null,
       trailing: categorie.active
           ? const Icon(Icons.chevron_right)
@@ -169,16 +169,5 @@ class _LigneCategorie extends ConsumerWidget {
         ),
       ),
     );
-  }
-
-  String _libellePilier(Pilier pilier) {
-    switch (pilier) {
-      case Pilier.epargne:
-        return 'Épargne';
-      case Pilier.famille:
-        return 'Famille';
-      case Pilier.vie:
-        return 'Vie';
-    }
   }
 }

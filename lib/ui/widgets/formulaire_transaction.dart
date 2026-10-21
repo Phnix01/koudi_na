@@ -5,6 +5,7 @@ import '../../core/theme/app_colors.dart';
 import '../../core/utils/formatters.dart';
 import '../../data/models/type_mouvement.dart';
 import '../../logic/providers/capture_form_provider.dart';
+import '../../l10n/l10n.dart';
 import 'grille_categories.dart';
 import 'note_et_date.dart';
 import 'pave_numerique.dart';
@@ -37,14 +38,14 @@ class FormulaireTransaction extends ConsumerWidget {
           // options, avec l'accessibilité intégrée.
           Center(
             child: SegmentedButton<TypeMouvement>(
-              segments: const [
+              segments: [
                 ButtonSegment(
                   value: TypeMouvement.depense,
-                  label: Text('Dépense'),
+                  label: Text(context.l10n.depense),
                 ),
                 ButtonSegment(
                   value: TypeMouvement.entree,
-                  label: Text('Entrée'),
+                  label: Text(context.l10n.entree),
                 ),
               ],
               selected: {type},
@@ -71,7 +72,7 @@ class FormulaireTransaction extends ConsumerWidget {
           const PaveNumerique(),
           const SizedBox(height: 24),
           Text(
-            'Catégorie',
+            context.l10n.categorie,
             style: Theme.of(
               context,
             ).textTheme.bodySmall?.copyWith(color: AppColors.textMuted),
@@ -80,7 +81,7 @@ class FormulaireTransaction extends ConsumerWidget {
           const GrilleCategories(),
           const SizedBox(height: 24),
           Text(
-            'Compte',
+            context.l10n.compte,
             style: Theme.of(
               context,
             ).textTheme.bodySmall?.copyWith(color: AppColors.textMuted),
