@@ -89,9 +89,12 @@ class CaptureScreen extends ConsumerWidget {
             const Expanded(child: FormulaireTransaction()),
             Padding(
               padding: const EdgeInsets.fromLTRB(20, 8, 20, 20),
-              child: ElevatedButton(
-                onPressed: peutEnregistrer ? () => _enregistrer(ref) : null,
-                child: Text(l10n.enregistrer),
+              child: SizedBox(
+                width: double.infinity,
+                child: ElevatedButton(
+                  onPressed: peutEnregistrer ? () => _enregistrer(ref) : null,
+                  child: Text(l10n.enregistrer),
+                ),
               ),
             ),
           ],

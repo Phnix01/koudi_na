@@ -94,7 +94,10 @@ abstract final class AppTheme {
           // on le remplace par un contraste qui reste lisible.
           disabledBackgroundColor: AppColors.surfaceHigh,
           disabledForegroundColor: AppColors.textMuted,
-          padding: const EdgeInsets.symmetric(vertical: AppSpacing.s16),
+          padding: const EdgeInsets.symmetric(
+            horizontal: AppSpacing.s24,
+            vertical: AppSpacing.s16,
+          ),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(AppSpacing.radius),
           ),

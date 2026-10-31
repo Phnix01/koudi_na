@@ -107,11 +107,14 @@ class _CorpsEdition extends ConsumerWidget {
             const Expanded(child: FormulaireTransaction()),
             Padding(
               padding: const EdgeInsets.fromLTRB(20, 8, 20, 20),
-              child: ElevatedButton(
-                onPressed: peutEnregistrer
-                    ? () => _enregistrer(ref, context)
-                    : null,
-                child: Text(context.l10n.enregistrerModifications),
+              child: SizedBox(
+                width: double.infinity,
+                child: ElevatedButton(
+                  onPressed: peutEnregistrer
+                      ? () => _enregistrer(ref, context)
+                      : null,
+                  child: Text(context.l10n.enregistrerModifications),
+                ),
               ),
             ),
           ],
