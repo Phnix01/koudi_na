@@ -15,6 +15,7 @@ import '../../logic/services/export_csv.dart';
 import '../../logic/services/import_csv.dart';
 import '../../logic/services/partage_csv.dart';
 import '../navigation/route_animee.dart';
+import '../widgets/segmented_toggle.dart';
 import 'categories_screen.dart';
 import 'comptes_screen.dart';
 import 'recurrences_screen.dart';
@@ -195,26 +196,26 @@ class _ReglagesScreenState extends ConsumerState<ReglagesScreen> {
           Card(
             child: Padding(
               padding: const EdgeInsets.all(12),
-              child: SegmentedButton<String>(
-                // Les noms de langues restent dans leur propre langue
-                // (« Français », « English ») : c'est ainsi qu'un
-                // utilisateur perdu dans une langue qu'il ne lit pas
-                // retrouve la sienne.
-                segments: [
-                  ButtonSegment(
-                    value: _langueSysteme,
-                    label: Text(l10n.langueSysteme),
+              // Les noms de langues restent dans leur propre langue
+              // (« Français », « English ») : c'est ainsi qu'un
+              // utilisateur perdu dans une langue qu'il ne lit pas
+              // retrouve la sienne.
+              child: SegmentedToggle<String>(
+                options: [
+                  SegmentedToggleOption(
+                    valeur: _langueSysteme,
+                    label: l10n.langueSysteme,
                   ),
-                  const ButtonSegment(value: 'fr', label: Text('Français')),
-                  const ButtonSegment(value: 'en', label: Text('English')),
+                  const SegmentedToggleOption(
+                    valeur: 'fr',
+                    label: 'Français',
+                  ),
+                  const SegmentedToggleOption(valeur: 'en', label: 'English'),
                 ],
-                selected: {langueChoisie},
-                onSelectionChanged: (selection) {
-                  final code = selection.first;
-                  ref
-                      .read(langueProvider.notifier)
-                      .choisir(code == _langueSysteme ? null : code);
-                },
+                selectionne: langueChoisie,
+                onChanged: (code) => ref
+                    .read(langueProvider.notifier)
+                    .choisir(code == _langueSysteme ? null : code),
               ),
             ),
           ),

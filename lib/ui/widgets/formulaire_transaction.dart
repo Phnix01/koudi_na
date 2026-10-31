@@ -9,6 +9,7 @@ import '../../l10n/l10n.dart';
 import 'grille_categories.dart';
 import 'note_et_date.dart';
 import 'pave_numerique.dart';
+import 'segmented_toggle.dart';
 import 'selecteur_compte.dart';
 
 /// Corps de formulaire commun aux écrans Capture et Édition (section 4) :
@@ -33,27 +34,24 @@ class FormulaireTransaction extends ConsumerWidget {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           const SizedBox(height: 16),
-          // SegmentedButton plutôt que deux boutons juxtaposés : c'est
-          // le widget Material 3 dédié à un choix unique parmi 2 à 4
-          // options, avec l'accessibilité intégrée.
           Center(
-            child: SegmentedButton<TypeMouvement>(
-              segments: [
-                ButtonSegment(
-                  value: TypeMouvement.depense,
-                  label: Text(context.l10n.depense),
-                ),
-                ButtonSegment(
-                  value: TypeMouvement.entree,
-                  label: Text(context.l10n.entree),
-                ),
-              ],
-              selected: {type},
-              onSelectionChanged: (selection) {
-                ref
-                    .read(captureFormProvider.notifier)
-                    .choisirType(selection.first);
-              },
+            child: SizedBox(
+              width: 240,
+              child: SegmentedToggle<TypeMouvement>(
+                options: [
+                  SegmentedToggleOption(
+                    valeur: TypeMouvement.depense,
+                    label: context.l10n.depense,
+                  ),
+                  SegmentedToggleOption(
+                    valeur: TypeMouvement.entree,
+                    label: context.l10n.entree,
+                  ),
+                ],
+                selectionne: type,
+                onChanged: (valeur) =>
+                    ref.read(captureFormProvider.notifier).choisirType(valeur),
+              ),
             ),
           ),
           const SizedBox(height: 16),
