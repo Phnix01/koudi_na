@@ -88,6 +88,8 @@ dependencies:
   # Ouvre le sélecteur de fichiers natif pour choisir le CSV à importer
   # (section 4, écran D, Phase 4).
   file_picker: ^11.0.3
+  url_launcher: ^6.3.3
+  package_info_plus: ^9.0.1
 
 dev_dependencies:
   flutter_test:
@@ -126,8 +128,12 @@ flutter:
 
   # Le monogramme de l'icône, réutilisé dans l'onboarding (avant-plan
   # transparent, même fichier que celui de flutter_launcher_icons).
+  #
+  # Inter et Sora embarquées (voir core/theme/app_theme.dart) : google_fonts
+  # détecte ces fichiers dans les assets et ne fait plus de requête réseau.
   assets:
     - assets/icon/app_icon_fg.png
+    - assets/google_fonts/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images

@@ -207,5 +207,18 @@
   "onboardingTitre3": "40/25/35: your income, already split",
   "onboardingCorps3": "Savings 40%, Family 25%, Living 35%: the split is decided before you spend. Each bar shows where you stand against the target. One glance, nothing to calculate.",
   "onboardingTitre4": "Your numbers stay in your pocket",
-  "onboardingCorps4": "Everything lives on your phone, no sign-up, no server. Works without signal, at the market or the village. Only you read your numbers. Your first expense is waiting."
+  "onboardingCorps4": "Everything lives on your phone, no sign-up, no server. Works without signal, at the market or the village. Only you read your numbers. Your first expense is waiting.",
+
+  "aPropos": "About",
+  "aProposVersion": "Version {version}",
+  "@aProposVersion": {
+    "placeholders": {
+      "version": {"type": "String"}
+    }
+  },
+  "aProposPolitiqueConfidentialite": "Privacy policy",
+  "aProposNousContacter": "Contact us",
+  "aProposEditeur": "Koudi Na is published by XNOVA Systems.",
+  "aProposHorsLigne": "100% offline: no data leaves your phone, except a CSV export you start yourself.",
+  "aProposLienIndisponible": "Couldn't open this link."
 }

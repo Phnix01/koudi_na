@@ -207,5 +207,18 @@
   "onboardingTitre3": "40/25/35 : ton revenu déjà réparti",
   "onboardingCorps3": "Épargne 40 %, Famille 25 %, Vie 35 % : la répartition est décidée d'avance. Chaque barre compare le réel à l'objectif. Un regard suffit, zéro calcul.",
   "onboardingTitre4": "Tes chiffres restent dans ta poche",
-  "onboardingCorps4": "Tout vit sur ton téléphone, sans inscription ni serveur. Ça marche sans réseau, au marché comme au village. Toi seul lis tes chiffres. Ta première dépense t'attend."
+  "onboardingCorps4": "Tout vit sur ton téléphone, sans inscription ni serveur. Ça marche sans réseau, au marché comme au village. Toi seul lis tes chiffres. Ta première dépense t'attend.",
+
+  "aPropos": "À propos",
+  "aProposVersion": "Version {version}",
+  "@aProposVersion": {
+    "placeholders": {
+      "version": {"type": "String"}
+    }
+  },
+  "aProposPolitiqueConfidentialite": "Politique de confidentialité",
+  "aProposNousContacter": "Nous contacter",
+  "aProposEditeur": "Koudi Na est édité par XNOVA Systems.",
+  "aProposHorsLigne": "100 % hors ligne : aucune donnée ne quitte votre téléphone, sauf export CSV initié par vous.",
+  "aProposLienIndisponible": "Impossible d'ouvrir ce lien."
 }

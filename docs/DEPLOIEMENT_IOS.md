@@ -11,9 +11,14 @@ Déjà fait dans le dépôt :
 
 - `ITSAppUsesNonExemptEncryption = false` et `CFBundleLocalizations` fr/en dans `ios/Runner/Info.plist`.
 - Cible iOS 15.0 (`ios/Podfile` et `IPHONEOS_DEPLOYMENT_TARGET` dans le pbxproj).
-- `ios/Runner/PrivacyInfo.xcprivacy` créé. **À ajouter à la cible Runner dans Xcode** (glisser le fichier dans le groupe Runner, cocher « Runner » dans Target Membership) : un fichier hors cible n'est pas embarqué.
+- `ios/Runner/PrivacyInfo.xcprivacy` ajouté à la cible Runner (référencé dans `project.pbxproj` : groupe Runner + Resources build phase). Vérifier dans Xcode → Target Membership que la case « Runner » reste cochée après toute manipulation manuelle du projet.
+- **iPhone uniquement** : `TARGETED_DEVICE_FAMILY = 1` dans les 3 configurations du pbxproj. Plus de captures iPad obligatoires.
+- **Portrait uniquement** : `UISupportedInterfaceOrientations` dans `Info.plist` ne contient plus que `UIInterfaceOrientationPortrait` ; les entrées `~ipad` ont été supprimées. Même choix côté Android (`android:screenOrientation="portrait"`).
+- **Google Fonts embarquées hors ligne** : Inter (Regular, Medium) et Sora (SemiBold, Bold) dans `assets/google_fonts/`, déclarées dans `pubspec.yaml`, `GoogleFonts.config.allowRuntimeFetching = false` dans `main()`, licences OFL enregistrées dans `LicenseRegistry`. Plus aucun appel réseau au premier lancement.
+- **Politique de confidentialité accessible dans l'app** : section « À propos » dans Réglages (`lib/ui/screens/reglages_screen.dart`), avec lien vers la politique et un contact. Voir section 4 ci-dessous pour l'URL et l'e-mail à finaliser.
+- Bundle ID iOS `com.xnovasystems.koudiNa` ↔ Bundle ID Android `com.xnovasystems.koudi_na` : confirmés et inchangés (Apple interdit le `_`, d'où la différence volontaire entre les deux plateformes).
 
-Reste à décider (choix produit, voir section 2) : iPhone seul ou iPad aussi, portrait seul ou paysage autorisé, polices embarquées.
+Reste à faire, hors code (voir sections 1, 4 et 6) : compte Apple Developer Program actif, captures d'écran réelles, remplir la fiche App Store Connect, confirmer l'e-mail de contact `contact@xnovasystems.com` (actuellement un espace réservé dans le code et la politique de confidentialité — à remplacer par une boîte surveillée avant soumission).
 
 ## 1. Prérequis compte et signature
 
@@ -31,11 +36,11 @@ Reste à décider (choix produit, voir section 2) : iPhone seul ou iPad aussi, p
 ### Cible iOS minimale → iOS 15.0 (fait)
 Flutter 3.41 et les plugins fonctionnent dès iOS 13, mais la branche stable de Flutter ne garantit plus que iOS 15+ : 15.0 évite une migration forcée à la prochaine mise à jour du SDK.
 
-### iPhone uniquement (à décider)
-L'app est pensée pour le téléphone. Passer `TARGETED_DEVICE_FAMILY = "1,2";` à `TARGETED_DEVICE_FAMILY = 1;` dans les 3 configurations du pbxproj. Conséquences : plus de captures iPad obligatoires et plus d'obligation de supporter toutes les orientations iPad. L'app reste installable sur iPad en mode compatibilité : vérifier qu'elle ne plante pas (les reviewers testent souvent sur iPad).
+### iPhone uniquement (fait)
+`TARGETED_DEVICE_FAMILY = 1` dans les 3 configurations du pbxproj. Plus de captures iPad obligatoires, plus d'obligation de supporter toutes les orientations iPad. L'app reste installable sur iPad en mode compatibilité (zoomée) : les reviewers testent parfois sur iPad, vérifier qu'elle ne plante pas au premier lancement.
 
-### Orientation (à décider)
-L'écran de saisie et les graphiques ne sont pas conçus pour le paysage. Pour verrouiller le portrait, remplacer dans `Info.plist` le tableau `UISupportedInterfaceOrientations` par le seul `UIInterfaceOrientationPortrait`, et supprimer `UISupportedInterfaceOrientations~ipad` si l'app devient iPhone-only. Faire la même chose côté Android (`android:screenOrientation="portrait"` dans le manifest) pour rester cohérent.
+### Orientation (fait)
+Portrait verrouillé : `Info.plist` ne déclare plus que `UIInterfaceOrientationPortrait` dans `UISupportedInterfaceOrientations` ; l'entrée `~ipad` a été retirée (app iPhone-only). Côté Android, `android:screenOrientation="portrait"` est posé sur `MainActivity` dans `AndroidManifest.xml`.
 
 ### Info.plist
 Déjà présent et correct : `CFBundleDisplayName` = `Koudi Na`, `CFBundleShortVersionString = $(FLUTTER_BUILD_NAME)`, `CFBundleVersion = $(FLUTTER_BUILD_NUMBER)`, `ITSAppUsesNonExemptEncryption = false` (aucun chiffrement propriétaire ; l'app n'utilise même pas HTTPS, qui serait de toute façon exempté), `CFBundleLocalizations` fr/en.
@@ -54,11 +59,8 @@ Obligatoire depuis mai 2024 pour les **API à motif requis** (horodatage de fich
 
 L'app n'est donc **pas tenue** d'avoir son propre manifeste. Par sécurité (et pour que le rapport de confidentialité généré par Xcode soit propre), `ios/Runner/PrivacyInfo.xcprivacy` existe avec quatre sections vides. Si un jour l'app lit `UserDefaults` (ex. `shared_preferences`), ajouter la catégorie `NSPrivacyAccessedAPICategoryUserDefaults` avec le motif `CA92.1`. Contrôle : Xcode → Organizer → archive → **Generate Privacy Report** ; aucun avertissement `ITMS-91053` ne doit arriver par mail après l'upload.
 
-### Google Fonts : supprimer le seul appel réseau (à faire)
-`google_fonts` télécharge Inter et Sora au premier lancement (`lib/core/theme/app_theme.dart`) : contradiction avec « 100 % hors ligne » et police système affichée si l'utilisateur n'a pas de réseau au premier lancement. Correctif :
-1. Télécharger les `.ttf` (Inter, Sora, licence OFL) dans `google_fonts/` et les déclarer dans `pubspec.yaml` (`flutter: assets: - google_fonts/`) ; le package détecte les fichiers embarqués et ne fait plus de requête.
-2. Dans `main()` : `GoogleFonts.config.allowRuntimeFetching = false;` (lève une erreur en debug si une police manque, au lieu de la télécharger).
-3. Ajouter les licences OFL au `LicenseRegistry` (le package le propose dans son README).
+### Google Fonts : appel réseau supprimé (fait)
+`Inter-Regular.ttf`, `Inter-Medium.ttf`, `Sora-SemiBold.ttf`, `Sora-Bold.ttf` (seuls poids utilisés par `AppTheme`) sont embarqués dans `assets/google_fonts/`, déclarés dans `pubspec.yaml`. `main()` pose `GoogleFonts.config.allowRuntimeFetching = false` avant tout usage et enregistre les licences OFL (`OFL-Inter.txt`, `OFL-Sora.txt`) dans `LicenseRegistry`. Plus aucune requête réseau au premier lancement.
 
 ### App Transport Security
 Rien à ajouter : aucune connexion réseau, donc aucune exception `NSAppTransportSecurity`. Ne pas en ajouter « au cas où » (cela déclenche une question de review).
@@ -108,7 +110,7 @@ xcrun altool --upload-package build/ios/ipa/koudi_na.ipa --type ios \
 | Copyright | | `2026 XNOVA Systems` |
 | Catégorie | | Principale **Finance** ; secondaire **Productivité** (facultatif) |
 
-**Politique de confidentialité** (une page, FR + EN, hébergée sur un domaine XNOVA) : identité de l'éditeur ; « Koudi Na ne collecte, ne transmet et ne partage aucune donnée ; toutes les données sont stockées uniquement sur l'appareil, dans la base locale de l'application » ; aucun compte, aucun service tiers, aucun suivi publicitaire ; les fichiers CSV exportés sont sous le contrôle de l'utilisateur ; suppression = désinstallation de l'app ; contact ; date. Le lien doit aussi être **accessible dans l'app** (écran Réglages, section À propos à ajouter) — guideline 5.1.1 (i).
+**Politique de confidentialité** : rédigée en FR + EN, identité de l'éditeur, aucune collecte, aucun compte, aucun service tiers, export CSV sous contrôle de l'utilisateur, suppression = désinstallation, contact, date. Publiée provisoirement ici : **https://claude.ai/artifact/Y3yFsKPSZjrWnGNcpFRgis** (même URL utilisée dans l'app, section Réglages → À propos, et à mettre dans `lib/ui/screens/reglages_screen.dart` si elle change). **À faire avant soumission** : migrer ce texte vers une page sur un domaine propre à XNOVA Systems (ex. `xnovasystems.com/koudi-na/confidentialite`) — une page hébergée sur claude.ai suffit pour tester mais n'est pas idéale à long terme pour une fiche officielle — puis mettre à jour l'URL dans le code et dans App Store Connect / Play Console. Le lien est déjà **accessible dans l'app** (écran Réglages, section À propos) — guideline 5.1.1 (i) respectée.
 
 **Confidentialité de l'app (App Privacy)** : répondre **« Non, nous ne collectons pas de données »** → étiquette *Data Not Collected*. C'est honnête car le critère d'Apple est la sortie des données de l'appareil : Hive est local, aucune requête réseau (une fois les polices embarquées), aucun analytics ni rapport de plantage. Si un SDK (Firebase, Sentry…) est ajouté plus tard, l'étiquette devra être refaite.
 
@@ -117,7 +119,7 @@ xcrun altool --upload-package build/ios/ipa/koudi_na.ipa --type ios \
 **Conformité à l'exportation** : « Non » (ou la question n'apparaît plus grâce à `ITSAppUsesNonExemptEncryption=false`). **Droits de contenu** : « Non, l'app ne contient pas de contenu tiers » (polices OFL incluses sous licence, ce n'est pas du « contenu »). **Publicité (IDFA)** : Non.
 
 **Notes pour la review** (2.3.1 a — être précis) :
-> Koudi Na est un gestionnaire de budget personnel entièrement hors ligne. Aucun compte, aucune connexion : ouvrez l'app, passez l'onboarding (4 écrans) et commencez à saisir. Les données sont stockées localement (base Hive). La « règle 40/25/35 » est une méthode de répartition du revenu mensuel en trois piliers (Épargne 40 %, Famille 25 %, Vie 35 %) ; l'app classe les dépenses dans ces piliers et affiche les écarts. Montants en FCFA (franc CFA). Export CSV via la feuille de partage iOS ; import CSV via le sélecteur de fichiers. L'app ne propose ni transfert d'argent, ni prêt, ni compte bancaire, ni conseil financier : « mobile money » y désigne seulement un type de compte que l'utilisateur suit lui-même. Interface disponible en français et en anglais (réglable dans Réglages). Contact : <email>.
+> Koudi Na est un gestionnaire de budget personnel entièrement hors ligne. Aucun compte, aucune connexion : ouvrez l'app, passez l'onboarding (4 écrans) et commencez à saisir. Les données sont stockées localement (base Hive). La « règle 40/25/35 » est une méthode de répartition du revenu mensuel en trois piliers (Épargne 40 %, Famille 25 %, Vie 35 %) ; l'app classe les dépenses dans ces piliers et affiche les écarts. Montants en FCFA (franc CFA). Export CSV via la feuille de partage iOS ; import CSV via le sélecteur de fichiers. L'app ne propose ni transfert d'argent, ni prêt, ni compte bancaire, ni conseil financier : « mobile money » y désigne seulement un type de compte que l'utilisateur suit lui-même. Interface disponible en français et en anglais (réglable dans Réglages). Contact : contact@xnovasystems.com.
 
 **Captures d'écran** (spécifications Apple vérifiées, max 10 par taille, PNG/JPEG **sans couche alpha**, prises dans l'app réelle — 2.3.3) :
 - **Obligatoire** : *iPhone avec Dynamic Island (écran moyen)* : **1179 × 2556** ou **1206 × 2622** px (portrait).
@@ -149,11 +151,11 @@ xcrun altool --upload-package build/ios/ipa/koudi_na.ipa --type ios \
 
 ## 6. Checklist finale avant « Soumettre »
 
-1. Polices Inter/Sora embarquées, `allowRuntimeFetching = false`, test en mode avion OK.
-2. `Podfile` → `platform :ios, '15.0'` ; `IPHONEOS_DEPLOYMENT_TARGET = 15.0` (fait) ; `TARGETED_DEVICE_FAMILY = 1` si iPhone seul.
-3. `Info.plist` : `ITSAppUsesNonExemptEncryption=false`, `CFBundleLocalizations` fr/en (fait) ; orientation tranchée.
-4. `ios/Runner/PrivacyInfo.xcprivacy` ajouté à la cible Runner ; rapport de confidentialité Xcode sans avertissement.
-5. `pubspec.yaml` version incrémentée (`1.0.0+N`, N jamais réutilisé).
+1. Polices Inter/Sora embarquées, `allowRuntimeFetching = false`, test en mode avion OK. **(fait)**
+2. `Podfile` → `platform :ios, '15.0'` ; `IPHONEOS_DEPLOYMENT_TARGET = 15.0` ; `TARGETED_DEVICE_FAMILY = 1`. **(fait)**
+3. `Info.plist` : `ITSAppUsesNonExemptEncryption=false`, `CFBundleLocalizations` fr/en, orientation portrait uniquement. **(fait)**
+4. `ios/Runner/PrivacyInfo.xcprivacy` ajouté à la cible Runner **(fait, vérifié dans le pbxproj)** ; contrôler quand même le rapport de confidentialité Xcode (Organizer → Generate Privacy Report) sans avertissement avant la première soumission.
+5. `pubspec.yaml` version incrémentée (`1.0.0+N`, N jamais réutilisé). Actuellement `1.0.0+1` : à incrémenter dès le premier upload qui échoue ou qui doit être remplacé.
 6. `flutter clean && flutter pub get && flutter build ipa --release --export-method app-store-connect` sans erreur ; upload via Transporter.
 7. Build testé sur TestFlight sur iPhone réel (FR et EN, onboarding, export + import CSV, iPad en compatibilité).
 8. Fiche : nom, sous-titre, description, mots-clés, URL support, URL politique de confidentialité (en ligne et testée), catégorie Finance, copyright — en FR et EN.

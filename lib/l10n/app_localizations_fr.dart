@@ -470,4 +470,28 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get onboardingCorps4 =>
       'Tout vit sur ton téléphone, sans inscription ni serveur. Ça marche sans réseau, au marché comme au village. Toi seul lis tes chiffres. Ta première dépense t\'attend.';
+
+  @override
+  String get aPropos => 'À propos';
+
+  @override
+  String aProposVersion(String version) {
+    return 'Version $version';
+  }
+
+  @override
+  String get aProposPolitiqueConfidentialite => 'Politique de confidentialité';
+
+  @override
+  String get aProposNousContacter => 'Nous contacter';
+
+  @override
+  String get aProposEditeur => 'Koudi Na est édité par XNOVA Systems.';
+
+  @override
+  String get aProposHorsLigne =>
+      '100 % hors ligne : aucune donnée ne quitte votre téléphone, sauf export CSV initié par vous.';
+
+  @override
+  String get aProposLienIndisponible => 'Impossible d\'ouvrir ce lien.';
 }

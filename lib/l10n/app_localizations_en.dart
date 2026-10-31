@@ -467,4 +467,28 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get onboardingCorps4 =>
       'Everything lives on your phone, no sign-up, no server. Works without signal, at the market or the village. Only you read your numbers. Your first expense is waiting.';
+
+  @override
+  String get aPropos => 'About';
+
+  @override
+  String aProposVersion(String version) {
+    return 'Version $version';
+  }
+
+  @override
+  String get aProposPolitiqueConfidentialite => 'Privacy policy';
+
+  @override
+  String get aProposNousContacter => 'Contact us';
+
+  @override
+  String get aProposEditeur => 'Koudi Na is published by XNOVA Systems.';
+
+  @override
+  String get aProposHorsLigne =>
+      '100% offline: no data leaves your phone, except a CSV export you start yourself.';
+
+  @override
+  String get aProposLienIndisponible => 'Couldn\'t open this link.';
 }

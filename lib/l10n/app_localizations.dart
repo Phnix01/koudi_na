@@ -901,6 +901,48 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'Tout vit sur ton téléphone, sans inscription ni serveur. Ça marche sans réseau, au marché comme au village. Toi seul lis tes chiffres. Ta première dépense t\'attend.'**
   String get onboardingCorps4;
+
+  /// No description provided for @aPropos.
+  ///
+  /// In fr, this message translates to:
+  /// **'À propos'**
+  String get aPropos;
+
+  /// No description provided for @aProposVersion.
+  ///
+  /// In fr, this message translates to:
+  /// **'Version {version}'**
+  String aProposVersion(String version);
+
+  /// No description provided for @aProposPolitiqueConfidentialite.
+  ///
+  /// In fr, this message translates to:
+  /// **'Politique de confidentialité'**
+  String get aProposPolitiqueConfidentialite;
+
+  /// No description provided for @aProposNousContacter.
+  ///
+  /// In fr, this message translates to:
+  /// **'Nous contacter'**
+  String get aProposNousContacter;
+
+  /// No description provided for @aProposEditeur.
+  ///
+  /// In fr, this message translates to:
+  /// **'Koudi Na est édité par XNOVA Systems.'**
+  String get aProposEditeur;
+
+  /// No description provided for @aProposHorsLigne.
+  ///
+  /// In fr, this message translates to:
+  /// **'100 % hors ligne : aucune donnée ne quitte votre téléphone, sauf export CSV initié par vous.'**
+  String get aProposHorsLigne;
+
+  /// No description provided for @aProposLienIndisponible.
+  ///
+  /// In fr, this message translates to:
+  /// **'Impossible d\'ouvrir ce lien.'**
+  String get aProposLienIndisponible;
 }
 
 class _AppLocalizationsDelegate

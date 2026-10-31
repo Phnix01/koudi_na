@@ -5,6 +5,8 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
+import 'package:package_info_plus/package_info_plus.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../l10n/l10n.dart';
 import '../../logic/providers/langue_provider.dart';
@@ -22,6 +24,12 @@ import 'recurrences_screen.dart';
 /// plus simple à écrire avec une valeur non nulle.
 const _langueSysteme = 'systeme';
 
+/// Guideline 5.1.1 (i) d'Apple (et équivalent Google Play) : la politique
+/// de confidentialité doit être accessible depuis l'app, pas seulement
+/// depuis la fiche store.
+const _urlPolitiqueConfidentialite = 'https://claude.ai/artifact/Y3yFsKPSZjrWnGNcpFRgis';
+const _emailContact = 'contact@xnovasystems.com';
+
 /// Écran D (section 4) : langue, gestion des catégories, des comptes et
 /// des récurrences, export et import CSV. Le réglage des pourcentages
 /// 40/25/35 et la bascule de thème ne font pas partie du périmètre
@@ -36,6 +44,21 @@ class ReglagesScreen extends ConsumerStatefulWidget {
 class _ReglagesScreenState extends ConsumerState<ReglagesScreen> {
   bool _exportEnCours = false;
   bool _importEnCours = false;
+  String _version = '';
+
+  @override
+  void initState() {
+    super.initState();
+    PackageInfo.fromPlatform().then((info) {
+      if (mounted) setState(() => _version = info.version);
+    });
+  }
+
+  Future<void> _ouvrirLien(Uri lien) async {
+    final messageEchec = context.l10n.aProposLienIndisponible;
+    final ouvert = await launchUrl(lien, mode: LaunchMode.externalApplication);
+    if (!ouvert) _afficherMessage(messageEchec);
+  }
 
   Future<void> _exporter({required bool moisCourantSeulement}) async {
     final l10n = context.l10n;
@@ -272,6 +295,54 @@ class _ReglagesScreenState extends ConsumerState<ReglagesScreen> {
                   ? const _IndicateurChargement()
                   : const Icon(Icons.chevron_right),
               onTap: _importEnCours ? null : _importer,
+            ),
+          ),
+          const SizedBox(height: 24),
+          Text(l10n.aPropos, style: Theme.of(context).textTheme.titleMedium),
+          const SizedBox(height: 8),
+          Card(
+            child: Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(16, 16, 16, 8),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(l10n.aProposEditeur),
+                      const SizedBox(height: 4),
+                      Text(
+                        l10n.aProposHorsLigne,
+                        style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                          color: Theme.of(context).colorScheme.onSurface
+                              .withValues(alpha: 0.7),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                const Divider(height: 1),
+                ListTile(
+                  leading: const Icon(Icons.privacy_tip_outlined),
+                  title: Text(l10n.aProposPolitiqueConfidentialite),
+                  trailing: const Icon(Icons.open_in_new, size: 18),
+                  onTap: () =>
+                      _ouvrirLien(Uri.parse(_urlPolitiqueConfidentialite)),
+                ),
+                const Divider(height: 1),
+                ListTile(
+                  leading: const Icon(Icons.mail_outline),
+                  title: Text(l10n.aProposNousContacter),
+                  subtitle: const Text(_emailContact),
+                  trailing: const Icon(Icons.open_in_new, size: 18),
+                  onTap: () => _ouvrirLien(
+                    Uri(scheme: 'mailto', path: _emailContact),
+                  ),
+                ),
+                if (_version.isNotEmpty) ...[
+                  const Divider(height: 1),
+                  ListTile(title: Text(l10n.aProposVersion(_version))),
+                ],
+              ],
             ),
           ),
         ],
