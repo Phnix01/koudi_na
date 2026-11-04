@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:phosphor_flutter/phosphor_flutter.dart';
 
 import '../../core/theme/app_colors.dart';
 import '../../core/utils/formatters.dart';
@@ -28,7 +29,7 @@ class RecurrencesScreen extends ConsumerWidget {
         onPressed: () => Navigator.of(
           context,
         ).push(routeAnimee(const RecurrenceEditionScreen())),
-        child: const Icon(Icons.add),
+        child: const PhosphorIcon(PhosphorIconsBold.plus),
       ),
       body: ValueListenableBuilder(
         valueListenable: repo.listenable(),

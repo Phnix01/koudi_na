@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:package_info_plus/package_info_plus.dart';
+import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../l10n/l10n.dart';
@@ -226,27 +227,27 @@ class _ReglagesScreenState extends ConsumerState<ReglagesScreen> {
             child: Column(
               children: [
                 ListTile(
-                  leading: const Icon(Icons.category_outlined),
+                  leading: const PhosphorIcon(PhosphorIconsRegular.squaresFour),
                   title: Text(l10n.categories),
-                  trailing: const Icon(Icons.chevron_right),
+                  trailing: const PhosphorIcon(PhosphorIconsRegular.caretRight),
                   onTap: () => Navigator.of(
                     context,
                   ).push(routeAnimee(const CategoriesScreen())),
                 ),
                 const Divider(height: 1),
                 ListTile(
-                  leading: const Icon(Icons.account_balance_wallet_outlined),
+                  leading: const PhosphorIcon(PhosphorIconsRegular.wallet),
                   title: Text(l10n.comptes),
-                  trailing: const Icon(Icons.chevron_right),
+                  trailing: const PhosphorIcon(PhosphorIconsRegular.caretRight),
                   onTap: () => Navigator.of(
                     context,
                   ).push(routeAnimee(const ComptesScreen())),
                 ),
                 const Divider(height: 1),
                 ListTile(
-                  leading: const Icon(Icons.repeat),
+                  leading: const PhosphorIcon(PhosphorIconsRegular.repeat),
                   title: Text(l10n.recurrences),
-                  trailing: const Icon(Icons.chevron_right),
+                  trailing: const PhosphorIcon(PhosphorIconsRegular.caretRight),
                   onTap: () => Navigator.of(
                     context,
                   ).push(routeAnimee(const RecurrencesScreen())),
@@ -261,22 +262,26 @@ class _ReglagesScreenState extends ConsumerState<ReglagesScreen> {
             child: Column(
               children: [
                 ListTile(
-                  leading: const Icon(Icons.calendar_today_outlined),
+                  leading: const PhosphorIcon(
+                    PhosphorIconsRegular.calendarBlank,
+                  ),
                   title: Text(l10n.exporterMoisCourant),
                   trailing: _exportEnCours
                       ? const _IndicateurChargement()
-                      : const Icon(Icons.chevron_right),
+                      : const PhosphorIcon(PhosphorIconsRegular.caretRight),
                   onTap: _exportEnCours
                       ? null
                       : () => _exporter(moisCourantSeulement: true),
                 ),
                 const Divider(height: 1),
                 ListTile(
-                  leading: const Icon(Icons.folder_outlined),
+                  leading: const PhosphorIcon(
+                    PhosphorIconsRegular.folderSimple,
+                  ),
                   title: Text(l10n.exporterTout),
                   trailing: _exportEnCours
                       ? const _IndicateurChargement()
-                      : const Icon(Icons.chevron_right),
+                      : const PhosphorIcon(PhosphorIconsRegular.caretRight),
                   onTap: _exportEnCours
                       ? null
                       : () => _exporter(moisCourantSeulement: false),
@@ -289,12 +294,12 @@ class _ReglagesScreenState extends ConsumerState<ReglagesScreen> {
           const SizedBox(height: 8),
           Card(
             child: ListTile(
-              leading: const Icon(Icons.upload_file_outlined),
+              leading: const PhosphorIcon(PhosphorIconsRegular.uploadSimple),
               title: Text(l10n.importerCsv),
               subtitle: Text(l10n.importerCsvSousTitre),
               trailing: _importEnCours
                   ? const _IndicateurChargement()
-                  : const Icon(Icons.chevron_right),
+                  : const PhosphorIcon(PhosphorIconsRegular.caretRight),
               onTap: _importEnCours ? null : _importer,
             ),
           ),
@@ -323,18 +328,26 @@ class _ReglagesScreenState extends ConsumerState<ReglagesScreen> {
                 ),
                 const Divider(height: 1),
                 ListTile(
-                  leading: const Icon(Icons.privacy_tip_outlined),
+                  leading: const PhosphorIcon(PhosphorIconsRegular.shieldCheck),
                   title: Text(l10n.aProposPolitiqueConfidentialite),
-                  trailing: const Icon(Icons.open_in_new, size: 18),
+                  trailing: const PhosphorIcon(
+                    PhosphorIconsRegular.arrowSquareOut,
+                    size: 18,
+                  ),
                   onTap: () =>
                       _ouvrirLien(Uri.parse(_urlPolitiqueConfidentialite)),
                 ),
                 const Divider(height: 1),
                 ListTile(
-                  leading: const Icon(Icons.mail_outline),
+                  leading: const PhosphorIcon(
+                    PhosphorIconsRegular.envelopeSimple,
+                  ),
                   title: Text(l10n.aProposNousContacter),
                   subtitle: const Text(_emailContact),
-                  trailing: const Icon(Icons.open_in_new, size: 18),
+                  trailing: const PhosphorIcon(
+                    PhosphorIconsRegular.arrowSquareOut,
+                    size: 18,
+                  ),
                   onTap: () => _ouvrirLien(
                     Uri(scheme: 'mailto', path: _emailContact),
                   ),

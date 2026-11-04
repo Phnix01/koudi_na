@@ -86,13 +86,13 @@ class _MoisScreenState extends ConsumerState<MoisScreen> {
           children: [
             IconButton(
               visualDensity: VisualDensity.compact,
-              icon: const Icon(Icons.chevron_left),
+              icon: const PhosphorIcon(PhosphorIconsRegular.caretLeft),
               onPressed: _moisPrecedent,
             ),
             Text(DateFormat.yMMMM().format(_moisAffiche)),
             IconButton(
               visualDensity: VisualDensity.compact,
-              icon: const Icon(Icons.chevron_right),
+              icon: const PhosphorIcon(PhosphorIconsRegular.caretRight),
               onPressed: _moisSuivant,
             ),
           ],
@@ -249,8 +249,8 @@ class _MoisScreenState extends ConsumerState<MoisScreen> {
                                       color: AppColors.negative,
                                       alignment: Alignment.centerRight,
                                       padding: const EdgeInsets.only(right: 20),
-                                      child: const Icon(
-                                        Icons.delete_outline,
+                                      child: const PhosphorIcon(
+                                        PhosphorIconsBold.trash,
                                         color: Colors.white,
                                       ),
                                     ),

@@ -11,6 +11,7 @@ import '../../data/models/pilier.dart';
 import '../../l10n/l10n.dart';
 import '../../logic/providers/langue_provider.dart';
 import '../navigation/route_animee.dart';
+import '../widgets/segmented_toggle.dart';
 import 'capture_screen.dart';
 
 /// Onboarding du tout premier lancement : quatre écrans, une promesse
@@ -151,19 +152,17 @@ class _BasculeLangue extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final courante = ref.watch(localeProvider).languageCode;
-    return SegmentedButton<String>(
-      style: const ButtonStyle(
-        visualDensity: VisualDensity.compact,
-        tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+    return SizedBox(
+      width: 112,
+      child: SegmentedToggle<String>(
+        options: const [
+          SegmentedToggleOption(valeur: 'fr', label: 'FR'),
+          SegmentedToggleOption(valeur: 'en', label: 'EN'),
+        ],
+        selectionne: courante,
+        onChanged: (valeur) =>
+            ref.read(langueProvider.notifier).choisir(valeur),
       ),
-      showSelectedIcon: false,
-      segments: const [
-        ButtonSegment(value: 'fr', label: Text('FR')),
-        ButtonSegment(value: 'en', label: Text('EN')),
-      ],
-      selected: {courante},
-      onSelectionChanged: (selection) =>
-          ref.read(langueProvider.notifier).choisir(selection.first),
     );
   }
 }

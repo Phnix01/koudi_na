@@ -163,8 +163,8 @@ class _LigneCategorie extends ConsumerWidget {
           ? Text(context.l10n.libellePilier(categorie.pilier!))
           : null,
       trailing: categorie.active
-          ? const Icon(Icons.chevron_right)
-          : const Icon(Icons.visibility_off_outlined, size: 18),
+          ? const PhosphorIcon(PhosphorIconsRegular.caretRight)
+          : const PhosphorIcon(PhosphorIconsRegular.eyeSlash, size: 18),
       onTap: () => Navigator.of(context).push(
         routeAnimee(
           CategorieEditionScreen(

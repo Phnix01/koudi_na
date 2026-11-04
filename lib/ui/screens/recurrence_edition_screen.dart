@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:uuid/uuid.dart';
 
 import '../../data/models/categorie.dart';
@@ -8,6 +9,7 @@ import '../../data/models/recurrence.dart';
 import '../../data/models/type_mouvement.dart';
 import '../../logic/providers/repositories_providers.dart';
 import '../widgets/feuille_selection.dart';
+import '../widgets/segmented_toggle.dart';
 import '../../l10n/l10n.dart';
 
 /// Création ou modification d'une transaction récurrente (Phase 4,
@@ -149,23 +151,26 @@ class _RecurrenceEditionScreenState
           ),
           const SizedBox(height: 20),
           Center(
-            child: SegmentedButton<TypeMouvement>(
-              segments: [
-                ButtonSegment(
-                  value: TypeMouvement.depense,
-                  label: Text(context.l10n.depense),
-                ),
-                ButtonSegment(
-                  value: TypeMouvement.entree,
-                  label: Text(context.l10n.entree),
-                ),
-              ],
-              selected: {_type},
-              onSelectionChanged: (selection) => setState(() {
-                _type = selection.first;
-                _categorieId =
-                    null; // la liste de catégories change avec le type
-              }),
+            child: SizedBox(
+              width: 240,
+              child: SegmentedToggle<TypeMouvement>(
+                options: [
+                  SegmentedToggleOption(
+                    valeur: TypeMouvement.depense,
+                    label: context.l10n.depense,
+                  ),
+                  SegmentedToggleOption(
+                    valeur: TypeMouvement.entree,
+                    label: context.l10n.entree,
+                  ),
+                ],
+                selectionne: _type,
+                onChanged: (valeur) => setState(() {
+                  _type = valeur;
+                  _categorieId =
+                      null; // la liste de catégories change avec le type
+                }),
+              ),
             ),
           ),
           const SizedBox(height: 20),
@@ -173,14 +178,14 @@ class _RecurrenceEditionScreenState
             contentPadding: EdgeInsets.zero,
             title: Text(l10n.categorie),
             subtitle: Text(categorieChoisie?.libelle ?? l10n.aChoisir),
-            trailing: const Icon(Icons.chevron_right),
+            trailing: const PhosphorIcon(PhosphorIconsRegular.caretRight),
             onTap: () => _choisirCategorie(categories),
           ),
           ListTile(
             contentPadding: EdgeInsets.zero,
             title: Text(l10n.compte),
             subtitle: Text(compteChoisi?.libelle ?? l10n.aChoisir),
-            trailing: const Icon(Icons.chevron_right),
+            trailing: const PhosphorIcon(PhosphorIconsRegular.caretRight),
             onTap: () => _choisirCompte(comptes),
           ),
           const SizedBox(height: 20),
@@ -198,9 +203,12 @@ class _RecurrenceEditionScreenState
             onChanged: (valeur) => setState(() => _active = valeur),
           ),
           const SizedBox(height: 24),
-          ElevatedButton(
-            onPressed: _peutEnregistrer ? _enregistrer : null,
-            child: Text(l10n.enregistrer),
+          SizedBox(
+            width: double.infinity,
+            child: ElevatedButton(
+              onPressed: _peutEnregistrer ? _enregistrer : null,
+              child: Text(l10n.enregistrer),
+            ),
           ),
         ],
       ),

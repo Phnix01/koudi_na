@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:phosphor_flutter/phosphor_flutter.dart';
 
 import '../../data/models/transaction.dart';
 import '../../logic/providers/capture_form_provider.dart';
@@ -96,7 +97,7 @@ class _CorpsEdition extends ConsumerWidget {
         actions: [
           IconButton(
             tooltip: context.l10n.supprimer,
-            icon: const Icon(Icons.delete_outline),
+            icon: const PhosphorIcon(PhosphorIconsRegular.trash),
             onPressed: () => _supprimer(ref, context),
           ),
         ],

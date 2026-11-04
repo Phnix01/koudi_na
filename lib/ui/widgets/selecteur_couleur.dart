@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:phosphor_flutter/phosphor_flutter.dart';
 
 import '../../core/constants/palette_couleurs.dart';
 import '../../core/utils/couleur_utils.dart';

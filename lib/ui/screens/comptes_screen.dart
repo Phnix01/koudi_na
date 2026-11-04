@@ -27,7 +27,7 @@ class ComptesScreen extends ConsumerWidget {
         onPressed: () => Navigator.of(
           context,
         ).push(routeAnimee(const CompteEditionScreen())),
-        child: const Icon(Icons.add),
+        child: const PhosphorIcon(PhosphorIconsBold.plus),
       ),
       body: ValueListenableBuilder(
         valueListenable: repo.listenable(),
@@ -61,8 +61,11 @@ class ComptesScreen extends ConsumerWidget {
                   ),
                 ),
                 trailing: compte.actif
-                    ? const Icon(Icons.chevron_right)
-                    : const Icon(Icons.visibility_off_outlined, size: 18),
+                    ? const PhosphorIcon(PhosphorIconsRegular.caretRight)
+                    : const PhosphorIcon(
+                        PhosphorIconsRegular.eyeSlash,
+                        size: 18,
+                      ),
                 onTap: () => Navigator.of(
                   context,
                 ).push(routeAnimee(CompteEditionScreen(compte: compte))),
