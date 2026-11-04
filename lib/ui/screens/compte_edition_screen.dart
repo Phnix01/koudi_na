@@ -144,9 +144,12 @@ class _CompteEditionScreenState extends ConsumerState<CompteEditionScreen> {
             onChanged: (valeur) => setState(() => _actif = valeur),
           ),
           const SizedBox(height: 24),
-          ElevatedButton(
-            onPressed: _peutEnregistrer ? _enregistrer : null,
-            child: Text(l10n.enregistrer),
+          SizedBox(
+            width: double.infinity,
+            child: ElevatedButton(
+              onPressed: _peutEnregistrer ? _enregistrer : null,
+              child: Text(l10n.enregistrer),
+            ),
           ),
         ],
       ),
