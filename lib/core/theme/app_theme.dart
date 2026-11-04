@@ -68,8 +68,19 @@ abstract final class AppTheme {
         color: AppColors.surface,
         elevation: 0,
         margin: EdgeInsets.zero,
+        // Un liseré d'un pixel donne du relief face au fond : sans lui,
+        // `surface` et `bg` sont trop proches pour que la carte se
+        // détache (elevation 0 + ombre invisible sur fond sombre).
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(AppSpacing.radius),
+          side: const BorderSide(color: AppColors.surfaceHigh, width: 1),
+        ),
+      ),
+      floatingActionButtonTheme: FloatingActionButtonThemeData(
+        backgroundColor: AppColors.accentRose,
+        foregroundColor: AppColors.bg,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(AppSpacing.s16),
         ),
       ),
       inputDecorationTheme: InputDecorationTheme(

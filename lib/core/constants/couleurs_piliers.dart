@@ -10,6 +10,6 @@ import '../theme/app_colors.dart';
 /// (calcul_piliers.dart) ne connaît aucune couleur.
 const Map<Pilier, Color> couleursPiliers = {
   Pilier.epargne: AppColors.primary,
-  Pilier.famille: Color(0xFFEC7FA9),
-  Pilier.vie: Color(0xFF3498DB),
+  Pilier.famille: AppColors.accentRose,
+  Pilier.vie: AppColors.accentBleu,
 };

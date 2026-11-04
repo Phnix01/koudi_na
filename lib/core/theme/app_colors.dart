@@ -12,6 +12,14 @@ abstract final class AppColors {
   static const primary = Color(0xFF00C2A8);
   static const accent = Color(0xFFC9971E);
 
+  // Rose et bleu du monogramme (assets/icon/app_icon.svg) : jusqu'ici
+  // seul le teal apparaissait dans l'interface (le logo, lui, est
+  // multicolore). Utilisés pour les actions secondaires (ex. le bouton
+  // d'ajout flottant) afin que l'identité de marque dépasse l'écran
+  // d'accueil.
+  static const accentRose = Color(0xFFEC7FA9);
+  static const accentBleu = Color(0xFF3498DB);
+
   static const positive = Color(0xFF2ECC71);
   static const negative = Color(0xFFE74C3C);
   // Pas dans les tokens de la section 3.1 : ajouté pour l'état "proche

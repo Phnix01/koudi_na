@@ -9,6 +9,7 @@ import '../../data/models/categorie.dart';
 import '../../data/models/type_mouvement.dart';
 import '../../logic/providers/repositories_providers.dart';
 import '../navigation/route_animee.dart';
+import '../widgets/segmented_toggle.dart';
 import '../../l10n/l10n.dart';
 import 'categorie_edition_screen.dart';
 
@@ -57,7 +58,7 @@ class _CategoriesScreenState extends ConsumerState<CategoriesScreen> {
         onPressed: () => Navigator.of(
           context,
         ).push(routeAnimee(CategorieEditionScreen(typeParDefaut: _type))),
-        child: const Icon(Icons.add),
+        child: const PhosphorIcon(PhosphorIconsBold.plus),
       ),
       body: ValueListenableBuilder(
         valueListenable: repo.listenable(),
@@ -71,20 +72,24 @@ class _CategoriesScreenState extends ConsumerState<CategoriesScreen> {
             children: [
               Padding(
                 padding: const EdgeInsets.all(16),
-                child: SegmentedButton<TypeMouvement>(
-                  segments: [
-                    ButtonSegment(
-                      value: TypeMouvement.depense,
-                      label: Text(context.l10n.depense),
+                child: Center(
+                  child: SizedBox(
+                    width: 240,
+                    child: SegmentedToggle<TypeMouvement>(
+                      options: [
+                        SegmentedToggleOption(
+                          valeur: TypeMouvement.depense,
+                          label: context.l10n.depense,
+                        ),
+                        SegmentedToggleOption(
+                          valeur: TypeMouvement.entree,
+                          label: context.l10n.entree,
+                        ),
+                      ],
+                      selectionne: _type,
+                      onChanged: (valeur) => setState(() => _type = valeur),
                     ),
-                    ButtonSegment(
-                      value: TypeMouvement.entree,
-                      label: Text(context.l10n.entree),
-                    ),
-                  ],
-                  selected: {_type},
-                  onSelectionChanged: (selection) =>
-                      setState(() => _type = selection.first),
+                  ),
                 ),
               ),
               Expanded(
