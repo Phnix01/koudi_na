@@ -22,7 +22,7 @@ import 'comptes_screen.dart';
 import 'recurrences_screen.dart';
 
 /// Valeur du segment « Système » dans le sélecteur de langue : le
-/// provider stocke `null` pour ce cas, mais un `SegmentedButton` est
+/// provider stocke `null` pour ce cas, mais un `SegmentedToggle` est
 /// plus simple à écrire avec une valeur non nulle.
 const _langueSysteme = 'systeme';
 

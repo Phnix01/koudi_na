@@ -99,7 +99,10 @@ class _NoteEtDateState extends ConsumerState<NoteEtDate> {
                   ref.read(captureFormProvider.notifier).changerDate(choisie);
                 }
               },
-              icon: const Icon(Icons.calendar_today, size: 14),
+              icon: const PhosphorIcon(
+                PhosphorIconsRegular.calendarBlank,
+                size: 14,
+              ),
               label: Text(
                 _estAujourdHui(date)
                     ? context.l10n.aujourdHui

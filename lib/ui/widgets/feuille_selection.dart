@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:phosphor_flutter/phosphor_flutter.dart';
 
 import '../../core/theme/app_colors.dart';
 import '../../l10n/l10n.dart';
@@ -48,7 +49,10 @@ class FeuilleSelection<T> extends StatelessWidget {
             return ListTile(
               title: Text(libelleDe(option)),
               trailing: estSelectionne(option)
-                  ? const Icon(Icons.check, color: AppColors.primary)
+                  ? const PhosphorIcon(
+                      PhosphorIconsBold.check,
+                      color: AppColors.primary,
+                    )
                   : null,
               onTap: () => Navigator.of(context).pop(option),
             );

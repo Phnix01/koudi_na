@@ -37,7 +37,11 @@ class SelecteurCouleur extends StatelessWidget {
                   : null,
             ),
             child: selectionnee
-                ? const Icon(Icons.check, color: Colors.white, size: 18)
+                ? const PhosphorIcon(
+                    PhosphorIconsBold.check,
+                    color: Colors.white,
+                    size: 18,
+                  )
                 : null,
           ),
         );

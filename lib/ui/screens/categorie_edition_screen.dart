@@ -7,6 +7,7 @@ import '../../data/models/categorie.dart';
 import '../../data/models/pilier.dart';
 import '../../data/models/type_mouvement.dart';
 import '../../logic/providers/repositories_providers.dart';
+import '../widgets/segmented_toggle.dart';
 import '../widgets/selecteur_couleur.dart';
 import '../widgets/selecteur_icone.dart';
 import '../../l10n/l10n.dart';
@@ -90,20 +91,22 @@ class _CategorieEditionScreenState
           ),
           const SizedBox(height: 20),
           Center(
-            child: SegmentedButton<TypeMouvement>(
-              segments: [
-                ButtonSegment(
-                  value: TypeMouvement.depense,
-                  label: Text(context.l10n.depense),
-                ),
-                ButtonSegment(
-                  value: TypeMouvement.entree,
-                  label: Text(context.l10n.entree),
-                ),
-              ],
-              selected: {_type},
-              onSelectionChanged: (selection) =>
-                  setState(() => _type = selection.first),
+            child: SizedBox(
+              width: 240,
+              child: SegmentedToggle<TypeMouvement>(
+                options: [
+                  SegmentedToggleOption(
+                    valeur: TypeMouvement.depense,
+                    label: context.l10n.depense,
+                  ),
+                  SegmentedToggleOption(
+                    valeur: TypeMouvement.entree,
+                    label: context.l10n.entree,
+                  ),
+                ],
+                selectionne: _type,
+                onChanged: (valeur) => setState(() => _type = valeur),
+              ),
             ),
           ),
           if (_type == TypeMouvement.depense) ...[
@@ -113,18 +116,18 @@ class _CategorieEditionScreenState
               style: Theme.of(context).textTheme.bodySmall,
             ),
             const SizedBox(height: 8),
-            Center(
-              child: SegmentedButton<Pilier?>(
-                segments: [
+            SizedBox(
+              width: double.infinity,
+              child: SegmentedToggle<Pilier?>(
+                options: [
                   for (final pilier in Pilier.values)
-                    ButtonSegment(
-                      value: pilier,
-                      label: Text(l10n.libellePilier(pilier)),
+                    SegmentedToggleOption(
+                      valeur: pilier,
+                      label: l10n.libellePilier(pilier),
                     ),
                 ],
-                selected: {_pilier ?? Pilier.vie},
-                onSelectionChanged: (selection) =>
-                    setState(() => _pilier = selection.first),
+                selectionne: _pilier ?? Pilier.vie,
+                onChanged: (valeur) => setState(() => _pilier = valeur),
               ),
             ),
           ],
@@ -152,9 +155,12 @@ class _CategorieEditionScreenState
             onChanged: (valeur) => setState(() => _active = valeur),
           ),
           const SizedBox(height: 24),
-          ElevatedButton(
-            onPressed: _peutEnregistrer ? _enregistrer : null,
-            child: Text(l10n.enregistrer),
+          SizedBox(
+            width: double.infinity,
+            child: ElevatedButton(
+              onPressed: _peutEnregistrer ? _enregistrer : null,
+              child: Text(l10n.enregistrer),
+            ),
           ),
         ],
       ),
