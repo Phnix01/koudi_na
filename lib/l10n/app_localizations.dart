@@ -854,11 +854,65 @@ abstract class AppLocalizations {
   /// **'Noter ma première dépense'**
   String get onboardingCommencer;
 
-  /// No description provided for @onboardingDeviseLabel.
+  /// No description provided for @devise.
   ///
   /// In fr, this message translates to:
   /// **'Devise'**
-  String get onboardingDeviseLabel;
+  String get devise;
+
+  /// No description provided for @deviseXof.
+  ///
+  /// In fr, this message translates to:
+  /// **'Franc CFA (UEMOA)'**
+  String get deviseXof;
+
+  /// No description provided for @deviseXaf.
+  ///
+  /// In fr, this message translates to:
+  /// **'Franc CFA (CEMAC)'**
+  String get deviseXaf;
+
+  /// No description provided for @deviseEur.
+  ///
+  /// In fr, this message translates to:
+  /// **'Euro'**
+  String get deviseEur;
+
+  /// No description provided for @deviseChf.
+  ///
+  /// In fr, this message translates to:
+  /// **'Franc suisse'**
+  String get deviseChf;
+
+  /// No description provided for @deviseCad.
+  ///
+  /// In fr, this message translates to:
+  /// **'Dollar canadien'**
+  String get deviseCad;
+
+  /// No description provided for @deviseGbp.
+  ///
+  /// In fr, this message translates to:
+  /// **'Livre sterling'**
+  String get deviseGbp;
+
+  /// No description provided for @deviseUsd.
+  ///
+  /// In fr, this message translates to:
+  /// **'Dollar américain'**
+  String get deviseUsd;
+
+  /// No description provided for @deviseNgn.
+  ///
+  /// In fr, this message translates to:
+  /// **'Naira (Nigeria)'**
+  String get deviseNgn;
+
+  /// No description provided for @deviseGhs.
+  ///
+  /// In fr, this message translates to:
+  /// **'Cedi (Ghana)'**
+  String get deviseGhs;
 
   /// No description provided for @onboardingTitre1.
   ///

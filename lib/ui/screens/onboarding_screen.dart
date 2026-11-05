@@ -13,6 +13,7 @@ import '../../l10n/l10n.dart';
 import '../../logic/providers/devise_provider.dart';
 import '../../logic/providers/langue_provider.dart';
 import '../navigation/route_animee.dart';
+import '../widgets/feuille_selection.dart';
 import '../widgets/segmented_toggle.dart';
 import 'capture_screen.dart';
 

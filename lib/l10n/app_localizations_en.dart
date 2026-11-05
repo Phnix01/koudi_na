@@ -441,7 +441,34 @@ class AppLocalizationsEn extends AppLocalizations {
   String get onboardingCommencer => 'Log my first expense';
 
   @override
-  String get onboardingDeviseLabel => 'Currency';
+  String get devise => 'Currency';
+
+  @override
+  String get deviseXof => 'CFA Franc (West Africa)';
+
+  @override
+  String get deviseXaf => 'CFA Franc (Central Africa)';
+
+  @override
+  String get deviseEur => 'Euro';
+
+  @override
+  String get deviseChf => 'Swiss Franc';
+
+  @override
+  String get deviseCad => 'Canadian Dollar';
+
+  @override
+  String get deviseGbp => 'British Pound';
+
+  @override
+  String get deviseUsd => 'US Dollar';
+
+  @override
+  String get deviseNgn => 'Nigerian Naira';
+
+  @override
+  String get deviseGhs => 'Ghanaian Cedi';
 
   @override
   String get onboardingTitre1 => 'Know where every cent goes';

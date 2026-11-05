@@ -444,7 +444,34 @@ class AppLocalizationsFr extends AppLocalizations {
   String get onboardingCommencer => 'Noter ma première dépense';
 
   @override
-  String get onboardingDeviseLabel => 'Devise';
+  String get devise => 'Devise';
+
+  @override
+  String get deviseXof => 'Franc CFA (UEMOA)';
+
+  @override
+  String get deviseXaf => 'Franc CFA (CEMAC)';
+
+  @override
+  String get deviseEur => 'Euro';
+
+  @override
+  String get deviseChf => 'Franc suisse';
+
+  @override
+  String get deviseCad => 'Dollar canadien';
+
+  @override
+  String get deviseGbp => 'Livre sterling';
+
+  @override
+  String get deviseUsd => 'Dollar américain';
+
+  @override
+  String get deviseNgn => 'Naira (Nigeria)';
+
+  @override
+  String get deviseGhs => 'Cedi (Ghana)';
 
   @override
   String get onboardingTitre1 => 'Sache où va chaque centime';
