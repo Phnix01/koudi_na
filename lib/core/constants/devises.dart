@@ -4,10 +4,10 @@ import '../../l10n/app_localizations.dart';
 
 /// Devises proposées à l'onboarding et dans Réglages. XOF reste la
 /// devise par défaut (comportement historique de l'app, zone UEMOA) ;
-/// les autres couvrent les deux premières cibles à l'international :
-/// francophones hors zone UEMOA (XAF, EUR, CHF, CAD) puis anglophones
-/// (GBP, USD, NGN, GHS).
-enum Devise { xof, xaf, eur, chf, cad, gbp, usd, ngn, ghs }
+/// les autres couvrent les cibles à l'international : francophones hors
+/// zone UEMOA (XAF, EUR, CHF, CAD), Maghreb (MAD, DZD, TND), puis
+/// anglophones (GBP, USD, NGN, GHS).
+enum Devise { xof, xaf, eur, chf, cad, mad, dzd, tnd, gbp, usd, ngn, ghs }
 
 @immutable
 class DeviseInfo {
@@ -41,6 +41,9 @@ const devisesDisponibles = {
   // "C$" plutôt que "$" seul : évite la confusion avec le dollar
   // américain, qui garde le symbole "$" nu (le plus répandu des deux).
   Devise.cad: DeviseInfo(code: 'CAD', symbole: 'C\$', avantLeMontant: true),
+  Devise.mad: DeviseInfo(code: 'MAD', symbole: 'DH', avantLeMontant: false),
+  Devise.dzd: DeviseInfo(code: 'DZD', symbole: 'DA', avantLeMontant: false),
+  Devise.tnd: DeviseInfo(code: 'TND', symbole: 'DT', avantLeMontant: false),
   Devise.gbp: DeviseInfo(code: 'GBP', symbole: '£', avantLeMontant: true),
   Devise.usd: DeviseInfo(code: 'USD', symbole: '\$', avantLeMontant: true),
   Devise.ngn: DeviseInfo(code: 'NGN', symbole: '₦', avantLeMontant: true),
@@ -72,6 +75,12 @@ String libelleDevise(AppLocalizations l10n, Devise devise) {
       return l10n.deviseChf;
     case Devise.cad:
       return l10n.deviseCad;
+    case Devise.mad:
+      return l10n.deviseMad;
+    case Devise.dzd:
+      return l10n.deviseDzd;
+    case Devise.tnd:
+      return l10n.deviseTnd;
     case Devise.gbp:
       return l10n.deviseGbp;
     case Devise.usd:

@@ -890,6 +890,24 @@ abstract class AppLocalizations {
   /// **'Dollar canadien'**
   String get deviseCad;
 
+  /// No description provided for @deviseMad.
+  ///
+  /// In fr, this message translates to:
+  /// **'Dirham marocain'**
+  String get deviseMad;
+
+  /// No description provided for @deviseDzd.
+  ///
+  /// In fr, this message translates to:
+  /// **'Dinar algérien'**
+  String get deviseDzd;
+
+  /// No description provided for @deviseTnd.
+  ///
+  /// In fr, this message translates to:
+  /// **'Dinar tunisien'**
+  String get deviseTnd;
+
   /// No description provided for @deviseGbp.
   ///
   /// In fr, this message translates to:

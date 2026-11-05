@@ -462,6 +462,15 @@ class AppLocalizationsFr extends AppLocalizations {
   String get deviseCad => 'Dollar canadien';
 
   @override
+  String get deviseMad => 'Dirham marocain';
+
+  @override
+  String get deviseDzd => 'Dinar algérien';
+
+  @override
+  String get deviseTnd => 'Dinar tunisien';
+
+  @override
   String get deviseGbp => 'Livre sterling';
 
   @override
