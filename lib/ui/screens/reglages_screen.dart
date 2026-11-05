@@ -59,6 +59,24 @@ class _ReglagesScreenState extends ConsumerState<ReglagesScreen> {
     });
   }
 
+  Future<void> _choisirDevise(Devise actuelle) async {
+    final l10n = context.l10n;
+    final choix = await showModalBottomSheet<Devise>(
+      context: context,
+      builder: (context) => FeuilleSelection<Devise>(
+        titre: l10n.devise,
+        options: Devise.values,
+        libelleDe: (d) =>
+            '${devisesDisponibles[d]!.symbole} · ${libelleDevise(l10n, d)}',
+        estSelectionne: (d) => d == actuelle,
+        avecOptionTous: false,
+      ),
+    );
+    if (choix != null) {
+      await ref.read(deviseProvider.notifier).choisir(choix);
+    }
+  }
+
   Future<void> _ouvrirLien(Uri lien) async {
     final messageEchec = context.l10n.aProposLienIndisponible;
     final ouvert = await launchUrl(lien, mode: LaunchMode.externalApplication);
@@ -189,6 +207,7 @@ class _ReglagesScreenState extends ConsumerState<ReglagesScreen> {
   Widget build(BuildContext context) {
     final l10n = context.l10n;
     final langueChoisie = ref.watch(langueProvider) ?? _langueSysteme;
+    final deviseChoisie = ref.watch(deviseProvider);
 
     return Scaffold(
       appBar: AppBar(title: Text(l10n.reglages)),
@@ -227,21 +246,16 @@ class _ReglagesScreenState extends ConsumerState<ReglagesScreen> {
           Text(l10n.devise, style: Theme.of(context).textTheme.titleMedium),
           const SizedBox(height: 8),
           Card(
-            child: Builder(
-              builder: (context) {
-                final deviseChoisie = ref.watch(deviseProvider);
-                final info = devisesDisponibles[deviseChoisie]!;
-                return ListTile(
-                  leading: const PhosphorIcon(
-                    PhosphorIconsRegular.currencyCircleDollar,
-                  ),
-                  title: Text(
-                    '${info.symbole} · ${libelleDevise(l10n, deviseChoisie)}',
-                  ),
-                  trailing: const PhosphorIcon(PhosphorIconsRegular.caretRight),
-                  onTap: () => _choisirDevise(deviseChoisie),
-                );
-              },
+            child: ListTile(
+              leading: const PhosphorIcon(
+                PhosphorIconsRegular.currencyCircleDollar,
+              ),
+              title: Text(
+                '${devisesDisponibles[deviseChoisie]!.symbole} · '
+                '${libelleDevise(l10n, deviseChoisie)}',
+              ),
+              trailing: const PhosphorIcon(PhosphorIconsRegular.caretRight),
+              onTap: () => _choisirDevise(deviseChoisie),
             ),
           ),
           const SizedBox(height: 24),
