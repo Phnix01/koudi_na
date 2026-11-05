@@ -9,13 +9,16 @@ import 'package:package_info_plus/package_info_plus.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../../core/constants/devises.dart';
 import '../../l10n/l10n.dart';
+import '../../logic/providers/devise_provider.dart';
 import '../../logic/providers/langue_provider.dart';
 import '../../logic/providers/repositories_providers.dart';
 import '../../logic/services/export_csv.dart';
 import '../../logic/services/import_csv.dart';
 import '../../logic/services/partage_csv.dart';
 import '../navigation/route_animee.dart';
+import '../widgets/feuille_selection.dart';
 import '../widgets/segmented_toggle.dart';
 import 'categories_screen.dart';
 import 'comptes_screen.dart';
@@ -218,6 +221,27 @@ class _ReglagesScreenState extends ConsumerState<ReglagesScreen> {
                     .read(langueProvider.notifier)
                     .choisir(code == _langueSysteme ? null : code),
               ),
+            ),
+          ),
+          const SizedBox(height: 24),
+          Text(l10n.devise, style: Theme.of(context).textTheme.titleMedium),
+          const SizedBox(height: 8),
+          Card(
+            child: Builder(
+              builder: (context) {
+                final deviseChoisie = ref.watch(deviseProvider);
+                final info = devisesDisponibles[deviseChoisie]!;
+                return ListTile(
+                  leading: const PhosphorIcon(
+                    PhosphorIconsRegular.currencyCircleDollar,
+                  ),
+                  title: Text(
+                    '${info.symbole} · ${libelleDevise(l10n, deviseChoisie)}',
+                  ),
+                  trailing: const PhosphorIcon(PhosphorIconsRegular.caretRight),
+                  onTap: () => _choisirDevise(deviseChoisie),
+                );
+              },
             ),
           ),
           const SizedBox(height: 24),

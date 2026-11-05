@@ -219,36 +219,69 @@ class _PageOnboarding extends StatelessWidget {
 
 /// Devise de l'application, choisie une bonne fois pour toutes dès
 /// l'onboarding plutôt qu'enfouie dans Réglages : les montants
-/// affichés juste après (écran 2) en dépendent directement.
+/// affichés juste après (écran 2) en dépendent directement. Une liste
+/// (feuille de sélection), pas un toggle à boutons : au-delà de 4
+/// devises, un groupe de boutons ne tiendrait plus sur une ligne.
 class _SelecteurDevise extends ConsumerWidget {
   const _SelecteurDevise();
+
+  Future<void> _choisir(
+    BuildContext context,
+    WidgetRef ref,
+    Devise actuelle,
+  ) async {
+    final l10n = context.l10n;
+    final choix = await showModalBottomSheet<Devise>(
+      context: context,
+      builder: (context) => FeuilleSelection<Devise>(
+        titre: l10n.devise,
+        options: Devise.values,
+        libelleDe: (d) =>
+            '${devisesDisponibles[d]!.symbole} · ${libelleDevise(l10n, d)}',
+        estSelectionne: (d) => d == actuelle,
+        avecOptionTous: false,
+      ),
+    );
+    if (choix != null) {
+      await ref.read(deviseProvider.notifier).choisir(choix);
+    }
+  }
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final courante = ref.watch(deviseProvider);
+    final info = devisesDisponibles[courante]!;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          context.l10n.onboardingDeviseLabel,
+          context.l10n.devise,
           style: Theme.of(
             context,
           ).textTheme.bodySmall?.copyWith(color: AppColors.textMuted),
         ),
         const SizedBox(height: AppSpacing.s8),
-        SizedBox(
-          width: double.infinity,
-          child: SegmentedToggle<Devise>(
-            options: [
-              for (final devise in Devise.values)
-                SegmentedToggleOption(
-                  valeur: devise,
-                  label: devisesDisponibles[devise]!.symbole,
-                ),
-            ],
-            selectionne: courante,
-            onChanged: (devise) =>
-                ref.read(deviseProvider.notifier).choisir(devise),
+        Material(
+          color: AppColors.surfaceHigh,
+          borderRadius: BorderRadius.circular(AppSpacing.radius),
+          child: InkWell(
+            borderRadius: BorderRadius.circular(AppSpacing.radius),
+            onTap: () => _choisir(context, ref, courante),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(
+                horizontal: AppSpacing.s16,
+                vertical: AppSpacing.s12,
+              ),
+              child: Row(
+                children: [
+                  Text(
+                    '${info.symbole} · ${libelleDevise(context.l10n, courante)}',
+                  ),
+                  const Spacer(),
+                  const PhosphorIcon(PhosphorIconsRegular.caretRight, size: 18),
+                ],
+              ),
+            ),
           ),
         ),
       ],
