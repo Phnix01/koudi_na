@@ -40,23 +40,34 @@ class FeuilleSelection<T> extends StatelessWidget {
             padding: const EdgeInsets.all(16),
             child: Text(titre, style: Theme.of(context).textTheme.titleMedium),
           ),
-          if (avecOptionTous)
-            ListTile(
-              title: Text(context.l10n.tous),
-              onTap: () => Navigator.of(context).pop(),
+          // `Flexible` plutôt qu'un `Column` nu : une liste courte garde
+          // sa hauteur naturelle (comptes, catégories...), mais une
+          // liste longue (les devises, section 4) défile au lieu de
+          // déborder de la feuille.
+          Flexible(
+            child: ListView(
+              shrinkWrap: true,
+              children: [
+                if (avecOptionTous)
+                  ListTile(
+                    title: Text(context.l10n.tous),
+                    onTap: () => Navigator.of(context).pop(),
+                  ),
+                ...options.map((option) {
+                  return ListTile(
+                    title: Text(libelleDe(option)),
+                    trailing: estSelectionne(option)
+                        ? const PhosphorIcon(
+                            PhosphorIconsBold.check,
+                            color: AppColors.primary,
+                          )
+                        : null,
+                    onTap: () => Navigator.of(context).pop(option),
+                  );
+                }),
+              ],
             ),
-          ...options.map((option) {
-            return ListTile(
-              title: Text(libelleDe(option)),
-              trailing: estSelectionne(option)
-                  ? const PhosphorIcon(
-                      PhosphorIconsBold.check,
-                      color: AppColors.primary,
-                    )
-                  : null,
-              onTap: () => Navigator.of(context).pop(option),
-            );
-          }),
+          ),
         ],
       ),
     );
