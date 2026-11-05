@@ -440,17 +440,17 @@ abstract class AppLocalizations {
   /// **'Modifier le compte'**
   String get modifierCompte;
 
-  /// No description provided for @soldeInitialFcfa.
+  /// No description provided for @soldeInitial.
   ///
   /// In fr, this message translates to:
-  /// **'Solde initial (FCFA)'**
-  String get soldeInitialFcfa;
+  /// **'Solde initial'**
+  String get soldeInitial;
 
-  /// No description provided for @objectifEpargneFcfa.
+  /// No description provided for @objectifEpargne.
   ///
   /// In fr, this message translates to:
-  /// **'Objectif d\'épargne (FCFA, optionnel)'**
-  String get objectifEpargneFcfa;
+  /// **'Objectif d\'épargne (optionnel)'**
+  String get objectifEpargne;
 
   /// No description provided for @objectifEpargneAide.
   ///
@@ -494,11 +494,11 @@ abstract class AppLocalizations {
   /// **'Libellé (ex : Loyer, Salaire)'**
   String get libelleExemple;
 
-  /// No description provided for @montantFcfa.
+  /// No description provided for @montantChamp.
   ///
   /// In fr, this message translates to:
-  /// **'Montant (FCFA)'**
-  String get montantFcfa;
+  /// **'Montant'**
+  String get montantChamp;
 
   /// No description provided for @jourDuMois.
   ///
@@ -854,16 +854,22 @@ abstract class AppLocalizations {
   /// **'Noter ma première dépense'**
   String get onboardingCommencer;
 
+  /// No description provided for @onboardingDeviseLabel.
+  ///
+  /// In fr, this message translates to:
+  /// **'Devise'**
+  String get onboardingDeviseLabel;
+
   /// No description provided for @onboardingTitre1.
   ///
   /// In fr, this message translates to:
-  /// **'Sache où va chaque franc'**
+  /// **'Sache où va chaque centime'**
   String get onboardingTitre1;
 
   /// No description provided for @onboardingCorps1.
   ///
   /// In fr, this message translates to:
-  /// **'Le pain, la moto, la recharge téléphone : ton argent part par petites sorties. Note-les dans Koudi Na et ton mois se lit franc par franc.'**
+  /// **'Le pain, la moto, la recharge téléphone : ton argent part par petites sorties. Note-les dans Koudi Na et ton mois se lit centime par centime.'**
   String get onboardingCorps1;
 
   /// No description provided for @onboardingTitre2.
@@ -875,8 +881,8 @@ abstract class AppLocalizations {
   /// No description provided for @onboardingCorps2.
   ///
   /// In fr, this message translates to:
-  /// **'2 500 F, Transport, enregistré : avant que le taxi redémarre. Cash, banque ou mobile money, chaque franc atterrit au bon endroit. Rien à ressaisir le soir.'**
-  String get onboardingCorps2;
+  /// **'{montant}, Transport, enregistré : avant que le taxi redémarre. Cash, banque ou mobile money, chaque centime atterrit au bon endroit. Rien à ressaisir le soir.'**
+  String onboardingCorps2(String montant);
 
   /// No description provided for @onboardingTitre3.
   ///

@@ -32,7 +32,11 @@ const Map<String, ColonnesCsv> colonnesCsvParLangue = {
   'fr': ColonnesCsv(
     date: 'Date',
     type: 'Type',
-    montant: 'Montant (FCFA)',
+    // Sans devise : l'app n'en a qu'une seule à la fois (réglage
+    // global, voir core/constants/devises.dart), ce n'est pas une
+    // donnée par ligne. La mentionner ici induirait en erreur si
+    // l'utilisateur change de devise entre l'export et une relecture.
+    montant: 'Montant',
     categorie: 'Catégorie',
     compte: 'Compte',
     note: 'Note',
@@ -42,7 +46,7 @@ const Map<String, ColonnesCsv> colonnesCsvParLangue = {
   'en': ColonnesCsv(
     date: 'Date',
     type: 'Type',
-    montant: 'Amount (FCFA)',
+    montant: 'Amount',
     categorie: 'Category',
     compte: 'Account',
     note: 'Note',

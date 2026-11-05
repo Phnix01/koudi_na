@@ -146,7 +146,7 @@ class _RecurrenceEditionScreenState
           TextField(
             controller: _controleurMontant,
             keyboardType: TextInputType.number,
-            decoration: InputDecoration(labelText: l10n.montantFcfa),
+            decoration: InputDecoration(labelText: l10n.montantChamp),
             onChanged: (_) => setState(() {}),
           ),
           const SizedBox(height: 20),

@@ -1,5 +1,7 @@
 import 'package:intl/intl.dart';
 
+import '../constants/devises.dart';
+
 // String.fromCharCode(0x...) plutot qu'un caractere brut dans le code :
 // une espace fine et une espace insecable sont visuellement identiques
 // a une espace normale dans un editeur de texte, impossible a
@@ -7,9 +9,23 @@ import 'package:intl/intl.dart';
 final String _espaceFineInsecable = String.fromCharCode(0x202F);
 final String _espaceInsecable = String.fromCharCode(0x00A0);
 
-/// Formate un montant en FCFA : entier, jamais de decimale, separateur
-/// de milliers de la langue courante (section 1.3) -- espace en
-/// francais ("1 994 000 F"), virgule en anglais ("1,994,000 F").
+/// Devise actuellement appliquee a `formaterMontant`, alignee sur le
+/// choix de l'utilisateur dans Reglages (voir `appliquerDeviseGlobale`,
+/// appelee depuis `hive_init.dart` au demarrage et depuis
+/// `DeviseNotifier.choisir`). Un module-level var plutot qu'un
+/// parametre explicite : `formaterMontant` est appelee depuis une
+/// douzaine d'ecrans, et suit le meme principe que `Intl.defaultLocale`
+/// pour la langue, juste en dessous.
+DeviseInfo _deviseActuelle = devisesDisponibles[deviseParDefaut]!;
+
+void appliquerDeviseGlobale(Devise devise) {
+  _deviseActuelle = devisesDisponibles[devise]!;
+}
+
+/// Formate un montant : entier, jamais de decimale (section 1.3),
+/// separateur de milliers de la langue courante -- espace en francais
+/// ("1 994 000 FCFA"), virgule en anglais ("1,994,000 FCFA") -- et
+/// symbole de la devise choisie dans Reglages.
 ///
 /// Aucune locale n'est passee a `NumberFormat` : il suit
 /// `Intl.defaultLocale`, aligne sur la langue choisie dans Reglages
@@ -24,7 +40,9 @@ final String _espaceInsecable = String.fromCharCode(0x00A0);
 String formaterMontant(int montant) {
   final brut = NumberFormat.decimalPattern().format(montant);
   final formate = brut.replaceAll(_espaceFineInsecable, _espaceInsecable);
-  return '$formate${_espaceInsecable}F';
+  return _deviseActuelle.avantLeMontant
+      ? '${_deviseActuelle.symbole}$formate'
+      : '$formate$_espaceInsecable${_deviseActuelle.symbole}';
 }
 
 /// Un nombre decimal a une decimale ("2,5" en francais, "2.5" en

@@ -183,10 +183,10 @@ class AppLocalizationsFr extends AppLocalizations {
   String get modifierCompte => 'Modifier le compte';
 
   @override
-  String get soldeInitialFcfa => 'Solde initial (FCFA)';
+  String get soldeInitial => 'Solde initial';
 
   @override
-  String get objectifEpargneFcfa => 'Objectif d\'épargne (FCFA, optionnel)';
+  String get objectifEpargne => 'Objectif d\'épargne (optionnel)';
 
   @override
   String get objectifEpargneAide =>
@@ -214,7 +214,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get libelleExemple => 'Libellé (ex : Loyer, Salaire)';
 
   @override
-  String get montantFcfa => 'Montant (FCFA)';
+  String get montantChamp => 'Montant';
 
   @override
   String get jourDuMois => 'Jour du mois (1-31)';
@@ -444,18 +444,22 @@ class AppLocalizationsFr extends AppLocalizations {
   String get onboardingCommencer => 'Noter ma première dépense';
 
   @override
-  String get onboardingTitre1 => 'Sache où va chaque franc';
+  String get onboardingDeviseLabel => 'Devise';
+
+  @override
+  String get onboardingTitre1 => 'Sache où va chaque centime';
 
   @override
   String get onboardingCorps1 =>
-      'Le pain, la moto, la recharge téléphone : ton argent part par petites sorties. Note-les dans Koudi Na et ton mois se lit franc par franc.';
+      'Le pain, la moto, la recharge téléphone : ton argent part par petites sorties. Note-les dans Koudi Na et ton mois se lit centime par centime.';
 
   @override
   String get onboardingTitre2 => 'Un montant, une catégorie, c\'est noté';
 
   @override
-  String get onboardingCorps2 =>
-      '2 500 F, Transport, enregistré : avant que le taxi redémarre. Cash, banque ou mobile money, chaque franc atterrit au bon endroit. Rien à ressaisir le soir.';
+  String onboardingCorps2(String montant) {
+    return '$montant, Transport, enregistré : avant que le taxi redémarre. Cash, banque ou mobile money, chaque centime atterrit au bon endroit. Rien à ressaisir le soir.';
+  }
 
   @override
   String get onboardingTitre3 => '40/25/35 : ton revenu déjà réparti';

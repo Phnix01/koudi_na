@@ -1,6 +1,8 @@
 import 'package:hive_ce_flutter/hive_flutter.dart';
 
+import '../core/constants/devises.dart';
 import '../core/constants/hive_boxes.dart';
+import '../core/utils/formatters.dart';
 import '../hive_registrar.g.dart';
 import '../l10n/locale_utils.dart';
 import 'models/categorie.dart';
@@ -32,8 +34,10 @@ Future<void> initialiserHive() async {
   // La langue est fixée ici, avant le seed : les catégories et comptes
   // de départ sont créés dans la langue de l'utilisateur, et `intl`
   // formate dates et montants correctement dès le premier écran.
-  final locale = resoudreLocale(ReglagesRepository().langue);
+  final reglages = ReglagesRepository();
+  final locale = resoudreLocale(reglages.langue);
   appliquerLocaleIntl(locale);
+  appliquerDeviseGlobale(deviseDepuisCode(reglages.devise));
 
   await seedSiPremierLancement(
     comptes: CompteRepository(),

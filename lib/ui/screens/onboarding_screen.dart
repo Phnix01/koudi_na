@@ -4,11 +4,13 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 
 import '../../core/constants/couleurs_piliers.dart';
+import '../../core/constants/devises.dart';
 import '../../core/theme/app_colors.dart';
 import '../../core/theme/app_spacing.dart';
 import '../../core/utils/formatters.dart';
 import '../../data/models/pilier.dart';
 import '../../l10n/l10n.dart';
+import '../../logic/providers/devise_provider.dart';
 import '../../logic/providers/langue_provider.dart';
 import '../navigation/route_animee.dart';
 import '../widgets/segmented_toggle.dart';
@@ -60,17 +62,21 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
   Widget build(BuildContext context) {
     final l10n = context.l10n;
     final derniere = _page == _nombreDePages - 1;
+    // Rend l'écran 2 réactif au choix de devise de l'écran 1 : le
+    // montant d'exemple doit refléter la devise tout juste choisie.
+    ref.watch(deviseProvider);
 
     final pages = [
       _PageOnboarding(
         visuel: const _VisuelMarque(),
         titre: l10n.onboardingTitre1,
         corps: l10n.onboardingCorps1,
+        piedDePage: const _SelecteurDevise(),
       ),
       _PageOnboarding(
         visuel: const _VisuelCapture(),
         titre: l10n.onboardingTitre2,
-        corps: l10n.onboardingCorps2,
+        corps: l10n.onboardingCorps2(formaterMontant(2500)),
       ),
       _PageOnboarding(
         visuel: const _VisuelPiliers(),
@@ -172,11 +178,13 @@ class _PageOnboarding extends StatelessWidget {
     required this.visuel,
     required this.titre,
     required this.corps,
+    this.piedDePage,
   });
 
   final Widget visuel;
   final String titre;
   final String corps;
+  final Widget? piedDePage;
 
   @override
   Widget build(BuildContext context) {
@@ -198,8 +206,51 @@ class _PageOnboarding extends StatelessWidget {
               height: 1.45,
             ),
           ),
+          if (piedDePage != null) ...[
+            const SizedBox(height: AppSpacing.s24),
+            piedDePage!,
+          ],
         ],
       ).animate().fadeIn(duration: 300.ms).slideY(begin: 0.04, end: 0),
+    );
+  }
+}
+
+/// Devise de l'application, choisie une bonne fois pour toutes dès
+/// l'onboarding plutôt qu'enfouie dans Réglages : les montants
+/// affichés juste après (écran 2) en dépendent directement.
+class _SelecteurDevise extends ConsumerWidget {
+  const _SelecteurDevise();
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final courante = ref.watch(deviseProvider);
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          context.l10n.onboardingDeviseLabel,
+          style: Theme.of(
+            context,
+          ).textTheme.bodySmall?.copyWith(color: AppColors.textMuted),
+        ),
+        const SizedBox(height: AppSpacing.s8),
+        SizedBox(
+          width: double.infinity,
+          child: SegmentedToggle<Devise>(
+            options: [
+              for (final devise in Devise.values)
+                SegmentedToggleOption(
+                  valeur: devise,
+                  label: devisesDisponibles[devise]!.symbole,
+                ),
+            ],
+            selectionne: courante,
+            onChanged: (devise) =>
+                ref.read(deviseProvider.notifier).choisir(devise),
+          ),
+        ),
+      ],
     );
   }
 }

@@ -67,7 +67,7 @@ ResultatImportCsv parserCsvTransactions(
       final categorie = categorieParCle['${type.name}|$libelleCategorie'];
       final compte =
           compteParLibelle[champs.lire((c) => c.compte).toLowerCase()];
-      final montant = int.parse(champs.lire((c) => c.montant));
+      final montant = int.parse(_lireMontant(champs));
       final date = formatDate.parse(champs.lire((c) => c.date));
       final note = champs.lire((c) => c.note);
 
@@ -95,6 +95,22 @@ ResultatImportCsv parserCsvTransactions(
   return (transactions: transactions, lignesIgnorees: lignesIgnorees);
 }
 
+/// Lit la colonne montant, avec repli sur les en-têtes d'avant
+/// l'introduction du choix de devise (« Montant (FCFA) »/« Amount
+/// (FCFA) ») : un export produit par une version antérieure de l'app
+/// doit rester réimportable.
+String _lireMontant(_ChampsLigne champs) {
+  final direct = champs.lire((c) => c.montant);
+  if (direct.isNotEmpty) return direct;
+  for (final entry in champs.ligne.headerMap.entries) {
+    final cle = entry.key.toLowerCase();
+    if (cle.startsWith('montant') || cle.startsWith('amount')) {
+      return champs.ligne[entry.key]?.toString().trim() ?? '';
+    }
+  }
+  return '';
+}
+
 /// Une valeur de type est une entrée si elle correspond au mot
 /// « Entrée »/« Income » d'une des langues connues ; tout le reste est
 /// une dépense (comportement d'origine, tolérant aux variantes
@@ -118,6 +134,8 @@ class _ChampsLigne {
   _ChampsLigne(this._ligne);
 
   final CsvRow _ligne;
+
+  CsvRow get ligne => _ligne;
 
   String lire(String Function(ColonnesCsv) nomColonne) {
     for (final colonnes in colonnesCsvParLangue.values) {

@@ -94,7 +94,7 @@ class _CompteEditionScreenState extends ConsumerState<CompteEditionScreen> {
           TextField(
             controller: _controleurSolde,
             keyboardType: TextInputType.number,
-            decoration: InputDecoration(labelText: l10n.soldeInitialFcfa),
+            decoration: InputDecoration(labelText: l10n.soldeInitial),
           ),
           const SizedBox(height: 20),
           Text(l10n.type, style: Theme.of(context).textTheme.bodySmall),
@@ -115,7 +115,7 @@ class _CompteEditionScreenState extends ConsumerState<CompteEditionScreen> {
               controller: _controleurObjectif,
               keyboardType: TextInputType.number,
               decoration: InputDecoration(
-                labelText: l10n.objectifEpargneFcfa,
+                labelText: l10n.objectifEpargne,
                 helperText: l10n.objectifEpargneAide,
               ),
             ),

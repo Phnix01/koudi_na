@@ -183,10 +183,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get modifierCompte => 'Edit account';
 
   @override
-  String get soldeInitialFcfa => 'Opening balance (FCFA)';
+  String get soldeInitial => 'Opening balance';
 
   @override
-  String get objectifEpargneFcfa => 'Savings goal (FCFA, optional)';
+  String get objectifEpargne => 'Savings goal (optional)';
 
   @override
   String get objectifEpargneAide =>
@@ -214,7 +214,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get libelleExemple => 'Name (e.g. Rent, Salary)';
 
   @override
-  String get montantFcfa => 'Amount (FCFA)';
+  String get montantChamp => 'Amount';
 
   @override
   String get jourDuMois => 'Day of month (1-31)';
@@ -441,18 +441,22 @@ class AppLocalizationsEn extends AppLocalizations {
   String get onboardingCommencer => 'Log my first expense';
 
   @override
-  String get onboardingTitre1 => 'Know where every franc goes';
+  String get onboardingDeviseLabel => 'Currency';
+
+  @override
+  String get onboardingTitre1 => 'Know where every cent goes';
 
   @override
   String get onboardingCorps1 =>
-      'Bread, a moto ride, phone top-up: money leaves in small pieces. Log them in Koudi Na and see your whole month, franc by franc.';
+      'Bread, a moto ride, phone top-up: money leaves in small pieces. Log them in Koudi Na and see your whole month, cent by cent.';
 
   @override
   String get onboardingTitre2 => 'One amount, one category, saved';
 
   @override
-  String get onboardingCorps2 =>
-      '2,500 F, Transport, saved: before the taxi pulls away. Cash, bank or mobile money, every franc lands in the right place. Nothing to type up tonight.';
+  String onboardingCorps2(String montant) {
+    return '$montant, Transport, saved: before the taxi pulls away. Cash, bank or mobile money, every cent lands in the right place. Nothing to type up tonight.';
+  }
 
   @override
   String get onboardingTitre3 => '40/25/35: your income, already split';

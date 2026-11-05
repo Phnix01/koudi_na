@@ -72,8 +72,8 @@
   },
   "nouveauCompte": "New account",
   "modifierCompte": "Edit account",
-  "soldeInitialFcfa": "Opening balance (FCFA)",
-  "objectifEpargneFcfa": "Savings goal (FCFA, optional)",
+  "soldeInitial": "Opening balance",
+  "objectifEpargne": "Savings goal (optional)",
   "objectifEpargneAide": "Shown as a reference line in the \"Savings trajectory\" chart",
   "compteDesactiveExplication": "A disabled account is hidden when adding transactions, but its history is kept",
 
@@ -88,7 +88,7 @@
   "nouvelleRecurrence": "New recurring transaction",
   "modifierRecurrence": "Edit recurring transaction",
   "libelleExemple": "Name (e.g. Rent, Salary)",
-  "montantFcfa": "Amount (FCFA)",
+  "montantChamp": "Amount",
   "jourDuMois": "Day of month (1-31)",
   "recurrenceDesactiveeExplication": "A disabled recurring transaction no longer generates anything",
 
@@ -200,10 +200,16 @@
   "onboardingPasser": "Skip",
   "onboardingSuivant": "Continue",
   "onboardingCommencer": "Log my first expense",
-  "onboardingTitre1": "Know where every franc goes",
-  "onboardingCorps1": "Bread, a moto ride, phone top-up: money leaves in small pieces. Log them in Koudi Na and see your whole month, franc by franc.",
+  "onboardingDeviseLabel": "Currency",
+  "onboardingTitre1": "Know where every cent goes",
+  "onboardingCorps1": "Bread, a moto ride, phone top-up: money leaves in small pieces. Log them in Koudi Na and see your whole month, cent by cent.",
   "onboardingTitre2": "One amount, one category, saved",
-  "onboardingCorps2": "2,500 F, Transport, saved: before the taxi pulls away. Cash, bank or mobile money, every franc lands in the right place. Nothing to type up tonight.",
+  "onboardingCorps2": "{montant}, Transport, saved: before the taxi pulls away. Cash, bank or mobile money, every cent lands in the right place. Nothing to type up tonight.",
+  "@onboardingCorps2": {
+    "placeholders": {
+      "montant": {"type": "String"}
+    }
+  },
   "onboardingTitre3": "40/25/35: your income, already split",
   "onboardingCorps3": "Savings 40%, Family 25%, Living 35%: the split is decided before you spend. Each bar shows where you stand against the target. One glance, nothing to calculate.",
   "onboardingTitre4": "Your numbers stay in your pocket",
