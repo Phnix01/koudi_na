@@ -1,27 +1,13 @@
 import 'dart:convert';
-import 'dart:io';
 
-import 'package:path_provider/path_provider.dart';
-import 'package:share_plus/share_plus.dart';
+import 'partage_fichier.dart';
 
-/// Écrit le CSV dans le dossier temporaire de l'app puis ouvre la
-/// feuille de partage native — WhatsApp, mail, Drive... (section 4,
-/// écran D). `texte` est le message qui accompagne le fichier, déjà
-/// traduit par l'appelant. Contrairement à [genererCsvTransactions],
-/// cette fonction fait de l'I/O (disque + plateforme native) : elle ne
-/// peut pas être testée aussi simplement qu'un calcul pur, d'où la
-/// séparation en deux fichiers.
+/// Partage le CSV généré par [genererCsvTransactions] (section 4,
+/// écran D). Fin wrapper autour de [partagerFichier] : l'encodage
+/// UTF-8 transforme le caractère BOM (U+FEFF) ajouté par
+/// genererCsvTransactions en ses 3 octets EF BB BF réels sur le disque.
 Future<void> partagerCsv(
   String contenuCsv,
   String nomFichier, {
   required String texte,
-}) async {
-  final dossier = await getTemporaryDirectory();
-  final fichier = File('${dossier.path}/$nomFichier');
-  // encoding: utf8 transforme le caractère BOM (U+FEFF) ajouté par
-  // genererCsvTransactions en ses 3 octets EF BB BF réels sur le disque.
-  await fichier.writeAsString(contenuCsv, encoding: utf8);
-  await SharePlus.instance.share(
-    ShareParams(files: [XFile(fichier.path)], text: texte),
-  );
-}
+}) => partagerFichier(utf8.encode(contenuCsv), nomFichier, texte: texte);

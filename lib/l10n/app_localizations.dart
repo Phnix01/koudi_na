@@ -620,6 +620,60 @@ abstract class AppLocalizations {
   /// **'Système'**
   String get langueSysteme;
 
+  /// No description provided for @exporterBouton.
+  ///
+  /// In fr, this message translates to:
+  /// **'Exporter'**
+  String get exporterBouton;
+
+  /// No description provided for @periode.
+  ///
+  /// In fr, this message translates to:
+  /// **'Période'**
+  String get periode;
+
+  /// No description provided for @periodeMoisCourant.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ce mois'**
+  String get periodeMoisCourant;
+
+  /// No description provided for @periodeTout.
+  ///
+  /// In fr, this message translates to:
+  /// **'Tout'**
+  String get periodeTout;
+
+  /// No description provided for @periodePersonnalisee.
+  ///
+  /// In fr, this message translates to:
+  /// **'Personnalisée'**
+  String get periodePersonnalisee;
+
+  /// No description provided for @choisirDates.
+  ///
+  /// In fr, this message translates to:
+  /// **'Choisir les dates'**
+  String get choisirDates;
+
+  /// No description provided for @plageDatesValeur.
+  ///
+  /// In fr, this message translates to:
+  /// **'{debut} – {fin}'**
+  String plageDatesValeur(String debut, String fin);
+
+  /// No description provided for @format.
+  ///
+  /// In fr, this message translates to:
+  /// **'Format'**
+  String get format;
+
+  /// No description provided for @genereLe.
+  ///
+  /// In fr, this message translates to:
+  /// **'Généré le {date}'**
+  String genereLe(String date);
+
   /// No description provided for @analyse.
   ///
   /// In fr, this message translates to:

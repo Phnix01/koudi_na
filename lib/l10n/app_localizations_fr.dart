@@ -308,6 +308,37 @@ class AppLocalizationsFr extends AppLocalizations {
   String get langueSysteme => 'Système';
 
   @override
+  String get exporterBouton => 'Exporter';
+
+  @override
+  String get periode => 'Période';
+
+  @override
+  String get periodeMoisCourant => 'Ce mois';
+
+  @override
+  String get periodeTout => 'Tout';
+
+  @override
+  String get periodePersonnalisee => 'Personnalisée';
+
+  @override
+  String get choisirDates => 'Choisir les dates';
+
+  @override
+  String plageDatesValeur(String debut, String fin) {
+    return '$debut – $fin';
+  }
+
+  @override
+  String get format => 'Format';
+
+  @override
+  String genereLe(String date) {
+    return 'Généré le $date';
+  }
+
+  @override
   String get analyse => 'Analyse';
 
   @override

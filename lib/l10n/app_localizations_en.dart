@@ -306,6 +306,37 @@ class AppLocalizationsEn extends AppLocalizations {
   String get langueSysteme => 'System';
 
   @override
+  String get exporterBouton => 'Export';
+
+  @override
+  String get periode => 'Period';
+
+  @override
+  String get periodeMoisCourant => 'This month';
+
+  @override
+  String get periodeTout => 'All';
+
+  @override
+  String get periodePersonnalisee => 'Custom';
+
+  @override
+  String get choisirDates => 'Choose dates';
+
+  @override
+  String plageDatesValeur(String debut, String fin) {
+    return '$debut – $fin';
+  }
+
+  @override
+  String get format => 'Format';
+
+  @override
+  String genereLe(String date) {
+    return 'Generated on $date';
+  }
+
+  @override
   String get analyse => 'Insights';
 
   @override

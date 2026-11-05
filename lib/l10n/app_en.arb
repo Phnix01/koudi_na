@@ -131,6 +131,27 @@
   "langue": "Language",
   "langueSysteme": "System",
 
+  "exporterBouton": "Export",
+  "periode": "Period",
+  "periodeMoisCourant": "This month",
+  "periodeTout": "All",
+  "periodePersonnalisee": "Custom",
+  "choisirDates": "Choose dates",
+  "plageDatesValeur": "{debut} – {fin}",
+  "@plageDatesValeur": {
+    "placeholders": {
+      "debut": {"type": "String"},
+      "fin": {"type": "String"}
+    }
+  },
+  "format": "Format",
+  "genereLe": "Generated on {date}",
+  "@genereLe": {
+    "placeholders": {
+      "date": {"type": "String"}
+    }
+  },
+
   "analyse": "Insights",
   "evolution12Mois": "12-month trend",
   "repartitionDepensesMois": "Spending breakdown (this month)",

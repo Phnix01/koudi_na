@@ -131,6 +131,27 @@
   "langue": "Langue",
   "langueSysteme": "Système",
 
+  "exporterBouton": "Exporter",
+  "periode": "Période",
+  "periodeMoisCourant": "Ce mois",
+  "periodeTout": "Tout",
+  "periodePersonnalisee": "Personnalisée",
+  "choisirDates": "Choisir les dates",
+  "plageDatesValeur": "{debut} – {fin}",
+  "@plageDatesValeur": {
+    "placeholders": {
+      "debut": {"type": "String"},
+      "fin": {"type": "String"}
+    }
+  },
+  "format": "Format",
+  "genereLe": "Généré le {date}",
+  "@genereLe": {
+    "placeholders": {
+      "date": {"type": "String"}
+    }
+  },
+
   "analyse": "Analyse",
   "evolution12Mois": "Évolution sur 12 mois",
   "repartitionDepensesMois": "Répartition des dépenses (ce mois)",
