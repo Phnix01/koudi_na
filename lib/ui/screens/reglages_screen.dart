@@ -14,14 +14,13 @@ import '../../l10n/l10n.dart';
 import '../../logic/providers/devise_provider.dart';
 import '../../logic/providers/langue_provider.dart';
 import '../../logic/providers/repositories_providers.dart';
-import '../../logic/services/export_csv.dart';
 import '../../logic/services/import_csv.dart';
-import '../../logic/services/partage_csv.dart';
 import '../navigation/route_animee.dart';
 import '../widgets/feuille_selection.dart';
 import '../widgets/segmented_toggle.dart';
 import 'categories_screen.dart';
 import 'comptes_screen.dart';
+import 'export_screen.dart';
 import 'recurrences_screen.dart';
 
 /// Valeur du segment « Système » dans le sélecteur de langue : le
@@ -81,50 +80,6 @@ class _ReglagesScreenState extends ConsumerState<ReglagesScreen> {
     final messageEchec = context.l10n.aProposLienIndisponible;
     final ouvert = await launchUrl(lien, mode: LaunchMode.externalApplication);
     if (!ouvert) _afficherMessage(messageEchec);
-  }
-
-  Future<void> _exporter({required bool moisCourantSeulement}) async {
-    final l10n = context.l10n;
-    setState(() => _exportEnCours = true);
-    try {
-      final categoriesParId = {
-        for (final c in ref.read(categorieRepositoryProvider).tous()) c.id: c,
-      };
-      final comptesParId = {
-        for (final c in ref.read(compteRepositoryProvider).tous()) c.id: c,
-      };
-
-      var transactions = ref.read(transactionRepositoryProvider).tous();
-      if (moisCourantSeulement) {
-        final maintenant = DateTime.now();
-        transactions = transactions
-            .where(
-              (t) =>
-                  t.date.year == maintenant.year &&
-                  t.date.month == maintenant.month,
-            )
-            .toList();
-      }
-      transactions.sort((a, b) => a.date.compareTo(b.date));
-
-      final csv = genererCsvTransactions(
-        transactions,
-        categoriesParId,
-        comptesParId,
-        langue: ref.read(localeProvider).languageCode,
-      );
-      final suffixe = moisCourantSeulement
-          ? DateFormat('yyyy-MM').format(DateTime.now())
-          : 'tout';
-      final nomFichier = 'koudi_na_$suffixe.csv';
-      await partagerCsv(
-        csv,
-        nomFichier,
-        texte: l10n.exportPartageTexte(nomFichier),
-      );
-    } finally {
-      if (mounted) setState(() => _exportEnCours = false);
-    }
   }
 
   Future<void> _importer() async {
