@@ -252,34 +252,12 @@ class _ReglagesScreenState extends ConsumerState<ReglagesScreen> {
           Text(l10n.export, style: Theme.of(context).textTheme.titleMedium),
           const SizedBox(height: 8),
           Card(
-            child: Column(
-              children: [
-                ListTile(
-                  leading: const PhosphorIcon(
-                    PhosphorIconsRegular.calendarBlank,
-                  ),
-                  title: Text(l10n.exporterMoisCourant),
-                  trailing: _exportEnCours
-                      ? const _IndicateurChargement()
-                      : const PhosphorIcon(PhosphorIconsRegular.caretRight),
-                  onTap: _exportEnCours
-                      ? null
-                      : () => _exporter(moisCourantSeulement: true),
-                ),
-                const Divider(height: 1),
-                ListTile(
-                  leading: const PhosphorIcon(
-                    PhosphorIconsRegular.folderSimple,
-                  ),
-                  title: Text(l10n.exporterTout),
-                  trailing: _exportEnCours
-                      ? const _IndicateurChargement()
-                      : const PhosphorIcon(PhosphorIconsRegular.caretRight),
-                  onTap: _exportEnCours
-                      ? null
-                      : () => _exporter(moisCourantSeulement: false),
-                ),
-              ],
+            child: ListTile(
+              leading: const PhosphorIcon(PhosphorIconsRegular.calendarBlank),
+              title: Text(l10n.exporterBouton),
+              trailing: const PhosphorIcon(PhosphorIconsRegular.caretRight),
+              onTap: () =>
+                  Navigator.of(context).push(routeAnimee(const ExportScreen())),
             ),
           ),
           const SizedBox(height: 24),

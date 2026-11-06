@@ -95,8 +95,6 @@
   "reglages": "Réglages",
   "donnees": "Données",
   "export": "Export",
-  "exporterMoisCourant": "Exporter le mois courant",
-  "exporterTout": "Exporter toutes les transactions",
   "exportPartageTexte": "Export Koudi Na — {nomFichier}",
   "@exportPartageTexte": {
     "placeholders": {
