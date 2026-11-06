@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';
+import 'package:intl/date_symbol_data_local.dart';
 import 'package:koudi_na/data/models/categorie.dart';
 import 'package:koudi_na/data/models/compte.dart';
 import 'package:koudi_na/data/models/transaction.dart';
@@ -9,6 +10,7 @@ import 'package:koudi_na/logic/services/export_pdf.dart';
 
 void main() {
   testWidgets('aperçu visuel jetable du rapport PDF', (tester) async {
+    await initializeDateFormatting('fr');
     final categories = [
       Categorie(
         id: 'cat-nourriture',
