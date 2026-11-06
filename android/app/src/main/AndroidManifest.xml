@@ -32,6 +32,15 @@
             android:name="flutterEmbedding"
             android:value="2" />
     </application>
+    <!-- L'app cible les téléphones, pas les tablettes : la quasi-
+         totalité des tablettes Android n'ont pas de modem téléphonique
+         (Wi-Fi uniquement), donc exiger ce matériel les exclut du Play
+         Store sans affecter les téléphones. `android:supports-screens`
+         n'est plus respecté par Play pour ce filtrage depuis Android
+         3.2 — c'est la méthode recommandée par Google à sa place. -->
+    <uses-feature
+        android:name="android.hardware.telephony"
+        android:required="true" />
     <!-- Required to query activities that can process text, see:
          https://developer.android.com/training/package-visibility and
          https://developer.android.com/reference/android/content/Intent#ACTION_PROCESS_TEXT.
