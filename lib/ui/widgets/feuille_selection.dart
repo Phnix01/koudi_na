@@ -42,8 +42,10 @@ class FeuilleSelection<T> extends StatelessWidget {
           ),
           // `Flexible` plutôt qu'un `Column` nu : une liste courte garde
           // sa hauteur naturelle (comptes, catégories...), mais une
-          // liste longue (les devises, section 4) défile au lieu de
-          // déborder de la feuille.
+          // liste plus longue défile au lieu de déborder de la feuille.
+          // Les devises ont leur propre feuille (`devise_selecteur_
+          // feuille.dart`) : avec ~150 entrées il leur fallait en plus
+          // une recherche, hors du périmètre de ce widget générique.
           Flexible(
             child: ListView(
               shrinkWrap: true,

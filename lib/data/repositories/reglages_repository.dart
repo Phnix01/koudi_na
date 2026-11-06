@@ -1,6 +1,6 @@
 import 'package:hive_ce_flutter/hive_flutter.dart';
 
-import '../../core/constants/devises.dart';
+import '../../core/constants/devises.dart' show deviseParDefautCode;
 import '../../core/constants/hive_boxes.dart';
 
 /// Accès aux préférences de l'application (section 4, écran D). Une
@@ -23,8 +23,7 @@ class ReglagesRepository {
   /// Code ISO de la devise choisie (`XOF`, `EUR`...), ou celui de la
   /// devise par défaut si l'utilisateur n'a encore rien choisi — ce qui
   /// couvre aussi les installations antérieures à ce réglage.
-  String get devise =>
-      _box.get(_cleDevise) ?? devisesDisponibles[deviseParDefaut]!.code;
+  String get devise => _box.get(_cleDevise) ?? deviseParDefautCode;
 
   Future<void> enregistrerDevise(String code) => _box.put(_cleDevise, code);
 

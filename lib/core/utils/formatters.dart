@@ -16,10 +16,10 @@ final String _espaceInsecable = String.fromCharCode(0x00A0);
 /// parametre explicite : `formaterMontant` est appelee depuis une
 /// douzaine d'ecrans, et suit le meme principe que `Intl.defaultLocale`
 /// pour la langue, juste en dessous.
-DeviseInfo _deviseActuelle = devisesDisponibles[deviseParDefaut]!;
+DeviseInfo _deviseActuelle = deviseDepuisCode(deviseParDefautCode);
 
-void appliquerDeviseGlobale(Devise devise) {
-  _deviseActuelle = devisesDisponibles[devise]!;
+void appliquerDeviseGlobale(DeviseInfo devise) {
+  _deviseActuelle = devise;
 }
 
 /// Formate un montant : entier, jamais de decimale (section 1.3),

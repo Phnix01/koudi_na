@@ -9,19 +9,18 @@ import 'langue_provider.dart' show reglagesRepositoryProvider;
 /// D) au même titre que la langue — pas de devise par compte, pas de
 /// conversion : les montants restent des entiers, seul le symbole
 /// affiché change (voir `formaterMontant`).
-class DeviseNotifier extends StateNotifier<Devise> {
-  DeviseNotifier(this._reglages)
-    : super(deviseDepuisCode(_reglages.devise));
+class DeviseNotifier extends StateNotifier<DeviseInfo> {
+  DeviseNotifier(this._reglages) : super(deviseDepuisCode(_reglages.devise));
 
   final ReglagesRepository _reglages;
 
-  Future<void> choisir(Devise devise) async {
-    await _reglages.enregistrerDevise(devisesDisponibles[devise]!.code);
+  Future<void> choisir(DeviseInfo devise) async {
+    await _reglages.enregistrerDevise(devise.code);
     appliquerDeviseGlobale(devise);
     state = devise;
   }
 }
 
-final deviseProvider = StateNotifierProvider<DeviseNotifier, Devise>(
+final deviseProvider = StateNotifierProvider<DeviseNotifier, DeviseInfo>(
   (ref) => DeviseNotifier(ref.watch(reglagesRepositoryProvider)),
 );
