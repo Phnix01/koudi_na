@@ -530,18 +530,6 @@ abstract class AppLocalizations {
   /// **'Export'**
   String get export;
 
-  /// No description provided for @exporterMoisCourant.
-  ///
-  /// In fr, this message translates to:
-  /// **'Exporter le mois courant'**
-  String get exporterMoisCourant;
-
-  /// No description provided for @exporterTout.
-  ///
-  /// In fr, this message translates to:
-  /// **'Exporter toutes les transactions'**
-  String get exporterTout;
-
   /// No description provided for @exportPartageTexte.
   ///
   /// In fr, this message translates to:

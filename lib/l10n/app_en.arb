@@ -95,8 +95,6 @@
   "reglages": "Settings",
   "donnees": "Data",
   "export": "Export",
-  "exporterMoisCourant": "Export current month",
-  "exporterTout": "Export all transactions",
   "exportPartageTexte": "Koudi Na export — {nomFichier}",
   "@exportPartageTexte": {
     "placeholders": {

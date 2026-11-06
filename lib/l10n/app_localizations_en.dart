@@ -233,12 +233,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get export => 'Export';
 
   @override
-  String get exporterMoisCourant => 'Export current month';
-
-  @override
-  String get exporterTout => 'Export all transactions';
-
-  @override
   String exportPartageTexte(String nomFichier) {
     return 'Koudi Na export — $nomFichier';
   }
