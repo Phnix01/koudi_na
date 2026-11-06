@@ -13,7 +13,7 @@ import '../../l10n/l10n.dart';
 import '../../logic/providers/devise_provider.dart';
 import '../../logic/providers/langue_provider.dart';
 import '../navigation/route_animee.dart';
-import '../widgets/feuille_selection.dart';
+import '../widgets/devise_selecteur_feuille.dart';
 import '../widgets/segmented_toggle.dart';
 import 'capture_screen.dart';
 
@@ -33,6 +33,12 @@ class OnboardingScreen extends ConsumerStatefulWidget {
 class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
   final _controleur = PageController();
   int _page = 0;
+
+  /// Vrai dès que l'utilisateur a validé un choix dans le sélecteur de
+  /// devise du dernier écran. Pas besoin de le persister : l'onboarding
+  /// ne s'affiche qu'une fois (voir `onboardingTermine`), un état local
+  /// suffit à bloquer « Commencer » tant que ce n'est pas fait.
+  bool _deviseConfirmee = false;
 
   static const _nombreDePages = 4;
 
@@ -72,7 +78,6 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
         visuel: const _VisuelMarque(),
         titre: l10n.onboardingTitre1,
         corps: l10n.onboardingCorps1,
-        piedDePage: const _SelecteurDevise(),
       ),
       _PageOnboarding(
         visuel: const _VisuelCapture(),
@@ -88,6 +93,12 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
         visuel: const _VisuelConfidentialite(),
         titre: l10n.onboardingTitre4,
         corps: l10n.onboardingCorps4,
+        // Dernier écran : la devise doit être choisie explicitement
+        // avant de pouvoir terminer (voir le bouton plus bas).
+        piedDePage: _SelecteurDevise(
+          confirmee: _deviseConfirmee,
+          onConfirme: () => setState(() => _deviseConfirmee = true),
+        ),
       ),
     ];
 
@@ -102,19 +113,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
                 AppSpacing.s16,
                 0,
               ),
-              child: Row(
-                children: [
-                  const _BasculeLangue(),
-                  const Spacer(),
-                  // « Passer » disparaît sur le dernier écran : il n'y a
-                  // plus rien à sauter, seul « Commencer » a du sens.
-                  if (!derniere)
-                    TextButton(
-                      onPressed: _terminer,
-                      child: Text(l10n.onboardingPasser),
-                    ),
-                ],
-              ),
+              child: Row(children: [const _BasculeLangue()]),
             ),
             Expanded(
               child: PageView(
@@ -134,7 +133,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
               child: SizedBox(
                 width: double.infinity,
                 child: ElevatedButton(
-                  onPressed: _suivant,
+                  onPressed: (!derniere || _deviseConfirmee) ? _suivant : null,
                   child: Text(
                     derniere
                         ? l10n.onboardingCommencer
@@ -219,38 +218,30 @@ class _PageOnboarding extends StatelessWidget {
 
 /// Devise de l'application, choisie une bonne fois pour toutes dès
 /// l'onboarding plutôt qu'enfouie dans Réglages : les montants
-/// affichés juste après (écran 2) en dépendent directement. Une liste
-/// (feuille de sélection), pas un toggle à boutons : au-delà de 4
-/// devises, un groupe de boutons ne tiendrait plus sur une ligne.
+/// affichés juste avant (écran 2) en dépendent directement. Sur le
+/// dernier écran et obligatoire : `onConfirme` ne s'appelle qu'après
+/// un choix explicite, ce qui débloque le bouton « Commencer ».
 class _SelecteurDevise extends ConsumerWidget {
-  const _SelecteurDevise();
+  const _SelecteurDevise({required this.confirmee, required this.onConfirme});
+
+  final bool confirmee;
+  final VoidCallback onConfirme;
 
   Future<void> _choisir(
     BuildContext context,
     WidgetRef ref,
-    Devise actuelle,
+    DeviseInfo actuelle,
   ) async {
-    final l10n = context.l10n;
-    final choix = await showModalBottomSheet<Devise>(
-      context: context,
-      builder: (context) => FeuilleSelection<Devise>(
-        titre: l10n.devise,
-        options: Devise.values,
-        libelleDe: (d) =>
-            '${devisesDisponibles[d]!.symbole} · ${libelleDevise(l10n, d)}',
-        estSelectionne: (d) => d == actuelle,
-        avecOptionTous: false,
-      ),
-    );
+    final choix = await ouvrirSelecteurDevise(context, actuelle: actuelle);
     if (choix != null) {
       await ref.read(deviseProvider.notifier).choisir(choix);
+      onConfirme();
     }
   }
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final courante = ref.watch(deviseProvider);
-    final info = devisesDisponibles[courante]!;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -275,7 +266,7 @@ class _SelecteurDevise extends ConsumerWidget {
               child: Row(
                 children: [
                   Text(
-                    '${info.symbole} · ${libelleDevise(context.l10n, courante)}',
+                    '${courante.symbole} · ${nomDevise(courante, Localizations.localeOf(context).languageCode)}',
                   ),
                   const Spacer(),
                   const PhosphorIcon(PhosphorIconsRegular.caretRight, size: 18),
@@ -284,6 +275,15 @@ class _SelecteurDevise extends ConsumerWidget {
             ),
           ),
         ),
+        if (!confirmee) ...[
+          const SizedBox(height: AppSpacing.s8),
+          Text(
+            context.l10n.deviseObligatoireIndication,
+            style: Theme.of(
+              context,
+            ).textTheme.bodySmall?.copyWith(color: AppColors.accent),
+          ),
+        ],
       ],
     );
   }

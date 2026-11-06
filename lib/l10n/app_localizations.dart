@@ -878,12 +878,6 @@ abstract class AppLocalizations {
   /// **'Ton épargne couvre désormais {mois} mois de dépenses.'**
   String obsAutonomie(String mois);
 
-  /// No description provided for @onboardingPasser.
-  ///
-  /// In fr, this message translates to:
-  /// **'Passer'**
-  String get onboardingPasser;
-
   /// No description provided for @onboardingSuivant.
   ///
   /// In fr, this message translates to:
@@ -902,77 +896,35 @@ abstract class AppLocalizations {
   /// **'Devise'**
   String get devise;
 
-  /// No description provided for @deviseXof.
+  /// No description provided for @deviseRechercher.
   ///
   /// In fr, this message translates to:
-  /// **'Franc CFA (UEMOA)'**
-  String get deviseXof;
+  /// **'Rechercher une devise'**
+  String get deviseRechercher;
 
-  /// No description provided for @deviseXaf.
+  /// No description provided for @devisePrincipales.
   ///
   /// In fr, this message translates to:
-  /// **'Franc CFA (CEMAC)'**
-  String get deviseXaf;
+  /// **'Principales'**
+  String get devisePrincipales;
 
-  /// No description provided for @deviseEur.
+  /// No description provided for @deviseToutes.
   ///
   /// In fr, this message translates to:
-  /// **'Euro'**
-  String get deviseEur;
+  /// **'Toutes les devises'**
+  String get deviseToutes;
 
-  /// No description provided for @deviseChf.
+  /// No description provided for @deviseAucunResultat.
   ///
   /// In fr, this message translates to:
-  /// **'Franc suisse'**
-  String get deviseChf;
+  /// **'Aucune devise trouvée'**
+  String get deviseAucunResultat;
 
-  /// No description provided for @deviseCad.
+  /// No description provided for @deviseObligatoireIndication.
   ///
   /// In fr, this message translates to:
-  /// **'Dollar canadien'**
-  String get deviseCad;
-
-  /// No description provided for @deviseMad.
-  ///
-  /// In fr, this message translates to:
-  /// **'Dirham marocain'**
-  String get deviseMad;
-
-  /// No description provided for @deviseDzd.
-  ///
-  /// In fr, this message translates to:
-  /// **'Dinar algérien'**
-  String get deviseDzd;
-
-  /// No description provided for @deviseTnd.
-  ///
-  /// In fr, this message translates to:
-  /// **'Dinar tunisien'**
-  String get deviseTnd;
-
-  /// No description provided for @deviseGbp.
-  ///
-  /// In fr, this message translates to:
-  /// **'Livre sterling'**
-  String get deviseGbp;
-
-  /// No description provided for @deviseUsd.
-  ///
-  /// In fr, this message translates to:
-  /// **'Dollar américain'**
-  String get deviseUsd;
-
-  /// No description provided for @deviseNgn.
-  ///
-  /// In fr, this message translates to:
-  /// **'Naira (Nigeria)'**
-  String get deviseNgn;
-
-  /// No description provided for @deviseGhs.
-  ///
-  /// In fr, this message translates to:
-  /// **'Cedi (Ghana)'**
-  String get deviseGhs;
+  /// **'Choisis ta devise pour continuer'**
+  String get deviseObligatoireIndication;
 
   /// No description provided for @onboardingTitre1.
   ///

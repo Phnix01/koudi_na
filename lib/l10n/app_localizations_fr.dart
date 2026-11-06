@@ -460,9 +460,6 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
-  String get onboardingPasser => 'Passer';
-
-  @override
   String get onboardingSuivant => 'Continuer';
 
   @override
@@ -472,40 +469,19 @@ class AppLocalizationsFr extends AppLocalizations {
   String get devise => 'Devise';
 
   @override
-  String get deviseXof => 'Franc CFA (UEMOA)';
+  String get deviseRechercher => 'Rechercher une devise';
 
   @override
-  String get deviseXaf => 'Franc CFA (CEMAC)';
+  String get devisePrincipales => 'Principales';
 
   @override
-  String get deviseEur => 'Euro';
+  String get deviseToutes => 'Toutes les devises';
 
   @override
-  String get deviseChf => 'Franc suisse';
+  String get deviseAucunResultat => 'Aucune devise trouvée';
 
   @override
-  String get deviseCad => 'Dollar canadien';
-
-  @override
-  String get deviseMad => 'Dirham marocain';
-
-  @override
-  String get deviseDzd => 'Dinar algérien';
-
-  @override
-  String get deviseTnd => 'Dinar tunisien';
-
-  @override
-  String get deviseGbp => 'Livre sterling';
-
-  @override
-  String get deviseUsd => 'Dollar américain';
-
-  @override
-  String get deviseNgn => 'Naira (Nigeria)';
-
-  @override
-  String get deviseGhs => 'Cedi (Ghana)';
+  String get deviseObligatoireIndication => 'Choisis ta devise pour continuer';
 
   @override
   String get onboardingTitre1 => 'Sache où va chaque centime';
