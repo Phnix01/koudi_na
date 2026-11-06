@@ -10,7 +10,7 @@ import 'package:koudi_na/core/utils/formatters.dart';
 void main() {
   final espaceInsecable = String.fromCharCode(0x00A0);
 
-  setUp(() => appliquerDeviseGlobale(deviseParDefaut));
+  setUp(() => appliquerDeviseGlobale(deviseDepuisCode(deviseParDefautCode)));
 
   test('montant en français : espace insécable et suffixe FCFA', () {
     Intl.defaultLocale = 'fr';
@@ -35,13 +35,13 @@ void main() {
 
   test('devise suffixe (EUR) : symbole après le montant', () {
     Intl.defaultLocale = 'fr';
-    appliquerDeviseGlobale(Devise.eur);
+    appliquerDeviseGlobale(deviseDepuisCode('EUR'));
     expect(formaterMontant(2500), '2${espaceInsecable}500$espaceInsecable€');
   });
 
   test('devise préfixe (USD) : symbole collé avant le montant', () {
     Intl.defaultLocale = 'en';
-    appliquerDeviseGlobale(Devise.usd);
+    appliquerDeviseGlobale(deviseDepuisCode('USD'));
     expect(formaterMontant(2500), '\$2,500');
   });
 }

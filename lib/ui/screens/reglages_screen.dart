@@ -15,7 +15,7 @@ import '../../logic/providers/langue_provider.dart';
 import '../../logic/providers/repositories_providers.dart';
 import '../../logic/services/import_csv.dart';
 import '../navigation/route_animee.dart';
-import '../widgets/feuille_selection.dart';
+import '../widgets/devise_selecteur_feuille.dart';
 import '../widgets/segmented_toggle.dart';
 import 'categories_screen.dart';
 import 'comptes_screen.dart';
@@ -56,19 +56,8 @@ class _ReglagesScreenState extends ConsumerState<ReglagesScreen> {
     });
   }
 
-  Future<void> _choisirDevise(Devise actuelle) async {
-    final l10n = context.l10n;
-    final choix = await showModalBottomSheet<Devise>(
-      context: context,
-      builder: (context) => FeuilleSelection<Devise>(
-        titre: l10n.devise,
-        options: Devise.values,
-        libelleDe: (d) =>
-            '${devisesDisponibles[d]!.symbole} · ${libelleDevise(l10n, d)}',
-        estSelectionne: (d) => d == actuelle,
-        avecOptionTous: false,
-      ),
-    );
+  Future<void> _choisirDevise(DeviseInfo actuelle) async {
+    final choix = await ouvrirSelecteurDevise(context, actuelle: actuelle);
     if (choix != null) {
       await ref.read(deviseProvider.notifier).choisir(choix);
     }
@@ -204,8 +193,8 @@ class _ReglagesScreenState extends ConsumerState<ReglagesScreen> {
                 PhosphorIconsRegular.currencyCircleDollar,
               ),
               title: Text(
-                '${devisesDisponibles[deviseChoisie]!.symbole} · '
-                '${libelleDevise(l10n, deviseChoisie)}',
+                '${deviseChoisie.symbole} · '
+                '${nomDevise(deviseChoisie, Localizations.localeOf(context).languageCode)}',
               ),
               trailing: const PhosphorIcon(PhosphorIconsRegular.caretRight),
               onTap: () => _choisirDevise(deviseChoisie),
