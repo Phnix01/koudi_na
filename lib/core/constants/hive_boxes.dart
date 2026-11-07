@@ -9,4 +9,9 @@ abstract final class HiveBoxes {
   /// Préférences simples (langue...) : une Box de chaînes, clé → valeur,
   /// sans modèle Hive dédié.
   static const reglages = 'reglages';
+
+  /// Série de jours actifs, badges débloqués et alertes de dépassement
+  /// déjà montrées : même principe que [reglages], une Box de chaînes
+  /// sans modèle Hive dédié.
+  static const gamification = 'gamification';
 }

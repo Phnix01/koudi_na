@@ -30,6 +30,7 @@ Future<void> initialiserHive() async {
   await Hive.openBox<Compte>(HiveBoxes.comptes);
   await Hive.openBox<Recurrence>(HiveBoxes.recurrences);
   await Hive.openBox<String>(HiveBoxes.reglages);
+  await Hive.openBox<String>(HiveBoxes.gamification);
 
   // La langue est fixée ici, avant le seed : les catégories et comptes
   // de départ sont créés dans la langue de l'utilisateur, et `intl`

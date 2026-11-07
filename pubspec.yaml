@@ -96,6 +96,17 @@ dependencies:
   # Génère le classeur Excel (.xlsx) de l'écran Export (Réglages).
   excel: ^4.0.6
 
+  # Planifie les notifications locales (rappel quotidien, récap
+  # hebdomadaire) et affiche les alertes de dépassement de budget.
+  # Aucun serveur de push : tout reste 100% hors ligne.
+  flutter_local_notifications: ^22.3.3
+  # Calcule les instants de déclenchement des notifications planifiées
+  # dans le fuseau horaire réel de l'appareil (sans ça, `timezone`
+  # planifie en UTC par défaut).
+  timezone: ^0.11.2
+  # Résout le nom IANA du fuseau horaire de l'appareil pour `timezone`.
+  flutter_timezone: ^5.1.1
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
