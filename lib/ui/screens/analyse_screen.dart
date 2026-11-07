@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../core/constants/astuces.dart';
 import '../../core/constants/couleurs_piliers.dart';
 import '../../core/theme/app_colors.dart';
 import '../../core/utils/couleur_utils.dart';
@@ -23,6 +24,7 @@ import '../widgets/graphique_evolution_mensuelle.dart';
 import '../widgets/graphique_repartition.dart';
 import '../widgets/graphique_rythme.dart';
 import '../widgets/graphique_trajectoire_epargne.dart';
+import '../widgets/astuce_du_jour.dart';
 import '../widgets/heatmap_habitudes.dart';
 import '../widgets/montant_anime.dart';
 import '../widgets/observations_automatiques.dart';
@@ -91,6 +93,13 @@ class AnalyseScreen extends ConsumerWidget {
                         ObservationsAutomatiques(observations: observations),
                         const SizedBox(height: 12),
                       ],
+                      AstuceDuJour(
+                        texte: astuceDuJour(
+                          DateTime.now(),
+                          Localizations.localeOf(context).languageCode,
+                        ),
+                      ),
+                      const SizedBox(height: 12),
                       Card(
                         child: Padding(
                           padding: const EdgeInsets.fromLTRB(8, 16, 16, 8),

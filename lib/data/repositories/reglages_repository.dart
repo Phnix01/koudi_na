@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart' show TimeOfDay;
 import 'package:hive_ce_flutter/hive_flutter.dart';
 
 import '../../core/constants/devises.dart' show deviseParDefautCode;
@@ -10,6 +11,8 @@ class ReglagesRepository {
   static const _cleLangue = 'langue';
   static const _cleDevise = 'devise';
   static const _cleOnboardingTermine = 'onboarding_termine';
+  static const _cleRappelQuotidienHeure = 'rappel_quotidien_heure';
+  static const _cleRecapHebdomadaireActif = 'recap_hebdomadaire_actif';
 
   Box<String> get _box => Hive.box<String>(HiveBoxes.reglages);
 
@@ -33,4 +36,27 @@ class ReglagesRepository {
 
   Future<void> marquerOnboardingTermine() =>
       _box.put(_cleOnboardingTermine, 'oui');
+
+  /// Heure du rappel quotidien (`HH:mm`), ou `null` si désactivé.
+  TimeOfDay? get rappelQuotidienHeure {
+    final valeur = _box.get(_cleRappelQuotidienHeure);
+    if (valeur == null) return null;
+    final parties = valeur.split(':');
+    if (parties.length != 2) return null;
+    final heure = int.tryParse(parties[0]);
+    final minute = int.tryParse(parties[1]);
+    if (heure == null || minute == null) return null;
+    return TimeOfDay(hour: heure, minute: minute);
+  }
+
+  Future<void> enregistrerRappelQuotidien(TimeOfDay? heure) => heure == null
+      ? _box.delete(_cleRappelQuotidienHeure)
+      : _box.put(_cleRappelQuotidienHeure, '${heure.hour}:${heure.minute}');
+
+  bool get recapHebdomadaireActif =>
+      _box.get(_cleRecapHebdomadaireActif) == 'oui';
+
+  Future<void> enregistrerRecapHebdomadaire(bool actif) => actif
+      ? _box.put(_cleRecapHebdomadaireActif, 'oui')
+      : _box.delete(_cleRecapHebdomadaireActif);
 }
