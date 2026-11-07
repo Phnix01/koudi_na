@@ -1,4 +1,13 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Notifications locales (rappel quotidien, récap hebdomadaire,
+         alerte de dépassement) : POST_NOTIFICATIONS est la permission
+         d'exécution Android 13+ demandée en contexte par
+         NotificationsService.demanderPermission(). RECEIVE_BOOT_COMPLETED
+         permet aux rappels planifiés de survivre à un redémarrage du
+         téléphone (sinon ils restent silencieusement inactifs jusqu'à
+         la prochaine ouverture de l'app). -->
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
     <application
         android:label="Koudi Na"
         android:name="${applicationName}"
@@ -31,6 +40,23 @@
         <meta-data
             android:name="flutterEmbedding"
             android:value="2" />
+        <!-- Déclenchent les notifications planifiées via zonedSchedule
+             (rappel quotidien, récap hebdomadaire) et les replanifient
+             après un redémarrage du téléphone. On utilise le mode
+             inexactAllowWhileIdle : pas besoin de SCHEDULE_EXACT_ALARM. -->
+        <receiver
+            android:exported="false"
+            android:name="com.dexterous.flutterlocalnotifications.ScheduledNotificationReceiver" />
+        <receiver
+            android:exported="false"
+            android:name="com.dexterous.flutterlocalnotifications.ScheduledNotificationBootReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED"/>
+                <action android:name="android.intent.action.MY_PACKAGE_REPLACED"/>
+                <action android:name="android.intent.action.QUICKBOOT_POWERON" />
+                <action android:name="com.htc.intent.action.QUICKBOOT_POWERON"/>
+            </intent-filter>
+        </receiver>
     </application>
     <!-- L'app cible les téléphones, pas les tablettes : la quasi-
          totalité des tablettes Android n'ont pas de modem téléphonique

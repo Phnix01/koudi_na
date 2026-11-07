@@ -1015,6 +1015,102 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'Impossible d\'ouvrir ce lien.'**
   String get aProposLienIndisponible;
+
+  /// No description provided for @notificationSectionTitre.
+  ///
+  /// In fr, this message translates to:
+  /// **'Notifications'**
+  String get notificationSectionTitre;
+
+  /// No description provided for @notificationRappelQuotidienTitre.
+  ///
+  /// In fr, this message translates to:
+  /// **'Rappel quotidien'**
+  String get notificationRappelQuotidienTitre;
+
+  /// No description provided for @notificationRappelQuotidienSousTitre.
+  ///
+  /// In fr, this message translates to:
+  /// **'Choisir une heure pour être rappelé d\'enregistrer ses dépenses.'**
+  String get notificationRappelQuotidienSousTitre;
+
+  /// No description provided for @notificationRappelHeureChoisie.
+  ///
+  /// In fr, this message translates to:
+  /// **'Actif à {heure}'**
+  String notificationRappelHeureChoisie(String heure);
+
+  /// No description provided for @notificationRecapHebdomadaireTitre.
+  ///
+  /// In fr, this message translates to:
+  /// **'Récap hebdomadaire'**
+  String get notificationRecapHebdomadaireTitre;
+
+  /// No description provided for @notificationRecapHebdomadaireSousTitre.
+  ///
+  /// In fr, this message translates to:
+  /// **'Un rappel chaque dimanche soir pour consulter le résumé de la semaine.'**
+  String get notificationRecapHebdomadaireSousTitre;
+
+  /// No description provided for @notificationPermissionRefusee.
+  ///
+  /// In fr, this message translates to:
+  /// **'Notifications refusées. Autorisez-les dans les réglages du téléphone pour activer ce rappel.'**
+  String get notificationPermissionRefusee;
+
+  /// No description provided for @notificationRappelNotifTitre.
+  ///
+  /// In fr, this message translates to:
+  /// **'Koudi Na'**
+  String get notificationRappelNotifTitre;
+
+  /// No description provided for @notificationRappelNotifCorps.
+  ///
+  /// In fr, this message translates to:
+  /// **'Pensez à enregistrer vos dépenses du jour.'**
+  String get notificationRappelNotifCorps;
+
+  /// No description provided for @notificationRecapNotifTitre.
+  ///
+  /// In fr, this message translates to:
+  /// **'Koudi Na'**
+  String get notificationRecapNotifTitre;
+
+  /// No description provided for @notificationRecapNotifCorps.
+  ///
+  /// In fr, this message translates to:
+  /// **'Votre résumé de la semaine est prêt, ouvrez l\'app pour le consulter.'**
+  String get notificationRecapNotifCorps;
+
+  /// No description provided for @notificationDepassementNotifTitre.
+  ///
+  /// In fr, this message translates to:
+  /// **'Dépassement de budget'**
+  String get notificationDepassementNotifTitre;
+
+  /// No description provided for @notificationDepassementNotifCorps.
+  ///
+  /// In fr, this message translates to:
+  /// **'Le pilier {pilier} dépasse son objectif ce mois-ci.'**
+  String notificationDepassementNotifCorps(String pilier);
+
+  /// No description provided for @badgesTitre.
+  ///
+  /// In fr, this message translates to:
+  /// **'Badges'**
+  String get badgesTitre;
+
+  /// No description provided for @badgesEntreeReglages.
+  ///
+  /// In fr, this message translates to:
+  /// **'Voir mes badges'**
+  String get badgesEntreeReglages;
+
+  /// No description provided for @badgesSnackbarDebloque.
+  ///
+  /// In fr, this message translates to:
+  /// **'Badge débloqué : {nomBadge}'**
+  String badgesSnackbarDebloque(String nomBadge);
 }
 
 class _AppLocalizationsDelegate

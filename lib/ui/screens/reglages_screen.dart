@@ -12,11 +12,13 @@ import '../../core/constants/devises.dart';
 import '../../l10n/l10n.dart';
 import '../../logic/providers/devise_provider.dart';
 import '../../logic/providers/langue_provider.dart';
+import '../../logic/providers/notifications_provider.dart';
 import '../../logic/providers/repositories_providers.dart';
 import '../../logic/services/import_csv.dart';
 import '../navigation/route_animee.dart';
 import '../widgets/devise_selecteur_feuille.dart';
 import '../widgets/segmented_toggle.dart';
+import 'badges_screen.dart';
 import 'categories_screen.dart';
 import 'comptes_screen.dart';
 import 'export_screen.dart';
@@ -47,6 +49,8 @@ class ReglagesScreen extends ConsumerStatefulWidget {
 class _ReglagesScreenState extends ConsumerState<ReglagesScreen> {
   bool _importEnCours = false;
   String _version = '';
+  TimeOfDay? _rappelHeure;
+  bool _recapActif = false;
 
   @override
   void initState() {
@@ -54,6 +58,71 @@ class _ReglagesScreenState extends ConsumerState<ReglagesScreen> {
     PackageInfo.fromPlatform().then((info) {
       if (mounted) setState(() => _version = info.version);
     });
+    final reglages = ref.read(reglagesRepositoryProvider);
+    _rappelHeure = reglages.rappelQuotidienHeure;
+    _recapActif = reglages.recapHebdomadaireActif;
+  }
+
+  /// Active (en demandant l'heure puis la permission, en contexte) ou
+  /// désactive le rappel quotidien. Appelée aussi pour changer l'heure
+  /// d'un rappel déjà actif (on repasse par le même flux).
+  Future<void> _basculerRappelQuotidien(bool activer) async {
+    final l10n = context.l10n;
+    final notifications = ref.read(notificationsServiceProvider);
+    final reglages = ref.read(reglagesRepositoryProvider);
+
+    if (!activer) {
+      await reglages.enregistrerRappelQuotidien(null);
+      await notifications.annulerRappelQuotidien();
+      setState(() => _rappelHeure = null);
+      return;
+    }
+
+    final heure = await showTimePicker(
+      context: context,
+      initialTime: _rappelHeure ?? const TimeOfDay(hour: 20, minute: 0),
+    );
+    if (heure == null) return;
+
+    final accordee = await notifications.demanderPermission();
+    if (!accordee) {
+      _afficherMessage(l10n.notificationPermissionRefusee);
+      return;
+    }
+
+    await reglages.enregistrerRappelQuotidien(heure);
+    await notifications.planifierRappelQuotidien(
+      heure,
+      titre: l10n.notificationRappelNotifTitre,
+      corps: l10n.notificationRappelNotifCorps,
+    );
+    setState(() => _rappelHeure = heure);
+  }
+
+  Future<void> _basculerRecapHebdomadaire(bool activer) async {
+    final l10n = context.l10n;
+    final notifications = ref.read(notificationsServiceProvider);
+    final reglages = ref.read(reglagesRepositoryProvider);
+
+    if (!activer) {
+      await reglages.enregistrerRecapHebdomadaire(false);
+      await notifications.annulerRecapHebdomadaire();
+      setState(() => _recapActif = false);
+      return;
+    }
+
+    final accordee = await notifications.demanderPermission();
+    if (!accordee) {
+      _afficherMessage(l10n.notificationPermissionRefusee);
+      return;
+    }
+
+    await reglages.enregistrerRecapHebdomadaire(true);
+    await notifications.planifierRecapHebdomadaire(
+      titre: l10n.notificationRecapNotifTitre,
+      corps: l10n.notificationRecapNotifCorps,
+    );
+    setState(() => _recapActif = true);
   }
 
   Future<void> _choisirDevise(DeviseInfo actuelle) async {
@@ -198,6 +267,53 @@ class _ReglagesScreenState extends ConsumerState<ReglagesScreen> {
               ),
               trailing: const PhosphorIcon(PhosphorIconsRegular.caretRight),
               onTap: () => _choisirDevise(deviseChoisie),
+            ),
+          ),
+          const SizedBox(height: 24),
+          Text(
+            l10n.notificationSectionTitre,
+            style: Theme.of(context).textTheme.titleMedium,
+          ),
+          const SizedBox(height: 8),
+          Card(
+            child: Column(
+              children: [
+                SwitchListTile(
+                  secondary: const PhosphorIcon(PhosphorIconsRegular.bell),
+                  title: Text(l10n.notificationRappelQuotidienTitre),
+                  subtitle: Text(
+                    _rappelHeure != null
+                        ? l10n.notificationRappelHeureChoisie(
+                            _rappelHeure!.format(context),
+                          )
+                        : l10n.notificationRappelQuotidienSousTitre,
+                  ),
+                  value: _rappelHeure != null,
+                  onChanged: _basculerRappelQuotidien,
+                ),
+                const Divider(height: 1),
+                SwitchListTile(
+                  secondary: const PhosphorIcon(
+                    PhosphorIconsRegular.calendarCheck,
+                  ),
+                  title: Text(l10n.notificationRecapHebdomadaireTitre),
+                  subtitle: Text(l10n.notificationRecapHebdomadaireSousTitre),
+                  value: _recapActif,
+                  onChanged: _basculerRecapHebdomadaire,
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(height: 24),
+          Text(l10n.badgesTitre, style: Theme.of(context).textTheme.titleMedium),
+          const SizedBox(height: 8),
+          Card(
+            child: ListTile(
+              leading: const PhosphorIcon(PhosphorIconsRegular.trophy),
+              title: Text(l10n.badgesEntreeReglages),
+              trailing: const PhosphorIcon(PhosphorIconsRegular.caretRight),
+              onTap: () =>
+                  Navigator.of(context).push(routeAnimee(const BadgesScreen())),
             ),
           ),
           const SizedBox(height: 24),

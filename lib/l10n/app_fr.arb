@@ -249,5 +249,38 @@
   "aProposNousContacter": "Nous contacter",
   "aProposEditeur": "Koudi Na est édité par XNOVA Systems.",
   "aProposHorsLigne": "100 % hors ligne : aucune donnée ne quitte votre téléphone, sauf export CSV initié par vous.",
-  "aProposLienIndisponible": "Impossible d'ouvrir ce lien."
+  "aProposLienIndisponible": "Impossible d'ouvrir ce lien.",
+
+  "notificationSectionTitre": "Notifications",
+  "notificationRappelQuotidienTitre": "Rappel quotidien",
+  "notificationRappelQuotidienSousTitre": "Choisir une heure pour être rappelé d'enregistrer ses dépenses.",
+  "notificationRappelHeureChoisie": "Actif à {heure}",
+  "@notificationRappelHeureChoisie": {
+    "placeholders": {
+      "heure": {"type": "String"}
+    }
+  },
+  "notificationRecapHebdomadaireTitre": "Récap hebdomadaire",
+  "notificationRecapHebdomadaireSousTitre": "Un rappel chaque dimanche soir pour consulter le résumé de la semaine.",
+  "notificationPermissionRefusee": "Notifications refusées. Autorisez-les dans les réglages du téléphone pour activer ce rappel.",
+  "notificationRappelNotifTitre": "Koudi Na",
+  "notificationRappelNotifCorps": "Pensez à enregistrer vos dépenses du jour.",
+  "notificationRecapNotifTitre": "Koudi Na",
+  "notificationRecapNotifCorps": "Votre résumé de la semaine est prêt, ouvrez l'app pour le consulter.",
+  "notificationDepassementNotifTitre": "Dépassement de budget",
+  "notificationDepassementNotifCorps": "Le pilier {pilier} dépasse son objectif ce mois-ci.",
+  "@notificationDepassementNotifCorps": {
+    "placeholders": {
+      "pilier": {"type": "String"}
+    }
+  },
+
+  "badgesTitre": "Badges",
+  "badgesEntreeReglages": "Voir mes badges",
+  "badgesSnackbarDebloque": "Badge débloqué : {nomBadge}",
+  "@badgesSnackbarDebloque": {
+    "placeholders": {
+      "nomBadge": {"type": "String"}
+    }
+  }
 }

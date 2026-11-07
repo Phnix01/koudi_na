@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/date_symbol_data_local.dart';
@@ -9,6 +10,8 @@ import 'core/theme/app_theme.dart';
 import 'data/hive_init.dart';
 import 'l10n/l10n.dart';
 import 'logic/providers/langue_provider.dart';
+import 'logic/providers/notifications_provider.dart';
+import 'logic/services/notifications_service.dart';
 import 'ui/screens/splash_screen.dart';
 
 Future<void> main() async {
@@ -38,7 +41,18 @@ Future<void> main() async {
   for (final locale in AppLocalizations.supportedLocales) {
     await initializeDateFormatting(locale.languageCode);
   }
-  runApp(const ProviderScope(child: MyApp()));
+
+  final notifications = NotificationsService(FlutterLocalNotificationsPlugin());
+  await notifications.init();
+
+  runApp(
+    ProviderScope(
+      overrides: [
+        notificationsServiceProvider.overrideWithValue(notifications),
+      ],
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends ConsumerWidget {

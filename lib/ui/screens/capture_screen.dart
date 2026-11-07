@@ -4,10 +4,18 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:uuid/uuid.dart';
 
+import '../../core/constants/badges.dart';
 import '../../data/models/transaction.dart';
+import '../../data/repositories/transaction_repository.dart';
 import '../../logic/providers/capture_form_provider.dart';
+import '../../logic/providers/notifications_provider.dart';
 import '../../logic/providers/repositories_providers.dart';
+import '../../logic/services/alerte_depassement.dart';
+import '../../logic/services/calcul_piliers.dart';
+import '../../logic/services/evaluation_badges.dart';
+import '../../logic/services/serie_quotidienne.dart';
 import '../navigation/route_animee.dart';
+import '../widgets/chip_serie.dart';
 import '../widgets/formulaire_transaction.dart';
 import '../widgets/solde_du_mois.dart';
 import '../../l10n/l10n.dart';
@@ -18,10 +26,73 @@ import 'reglages_screen.dart';
 /// Écran A du cahier des charges : la capture, cœur de l'application.
 /// Parcours cible (section 4) : ouvrir → taper le montant → taper la
 /// catégorie → enregistré, trois gestes, moins de 10 secondes.
-class CaptureScreen extends ConsumerWidget {
+class CaptureScreen extends ConsumerStatefulWidget {
   const CaptureScreen({super.key});
 
-  Future<void> _enregistrer(WidgetRef ref) async {
+  @override
+  ConsumerState<CaptureScreen> createState() => _CaptureScreenState();
+}
+
+class _CaptureScreenState extends ConsumerState<CaptureScreen>
+    with WidgetsBindingObserver {
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addObserver(this);
+    WidgetsBinding.instance.addPostFrameCallback(
+      (_) => _verifierDepassements(),
+    );
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.resumed) _verifierDepassements();
+  }
+
+  /// Vérifie, chaque fois que l'app repasse au premier plan, si un
+  /// pilier dépasse sa cible du mois et ne l'a pas encore signalé —
+  /// pas de calcul en arrière-plan, juste un contrôle en direct à
+  /// chaque reprise (voir le plan : aucune exécution hors ligne n'est
+  /// possible sans backend).
+  Future<void> _verifierDepassements() async {
+    final transactions = ref.read(transactionRepositoryProvider).tous();
+    final categories = ref.read(categorieRepositoryProvider).tous();
+    final gamification = ref.read(gamificationRepositoryProvider);
+    final maintenant = DateTime.now();
+
+    final progressions = calculerProgressionPiliers(
+      transactions,
+      categories,
+      maintenant: maintenant,
+    );
+    final enDepassement = piliersEnDepassementNonAlertes(
+      progressions,
+      (pilier) => gamification.dejaAlertePourCeMois(pilier, maintenant),
+    );
+    if (enDepassement.isEmpty) return;
+
+    if (!mounted) return;
+    final l10n = context.l10n;
+    final notifications = ref.read(notificationsServiceProvider);
+    for (final pilier in enDepassement) {
+      await gamification.marquerAlertePourCeMois(pilier, maintenant);
+      await notifications.afficherAlerteDepassement(
+        pilier,
+        titre: l10n.notificationDepassementNotifTitre,
+        corps: l10n.notificationDepassementNotifCorps(
+          l10n.libellePilier(pilier),
+        ),
+      );
+    }
+  }
+
+  Future<void> _enregistrer(BuildContext context, WidgetRef ref) async {
     final form = ref.read(captureFormProvider);
     final transaction = Transaction(
       id: const Uuid().v4(),
@@ -32,15 +103,70 @@ class CaptureScreen extends ConsumerWidget {
       compteId: form.compteId,
       note: form.note.isEmpty ? null : form.note,
     );
-    await ref.read(transactionRepositoryProvider).enregistrer(transaction);
+    final transactionRepo = ref.read(transactionRepositoryProvider);
+    await transactionRepo.enregistrer(transaction);
     // Le retour haptique remplace un dialogue de confirmation (section 3.3) :
     // aucune étape supplémentaire ne doit retarder la saisie suivante.
     HapticFeedback.lightImpact();
     ref.read(captureFormProvider.notifier).reinitialiserApresEnregistrement();
+
+    if (!context.mounted) return;
+    await _mettreAJourSerieEtBadges(context, ref, transactionRepo);
+  }
+
+  /// Une saisie active est le seul événement qui compte pour la série
+  /// et les badges — jamais une transaction générée automatiquement
+  /// par une récurrence (voir `hive_init.dart`).
+  Future<void> _mettreAJourSerieEtBadges(
+    BuildContext context,
+    WidgetRef ref,
+    TransactionRepository transactionRepo,
+  ) async {
+    final gamification = ref.read(gamificationRepositoryProvider);
+    final categories = ref.read(categorieRepositoryProvider).tous();
+    final maintenant = DateTime.now();
+
+    final nouvelleSerie = calculerNouvelleSerie(
+      gamification.derniereActivite,
+      maintenant,
+      gamification.serieCourante,
+    );
+    await gamification.enregistrerActivite(maintenant, nouvelleSerie);
+
+    final transactions = transactionRepo.tous();
+    final progressions = calculerProgressionPiliers(
+      transactions,
+      categories,
+      maintenant: maintenant,
+    );
+    final contexte = (
+      serieCourante: nouvelleSerie,
+      totalTransactions: transactions.length,
+      progressionMoisCourant: progressions,
+    );
+    final nouveauxBadges = evaluerBadges(
+      contexte,
+      gamification.badgesDebloques,
+    );
+    if (nouveauxBadges.isEmpty) return;
+    await gamification.debloquerBadges(nouveauxBadges);
+
+    if (!context.mounted) return;
+    final langue = Localizations.localeOf(context).languageCode;
+    final badge = badgesDisponibles.firstWhere(
+      (b) => b.id == nouveauxBadges.first,
+    );
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(
+          context.l10n.badgesSnackbarDebloque(titreBadge(badge, langue)),
+        ),
+      ),
+    );
   }
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  Widget build(BuildContext context) {
     final montant = ref.watch(
       captureFormProvider.select((form) => form.montant),
     );
@@ -86,13 +212,16 @@ class CaptureScreen extends ConsumerWidget {
                 ],
               ),
             ),
+            const ChipSerie(),
             const Expanded(child: FormulaireTransaction()),
             Padding(
               padding: const EdgeInsets.fromLTRB(20, 8, 20, 20),
               child: SizedBox(
                 width: double.infinity,
                 child: ElevatedButton(
-                  onPressed: peutEnregistrer ? () => _enregistrer(ref) : null,
+                  onPressed: peutEnregistrer
+                      ? () => _enregistrer(context, ref)
+                      : null,
                   child: Text(l10n.enregistrer),
                 ),
               ),

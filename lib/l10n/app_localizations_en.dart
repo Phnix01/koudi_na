@@ -532,4 +532,63 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get aProposLienIndisponible => 'Couldn\'t open this link.';
+
+  @override
+  String get notificationSectionTitre => 'Notifications';
+
+  @override
+  String get notificationRappelQuotidienTitre => 'Daily reminder';
+
+  @override
+  String get notificationRappelQuotidienSousTitre =>
+      'Pick a time to be reminded to record your expenses.';
+
+  @override
+  String notificationRappelHeureChoisie(String heure) {
+    return 'On at $heure';
+  }
+
+  @override
+  String get notificationRecapHebdomadaireTitre => 'Weekly recap';
+
+  @override
+  String get notificationRecapHebdomadaireSousTitre =>
+      'A reminder every Sunday evening to check your week\'s summary.';
+
+  @override
+  String get notificationPermissionRefusee =>
+      'Notifications denied. Allow them in your phone\'s settings to turn this on.';
+
+  @override
+  String get notificationRappelNotifTitre => 'Koudi Na';
+
+  @override
+  String get notificationRappelNotifCorps =>
+      'Don\'t forget to record today\'s expenses.';
+
+  @override
+  String get notificationRecapNotifTitre => 'Koudi Na';
+
+  @override
+  String get notificationRecapNotifCorps =>
+      'Your weekly summary is ready, open the app to see it.';
+
+  @override
+  String get notificationDepassementNotifTitre => 'Budget overrun';
+
+  @override
+  String notificationDepassementNotifCorps(String pilier) {
+    return 'The $pilier pillar is over its target this month.';
+  }
+
+  @override
+  String get badgesTitre => 'Badges';
+
+  @override
+  String get badgesEntreeReglages => 'View my badges';
+
+  @override
+  String badgesSnackbarDebloque(String nomBadge) {
+    return 'Badge unlocked: $nomBadge';
+  }
 }
