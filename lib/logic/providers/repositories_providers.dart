@@ -2,6 +2,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../data/repositories/categorie_repository.dart';
 import '../../data/repositories/compte_repository.dart';
+import '../../data/repositories/gamification_repository.dart';
 import '../../data/repositories/recurrence_repository.dart';
 import '../../data/repositories/transaction_repository.dart';
 
@@ -15,3 +16,6 @@ final transactionRepositoryProvider = Provider(
   (ref) => TransactionRepository(),
 );
 final recurrenceRepositoryProvider = Provider((ref) => RecurrenceRepository());
+final gamificationRepositoryProvider = Provider(
+  (ref) => GamificationRepository(),
+);
