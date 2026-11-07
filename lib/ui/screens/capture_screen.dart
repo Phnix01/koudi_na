@@ -16,6 +16,7 @@ import '../../logic/services/evaluation_badges.dart';
 import '../../logic/services/serie_quotidienne.dart';
 import '../navigation/route_animee.dart';
 import '../widgets/chip_serie.dart';
+import '../widgets/dialogue_badge_debloque.dart';
 import '../widgets/formulaire_transaction.dart';
 import '../widgets/solde_du_mois.dart';
 import '../../l10n/l10n.dart';
@@ -156,13 +157,7 @@ class _CaptureScreenState extends ConsumerState<CaptureScreen>
     final badge = badgesDisponibles.firstWhere(
       (b) => b.id == nouveauxBadges.first,
     );
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(
-          context.l10n.badgesSnackbarDebloque(titreBadge(badge, langue)),
-        ),
-      ),
-    );
+    await afficherDeblocageBadge(context, badge, langue);
   }
 
   @override

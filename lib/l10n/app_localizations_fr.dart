@@ -591,7 +591,27 @@ class AppLocalizationsFr extends AppLocalizations {
   String get badgesEntreeReglages => 'Voir mes badges';
 
   @override
-  String badgesSnackbarDebloque(String nomBadge) {
-    return 'Badge débloqué : $nomBadge';
+  String get badgesDeblocageTitre => 'Badge débloqué !';
+
+  @override
+  String get badgesDeblocageBouton => 'Continuer';
+
+  @override
+  String badgesProgression(int debloques, int total) {
+    return '$debloques/$total badges débloqués';
+  }
+
+  @override
+  String get astuceDuJourEtiquette => 'Astuce du jour';
+
+  @override
+  String serieJoursChip(int nombre) {
+    String _temp0 = intl.Intl.pluralLogic(
+      nombre,
+      locale: localeName,
+      other: '$nombre jours',
+      one: '1 jour',
+    );
+    return '$_temp0';
   }
 }

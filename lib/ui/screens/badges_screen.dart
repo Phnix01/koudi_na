@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 
@@ -26,26 +27,95 @@ class BadgesScreen extends ConsumerWidget {
         valueListenable: gamification.listenable(),
         builder: (context, _, _) {
           final debloques = gamification.badgesDebloques;
-          return GridView.builder(
-            padding: const EdgeInsets.all(AppSpacing.s16),
-            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 2,
-              mainAxisSpacing: AppSpacing.s12,
-              crossAxisSpacing: AppSpacing.s12,
-              childAspectRatio: 0.95,
-            ),
-            itemCount: badgesDisponibles.length,
-            itemBuilder: (context, index) {
-              final badge = badgesDisponibles[index];
-              final debloque = debloques.contains(badge.id);
-              return _CarteBadge(
-                badge: badge,
-                debloque: debloque,
-                langue: langue,
-              );
-            },
+          return Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.fromLTRB(16, 8, 16, 0),
+                child: _EnTeteProgression(
+                  debloques: debloques.length,
+                  total: badgesDisponibles.length,
+                ),
+              ),
+              Expanded(
+                child: GridView.builder(
+                  padding: const EdgeInsets.all(AppSpacing.s16),
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                    mainAxisSpacing: AppSpacing.s12,
+                    crossAxisSpacing: AppSpacing.s12,
+                    childAspectRatio: 0.95,
+                  ),
+                  itemCount: badgesDisponibles.length,
+                  itemBuilder: (context, index) {
+                    final badge = badgesDisponibles[index];
+                    final debloque = debloques.contains(badge.id);
+                    return _CarteBadge(
+                          badge: badge,
+                          debloque: debloque,
+                          langue: langue,
+                        )
+                        .animate(delay: (index * 40).ms)
+                        .fadeIn(duration: 300.ms)
+                        .scale(
+                          begin: const Offset(0.92, 0.92),
+                          curve: Curves.easeOut,
+                        );
+                  },
+                ),
+              ),
+            ],
           );
         },
+      ),
+    );
+  }
+}
+
+class _EnTeteProgression extends StatelessWidget {
+  const _EnTeteProgression({required this.debloques, required this.total});
+
+  final int debloques;
+  final int total;
+
+  @override
+  Widget build(BuildContext context) {
+    final proportion = total == 0 ? 0.0 : debloques / total;
+
+    return Container(
+      padding: const EdgeInsets.all(AppSpacing.s16),
+      decoration: BoxDecoration(
+        color: AppColors.surface,
+        borderRadius: BorderRadius.circular(AppSpacing.radius),
+        border: Border.all(color: AppColors.surfaceHigh),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              const PhosphorIcon(
+                PhosphorIconsFill.trophy,
+                color: AppColors.accent,
+                size: 18,
+              ),
+              const SizedBox(width: AppSpacing.s8),
+              Text(
+                context.l10n.badgesProgression(debloques, total),
+                style: Theme.of(context).textTheme.titleSmall,
+              ),
+            ],
+          ),
+          const SizedBox(height: AppSpacing.s12),
+          ClipRRect(
+            borderRadius: BorderRadius.circular(999),
+            child: LinearProgressIndicator(
+              value: proportion,
+              minHeight: 8,
+              backgroundColor: AppColors.surfaceHigh,
+              color: AppColors.accent,
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -66,35 +136,71 @@ class _CarteBadge extends StatelessWidget {
   Widget build(BuildContext context) {
     final couleur = debloque ? AppColors.accent : AppColors.textMuted;
 
-    return Opacity(
-      opacity: debloque ? 1 : 0.5,
-      child: Card(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(AppSpacing.radius),
-          side: BorderSide(color: debloque ? AppColors.accent : Colors.transparent),
+    return Container(
+      decoration: BoxDecoration(
+        color: debloque ? AppColors.accent.withValues(alpha: 0.08) : AppColors.surface,
+        borderRadius: BorderRadius.circular(AppSpacing.radius),
+        border: Border.all(
+          color: debloque
+              ? AppColors.accent.withValues(alpha: 0.5)
+              : AppColors.surfaceHigh,
         ),
-        child: Padding(
-          padding: const EdgeInsets.all(AppSpacing.s16),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              PhosphorIcon(badge.icone, color: couleur, size: 32),
-              const SizedBox(height: AppSpacing.s8),
-              Text(
-                titreBadge(badge, langue),
-                textAlign: TextAlign.center,
-                style: Theme.of(context).textTheme.titleSmall,
-              ),
-              const SizedBox(height: AppSpacing.s4),
-              Text(
-                descriptionBadge(badge, langue),
-                textAlign: TextAlign.center,
-                style: Theme.of(context).textTheme.bodySmall?.copyWith(
+        boxShadow: debloque
+            ? [
+                BoxShadow(
+                  color: AppColors.accent.withValues(alpha: 0.18),
+                  blurRadius: 14,
+                  offset: const Offset(0, 4),
+                ),
+              ]
+            : null,
+      ),
+      child: Padding(
+        padding: const EdgeInsets.all(AppSpacing.s16),
+        child: Stack(
+          children: [
+            Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Container(
+                  padding: const EdgeInsets.all(AppSpacing.s12),
+                  decoration: BoxDecoration(
+                    color: debloque
+                        ? AppColors.accent.withValues(alpha: 0.15)
+                        : AppColors.surfaceHigh,
+                    shape: BoxShape.circle,
+                  ),
+                  child: PhosphorIcon(badge.icone, color: couleur, size: 28),
+                ),
+                const SizedBox(height: AppSpacing.s12),
+                Text(
+                  titreBadge(badge, langue),
+                  textAlign: TextAlign.center,
+                  style: Theme.of(context).textTheme.titleSmall,
+                ),
+                const SizedBox(height: AppSpacing.s4),
+                Text(
+                  descriptionBadge(badge, langue),
+                  textAlign: TextAlign.center,
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                  style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                    color: AppColors.textMuted,
+                  ),
+                ),
+              ],
+            ),
+            if (!debloque)
+              const Positioned(
+                top: 0,
+                right: 0,
+                child: PhosphorIcon(
+                  PhosphorIconsFill.lockSimple,
+                  size: 16,
                   color: AppColors.textMuted,
                 ),
               ),
-            ],
-          ),
+          ],
         ),
       ),
     );

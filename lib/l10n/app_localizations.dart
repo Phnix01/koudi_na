@@ -1106,11 +1106,35 @@ abstract class AppLocalizations {
   /// **'Voir mes badges'**
   String get badgesEntreeReglages;
 
-  /// No description provided for @badgesSnackbarDebloque.
+  /// No description provided for @badgesDeblocageTitre.
   ///
   /// In fr, this message translates to:
-  /// **'Badge débloqué : {nomBadge}'**
-  String badgesSnackbarDebloque(String nomBadge);
+  /// **'Badge débloqué !'**
+  String get badgesDeblocageTitre;
+
+  /// No description provided for @badgesDeblocageBouton.
+  ///
+  /// In fr, this message translates to:
+  /// **'Continuer'**
+  String get badgesDeblocageBouton;
+
+  /// No description provided for @badgesProgression.
+  ///
+  /// In fr, this message translates to:
+  /// **'{debloques}/{total} badges débloqués'**
+  String badgesProgression(int debloques, int total);
+
+  /// No description provided for @astuceDuJourEtiquette.
+  ///
+  /// In fr, this message translates to:
+  /// **'Astuce du jour'**
+  String get astuceDuJourEtiquette;
+
+  /// No description provided for @serieJoursChip.
+  ///
+  /// In fr, this message translates to:
+  /// **'{nombre, plural, =1{1 jour} other{{nombre} jours}}'**
+  String serieJoursChip(int nombre);
 }
 
 class _AppLocalizationsDelegate

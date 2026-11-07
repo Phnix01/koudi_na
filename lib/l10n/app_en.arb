@@ -277,10 +277,22 @@
 
   "badgesTitre": "Badges",
   "badgesEntreeReglages": "View my badges",
-  "badgesSnackbarDebloque": "Badge unlocked: {nomBadge}",
-  "@badgesSnackbarDebloque": {
+  "badgesDeblocageTitre": "Badge unlocked!",
+  "badgesDeblocageBouton": "Continue",
+  "badgesProgression": "{debloques}/{total} badges unlocked",
+  "@badgesProgression": {
     "placeholders": {
-      "nomBadge": {"type": "String"}
+      "debloques": {"type": "int"},
+      "total": {"type": "int"}
+    }
+  },
+
+  "astuceDuJourEtiquette": "Tip of the day",
+
+  "serieJoursChip": "{nombre, plural, =1{1 day} other{{nombre} days}}",
+  "@serieJoursChip": {
+    "placeholders": {
+      "nombre": {"type": "int"}
     }
   }
 }
