@@ -27,7 +27,7 @@ class NotificationsService {
   Future<void> init() async {
     tzdata.initializeTimeZones();
     final fuseau = await FlutterTimezone.getLocalTimezone();
-    tz.setLocalLocation(tz.getLocation(fuseau.identifier));
+    tz.setLocalLocation(_resoudreFuseau(fuseau.identifier));
 
     await _plugin.initialize(
       settings: const InitializationSettings(
@@ -135,5 +135,25 @@ class NotificationsService {
       date = date.add(const Duration(days: 1));
     }
     return date;
+  }
+
+  /// `flutter_timezone` rapporte le nom IANA tel que le système
+  /// d'exploitation le connaît (ex. "Africa/Niamey"), mais la base
+  /// embarquée par `timezone` ne contient que les fuseaux canoniques,
+  /// pas leurs alias politiques (Niger utilise les mêmes horaires que
+  /// le Nigeria, donc "Africa/Niamey" n'existe que comme alias vers
+  /// "Africa/Lagos" dans la base IANA — absent ici). Si le nom n'est
+  /// pas reconnu, on reconstruit un fuseau à décalage fixe à partir du
+  /// décalage UTC réel de l'appareil : l'heure affichée reste correcte
+  /// même sans nom de zone reconnu.
+  tz.Location _resoudreFuseau(String identifiant) {
+    try {
+      return tz.getLocation(identifiant);
+    } on tz.LocationNotFoundException {
+      final decalage = DateTime.now().timeZoneOffset;
+      return tz.Location('decalage-local-$identifiant', const [], const [], [
+        tz.TimeZone(decalage, isDst: false, abbreviation: 'LOCAL'),
+      ]);
+    }
   }
 }
