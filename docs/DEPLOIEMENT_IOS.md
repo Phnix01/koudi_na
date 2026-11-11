@@ -3,7 +3,7 @@
 *XNOVA Systems · Flutter 3.41 · Xcode 27.1 (SDK iOS 27) · bundle `com.xnovasystems.koudiNa` · version `1.0.0+1`*
 *Exigences Apple vérifiées le 21 octobre 2026 (developer.apple.com : versions minimales, spécifications des captures, outils d'upload).*
 
-Les textes de la fiche (nom, sous-titre, description, mots-clés, FR et EN) sont dans [FICHE_STORE.md](FICHE_STORE.md).
+La fiche (8 langues) vit dans `ios/fastlane/metadata/` et se génère, se relit et s'envoie avec `tool/store/release_ios.sh` : voir [FICHE_STORE.md](FICHE_STORE.md). Ce script remplace aussi l'upload manuel de la section 3 (build IPA puis envoi via l'API App Store Connect).
 
 ## État du projet
 

@@ -1,0 +1,32 @@
+{
+  "es-ES": {
+    "langue": "espagnol d'Espagne",
+    "marche": "Espagne",
+    "consignes": "Vouvoiement ou tutoiement au choix du registre des apps grand public espagnoles (le tutoiement est courant). Vocabulaire d'Espagne (« móvil », « vosotros »). Mettre en avant l'euro et le suivi simple du budget mensuel ; le mobile money compte peu ici, le citer seulement comme type de compte parmi d'autres."
+  },
+  "es-MX": {
+    "langue": "espagnol d'Amérique latine (Mexique et pays hispanophones d'Amérique)",
+    "marche": "Mexique et Amérique latine hispanophone",
+    "consignes": "Vocabulaire latino-américain (« celular », « ustedes », jamais « vosotros »). Mettre en avant le peso et les autres devises de la région, l'usage hors ligne et l'absence de compte à créer. Les paiements récurrents (renta, servicios) parlent bien à ce public."
+  },
+  "pt-BR": {
+    "langue": "portugais du Brésil",
+    "marche": "Brésil (et lecteurs lusophones d'Afrique)",
+    "consignes": "Portugais brésilien naturel (« celular », « você »), jamais européen. Mettre en avant le réal et la clarté du mois. Ne jamais citer Pix ni une banque : l'app ne s'y connecte pas. Le mot « carteira » (portefeuille) est interdit pour désigner l'app."
+  },
+  "ar-SA": {
+    "langue": "arabe standard moderne",
+    "marche": "Arabie saoudite, Golfe, Égypte et Maghreb arabophone",
+    "consignes": "Arabe standard moderne sobre, compréhensible du Golfe au Maghreb. Garder « Koudi Na » en caractères latins dans le nom. Chiffres occidentaux acceptés pour 40/25/35. Mettre en avant le riyal, le dirham, la livre égyptienne et le respect de la vie privée (rien ne quitte le téléphone). Le mot « محفظة » (portefeuille) est interdit pour désigner l'app."
+  },
+  "de-DE": {
+    "langue": "allemand",
+    "marche": "Allemagne, Autriche, Suisse",
+    "consignes": "Tutoiement (« du ») courant pour les apps grand public. Public très attentif à la confidentialité : mettre en avant le 100 % hors ligne, aucune donnée collectée, aucun compte. Mettre en avant l'euro et le franc suisse. Ton précis, sans superlatifs."
+  },
+  "it": {
+    "langue": "italien",
+    "marche": "Italie et Suisse italophone",
+    "consignes": "Tutoiement courant pour les apps grand public. Mettre en avant l'euro, la simplicité de saisie et la règle 40/25/35 comme méthode concrète pour organiser le mois."
+  }
+}

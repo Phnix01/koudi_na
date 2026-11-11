@@ -108,11 +108,30 @@ class AnalyseScreen extends ConsumerWidget {
                             children: [
                               Padding(
                                 padding: const EdgeInsets.only(left: 8),
-                                child: Text(
-                                  l10n.evolution12Mois,
-                                  style: Theme.of(
-                                    context,
-                                  ).textTheme.titleMedium,
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      l10n.evolution12Mois,
+                                      style: Theme.of(
+                                        context,
+                                      ).textTheme.titleMedium,
+                                    ),
+                                    const SizedBox(height: 4),
+                                    Row(
+                                      children: [
+                                        _PastilleLegende(
+                                          couleur: AppColors.positive,
+                                          libelle: l10n.entrees,
+                                        ),
+                                        const SizedBox(width: 16),
+                                        _PastilleLegende(
+                                          couleur: AppColors.negative,
+                                          libelle: l10n.depenses,
+                                        ),
+                                      ],
+                                    ),
+                                  ],
                                 ),
                               ),
                               const SizedBox(height: 12),

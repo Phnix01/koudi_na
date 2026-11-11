@@ -1,0 +1,36 @@
+opt_out_usage
+default_platform(:ios)
+
+# Lancé par tool/store/release_ios.sh, après relecture humaine de la fiche.
+# Ne soumet jamais à la review Apple : la soumission reste un clic dans App
+# Store Connect, une fois le build testé sur TestFlight.
+OPTIONS_FICHE = {
+  skip_screenshots: true,
+  submit_for_review: false,
+  automatic_release: false,
+  run_precheck_before_submit: false,
+  # Aperçu HTML de deliver inutile : le diff a déjà été relu dans le terminal.
+  force: true,
+}.freeze
+
+platform :ios do
+  before_all do
+    key_id = ENV.fetch("ASC_KEY_ID")
+    app_store_connect_api_key(
+      key_id: key_id,
+      issuer_id: ENV.fetch("ASC_ISSUER_ID"),
+      key_filepath: ENV["ASC_KEY_PATH"] ||
+        File.expand_path("~/.appstoreconnect/private_keys/AuthKey_#{key_id}.p8"),
+    )
+  end
+
+  desc "Envoie la fiche (textes de toutes les langues) sans binaire"
+  lane :fiche do
+    deliver(skip_binary_upload: true, **OPTIONS_FICHE)
+  end
+
+  desc "Envoie l'IPA construit par flutter build ipa, puis la fiche"
+  lane :release do
+    deliver(ipa: "../build/ios/ipa/koudi_na.ipa", **OPTIONS_FICHE)
+  end
+end

@@ -1,0 +1,21 @@
+Where did your money go this month? Koudi Na gives you the answer at a glance, one franc at a time.
+
+"Kudi" means money in Hausa. Koudi Na is a ledger that fits in your pocket, built for real life in West Africa: morning bread paid in cash, rent sent from the bank account, phone credit topped up through mobile money, a few notes set aside for later.
+
+Logging an expense takes three taps. The amount on the keypad, the category from the grid, the account. It is saved in under ten seconds, before the taxi pulls away. The categories you use most rise to the top of the grid on their own. Income is logged just as fast as spending.
+
+Four accounts, one screen. Cash, bank, mobile money and savings. Mobile money gets its own balance, tracked separately from cash and bank. At any moment you know what is left in each one.
+
+The 40/25/35 rule. Each month, your income is split into three pillars: 40% Savings, 25% Family, 35% Living. Three bars show the real figure against the target. No table to build, no formula to retype: the rule is already in the app.
+
+Your month, in plain view. Filter by account or category, fix a typo, undo a deletion made by mistake. Payments that come back every month, rent, a subscription, a tontine contribution, are created for you automatically.
+
+Trends, not just totals. The Insights screen draws your year across 12 months, compares your five biggest categories with last month, projects where you will land at your current pace, and plots your savings line against your goal. A weekly heatmap shows which days of the week cost the most. And the app leaves short notes along the way: "Your Food spending is up 32% this month."
+
+Your numbers stay with you. Koudi Na works fully offline, with no sign-up, no server, no ads and no subscription. Nothing leaves your phone unless you choose to export your data as a CSV file to send or archive. You can import an existing CSV file too.
+
+Available in French and English, in a dark, calm interface designed to be opened several times a day without wearing you out.
+
+Koudi Na is made in Niger by XNOVA Systems, for West Africa and the CFA franc.
+
+Download Koudi Na and log your first expense today.

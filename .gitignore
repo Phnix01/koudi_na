@@ -49,3 +49,11 @@ app.*.map.json
 /android/key.properties
 /android/*.jks
 /android/*.keystore
+
+# Release iOS (tool/store/release_ios.sh)
+ios/fastlane/.env
+ios/fastlane/report.xml
+ios/fastlane/Preview.html
+ios/.bundle/
+ios/vendor/
+__pycache__/

@@ -5,6 +5,7 @@ import '../../core/theme/app_colors.dart';
 import '../../core/utils/couleur_utils.dart';
 import '../../logic/services/comparaison_mensuelle.dart';
 import '../../l10n/l10n.dart';
+import 'infobulles_graphiques.dart';
 
 /// Graphique 3 de la section 5.1 : barres groupées, ce mois contre le
 /// mois précédent, catégorie par catégorie. `comparaisons` doit déjà
@@ -43,6 +44,7 @@ class GraphiqueComparaison extends StatelessWidget {
         BarChartData(
           maxY: plusGrandeValeur == 0 ? 10 : plusGrandeValeur * 1.2,
           alignment: BarChartAlignment.spaceAround,
+          barTouchData: touchBarresMontants(),
           gridData: FlGridData(
             drawVerticalLine: false,
             getDrawingHorizontalLine: (value) =>

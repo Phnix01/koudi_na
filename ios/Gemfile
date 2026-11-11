@@ -1,0 +1,4 @@
+source "https://rubygems.org"
+
+# Envoi de la fiche et du binaire vers App Store Connect (tool/store/release_ios.sh).
+gem "fastlane", "~> 2.228"

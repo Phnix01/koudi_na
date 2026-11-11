@@ -5,6 +5,7 @@ import 'package:intl/intl.dart';
 import '../../core/theme/app_colors.dart';
 import '../../logic/services/trajectoire_epargne.dart';
 import '../../l10n/l10n.dart';
+import 'infobulles_graphiques.dart';
 
 /// Graphique 6 de la section 5.1 : épargne cumulée sur 12 mois, avec
 /// une ligne de repère à l'objectif réglé sur le compte Épargne (même
@@ -22,6 +23,7 @@ class GraphiqueTrajectoireEpargne extends StatelessWidget {
         duration: const Duration(milliseconds: 400),
         LineChartData(
           minY: 0,
+          lineTouchData: touchLigneMontants(),
           gridData: FlGridData(
             drawVerticalLine: false,
             getDrawingHorizontalLine: (value) =>

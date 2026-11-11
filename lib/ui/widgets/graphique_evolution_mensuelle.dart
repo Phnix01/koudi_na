@@ -4,6 +4,7 @@ import 'package:intl/intl.dart';
 
 import '../../core/theme/app_colors.dart';
 import '../../logic/services/evolution_mensuelle.dart';
+import 'infobulles_graphiques.dart';
 
 /// Graphique 1 de la section 5.1 : double courbe entrées/dépenses sur
 /// 12 mois, avec zone remplie en dégradé sous chaque courbe.
@@ -20,11 +21,7 @@ class GraphiqueEvolutionMensuelle extends StatelessWidget {
         duration: const Duration(milliseconds: 400),
         LineChartData(
           minY: 0,
-          lineTouchData: const LineTouchData(
-            touchTooltipData: LineTouchTooltipData(
-              getTooltipColor: _couleurInfobulle,
-            ),
-          ),
+          lineTouchData: touchLigneMontants(),
           gridData: FlGridData(
             drawVerticalLine: false,
             getDrawingHorizontalLine: (value) =>
@@ -102,6 +99,4 @@ class GraphiqueEvolutionMensuelle extends StatelessWidget {
       ),
     );
   }
-
-  static Color _couleurInfobulle(LineBarSpot spot) => AppColors.surfaceHigh;
 }

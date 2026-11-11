@@ -1,0 +1,23 @@
+Para onde foi seu dinheiro este mês? Com o Koudi Na, a resposta aparece de uma vez, real por real.
+
+"Kudi" quer dizer dinheiro em hauçá. O Koudi Na foi criado no Níger pela XNOVA Systems e hoje acompanha mais de 150 moedas, o real brasileiro entre elas. É um caderno de gastos que cabe no bolso, feito para a vida de verdade: o pão da manhã pago em dinheiro, o aluguel que sai da conta do banco, a passagem do ônibus, o pouco que você separa todo mês.
+
+Anotar um gasto leva três toques. O valor no teclado, a categoria na grade, a conta. Fica salvo em menos de dez segundos, antes de o sinal abrir. As categorias que você mais usa sobem sozinhas para o topo da grade. As entradas se anotam tão rápido quanto as saídas.
+
+Quatro tipos de conta, uma tela. Dinheiro, banco, poupança e mobile money. Cada conta tem o seu próprio saldo, atualizado por você. O app não guarda, não recebe e não transfere dinheiro, e não está ligado a nenhum banco nem a nenhum serviço de pagamento: quem registra é você, e por isso você sabe a qualquer momento quanto resta em cada lugar.
+
+A regra 40/25/35. Todo mês, a sua renda se divide em três pilares: 40% Poupança, 25% Família, 35% Vida. Três barras comparam o que realmente aconteceu com a meta. Nenhuma tabela para montar, nenhuma fórmula para digitar de novo: a regra já vem pronta no app.
+
+Seu mês, às claras. Filtre por conta ou por categoria, corrija um lançamento, desfaça uma exclusão feita sem querer. As contas que voltam todo mês, como aluguel, assinatura ou mensalidade, podem ser criadas automaticamente.
+
+Tendências, não só totais. A tela de análise desenha os seus 12 meses de entradas e saídas, compara as cinco maiores categorias com o mês passado, projeta onde você vai terminar o mês no ritmo atual e traça a sua linha de poupança diante da meta. Um mapa de calor mostra quais dias da semana custam mais. E o app deixa observações curtas pelo caminho: "Seus gastos em Alimentação subiram 32% este mês." Tudo isso é calculado no próprio celular, sem IA. Ainda há uma dica de organização financeira por dia.
+
+Para não perder o fio. Uma sequência conta os dias seguidos com pelo menos um lançamento, e há conquistas para desbloquear: o primeiro gasto, sequências de 3, 7, 30 e 100 dias, 50 e 200 lançamentos, um mês equilibrado, a meta de poupança cumprida. Você pode ativar um lembrete diário na hora que escolher, um resumo no domingo à noite e um aviso quando um pilar passa da meta do mês. São notificações locais, pedidas só quando você as liga e todas podem ser desligadas.
+
+Seus números ficam com você. O Koudi Na funciona 100% offline, sem cadastro, sem servidor, sem anúncios, sem assinatura, sem rastreadores e sem análise dos seus dados. Nada sai do celular, a menos que você mesmo exporte: arquivo CSV, relatório em PDF ou planilha do Excel, pelo menu de compartilhamento. Também é possível importar um arquivo CSV que você já tenha.
+
+Uma observação honesta: a interface do app está disponível em francês e inglês. Esta página está em português, as telas ainda não.
+
+O Koudi Na é um app calmo, feito para ser aberto várias vezes por dia sem cansar.
+
+Baixe o Koudi Na e anote o seu primeiro gasto hoje.

@@ -1,0 +1,21 @@
+Où est passé ton argent ce mois-ci ? Avec Koudi Na, tu as la réponse en un coup d'œil, franc par franc.
+
+« Kudi », c'est l'argent en haoussa. Koudi Na est un carnet de comptes qui tient dans ta poche, fait pour la vie réelle en Afrique de l'Ouest : le pain du matin payé en cash, le loyer viré depuis le compte bancaire, le crédit téléphone passé par mobile money, les quelques billets mis de côté pour plus tard.
+
+Noter une dépense prend trois touches. Le montant sur le clavier, la catégorie dans la grille, le compte. C'est enregistré en moins de dix secondes, avant même que le taxi redémarre. Les catégories que tu utilises le plus remontent toutes seules en haut de la grille. Les revenus se notent aussi vite que les dépenses.
+
+Quatre comptes, un seul écran. Cash, banque, mobile money, épargne. Le mobile money a son propre solde, suivi séparément du cash et de la banque. À tout moment, tu sais combien il reste dans chaque poche.
+
+La règle 40/25/35. Chaque mois, ton revenu se partage en trois piliers : 40 % Épargne, 25 % Famille, 35 % Vie. Trois barres montrent le réel face à l'objectif. Pas de tableau à construire, pas de formule à retaper : la règle est déjà dans l'app.
+
+Ton mois, en clair. Filtre par compte ou par catégorie, corrige une saisie, annule une suppression faite par erreur. Les dépenses qui reviennent chaque mois, loyer, abonnement, cotisation de tontine, se créent toutes seules.
+
+Des tendances, pas seulement des totaux. L'écran Analyse trace ton année sur 12 mois, compare tes cinq plus grosses catégories au mois dernier, projette où tu finiras le mois à ton rythme actuel et dessine ta trajectoire d'épargne face à ton objectif. Une carte de chaleur montre quels jours de la semaine coûtent le plus. Et l'app te glisse de courtes observations : « Tes dépenses en Nourriture ont augmenté de 32 % ce mois-ci. »
+
+Tes chiffres restent chez toi. Koudi Na marche à 100 % hors ligne, sans inscription, sans serveur, sans publicité, sans abonnement. Rien ne quitte ton téléphone, sauf si tu décides d'exporter tes données en CSV pour les envoyer ou les archiver. Tu peux aussi importer un fichier CSV existant.
+
+Disponible en français et en anglais, dans une interface sombre et calme, pensée pour être ouverte plusieurs fois par jour sans fatigue.
+
+Koudi Na est conçu au Niger par XNOVA Systems, pour l'Afrique de l'Ouest et le franc CFA.
+
+Télécharge Koudi Na et note ta première dépense dès aujourd'hui.

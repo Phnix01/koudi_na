@@ -1,0 +1,25 @@
+Wo ist dein Geld diesen Monat geblieben? Koudi Na gibt dir die Antwort auf einen Blick, Betrag für Betrag.
+
+Koudi Na ist ein Haushaltsbuch für die Hosentasche. Kein Formular, keine Tabelle, die du abends noch nachtragen musst: Du erfasst den Kaffee beim Bäcker, die Miete, den Wochenendeinkauf und die zwanzig Euro, die du zur Seite legst, und siehst sofort, was das für deinen Monat bedeutet.
+
+Eine Ausgabe kostet dich drei Fingertipps: Betrag auf dem Ziffernfeld, Kategorie aus dem Raster, Konto. Der Eintrag steht, noch bevor die Bahn losfährt. Die Kategorien, die du am häufigsten nutzt, wandern von selbst nach oben. Einnahmen gehen genauso schnell.
+
+Vier Konten, ein Bildschirm. Bargeld, Bankkonto, Sparkonto und Mobile Money, jedes mit eigenem Saldo, von dir selbst geführt. Koudi Na ist mit keiner Bank und keinem Zahlungsdienst verbunden: Die App bewegt kein Geld, sie hält fest, was du einträgst.
+
+Die 40/25/35-Regel. Dein Monatseinkommen teilt sich in drei Säulen: 40 % Sparen, 25 % Familie, 35 % Leben. Drei Balken zeigen den Istwert gegen das Ziel. Keine Tabelle bauen, keine Formel neu tippen, die Regel steckt schon in der App.
+
+Dein Monat, übersichtlich. Zahlungen, die jeden Monat wiederkommen, Miete, Streaming-Abo, Vereinsbeitrag, legt die App als Wiederholung automatisch an.
+
+Trends statt nur Summen. Die Analyse zeichnet zwölf Monate Einnahmen und Ausgaben, vergleicht deine fünf größten Kategorien mit dem Vormonat, rechnet aus, wo du bei diesem Tempo am Monatsende landest, und legt deine Sparkurve neben dein Ziel. Eine Heatmap zeigt, welche Wochentage am teuersten sind. Dazu kurze Beobachtungen wie „Deine Ausgaben für Lebensmittel sind diesen Monat um 32 % gestiegen“, auf dem Gerät selbst berechnet, ohne KI. Und ein kurzer Tipp zum Umgang mit Geld pro Tag.
+
+Dranbleiben wird sichtbar. Eine Serie zählt die Tage, an denen du mindestens einen Eintrag gemacht hast, Abzeichen schaltest du nach und nach frei: erste Ausgabe, 3, 7, 30 und 100 Tage in Folge, 50 und 200 Buchungen, ausgeglichener Monat, Sparziel erreicht. Dazu eine tägliche Erinnerung zu deiner Uhrzeit, sonntagabends ein Wochenrückblick und ein Hinweis, wenn eine Säule ihr Monatsziel überschreitet. Alle Benachrichtigungen bleiben lokal und lassen sich abschalten.
+
+Deine Zahlen bleiben bei dir. Koudi Na arbeitet komplett offline: kein Benutzerkonto, keine Anmeldung, kein Server. Keine Werbung, kein Abo, keine Tracker, keine Datenanalyse. Nichts verlässt dein Telefon, außer du exportierst selbst, als CSV, PDF-Bericht oder Excel-Datei über das Teilen-Menü. Eine vorhandene CSV-Datei kannst du auch importieren.
+
+Mehr als 150 Währungen stehen zur Wahl, darunter Euro und Schweizer Franken. Du stellst deine Währung einmal ein, danach denkst du nicht mehr daran.
+
+Ein Hinweis zur Sprache: Die Oberfläche von Koudi Na gibt es auf Französisch und Englisch, nicht auf Deutsch.
+
+„Kudi“ heißt Geld auf Hausa. Koudi Na wird von XNOVA Systems in Niger entwickelt.
+
+Lade Koudi Na und trage heute deine erste Ausgabe ein.

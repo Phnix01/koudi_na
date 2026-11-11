@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import '../../core/theme/app_colors.dart';
 import '../../logic/services/rythme_mois.dart';
 import '../../l10n/l10n.dart';
+import 'infobulles_graphiques.dart';
 
 /// Graphique 4 de la section 5.1 : dépenses cumulées du mois (trait
 /// plein), prolongées par une projection en pointillés jusqu'à la fin
@@ -22,6 +23,7 @@ class GraphiqueRythme extends StatelessWidget {
         duration: const Duration(milliseconds: 400),
         LineChartData(
           minY: 0,
+          lineTouchData: touchLigneMontants(),
           gridData: FlGridData(
             drawVerticalLine: false,
             getDrawingHorizontalLine: (value) =>
