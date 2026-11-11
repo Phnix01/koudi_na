@@ -24,7 +24,7 @@ META=ios/fastlane/metadata
 if [[ $GENERER == 1 ]]; then
   if ! python3 tool/store/generer_fiche.py; then
     echo
-    echo "Au moins une langue a échoué (voir build/fiche_store/rapport.md)."
+    echo "Au moins une langue a échoué (voir build/fiche_store/<langue>.md)."
     echo "Les langues validées sont écrites ; relance avec --locales pour réessayer les autres."
     exit 1
   fi
@@ -41,9 +41,9 @@ while IFS= read -r fichier; do
   cat "$fichier"
   echo
 done < <(git ls-files --others --exclude-standard -- "$META")
-if [[ -f build/fiche_store/rapport.md ]]; then
+if compgen -G "build/fiche_store/*.md" >/dev/null; then
   echo
-  echo "Remarques des relecteurs : build/fiche_store/rapport.md"
+  echo "Remarques des relecteurs : build/fiche_store/<langue>.md"
 fi
 echo "=========================================================="
 

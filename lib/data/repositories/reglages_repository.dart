@@ -11,6 +11,7 @@ class ReglagesRepository {
   static const _cleLangue = 'langue';
   static const _cleDevise = 'devise';
   static const _cleOnboardingTermine = 'onboarding_termine';
+  static const _cleDidacticielVu = 'didacticiel_vu';
   static const _cleRappelQuotidienHeure = 'rappel_quotidien_heure';
   static const _cleRecapHebdomadaireActif = 'recap_hebdomadaire_actif';
 
@@ -36,6 +37,11 @@ class ReglagesRepository {
 
   Future<void> marquerOnboardingTermine() =>
       _box.put(_cleOnboardingTermine, 'oui');
+
+  /// Visite guidée de l'écran Capture, vue (ou passée) une fois.
+  bool get didacticielVu => _box.get(_cleDidacticielVu) == 'oui';
+
+  Future<void> marquerDidacticielVu() => _box.put(_cleDidacticielVu, 'oui');
 
   /// Heure du rappel quotidien (`HH:mm`), ou `null` si désactivé.
   TimeOfDay? get rappelQuotidienHeure {

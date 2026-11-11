@@ -28,7 +28,7 @@ from pathlib import Path
 DOSSIER_OUTIL = Path(__file__).resolve().parent
 RACINE = DOSSIER_OUTIL.parents[1]
 METADATA = RACINE / "ios" / "fastlane" / "metadata"
-RAPPORT = RACINE / "build" / "fiche_store" / "rapport.md"
+RAPPORTS = RACINE / "build" / "fiche_store"
 
 LOCALE_SOURCE = "fr-FR"
 LOCALE_REFERENCE = "en-US"
@@ -80,7 +80,7 @@ SCHEMA_REVUE = {
                 "type": "object",
                 "properties": {
                     "champ": {"type": "string", "enum": CHAMPS_FICHE + ["release_notes"]},
-                    "gravite": {"type": "string", "enum": ["bloquant", "mineur"]},
+                    "gravite": {"type": "string", "enum": ["bloquant", "a_corriger", "mineur"]},
                     "passage": {"type": "string"},
                     "explication": {"type": "string"},
                     "correction_proposee": {"type": "string"},
@@ -283,9 +283,12 @@ def localiser(locale: str, marche: dict, contexte: dict) -> Resultat:
             ),
             SCHEMA_REVUE,
         )
+        # Seuls les bloquants relancent une réécriture complète ; les calques
+        # et suggestions vont au tour de finition, sinon la boucle ne converge
+        # pas (chaque réécriture corrige un calque et peut en créer un autre).
         bloquants = [p for p in revue["problemes"] if p["gravite"] == "bloquant"]
-        mineurs = [p for p in revue["problemes"] if p["gravite"] == "mineur"]
-        return bloquants, mineurs, revue["appreciation"]
+        autres = [p for p in revue["problemes"] if p["gravite"] != "bloquant"]
+        return bloquants, autres, revue["appreciation"]
 
     def detailler(problemes: list[dict]) -> list[str]:
         return [
@@ -325,7 +328,7 @@ def localiser(locale: str, marche: dict, contexte: dict) -> Resultat:
 
         print(f"  {locale} : validée au tour {tour}", flush=True)
         remarques = avertissements + [
-            f"[{p['champ']}] {p['explication']} → {p['correction_proposee']}" for p in mineurs
+            f"[{p['gravite']}] [{p['champ']}] {p['explication']} → {p['correction_proposee']}" for p in mineurs
         ]
         return Resultat(locale, True, tour, candidat, [appreciation, *remarques])
 
@@ -368,17 +371,17 @@ def ecrire(locale: str, fiche: dict[str, str]) -> None:
     (dossier / "privacy_url.txt").write_text(url, encoding="utf-8")
 
 
-def ecrire_rapport(resultats: list[Resultat], depuis: str | None) -> None:
-    lignes = ["# Rapport de génération de la fiche App Store", ""]
-    lignes.append(f"Notes de version depuis : {depuis or 'aucune (première version)'}")
-    lignes.append("")
+def ecrire_rapports(resultats: list[Resultat], depuis: str | None) -> None:
+    """Un fichier par langue : relancer quelques langues n'efface pas les autres."""
+    RAPPORTS.mkdir(parents=True, exist_ok=True)
     for r in resultats:
         statut = f"validée au tour {r.tours}" if r.ok else f"ÉCHEC après {r.tours} tours, non écrite"
-        lignes += [f"## {r.locale} — {statut}", ""]
+        lignes = [
+            f"# {r.locale} — {statut}", "",
+            f"Notes de version depuis : {depuis or 'aucune (première version)'}", "",
+        ]
         lignes += [f"- {m}" for m in r.remarques] or ["- (aucune remarque)"]
-        lignes.append("")
-    RAPPORT.parent.mkdir(parents=True, exist_ok=True)
-    RAPPORT.write_text("\n".join(lignes), encoding="utf-8")
+        (RAPPORTS / f"{r.locale}.md").write_text("\n".join(lignes) + "\n", encoding="utf-8")
 
 
 def main() -> int:
@@ -432,10 +435,10 @@ def main() -> int:
     for r in resultats:
         if r.ok and r.fiche:
             ecrire(r.locale, r.fiche)
-    ecrire_rapport(resultats, depuis)
+    ecrire_rapports(resultats, depuis)
 
     echecs = [r.locale for r in resultats if not r.ok]
-    print(f"\nRapport détaillé : {RAPPORT.relative_to(RACINE)}")
+    print(f"\nRemarques des relecteurs : {RAPPORTS.relative_to(RACINE)}/<langue>.md")
     if echecs:
         print(f"Langues en échec (non écrites) : {', '.join(echecs)}")
         return 1

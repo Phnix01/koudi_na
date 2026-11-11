@@ -15,9 +15,12 @@ import '../../logic/services/calcul_piliers.dart';
 import '../../logic/services/evaluation_badges.dart';
 import '../../logic/services/serie_quotidienne.dart';
 import '../navigation/route_animee.dart';
-import '../widgets/chip_serie.dart';
+import '../../logic/providers/didacticiel_provider.dart';
+import '../../logic/providers/langue_provider.dart';
 import '../widgets/dialogue_badge_debloque.dart';
+import '../widgets/didacticiel.dart';
 import '../widgets/formulaire_transaction.dart';
+import '../widgets/indicateur_serie.dart';
 import '../widgets/solde_du_mois.dart';
 import '../../l10n/l10n.dart';
 import 'analyse_screen.dart';
@@ -36,13 +39,96 @@ class CaptureScreen extends ConsumerStatefulWidget {
 
 class _CaptureScreenState extends ConsumerState<CaptureScreen>
     with WidgetsBindingObserver {
+  final _cleMontant = GlobalKey();
+  final _cleCategories = GlobalKey();
+  final _cleEnregistrer = GlobalKey();
+  final _cleSolde = GlobalKey();
+  final _cleSerie = GlobalKey();
+  final _cleAnalyse = GlobalKey();
+  final _cleMois = GlobalKey();
+  final _cleReglages = GlobalKey();
+  bool _didacticielEnCours = false;
+
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
-    WidgetsBinding.instance.addPostFrameCallback(
-      (_) => _verifierDepassements(),
-    );
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _verifierDepassements();
+      if (!ref.read(reglagesRepositoryProvider).didacticielVu) {
+        _lancerDidacticiel();
+      }
+    });
+  }
+
+  Future<void> _lancerDidacticiel() async {
+    if (_didacticielEnCours) return;
+    _didacticielEnCours = true;
+    try {
+      // Laisse finir la transition qui amène ici (fin de l'onboarding,
+      // retour depuis Réglages) : les cibles doivent être à leur place.
+      await Future<void>.delayed(const Duration(milliseconds: 400));
+      if (!mounted) return;
+      final l10n = context.l10n;
+      await lancerDidacticiel(context, [
+        EtapeDidacticiel(
+          cible: _cleMontant,
+          titre: l10n.didacticielMontantTitre,
+          texte: l10n.didacticielMontantTexte,
+        ),
+        EtapeDidacticiel(
+          cible: _cleCategories,
+          titre: l10n.didacticielCategorieTitre,
+          texte: l10n.didacticielCategorieTexte,
+        ),
+        EtapeDidacticiel(
+          cible: _cleEnregistrer,
+          titre: l10n.didacticielEnregistrerTitre,
+          texte: l10n.didacticielEnregistrerTexte,
+        ),
+        EtapeDidacticiel(
+          cible: _cleSolde,
+          titre: l10n.didacticielSoldeTitre,
+          texte: l10n.didacticielSoldeTexte,
+        ),
+        EtapeDidacticiel(
+          cible: _cleSerie,
+          titre: l10n.didacticielSerieTitre,
+          texte: l10n.didacticielSerieTexte,
+          ronde: true,
+        ),
+        EtapeDidacticiel(
+          cible: _cleAnalyse,
+          titre: l10n.didacticielAnalyseTitre,
+          texte: l10n.didacticielAnalyseTexte,
+          ronde: true,
+        ),
+        EtapeDidacticiel(
+          cible: _cleMois,
+          titre: l10n.didacticielMoisTitre,
+          texte: l10n.didacticielMoisTexte,
+          ronde: true,
+        ),
+        EtapeDidacticiel(
+          cible: _cleReglages,
+          titre: l10n.didacticielReglagesTitre,
+          texte: l10n.didacticielReglagesTexte,
+          ronde: true,
+        ),
+      ]);
+      await ref.read(reglagesRepositoryProvider).marquerDidacticielVu();
+      // La visite a fait défiler le formulaire : on le remet en haut.
+      final position = _cleMontant.currentContext == null
+          ? null
+          : Scrollable.maybeOf(_cleMontant.currentContext!)?.position;
+      await position?.animateTo(
+        0,
+        duration: const Duration(milliseconds: 300),
+        curve: Curves.easeOut,
+      );
+    } finally {
+      _didacticielEnCours = false;
+    }
   }
 
   @override
@@ -170,6 +256,7 @@ class _CaptureScreenState extends ConsumerState<CaptureScreen>
     );
     final peutEnregistrer = montant > 0 && categorieId != null;
     final l10n = context.l10n;
+    ref.listen(demandeDidacticielProvider, (_, _) => _lancerDidacticiel());
 
     return Scaffold(
       body: SafeArea(
@@ -179,11 +266,21 @@ class _CaptureScreenState extends ConsumerState<CaptureScreen>
               padding: const EdgeInsets.only(top: 8),
               child: Row(
                 children: [
-                  const SizedBox(
+                  // Même largeur que les trois IconButton à droite : le
+                  // solde reste centré, la série occupe ce coin gauche.
+                  SizedBox(
                     width: 144,
-                  ), // équilibre visuellement les trois IconButton à droite
-                  const Expanded(child: SoldeDuMois()),
+                    child: Align(
+                      alignment: Alignment.centerLeft,
+                      child: Padding(
+                        padding: const EdgeInsets.only(left: 8),
+                        child: IndicateurSerie(key: _cleSerie),
+                      ),
+                    ),
+                  ),
+                  Expanded(child: Center(child: SoldeDuMois(key: _cleSolde))),
                   IconButton(
+                    key: _cleAnalyse,
                     tooltip: l10n.tooltipAnalyse,
                     icon: const PhosphorIcon(PhosphorIconsFill.chartLineUp),
                     onPressed: () => Navigator.of(
@@ -191,6 +288,7 @@ class _CaptureScreenState extends ConsumerState<CaptureScreen>
                     ).push(routeAnimee(const AnalyseScreen())),
                   ),
                   IconButton(
+                    key: _cleMois,
                     tooltip: l10n.tooltipVoirLeMois,
                     icon: const PhosphorIcon(PhosphorIconsFill.listBullets),
                     onPressed: () => Navigator.of(
@@ -198,6 +296,7 @@ class _CaptureScreenState extends ConsumerState<CaptureScreen>
                     ).push(routeAnimee(const MoisScreen())),
                   ),
                   IconButton(
+                    key: _cleReglages,
                     tooltip: l10n.tooltipReglages,
                     icon: const PhosphorIcon(PhosphorIconsFill.gearSix),
                     onPressed: () => Navigator.of(
@@ -207,11 +306,16 @@ class _CaptureScreenState extends ConsumerState<CaptureScreen>
                 ],
               ),
             ),
-            const ChipSerie(),
-            const Expanded(child: FormulaireTransaction()),
+            Expanded(
+              child: FormulaireTransaction(
+                cleMontant: _cleMontant,
+                cleCategories: _cleCategories,
+              ),
+            ),
             Padding(
               padding: const EdgeInsets.fromLTRB(20, 8, 20, 20),
               child: SizedBox(
+                key: _cleEnregistrer,
                 width: double.infinity,
                 child: ElevatedButton(
                   onPressed: peutEnregistrer

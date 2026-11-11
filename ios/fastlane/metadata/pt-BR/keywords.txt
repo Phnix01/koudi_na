@@ -1,1 +1,1 @@
-controle,financeiro,finanças,pessoais,despesas,dinheiro,economizar,poupança,renda,planilha,offline
+orçamento,despesas,finanças,dinheiro,economizar,poupança,offline,contas,renda,planilha,financeiro

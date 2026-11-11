@@ -605,13 +605,90 @@ class AppLocalizationsFr extends AppLocalizations {
   String get astuceDuJourEtiquette => 'Astuce du jour';
 
   @override
-  String serieJoursChip(int nombre) {
+  String serieInfobulle(int nombre) {
     String _temp0 = intl.Intl.pluralLogic(
       nombre,
       locale: localeName,
-      other: '$nombre jours',
-      one: '1 jour',
+      other: '$nombre jours de suite avec au moins une saisie',
+      one: '1 jour de suite avec au moins une saisie',
     );
     return '$_temp0';
   }
+
+  @override
+  String get serieInfobulleVide =>
+      'Note une dépense aujourd\'hui pour allumer ta série';
+
+  @override
+  String get didacticielSuivant => 'Suivant';
+
+  @override
+  String get didacticielTerminer => 'C\'est parti';
+
+  @override
+  String get didacticielPasser => 'Passer';
+
+  @override
+  String didacticielEtape(int numero, int total) {
+    return '$numero/$total';
+  }
+
+  @override
+  String get didacticielMontantTitre => 'Le montant';
+
+  @override
+  String get didacticielMontantTexte =>
+      'Tape-le sur le pavé juste en dessous. Le sélecteur au-dessus bascule entre dépense et entrée.';
+
+  @override
+  String get didacticielCategorieTitre => 'La catégorie';
+
+  @override
+  String get didacticielCategorieTexte =>
+      'Touche celle qui correspond, puis le compte juste après. Celles que tu utilises le plus remontent toutes seules.';
+
+  @override
+  String get didacticielEnregistrerTitre => 'Enregistrer';
+
+  @override
+  String get didacticielEnregistrerTexte =>
+      'Montant, catégorie, enregistrer : trois gestes et c\'est noté.';
+
+  @override
+  String get didacticielSoldeTitre => 'Ton solde du mois';
+
+  @override
+  String get didacticielSoldeTexte =>
+      'Entrées moins dépenses, mis à jour à chaque saisie. Vert tant que tu restes dans le positif.';
+
+  @override
+  String get didacticielSerieTitre => 'Ta série';
+
+  @override
+  String get didacticielSerieTexte =>
+      'Chaque jour où tu notes au moins une dépense, la flamme s\'allume et compte les jours. Touche-la pour voir où tu en es.';
+
+  @override
+  String get didacticielAnalyseTitre => 'Analyse';
+
+  @override
+  String get didacticielAnalyseTexte =>
+      'Tes tendances sur 12 mois, la règle 40/25/35, une astuce par jour.';
+
+  @override
+  String get didacticielMoisTitre => 'Le mois';
+
+  @override
+  String get didacticielMoisTexte =>
+      'Toutes tes saisies du mois, à filtrer, corriger ou supprimer.';
+
+  @override
+  String get didacticielReglagesTitre => 'Réglages';
+
+  @override
+  String get didacticielReglagesTexte =>
+      'Langue, devise, rappels, badges, export de tes données. Tu peux aussi y revoir cette visite.';
+
+  @override
+  String get reglagesRevoirDidacticiel => 'Revoir la visite guidée';
 }

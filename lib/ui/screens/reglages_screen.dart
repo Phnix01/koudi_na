@@ -11,6 +11,7 @@ import 'package:url_launcher/url_launcher.dart';
 import '../../core/constants/devises.dart';
 import '../../l10n/l10n.dart';
 import '../../logic/providers/devise_provider.dart';
+import '../../logic/providers/didacticiel_provider.dart';
 import '../../logic/providers/langue_provider.dart';
 import '../../logic/providers/notifications_provider.dart';
 import '../../logic/providers/repositories_providers.dart';
@@ -399,6 +400,18 @@ class _ReglagesScreenState extends ConsumerState<ReglagesScreen> {
                       ),
                     ],
                   ),
+                ),
+                const Divider(height: 1),
+                ListTile(
+                  leading: const PhosphorIcon(PhosphorIconsRegular.compass),
+                  title: Text(l10n.reglagesRevoirDidacticiel),
+                  trailing: const PhosphorIcon(PhosphorIconsRegular.caretRight),
+                  onTap: () {
+                    // La visite se joue sur l'écran Capture, toujours à la
+                    // racine de la pile de navigation.
+                    Navigator.of(context).popUntil((route) => route.isFirst);
+                    ref.read(demandeDidacticielProvider.notifier).state++;
+                  },
                 ),
                 const Divider(height: 1),
                 ListTile(

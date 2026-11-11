@@ -19,7 +19,11 @@ import 'selecteur_compte.dart';
 /// fournit le `ProviderScope` le plus proche (celui de l'écran Capture,
 /// ou celui, pré-rempli, de l'écran Édition).
 class FormulaireTransaction extends ConsumerWidget {
-  const FormulaireTransaction({super.key});
+  const FormulaireTransaction({super.key, this.cleMontant, this.cleCategories});
+
+  /// Ancres de la visite guidée de l'écran Capture (inutiles en édition).
+  final GlobalKey? cleMontant;
+  final GlobalKey? cleCategories;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -59,6 +63,7 @@ class FormulaireTransaction extends ConsumerWidget {
           // rétrécit pour tenir sur une ligne plutôt que de passer à
           // la ligne au milieu du chiffre.
           FittedBox(
+            key: cleMontant,
             fit: BoxFit.scaleDown,
             child: Text(
               formaterMontant(montant),
@@ -76,7 +81,7 @@ class FormulaireTransaction extends ConsumerWidget {
             ).textTheme.bodySmall?.copyWith(color: AppColors.textMuted),
           ),
           const SizedBox(height: 8),
-          const GrilleCategories(),
+          GrilleCategories(key: cleCategories),
           const SizedBox(height: 24),
           Text(
             context.l10n.compte,

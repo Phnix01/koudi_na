@@ -602,13 +602,90 @@ class AppLocalizationsEn extends AppLocalizations {
   String get astuceDuJourEtiquette => 'Tip of the day';
 
   @override
-  String serieJoursChip(int nombre) {
+  String serieInfobulle(int nombre) {
     String _temp0 = intl.Intl.pluralLogic(
       nombre,
       locale: localeName,
-      other: '$nombre days',
-      one: '1 day',
+      other: '$nombre days in a row with at least one entry',
+      one: '1 day in a row with at least one entry',
     );
     return '$_temp0';
   }
+
+  @override
+  String get serieInfobulleVide =>
+      'Log an expense today to light up your streak';
+
+  @override
+  String get didacticielSuivant => 'Next';
+
+  @override
+  String get didacticielTerminer => 'Let\'s go';
+
+  @override
+  String get didacticielPasser => 'Skip';
+
+  @override
+  String didacticielEtape(int numero, int total) {
+    return '$numero/$total';
+  }
+
+  @override
+  String get didacticielMontantTitre => 'The amount';
+
+  @override
+  String get didacticielMontantTexte =>
+      'Type it on the keypad just below. The switch above toggles between expense and income.';
+
+  @override
+  String get didacticielCategorieTitre => 'The category';
+
+  @override
+  String get didacticielCategorieTexte =>
+      'Tap the right one, then the account just after. The ones you use most rise to the top on their own.';
+
+  @override
+  String get didacticielEnregistrerTitre => 'Save';
+
+  @override
+  String get didacticielEnregistrerTexte =>
+      'Amount, category, save: three taps and it\'s logged.';
+
+  @override
+  String get didacticielSoldeTitre => 'Your monthly balance';
+
+  @override
+  String get didacticielSoldeTexte =>
+      'Income minus spending, updated with every entry. Green as long as you stay in the positive.';
+
+  @override
+  String get didacticielSerieTitre => 'Your streak';
+
+  @override
+  String get didacticielSerieTexte =>
+      'Every day you log at least one expense, the flame lights up and counts the days. Tap it to see where you stand.';
+
+  @override
+  String get didacticielAnalyseTitre => 'Insights';
+
+  @override
+  String get didacticielAnalyseTexte =>
+      'Your trends over 12 months, the 40/25/35 rule, a tip every day.';
+
+  @override
+  String get didacticielMoisTitre => 'The month';
+
+  @override
+  String get didacticielMoisTexte =>
+      'All your entries for the month, to filter, edit or delete.';
+
+  @override
+  String get didacticielReglagesTitre => 'Settings';
+
+  @override
+  String get didacticielReglagesTexte =>
+      'Language, currency, reminders, badges, data export. You can replay this tour from there too.';
+
+  @override
+  String get reglagesRevoirDidacticiel => 'Replay the guided tour';
 }

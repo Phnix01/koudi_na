@@ -1,1 +1,1 @@
-presupuesto,finanzas,dinero,cuentas,ingresos,sin internet,privacidad,recurrentes,mensual,renta
+presupuesto,finanzas,personales,dinero,efectivo,ingresos,cuentas,sin internet,contabilidad,control

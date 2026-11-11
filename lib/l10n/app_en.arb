@@ -289,10 +289,39 @@
 
   "astuceDuJourEtiquette": "Tip of the day",
 
-  "serieJoursChip": "{nombre, plural, =1{1 day} other{{nombre} days}}",
-  "@serieJoursChip": {
+  "serieInfobulle": "{nombre, plural, =1{1 day in a row with at least one entry} other{{nombre} days in a row with at least one entry}}",
+  "@serieInfobulle": {
     "placeholders": {
       "nombre": {"type": "int"}
     }
-  }
+  },
+  "serieInfobulleVide": "Log an expense today to light up your streak",
+
+  "didacticielSuivant": "Next",
+  "didacticielTerminer": "Let's go",
+  "didacticielPasser": "Skip",
+  "didacticielEtape": "{numero}/{total}",
+  "@didacticielEtape": {
+    "placeholders": {
+      "numero": {"type": "int"},
+      "total": {"type": "int"}
+    }
+  },
+  "didacticielMontantTitre": "The amount",
+  "didacticielMontantTexte": "Type it on the keypad just below. The switch above toggles between expense and income.",
+  "didacticielCategorieTitre": "The category",
+  "didacticielCategorieTexte": "Tap the right one, then the account just after. The ones you use most rise to the top on their own.",
+  "didacticielEnregistrerTitre": "Save",
+  "didacticielEnregistrerTexte": "Amount, category, save: three taps and it's logged.",
+  "didacticielSoldeTitre": "Your monthly balance",
+  "didacticielSoldeTexte": "Income minus spending, updated with every entry. Green as long as you stay in the positive.",
+  "didacticielSerieTitre": "Your streak",
+  "didacticielSerieTexte": "Every day you log at least one expense, the flame lights up and counts the days. Tap it to see where you stand.",
+  "didacticielAnalyseTitre": "Insights",
+  "didacticielAnalyseTexte": "Your trends over 12 months, the 40/25/35 rule, a tip every day.",
+  "didacticielMoisTitre": "The month",
+  "didacticielMoisTexte": "All your entries for the month, to filter, edit or delete.",
+  "didacticielReglagesTitre": "Settings",
+  "didacticielReglagesTexte": "Language, currency, reminders, badges, data export. You can replay this tour from there too.",
+  "reglagesRevoirDidacticiel": "Replay the guided tour"
 }

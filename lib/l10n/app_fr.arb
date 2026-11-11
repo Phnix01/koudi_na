@@ -289,10 +289,39 @@
 
   "astuceDuJourEtiquette": "Astuce du jour",
 
-  "serieJoursChip": "{nombre, plural, =1{1 jour} other{{nombre} jours}}",
-  "@serieJoursChip": {
+  "serieInfobulle": "{nombre, plural, =1{1 jour de suite avec au moins une saisie} other{{nombre} jours de suite avec au moins une saisie}}",
+  "@serieInfobulle": {
     "placeholders": {
       "nombre": {"type": "int"}
     }
-  }
+  },
+  "serieInfobulleVide": "Note une dépense aujourd'hui pour allumer ta série",
+
+  "didacticielSuivant": "Suivant",
+  "didacticielTerminer": "C'est parti",
+  "didacticielPasser": "Passer",
+  "didacticielEtape": "{numero}/{total}",
+  "@didacticielEtape": {
+    "placeholders": {
+      "numero": {"type": "int"},
+      "total": {"type": "int"}
+    }
+  },
+  "didacticielMontantTitre": "Le montant",
+  "didacticielMontantTexte": "Tape-le sur le pavé juste en dessous. Le sélecteur au-dessus bascule entre dépense et entrée.",
+  "didacticielCategorieTitre": "La catégorie",
+  "didacticielCategorieTexte": "Touche celle qui correspond, puis le compte juste après. Celles que tu utilises le plus remontent toutes seules.",
+  "didacticielEnregistrerTitre": "Enregistrer",
+  "didacticielEnregistrerTexte": "Montant, catégorie, enregistrer : trois gestes et c'est noté.",
+  "didacticielSoldeTitre": "Ton solde du mois",
+  "didacticielSoldeTexte": "Entrées moins dépenses, mis à jour à chaque saisie. Vert tant que tu restes dans le positif.",
+  "didacticielSerieTitre": "Ta série",
+  "didacticielSerieTexte": "Chaque jour où tu notes au moins une dépense, la flamme s'allume et compte les jours. Touche-la pour voir où tu en es.",
+  "didacticielAnalyseTitre": "Analyse",
+  "didacticielAnalyseTexte": "Tes tendances sur 12 mois, la règle 40/25/35, une astuce par jour.",
+  "didacticielMoisTitre": "Le mois",
+  "didacticielMoisTexte": "Toutes tes saisies du mois, à filtrer, corriger ou supprimer.",
+  "didacticielReglagesTitre": "Réglages",
+  "didacticielReglagesTexte": "Langue, devise, rappels, badges, export de tes données. Tu peux aussi y revoir cette visite.",
+  "reglagesRevoirDidacticiel": "Revoir la visite guidée"
 }

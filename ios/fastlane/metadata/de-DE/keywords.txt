@@ -1,1 +1,1 @@
-haushaltsbuch,finanzen,sparen,kosten,geld,offline,kassenbuch,fixkosten,bargeld,sparziel,franken
+haushaltsbuch,finanzen,sparen,geld,budgetplaner,offline,fixkosten,einnahmen,bargeld,sparziel,franken

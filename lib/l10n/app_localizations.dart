@@ -1130,11 +1130,143 @@ abstract class AppLocalizations {
   /// **'Astuce du jour'**
   String get astuceDuJourEtiquette;
 
-  /// No description provided for @serieJoursChip.
+  /// No description provided for @serieInfobulle.
   ///
   /// In fr, this message translates to:
-  /// **'{nombre, plural, =1{1 jour} other{{nombre} jours}}'**
-  String serieJoursChip(int nombre);
+  /// **'{nombre, plural, =1{1 jour de suite avec au moins une saisie} other{{nombre} jours de suite avec au moins une saisie}}'**
+  String serieInfobulle(int nombre);
+
+  /// No description provided for @serieInfobulleVide.
+  ///
+  /// In fr, this message translates to:
+  /// **'Note une dépense aujourd\'hui pour allumer ta série'**
+  String get serieInfobulleVide;
+
+  /// No description provided for @didacticielSuivant.
+  ///
+  /// In fr, this message translates to:
+  /// **'Suivant'**
+  String get didacticielSuivant;
+
+  /// No description provided for @didacticielTerminer.
+  ///
+  /// In fr, this message translates to:
+  /// **'C\'est parti'**
+  String get didacticielTerminer;
+
+  /// No description provided for @didacticielPasser.
+  ///
+  /// In fr, this message translates to:
+  /// **'Passer'**
+  String get didacticielPasser;
+
+  /// No description provided for @didacticielEtape.
+  ///
+  /// In fr, this message translates to:
+  /// **'{numero}/{total}'**
+  String didacticielEtape(int numero, int total);
+
+  /// No description provided for @didacticielMontantTitre.
+  ///
+  /// In fr, this message translates to:
+  /// **'Le montant'**
+  String get didacticielMontantTitre;
+
+  /// No description provided for @didacticielMontantTexte.
+  ///
+  /// In fr, this message translates to:
+  /// **'Tape-le sur le pavé juste en dessous. Le sélecteur au-dessus bascule entre dépense et entrée.'**
+  String get didacticielMontantTexte;
+
+  /// No description provided for @didacticielCategorieTitre.
+  ///
+  /// In fr, this message translates to:
+  /// **'La catégorie'**
+  String get didacticielCategorieTitre;
+
+  /// No description provided for @didacticielCategorieTexte.
+  ///
+  /// In fr, this message translates to:
+  /// **'Touche celle qui correspond, puis le compte juste après. Celles que tu utilises le plus remontent toutes seules.'**
+  String get didacticielCategorieTexte;
+
+  /// No description provided for @didacticielEnregistrerTitre.
+  ///
+  /// In fr, this message translates to:
+  /// **'Enregistrer'**
+  String get didacticielEnregistrerTitre;
+
+  /// No description provided for @didacticielEnregistrerTexte.
+  ///
+  /// In fr, this message translates to:
+  /// **'Montant, catégorie, enregistrer : trois gestes et c\'est noté.'**
+  String get didacticielEnregistrerTexte;
+
+  /// No description provided for @didacticielSoldeTitre.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ton solde du mois'**
+  String get didacticielSoldeTitre;
+
+  /// No description provided for @didacticielSoldeTexte.
+  ///
+  /// In fr, this message translates to:
+  /// **'Entrées moins dépenses, mis à jour à chaque saisie. Vert tant que tu restes dans le positif.'**
+  String get didacticielSoldeTexte;
+
+  /// No description provided for @didacticielSerieTitre.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ta série'**
+  String get didacticielSerieTitre;
+
+  /// No description provided for @didacticielSerieTexte.
+  ///
+  /// In fr, this message translates to:
+  /// **'Chaque jour où tu notes au moins une dépense, la flamme s\'allume et compte les jours. Touche-la pour voir où tu en es.'**
+  String get didacticielSerieTexte;
+
+  /// No description provided for @didacticielAnalyseTitre.
+  ///
+  /// In fr, this message translates to:
+  /// **'Analyse'**
+  String get didacticielAnalyseTitre;
+
+  /// No description provided for @didacticielAnalyseTexte.
+  ///
+  /// In fr, this message translates to:
+  /// **'Tes tendances sur 12 mois, la règle 40/25/35, une astuce par jour.'**
+  String get didacticielAnalyseTexte;
+
+  /// No description provided for @didacticielMoisTitre.
+  ///
+  /// In fr, this message translates to:
+  /// **'Le mois'**
+  String get didacticielMoisTitre;
+
+  /// No description provided for @didacticielMoisTexte.
+  ///
+  /// In fr, this message translates to:
+  /// **'Toutes tes saisies du mois, à filtrer, corriger ou supprimer.'**
+  String get didacticielMoisTexte;
+
+  /// No description provided for @didacticielReglagesTitre.
+  ///
+  /// In fr, this message translates to:
+  /// **'Réglages'**
+  String get didacticielReglagesTitre;
+
+  /// No description provided for @didacticielReglagesTexte.
+  ///
+  /// In fr, this message translates to:
+  /// **'Langue, devise, rappels, badges, export de tes données. Tu peux aussi y revoir cette visite.'**
+  String get didacticielReglagesTexte;
+
+  /// No description provided for @reglagesRevoirDidacticiel.
+  ///
+  /// In fr, this message translates to:
+  /// **'Revoir la visite guidée'**
+  String get reglagesRevoirDidacticiel;
 }
 
 class _AppLocalizationsDelegate

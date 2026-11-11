@@ -1,1 +1,1 @@
-presupuesto,finanzas,dinero,cuentas,control,domestica,mensual,factura,efectivo,offline,sueldo,banco
+presupuesto,finanzas,personales,dinero,cuentas,sin,conexión,offline,privado,ingresos,economía

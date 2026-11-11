@@ -32,7 +32,7 @@ Pour chaque langue, un agent **rédacteur** adapte la fiche française au march�
 
 Les notes de version (« Nouveautés ») sont rédigées à partir des commits depuis le dernier tag git ; à la première version, il n'y en a pas (Apple ne les affiche pas). **Taguer chaque version publiée** (`git tag v1.0.0`) pour que la suivante ait ses notes.
 
-Rien ne part chez Apple sans un « o » tapé après lecture du diff dans le terminal. Le détail des remarques des relecteurs est dans `build/fiche_store/rapport.md`.
+Rien ne part chez Apple sans un « o » tapé après lecture du diff dans le terminal. Le détail des remarques des relecteurs est dans `build/fiche_store/<langue>.md`.
 
 ## Ce qui fait foi
 
