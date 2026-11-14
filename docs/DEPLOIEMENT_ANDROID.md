@@ -1,6 +1,6 @@
 # Koudi Na — Guide de déploiement Google Play (Android)
 
-*XNOVA Systems · Flutter 3.41 · applicationId `com.xnovasystems.koudi_na` · version `1.0.0+1`*
+*XNOVA Systems · Flutter 3.41 · applicationId `com.xnovasystems.koudi_na` · version `1.1.0+2`*
 
 Les textes de la fiche (nom, description, mots-clés, FR et EN) sont dans [FICHE_STORE.md](FICHE_STORE.md). Ce guide est le pendant Android de [DEPLOIEMENT_IOS.md](DEPLOIEMENT_IOS.md) ; les deux partagent la même politique de confidentialité et la même fiche produit.
 
@@ -40,7 +40,7 @@ flutter build appbundle --release
 
 Résultat : `build/app/outputs/bundle/release/app-release.aab`.
 
-**Version et build** : `pubspec.yaml` → `version: 1.0.0+1` ; `1.0.0` devient le nom de version visible, `1` devient le `versionCode`. **Le `versionCode` doit augmenter à chaque upload**, exactement comme le build number iOS — les deux peuvent d'ailleurs rester synchronisés en incrémentant le même nombre après le `+` dans `pubspec.yaml` pour les deux plateformes à la fois.
+**Version et build** : `pubspec.yaml` → `version: 1.1.0+2` ; `1.1.0` devient le nom de version visible, `2` devient le `versionCode`. **Le `versionCode` doit augmenter à chaque upload**, exactement comme le build number iOS — les deux peuvent d'ailleurs rester synchronisés en incrémentant le même nombre après le `+` dans `pubspec.yaml` pour les deux plateformes à la fois.
 
 **Upload** : Play Console → votre app → *Production* (ou *Test interne* d'abord, recommandé) → *Créer une version* → glisser le `.aab`.
 
@@ -76,7 +76,7 @@ Résultat : `build/app/outputs/bundle/release/app-release.aab`.
 
 - **Politique de confidentialité** : même page, même contenu FR/EN pour les deux stores (voir DEPLOIEMENT_IOS.md section 4). Toute modification du texte doit être republiée aux deux endroits (Réglages → À propos dans l'app pointe vers une seule URL partagée entre iOS et Android, dans `lib/ui/screens/reglages_screen.dart`).
 - **Contact** : même adresse `contact@xnovasystems.com` utilisée dans l'app, les deux fiches store et la politique de confidentialité.
-- **Version marketing** : garder `1.0.0` identique sur les deux plateformes au lancement ; les numéros de build (`+N`) peuvent diverger ensuite selon le rythme de publication de chaque store.
+- **Version marketing** : garder `1.1.0` identique sur les deux plateformes au lancement ; les numéros de build (`+N`) peuvent diverger ensuite selon le rythme de publication de chaque store.
 - **Formulations à éviter** : le tableau de la section 5 de `DEPLOIEMENT_IOS.md` s'applique aussi à la fiche Google Play (mêmes risques de rejet : promesses chiffrées, mots « wallet »/« banque », marques tierces dans les mots-clés, mentions Android/iOS croisées à retirer selon la plateforme).
 
 ## 5. Checklist finale avant publication

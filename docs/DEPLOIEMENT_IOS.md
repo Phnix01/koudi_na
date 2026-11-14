@@ -1,6 +1,6 @@
 # Koudi Na — Guide de déploiement App Store (iOS)
 
-*XNOVA Systems · Flutter 3.41 · Xcode 27.1 (SDK iOS 27) · bundle `com.xnovasystems.koudiNa` · version `1.0.0+1`*
+*XNOVA Systems · Flutter 3.41 · Xcode 27.1 (SDK iOS 27) · bundle `com.xnovasystems.koudiNa` · version `1.1.0+2`*
 *Exigences Apple vérifiées le 21 octobre 2026 (developer.apple.com : versions minimales, spécifications des captures, outils d'upload).*
 
 La fiche (8 langues) vit dans `ios/fastlane/metadata/` et se génère, se relit et s'envoie avec `tool/store/release_ios.sh` : voir [FICHE_STORE.md](FICHE_STORE.md). Ce script remplace aussi l'upload manuel de la section 3 (build IPA puis envoi via l'API App Store Connect).
@@ -47,7 +47,7 @@ Déjà présent et correct : `CFBundleDisplayName` = `Koudi Na`, `CFBundleShortV
 **Aucune clé `NS…UsageDescription`** : l'app ne demande aucune permission (`file_picker` et `share_plus` passent par les pickers système, hors sandbox, sans autorisation).
 
 ### Version et build
-`pubspec.yaml` → `version: 1.0.0+1` : `1.0.0` devient `CFBundleShortVersionString` (visible sur le store), `1` devient `CFBundleVersion`. **Le build number doit augmenter à chaque upload** vers App Store Connect, même pour une même version marketing : `1.0.0+2`, `1.0.0+3`… Un build déjà utilisé est rejeté à l'upload. Ne pas toucher `MARKETING_VERSION`/`CURRENT_PROJECT_VERSION` dans le pbxproj (ils ne concernent que `RunnerTests`).
+`pubspec.yaml` → `version: 1.1.0+2` : `1.1.0` devient `CFBundleShortVersionString` (visible sur le store), `2` devient `CFBundleVersion`. **Le build number doit augmenter à chaque upload** vers App Store Connect, même pour une même version marketing : `1.1.0+3`, `1.1.0+4`… Un build déjà utilisé est rejeté à l'upload. Ne pas toucher `MARKETING_VERSION`/`CURRENT_PROJECT_VERSION` dans le pbxproj (ils ne concernent que `RunnerTests`).
 
 ### Manifeste de confidentialité (`PrivacyInfo.xcprivacy`)
 Obligatoire depuis mai 2024 pour les **API à motif requis** (horodatage de fichiers, UserDefaults, espace disque, boot time). État du projet, vérifié dans le cache pub et le moteur :
@@ -88,12 +88,12 @@ Un `ExportOptions.plist` n'est nécessaire que pour forcer des options (signatur
 xcrun altool --upload-package build/ios/ipa/koudi_na.ipa --type ios \
   --apple-id <Apple ID numérique de l'app, visible dans App Store Connect > App Information> \
   --bundle-id com.xnovasystems.koudiNa \
-  --bundle-short-version-string 1.0.0 --bundle-version 1 \
+  --bundle-short-version-string 1.1.0 --bundle-version 2 \
   --apiKey <KEY_ID> --apiIssuer <ISSUER_ID>
 ```
 (clé API App Store Connect placée dans `~/.appstoreconnect/private_keys/AuthKey_<KEY_ID>.p8`). Alternative sans altool : `xcodebuild -exportArchive` avec `destination = upload` dans l'ExportOptions.
 
-**TestFlight avant review** : le build apparaît sous *TestFlight* après 10–30 min de traitement. Installer sur un iPhone réel sans réseau (mode avion) : onboarding, saisie, graphiques, export CSV via feuille de partage, import CSV via le picker, changement de langue. Puis seulement l'attacher à la version 1.0.0 et soumettre.
+**TestFlight avant review** : le build apparaît sous *TestFlight* après 10–30 min de traitement. Installer sur un iPhone réel sans réseau (mode avion) : onboarding, saisie, graphiques, export CSV via feuille de partage, import CSV via le picker, changement de langue. Puis seulement l'attacher à la version 1.1.0 et soumettre.
 
 ## 4. Fiche App Store Connect
 
@@ -155,7 +155,7 @@ xcrun altool --upload-package build/ios/ipa/koudi_na.ipa --type ios \
 2. `Podfile` → `platform :ios, '15.0'` ; `IPHONEOS_DEPLOYMENT_TARGET = 15.0` ; `TARGETED_DEVICE_FAMILY = 1`. **(fait)**
 3. `Info.plist` : `ITSAppUsesNonExemptEncryption=false`, `CFBundleLocalizations` fr/en, orientation portrait uniquement. **(fait)**
 4. `ios/Runner/PrivacyInfo.xcprivacy` ajouté à la cible Runner **(fait, vérifié dans le pbxproj)** ; contrôler quand même le rapport de confidentialité Xcode (Organizer → Generate Privacy Report) sans avertissement avant la première soumission.
-5. `pubspec.yaml` version incrémentée (`1.0.0+N`, N jamais réutilisé). Actuellement `1.0.0+1` : à incrémenter dès le premier upload qui échoue ou qui doit être remplacé.
+5. `pubspec.yaml` version incrémentée (`1.1.0+N`, N jamais réutilisé). Actuellement `1.1.0+2` (le build 1 a pu partir avec l'IPA du 5 novembre) : à incrémenter à chaque nouvel upload.
 6. `flutter clean && flutter pub get && flutter build ipa --release --export-method app-store-connect` sans erreur ; upload via Transporter.
 7. Build testé sur TestFlight sur iPhone réel (FR et EN, onboarding, export + import CSV, iPad en compatibilité).
 8. Fiche : nom, sous-titre, description, mots-clés, URL support, URL politique de confidentialité (en ligne et testée), catégorie Finance, copyright — en FR et EN.

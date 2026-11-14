@@ -72,6 +72,18 @@ if [[ "$reponse" != "o" && "$reponse" != "O" ]]; then
 fi
 
 if [[ $LANE == release ]]; then
+  # Flutter 3.41 réutilise build/native_assets/ios (objective_c.framework,
+  # tiré par path_provider_foundation) sans distinguer iPhone et simulateur :
+  # après un lancement sur simulateur, l'IPA embarquerait la version
+  # simulateur et planterait au démarrage sur tout iPhone réel.
+  rm -rf build/native_assets/ios
   flutter build ipa --release --export-method app-store-connect
+  fw=build/ios/archive/Runner.xcarchive/Products/Applications/Runner.app/Frameworks/objective_c.framework/objective_c
+  if [[ -f "$fw" ]] && ! xcrun vtool -show-build "$fw" | grep -qE "platform IOS$"; then
+    echo "objective_c.framework n'est pas compilé pour iPhone dans l'archive : envoi annulé."
+    exit 1
+  fi
+  # Sinon le prochain lancement sur simulateur reprendrait la version iPhone.
+  rm -rf build/native_assets/ios
 fi
 cd ios && bundle exec fastlane "$LANE"
