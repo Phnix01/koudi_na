@@ -8,6 +8,7 @@ import '../../core/theme/app_colors.dart';
 import '../../core/theme/app_spacing.dart';
 import '../../l10n/l10n.dart';
 import '../../logic/providers/repositories_providers.dart';
+import '../widgets/medaille_badge.dart';
 
 /// Écran listant tous les badges disponibles (débloqués ou non),
 /// accessible depuis Réglages. L'app de capture reste volontairement
@@ -43,7 +44,7 @@ class BadgesScreen extends ConsumerWidget {
                     crossAxisCount: 2,
                     mainAxisSpacing: AppSpacing.s12,
                     crossAxisSpacing: AppSpacing.s12,
-                    childAspectRatio: 0.95,
+                    childAspectRatio: 0.8,
                   ),
                   itemCount: badgesDisponibles.length,
                   itemBuilder: (context, index) {
@@ -134,8 +135,6 @@ class _CarteBadge extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final couleur = debloque ? AppColors.accent : AppColors.textMuted;
-
     return Container(
       decoration: BoxDecoration(
         color: debloque ? AppColors.accent.withValues(alpha: 0.08) : AppColors.surface,
@@ -162,16 +161,7 @@ class _CarteBadge extends StatelessWidget {
             Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Container(
-                  padding: const EdgeInsets.all(AppSpacing.s12),
-                  decoration: BoxDecoration(
-                    color: debloque
-                        ? AppColors.accent.withValues(alpha: 0.15)
-                        : AppColors.surfaceHigh,
-                    shape: BoxShape.circle,
-                  ),
-                  child: PhosphorIcon(badge.icone, color: couleur, size: 28),
-                ),
+                MedailleBadge(badge: badge, debloque: debloque, taille: 64),
                 const SizedBox(height: AppSpacing.s12),
                 Text(
                   titreBadge(badge, langue),
@@ -182,7 +172,7 @@ class _CarteBadge extends StatelessWidget {
                 Text(
                   descriptionBadge(badge, langue),
                   textAlign: TextAlign.center,
-                  maxLines: 2,
+                  maxLines: 3,
                   overflow: TextOverflow.ellipsis,
                   style: Theme.of(context).textTheme.bodySmall?.copyWith(
                     color: AppColors.textMuted,

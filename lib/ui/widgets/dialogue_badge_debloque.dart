@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_animate/flutter_animate.dart';
-import 'package:phosphor_flutter/phosphor_flutter.dart';
 
 import '../../core/constants/badges.dart';
 import '../../core/theme/app_colors.dart';
 import '../../core/theme/app_spacing.dart';
 import '../../l10n/l10n.dart';
+import 'medaille_badge.dart';
 
 /// Déblocage d'un badge : le seul moment "récompense" de l'app, donc
 /// la seule gamification à mériter plus qu'une SnackBar — une carte
@@ -55,28 +55,31 @@ class _CarteDeblocageBadge extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               children: [
                 Container(
-                  width: 88,
-                  height: 88,
+                  width: 168,
+                  height: 168,
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
                     gradient: RadialGradient(
                       colors: [
                         AppColors.accent.withValues(alpha: 0.35),
-                        AppColors.accent.withValues(alpha: 0.05),
+                        AppColors.accent.withValues(alpha: 0),
                       ],
                     ),
                   ),
-                  child: Center(
-                    child: PhosphorIcon(
-                      badge.icone,
-                      color: AppColors.accent,
-                      size: 44,
-                    ),
-                  ),
-                ).animate().scale(
-                  begin: const Offset(0.4, 0.4),
-                  duration: 500.ms,
-                  curve: Curves.elasticOut,
+                  alignment: Alignment.center,
+                  child: MedailleBadge(badge: badge, taille: 120)
+                      .animate()
+                      .scale(
+                        begin: const Offset(0.4, 0.4),
+                        duration: 600.ms,
+                        curve: Curves.elasticOut,
+                      )
+                      // Un seul reflet qui balaie la médaille, une fois posée.
+                      .then(delay: 150.ms)
+                      .shimmer(
+                        duration: 900.ms,
+                        color: Colors.white.withValues(alpha: 0.55),
+                      ),
                 ),
                 const SizedBox(height: AppSpacing.s16),
                 Text(

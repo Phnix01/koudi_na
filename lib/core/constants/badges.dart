@@ -1,5 +1,4 @@
 import 'package:flutter/foundation.dart';
-import 'package:phosphor_flutter/phosphor_flutter.dart';
 
 /// Un badge à débloquer (écran Badges, section gamification). Nommé
 /// `BadgeInfo` et non `Badge` : ce dernier nom est déjà pris par le
@@ -12,7 +11,6 @@ import 'package:phosphor_flutter/phosphor_flutter.dart';
 class BadgeInfo {
   const BadgeInfo({
     required this.id,
-    required this.icone,
     required this.titreFr,
     required this.titreEn,
     required this.descriptionFr,
@@ -20,11 +18,15 @@ class BadgeInfo {
   });
 
   final String id;
-  final PhosphorIconData icone;
   final String titreFr;
   final String titreEn;
   final String descriptionFr;
   final String descriptionEn;
+
+  /// Médaille illustrée (générée avec Higgsfield, détourée, 288 px).
+  /// Déduite de l'id : un badge ajouté sans son fichier se voit tout
+  /// de suite au lancement des tests (voir badges_test.dart).
+  String get image => 'assets/badges/$id.webp';
 }
 
 /// Les conditions de déblocage ne sont pas ici : elles vivent dans
@@ -33,7 +35,6 @@ class BadgeInfo {
 const List<BadgeInfo> badgesDisponibles = [
   BadgeInfo(
     id: 'premiere_transaction',
-    icone: PhosphorIconsFill.star,
     titreFr: 'Premier pas',
     titreEn: 'First step',
     descriptionFr: 'Enregistrer une première transaction.',
@@ -41,7 +42,6 @@ const List<BadgeInfo> badgesDisponibles = [
   ),
   BadgeInfo(
     id: 'serie_3',
-    icone: PhosphorIconsFill.flame,
     titreFr: '3 jours de suite',
     titreEn: '3 days in a row',
     descriptionFr: 'Enregistrer une transaction 3 jours consécutifs.',
@@ -49,7 +49,6 @@ const List<BadgeInfo> badgesDisponibles = [
   ),
   BadgeInfo(
     id: 'serie_7',
-    icone: PhosphorIconsFill.flame,
     titreFr: 'Une semaine',
     titreEn: 'One week',
     descriptionFr: 'Enregistrer une transaction 7 jours consécutifs.',
@@ -57,7 +56,6 @@ const List<BadgeInfo> badgesDisponibles = [
   ),
   BadgeInfo(
     id: 'serie_30',
-    icone: PhosphorIconsFill.flame,
     titreFr: 'Un mois entier',
     titreEn: 'A full month',
     descriptionFr: 'Enregistrer une transaction 30 jours consécutifs.',
@@ -65,7 +63,6 @@ const List<BadgeInfo> badgesDisponibles = [
   ),
   BadgeInfo(
     id: 'serie_100',
-    icone: PhosphorIconsFill.fire,
     titreFr: '100 jours de suite',
     titreEn: '100 days in a row',
     descriptionFr: 'Enregistrer une transaction 100 jours consécutifs.',
@@ -73,7 +70,6 @@ const List<BadgeInfo> badgesDisponibles = [
   ),
   BadgeInfo(
     id: 'transactions_50',
-    icone: PhosphorIconsFill.notebook,
     titreFr: '50 transactions',
     titreEn: '50 transactions',
     descriptionFr: 'Enregistrer 50 transactions au total.',
@@ -81,7 +77,6 @@ const List<BadgeInfo> badgesDisponibles = [
   ),
   BadgeInfo(
     id: 'transactions_200',
-    icone: PhosphorIconsFill.notebook,
     titreFr: '200 transactions',
     titreEn: '200 transactions',
     descriptionFr: 'Enregistrer 200 transactions au total.',
@@ -89,7 +84,6 @@ const List<BadgeInfo> badgesDisponibles = [
   ),
   BadgeInfo(
     id: 'mois_equilibre',
-    icone: PhosphorIconsFill.scales,
     titreFr: 'Mois équilibré',
     titreEn: 'Balanced month',
     descriptionFr: 'Respecter les 3 piliers 40/25/35 sur un mois.',
@@ -98,7 +92,6 @@ const List<BadgeInfo> badgesDisponibles = [
   ),
   BadgeInfo(
     id: 'epargne_respectee',
-    icone: PhosphorIconsFill.piggyBank,
     titreFr: 'Épargne respectée',
     titreEn: 'Savings on track',
     descriptionFr: "Respecter l'objectif d'épargne du mois.",

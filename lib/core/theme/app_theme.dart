@@ -112,7 +112,12 @@ abstract final class AppTheme {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(AppSpacing.radius),
           ),
-          textStyle: const TextStyle(fontWeight: FontWeight.w600, fontSize: 16),
+          // Partir du style du thème : un TextStyle nu remplacerait la
+          // police Inter par celle du système sur tous les boutons pleins.
+          textStyle: baseText.labelLarge?.copyWith(
+            fontWeight: FontWeight.w600,
+            fontSize: 16,
+          ),
         ),
       ),
       chipTheme: ChipThemeData(

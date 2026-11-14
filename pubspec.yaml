@@ -153,6 +153,8 @@ flutter:
     # (lib/logic/services/export_pdf.dart).
     - assets/icon/app_icon.png
     - assets/google_fonts/
+    # Médailles des badges (core/constants/badges.dart), une par id.
+    - assets/badges/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images
