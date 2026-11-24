@@ -1,8 +1,6 @@
 {
   "@@locale": "en",
-
   "appTitre": "Koudi Na",
-
   "enregistrer": "Save",
   "enregistrerModifications": "Save changes",
   "annuler": "Cancel",
@@ -14,7 +12,6 @@
   "nouveau": "New",
   "total": "Total",
   "objectif": "Goal",
-
   "depense": "Expense",
   "entree": "Income",
   "depenses": "Expenses",
@@ -30,22 +27,18 @@
   "libelle": "Name",
   "icone": "Icon",
   "couleur": "Color",
-
   "pilierEpargne": "Savings",
   "pilierFamille": "Family",
   "pilierVie": "Living",
   "regle402535": "40/25/35 rule",
   "pilierRegle": "Pillar (40/25/35 rule)",
-
   "typeCompteEspeces": "Cash",
   "typeCompteBanque": "Bank",
   "typeCompteMobileMoney": "Mobile Money",
   "typeCompteEpargne": "Savings",
-
   "tooltipAnalyse": "Insights",
   "tooltipVoirLeMois": "View month",
   "tooltipReglages": "Settings",
-
   "aujourdHui": "Today",
   "hier": "Yesterday",
   "aucuneTransactionFiltres": "No transactions match these filters",
@@ -53,21 +46,20 @@
   "transactionSupprimee": "Transaction deleted",
   "categorieSupprimee": "Deleted category",
   "compteSupprime": "Deleted account",
-
   "supprimerTransactionTitre": "Delete this transaction?",
   "actionIrreversible": "This cannot be undone.",
-
   "desactivees": "Disabled",
   "nouvelleCategorie": "New category",
   "modifierCategorie": "Edit category",
   "active": "Enabled",
   "actif": "Enabled",
   "categorieDesactiveeExplication": "A disabled category is hidden when adding transactions, but its history is kept",
-
   "soldeInitialValeur": "Opening balance: {montant}",
   "@soldeInitialValeur": {
     "placeholders": {
-      "montant": {"type": "String"}
+      "montant": {
+        "type": "String"
+      }
     }
   },
   "nouveauCompte": "New account",
@@ -76,13 +68,16 @@
   "objectifEpargne": "Savings goal (optional)",
   "objectifEpargneAide": "Shown as a reference line in the \"Savings trajectory\" chart",
   "compteDesactiveExplication": "A disabled account is hidden when adding transactions, but its history is kept",
-
   "aucuneRecurrence": "No recurring transactions yet",
   "recurrenceSousTitre": "{categorie} · on the {jour} of each month",
   "@recurrenceSousTitre": {
     "placeholders": {
-      "categorie": {"type": "String"},
-      "jour": {"type": "int"}
+      "categorie": {
+        "type": "String"
+      },
+      "jour": {
+        "type": "int"
+      }
     }
   },
   "nouvelleRecurrence": "New recurring transaction",
@@ -91,14 +86,15 @@
   "montantChamp": "Amount",
   "jourDuMois": "Day of month (1-31)",
   "recurrenceDesactiveeExplication": "A disabled recurring transaction no longer generates anything",
-
   "reglages": "Settings",
   "donnees": "Data",
   "export": "Export",
   "exportPartageTexte": "Koudi Na export — {nomFichier}",
   "@exportPartageTexte": {
     "placeholders": {
-      "nomFichier": {"type": "String"}
+      "nomFichier": {
+        "type": "String"
+      }
     }
   },
   "import": "Import",
@@ -109,13 +105,17 @@
   "importResume": "{nombre, plural, =0{No transactions will be added.} =1{1 transaction will be added.} other{{nombre} transactions will be added.}}",
   "@importResume": {
     "placeholders": {
-      "nombre": {"type": "int"}
+      "nombre": {
+        "type": "int"
+      }
     }
   },
   "importIgnorees": "{nombre, plural, =1{1 line skipped (unknown category, account or amount).} other{{nombre} lines skipped (unknown category, account or amount).}}",
   "@importIgnorees": {
     "placeholders": {
-      "nombre": {"type": "int"}
+      "nombre": {
+        "type": "int"
+      }
     }
   },
   "importDoublonsAvertissement": "This import adds the transactions without checking for duplicates: importing the same file twice creates two copies.",
@@ -123,12 +123,13 @@
   "importTermine": "{nombre, plural, =1{1 transaction imported.} other{{nombre} transactions imported.}}",
   "@importTermine": {
     "placeholders": {
-      "nombre": {"type": "int"}
+      "nombre": {
+        "type": "int"
+      }
     }
   },
   "langue": "Language",
   "langueSysteme": "System",
-
   "exporterBouton": "Export",
   "periode": "Period",
   "periodeMoisCourant": "This month",
@@ -138,18 +139,23 @@
   "plageDatesValeur": "{debut} – {fin}",
   "@plageDatesValeur": {
     "placeholders": {
-      "debut": {"type": "String"},
-      "fin": {"type": "String"}
+      "debut": {
+        "type": "String"
+      },
+      "fin": {
+        "type": "String"
+      }
     }
   },
   "format": "Format",
   "genereLe": "Generated on {date}",
   "@genereLe": {
     "placeholders": {
-      "date": {"type": "String"}
+      "date": {
+        "type": "String"
+      }
     }
   },
-
   "analyse": "Insights",
   "evolution12Mois": "12-month trend",
   "repartitionDepensesMois": "Spending breakdown (this month)",
@@ -165,7 +171,9 @@
   "autonomieValeur": "{mois} months",
   "@autonomieValeur": {
     "placeholders": {
-      "mois": {"type": "String"}
+      "mois": {
+        "type": "String"
+      }
     }
   },
   "autonomieDescription": "Number of months of average spending your current savings cover",
@@ -175,7 +183,6 @@
   "depenseMoyJourHistorique": "Avg. spend / day (all time)",
   "projectionFinDeMois": "End-of-month projection",
   "projectionDepasseEntrees": "At the current pace, you will exceed your income this month",
-
   "pasAssezDonnees": "Not enough data",
   "pasAssezDonneesComparer": "Not enough data to compare",
   "pasAssezDonnees90Jours": "Not enough data over the last 90 days",
@@ -185,37 +192,44 @@
   "momentApresMidi": "Afternoon",
   "momentSoir": "Evening",
   "momentNuit": "Night",
-
   "retirerNote": "Remove note",
   "ajouterNote": "Add a note",
   "noteOptionnelle": "Note (optional)",
-
   "obsHausse": "Your {categorie} spending is up {pourcent}% this month.",
   "@obsHausse": {
     "placeholders": {
-      "categorie": {"type": "String"},
-      "pourcent": {"type": "int"}
+      "categorie": {
+        "type": "String"
+      },
+      "pourcent": {
+        "type": "int"
+      }
     }
   },
   "obsDepassement": "At the current pace, you will exceed your income by {montant} before the end of the month.",
   "@obsDepassement": {
     "placeholders": {
-      "montant": {"type": "String"}
+      "montant": {
+        "type": "String"
+      }
     }
   },
   "obsObjectifEpargne": "{mois, plural, other{You have met your savings goal {mois} months in a row.}}",
   "@obsObjectifEpargne": {
     "placeholders": {
-      "mois": {"type": "int"}
+      "mois": {
+        "type": "int"
+      }
     }
   },
   "obsAutonomie": "Your savings now cover {mois} months of spending.",
   "@obsAutonomie": {
     "placeholders": {
-      "mois": {"type": "String"}
+      "mois": {
+        "type": "String"
+      }
     }
   },
-
   "onboardingSuivant": "Continue",
   "onboardingCommencer": "Log my first expense",
   "devise": "Currency",
@@ -230,19 +244,22 @@
   "onboardingCorps2": "{montant}, Transport, saved: before the taxi pulls away. Cash, bank or mobile money, every cent lands in the right place. Nothing to type up tonight.",
   "@onboardingCorps2": {
     "placeholders": {
-      "montant": {"type": "String"}
+      "montant": {
+        "type": "String"
+      }
     }
   },
   "onboardingTitre3": "40/25/35: your income, already split",
   "onboardingCorps3": "Savings 40%, Family 25%, Living 35%: the split is decided before you spend. Each bar shows where you stand against the target. One glance, nothing to calculate.",
   "onboardingTitre4": "Your numbers stay in your pocket",
   "onboardingCorps4": "Everything lives on your phone, no sign-up, no server. Works without signal, at the market or the village. Only you read your numbers. Your first expense is waiting.",
-
   "aPropos": "About",
   "aProposVersion": "Version {version}",
   "@aProposVersion": {
     "placeholders": {
-      "version": {"type": "String"}
+      "version": {
+        "type": "String"
+      }
     }
   },
   "aProposPolitiqueConfidentialite": "Privacy policy",
@@ -250,14 +267,15 @@
   "aProposEditeur": "Koudi Na is published by XNOVA Systems.",
   "aProposHorsLigne": "100% offline: no data leaves your phone, except a CSV export you start yourself.",
   "aProposLienIndisponible": "Couldn't open this link.",
-
   "notificationSectionTitre": "Notifications",
   "notificationRappelQuotidienTitre": "Daily reminder",
   "notificationRappelQuotidienSousTitre": "Pick a time to be reminded to record your expenses.",
   "notificationRappelHeureChoisie": "On at {heure}",
   "@notificationRappelHeureChoisie": {
     "placeholders": {
-      "heure": {"type": "String"}
+      "heure": {
+        "type": "String"
+      }
     }
   },
   "notificationRecapHebdomadaireTitre": "Weekly recap",
@@ -271,10 +289,11 @@
   "notificationDepassementNotifCorps": "The {pilier} pillar is over its target this month.",
   "@notificationDepassementNotifCorps": {
     "placeholders": {
-      "pilier": {"type": "String"}
+      "pilier": {
+        "type": "String"
+      }
     }
   },
-
   "badgesTitre": "Badges",
   "badgesEntreeReglages": "View my badges",
   "badgesDeblocageTitre": "Badge unlocked!",
@@ -282,29 +301,36 @@
   "badgesProgression": "{debloques}/{total} badges unlocked",
   "@badgesProgression": {
     "placeholders": {
-      "debloques": {"type": "int"},
-      "total": {"type": "int"}
+      "debloques": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
     }
   },
-
   "astuceDuJourEtiquette": "Tip of the day",
-
   "serieInfobulle": "{nombre, plural, =1{1 day in a row with at least one entry} other{{nombre} days in a row with at least one entry}}",
   "@serieInfobulle": {
     "placeholders": {
-      "nombre": {"type": "int"}
+      "nombre": {
+        "type": "int"
+      }
     }
   },
   "serieInfobulleVide": "Log an expense today to light up your streak",
-
   "didacticielSuivant": "Next",
   "didacticielTerminer": "Let's go",
   "didacticielPasser": "Skip",
   "didacticielEtape": "{numero}/{total}",
   "@didacticielEtape": {
     "placeholders": {
-      "numero": {"type": "int"},
-      "total": {"type": "int"}
+      "numero": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
     }
   },
   "didacticielMontantTitre": "The amount",
@@ -314,14 +340,176 @@
   "didacticielEnregistrerTitre": "Save",
   "didacticielEnregistrerTexte": "Amount, category, save: three taps and it's logged.",
   "didacticielSoldeTitre": "Your monthly balance",
-  "didacticielSoldeTexte": "Income minus spending, updated with every entry. Green as long as you stay in the positive.",
+  "didacticielSoldeTexte": "This month's income minus spending, updated with every entry.",
   "didacticielSerieTitre": "Your streak",
   "didacticielSerieTexte": "Every day you log at least one expense, the flame lights up and counts the days. Tap it to see where you stand.",
   "didacticielAnalyseTitre": "Insights",
   "didacticielAnalyseTexte": "Your trends over 12 months, the 40/25/35 rule, a tip every day.",
-  "didacticielMoisTitre": "The month",
-  "didacticielMoisTexte": "All your entries for the month, to filter, edit or delete.",
+  "didacticielMoisTitre": "Activity",
+  "didacticielMoisTexte": "All your entries, month by month, to search, filter or edit.",
   "didacticielReglagesTitre": "Settings",
   "didacticielReglagesTexte": "Language, currency, reminders, badges, data export. You can replay this tour from there too.",
-  "reglagesRevoirDidacticiel": "Replay the guided tour"
+  "reglagesRevoirDidacticiel": "Replay the guided tour",
+  "ongletAccueil": "Home",
+  "ongletJournal": "Activity",
+  "boutonAjouterSemantique": "Add an expense or income",
+  "nouvelleOperation": "New entry",
+  "operationDepenseSousTitre": "Meals, transport, data, family…",
+  "operationEntreeSousTitre": "Salary, freelance, gifts…",
+  "fermer": "Close",
+  "saisieDate": "Date: {date}",
+  "@saisieDate": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "aujourdhui": "Today",
+  "saisieResteAvant": "",
+  "saisieResteApres": " left this month",
+  "saisieNote": "Note",
+  "saisieNoteAjouter": "Add a note",
+  "saisieNoteIndice": "e.g. Lunch, taxi, market…",
+  "saisieEnregistrerMontant": "Save {montant}",
+  "@saisieEnregistrerMontant": {
+    "placeholders": {
+      "montant": {
+        "type": "String"
+      }
+    }
+  },
+  "saisieEnregistrerModifs": "Save changes",
+  "saisieMontantVide": "Enter an amount",
+  "saisieEffacer": "Delete last digit",
+  "saisiePlus": "More",
+  "saisieToutesCategories": "All categories",
+  "saisieDepenseEnregistree": "Expense saved",
+  "saisieEntreeEnregistree": "Income saved",
+  "saisieOperationModifiee": "Entry updated",
+  "accueilRythmeDepense": "{pourcent}% of income spent",
+  "@accueilRythmeDepense": {
+    "placeholders": {
+      "pourcent": {
+        "type": "int"
+      }
+    }
+  },
+  "accueilRythmeJour": "day {jour} / {total}",
+  "@accueilRythmeJour": {
+    "placeholders": {
+      "jour": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "accueilEnAvance": "you're ahead",
+  "accueilAttentionRythme": "watch your pace",
+  "accueilMoisTermine": "month closed",
+  "accueilFinDeMois": "End of month",
+  "accueilSousEntrees": "{montant} under your income",
+  "@accueilSousEntrees": {
+    "placeholders": {
+      "montant": {
+        "type": "String"
+      }
+    }
+  },
+  "accueilAuDessusEntrees": "{montant} over your income",
+  "@accueilAuDessusEntrees": {
+    "placeholders": {
+      "montant": {
+        "type": "String"
+      }
+    }
+  },
+  "accueilSansEntree": "no income yet",
+  "accueilMoyenneJour": "Daily average",
+  "accueilHorsEpargne": "{montant} excl. savings",
+  "@accueilHorsEpargne": {
+    "placeholders": {
+      "montant": {
+        "type": "String"
+      }
+    }
+  },
+  "accueilEnveloppes": "Envelopes",
+  "accueilReste": "left",
+  "accueilDepasseDe": "over by",
+  "accueilEnveloppesVide": "Add your first income this month to turn on the 40 · 25 · 35 rule",
+  "accueilAjouterEntree": "Add income",
+  "accueilRecents": "Recent",
+  "toutVoir": "See all",
+  "accueilRecentsVide": "Nothing this month yet. Tap + to start.",
+  "accueilChoisirMois": "Pick a month",
+  "serieJoursCourt": "{nombre, plural, =1{1 day} other{{nombre} days}}",
+  "@serieJoursCourt": {
+    "placeholders": {
+      "nombre": {
+        "type": "int"
+      }
+    }
+  },
+  "journalRechercher": "Search",
+  "journalRechercheIndice": "Note, category, account, amount…",
+  "moisPrecedent": "Previous month",
+  "moisSuivant": "Next month",
+  "filtreTout": "All",
+  "filtres": "Filters",
+  "journalVide": "Nothing this month. Tap + to add an entry.",
+  "journalAucunResultat": "No results",
+  "periodeMois": "Month",
+  "periode6Mois": "6 months",
+  "periodeAnnee": "Year",
+  "projectionSurtitre": "Projection",
+  "projectionEnCours": "At this pace, you'll end {mois} with about ",
+  "@projectionEnCours": {
+    "placeholders": {
+      "mois": {
+        "type": "String"
+      }
+    }
+  },
+  "projectionPasse": "In {mois}, you spent ",
+  "@projectionPasse": {
+    "placeholders": {
+      "mois": {
+        "type": "String"
+      }
+    }
+  },
+  "projectionDeDepenses": " in spending",
+  "projectionSoit": ", which is ",
+  "projectionSansDepense": "No spending in {mois} so far.",
+  "@projectionSansDepense": {
+    "placeholders": {
+      "mois": {
+        "type": "String"
+      }
+    }
+  },
+  "entreesEtDepenses": "Income and spending",
+  "ouVaLArgent": "Where the money goes · {periode}",
+  "@ouVaLArgent": {
+    "placeholders": {
+      "periode": {
+        "type": "String"
+      }
+    }
+  },
+  "semaineCourte": "W{numero}",
+  "@semaineCourte": {
+    "placeholders": {
+      "numero": {
+        "type": "int"
+      }
+    }
+  },
+  "analyseJoursCouteux": "Costliest days",
+  "analyseVide": "Add a few entries to see your trends here.",
+  "didacticielPlusTitre": "The + button",
+  "didacticielPlusTexte": "Tap it to log an expense or income. Press and hold to go straight to an expense."
 }

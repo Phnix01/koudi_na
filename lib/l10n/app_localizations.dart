@@ -1211,7 +1211,7 @@ abstract class AppLocalizations {
   /// No description provided for @didacticielSoldeTexte.
   ///
   /// In fr, this message translates to:
-  /// **'Entrées moins dépenses, mis à jour à chaque saisie. Vert tant que tu restes dans le positif.'**
+  /// **'Entrées moins dépenses du mois, mis à jour à chaque opération.'**
   String get didacticielSoldeTexte;
 
   /// No description provided for @didacticielSerieTitre.
@@ -1241,13 +1241,13 @@ abstract class AppLocalizations {
   /// No description provided for @didacticielMoisTitre.
   ///
   /// In fr, this message translates to:
-  /// **'Le mois'**
+  /// **'Journal'**
   String get didacticielMoisTitre;
 
   /// No description provided for @didacticielMoisTexte.
   ///
   /// In fr, this message translates to:
-  /// **'Toutes tes saisies du mois, à filtrer, corriger ou supprimer.'**
+  /// **'Toutes tes opérations, mois par mois, à rechercher, filtrer ou corriger.'**
   String get didacticielMoisTexte;
 
   /// No description provided for @didacticielReglagesTitre.
@@ -1267,6 +1267,414 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'Revoir la visite guidée'**
   String get reglagesRevoirDidacticiel;
+
+  /// No description provided for @ongletAccueil.
+  ///
+  /// In fr, this message translates to:
+  /// **'Accueil'**
+  String get ongletAccueil;
+
+  /// No description provided for @ongletJournal.
+  ///
+  /// In fr, this message translates to:
+  /// **'Journal'**
+  String get ongletJournal;
+
+  /// No description provided for @boutonAjouterSemantique.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ajouter une dépense ou une entrée'**
+  String get boutonAjouterSemantique;
+
+  /// No description provided for @nouvelleOperation.
+  ///
+  /// In fr, this message translates to:
+  /// **'Nouvelle opération'**
+  String get nouvelleOperation;
+
+  /// No description provided for @operationDepenseSousTitre.
+  ///
+  /// In fr, this message translates to:
+  /// **'Repas, transport, data, famille…'**
+  String get operationDepenseSousTitre;
+
+  /// No description provided for @operationEntreeSousTitre.
+  ///
+  /// In fr, this message translates to:
+  /// **'Salaire, freelance, don reçu…'**
+  String get operationEntreeSousTitre;
+
+  /// No description provided for @fermer.
+  ///
+  /// In fr, this message translates to:
+  /// **'Fermer'**
+  String get fermer;
+
+  /// No description provided for @saisieDate.
+  ///
+  /// In fr, this message translates to:
+  /// **'Date : {date}'**
+  String saisieDate(String date);
+
+  /// No description provided for @aujourdhui.
+  ///
+  /// In fr, this message translates to:
+  /// **'Aujourd\'hui'**
+  String get aujourdhui;
+
+  /// No description provided for @saisieResteAvant.
+  ///
+  /// In fr, this message translates to:
+  /// **'il te restera '**
+  String get saisieResteAvant;
+
+  /// No description provided for @saisieResteApres.
+  ///
+  /// In fr, this message translates to:
+  /// **''**
+  String get saisieResteApres;
+
+  /// No description provided for @saisieNote.
+  ///
+  /// In fr, this message translates to:
+  /// **'Note'**
+  String get saisieNote;
+
+  /// No description provided for @saisieNoteAjouter.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ajouter une note'**
+  String get saisieNoteAjouter;
+
+  /// No description provided for @saisieNoteIndice.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ex. Déjeuner, taxi, marché…'**
+  String get saisieNoteIndice;
+
+  /// No description provided for @saisieEnregistrerMontant.
+  ///
+  /// In fr, this message translates to:
+  /// **'Enregistrer {montant}'**
+  String saisieEnregistrerMontant(String montant);
+
+  /// No description provided for @saisieEnregistrerModifs.
+  ///
+  /// In fr, this message translates to:
+  /// **'Enregistrer les modifications'**
+  String get saisieEnregistrerModifs;
+
+  /// No description provided for @saisieMontantVide.
+  ///
+  /// In fr, this message translates to:
+  /// **'Saisis un montant'**
+  String get saisieMontantVide;
+
+  /// No description provided for @saisieEffacer.
+  ///
+  /// In fr, this message translates to:
+  /// **'Effacer le dernier chiffre'**
+  String get saisieEffacer;
+
+  /// No description provided for @saisiePlus.
+  ///
+  /// In fr, this message translates to:
+  /// **'Plus'**
+  String get saisiePlus;
+
+  /// No description provided for @saisieToutesCategories.
+  ///
+  /// In fr, this message translates to:
+  /// **'Toutes les catégories'**
+  String get saisieToutesCategories;
+
+  /// No description provided for @saisieDepenseEnregistree.
+  ///
+  /// In fr, this message translates to:
+  /// **'Dépense enregistrée'**
+  String get saisieDepenseEnregistree;
+
+  /// No description provided for @saisieEntreeEnregistree.
+  ///
+  /// In fr, this message translates to:
+  /// **'Entrée enregistrée'**
+  String get saisieEntreeEnregistree;
+
+  /// No description provided for @saisieOperationModifiee.
+  ///
+  /// In fr, this message translates to:
+  /// **'Opération modifiée'**
+  String get saisieOperationModifiee;
+
+  /// No description provided for @accueilRythmeDepense.
+  ///
+  /// In fr, this message translates to:
+  /// **'{pourcent} % des entrées dépensées'**
+  String accueilRythmeDepense(int pourcent);
+
+  /// No description provided for @accueilRythmeJour.
+  ///
+  /// In fr, this message translates to:
+  /// **'jour {jour} / {total}'**
+  String accueilRythmeJour(int jour, int total);
+
+  /// No description provided for @accueilEnAvance.
+  ///
+  /// In fr, this message translates to:
+  /// **'tu es en avance'**
+  String get accueilEnAvance;
+
+  /// No description provided for @accueilAttentionRythme.
+  ///
+  /// In fr, this message translates to:
+  /// **'attention au rythme'**
+  String get accueilAttentionRythme;
+
+  /// No description provided for @accueilMoisTermine.
+  ///
+  /// In fr, this message translates to:
+  /// **'mois terminé'**
+  String get accueilMoisTermine;
+
+  /// No description provided for @accueilFinDeMois.
+  ///
+  /// In fr, this message translates to:
+  /// **'Fin de mois'**
+  String get accueilFinDeMois;
+
+  /// No description provided for @accueilSousEntrees.
+  ///
+  /// In fr, this message translates to:
+  /// **'{montant} sous tes entrées'**
+  String accueilSousEntrees(String montant);
+
+  /// No description provided for @accueilAuDessusEntrees.
+  ///
+  /// In fr, this message translates to:
+  /// **'{montant} au-dessus de tes entrées'**
+  String accueilAuDessusEntrees(String montant);
+
+  /// No description provided for @accueilSansEntree.
+  ///
+  /// In fr, this message translates to:
+  /// **'pas encore d\'entrée'**
+  String get accueilSansEntree;
+
+  /// No description provided for @accueilMoyenneJour.
+  ///
+  /// In fr, this message translates to:
+  /// **'Moyenne par jour'**
+  String get accueilMoyenneJour;
+
+  /// No description provided for @accueilHorsEpargne.
+  ///
+  /// In fr, this message translates to:
+  /// **'{montant} hors épargne'**
+  String accueilHorsEpargne(String montant);
+
+  /// No description provided for @accueilEnveloppes.
+  ///
+  /// In fr, this message translates to:
+  /// **'Enveloppes'**
+  String get accueilEnveloppes;
+
+  /// No description provided for @accueilReste.
+  ///
+  /// In fr, this message translates to:
+  /// **'reste'**
+  String get accueilReste;
+
+  /// No description provided for @accueilDepasseDe.
+  ///
+  /// In fr, this message translates to:
+  /// **'dépassé de'**
+  String get accueilDepasseDe;
+
+  /// No description provided for @accueilEnveloppesVide.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ajoute ta première entrée du mois pour activer la règle 40 · 25 · 35'**
+  String get accueilEnveloppesVide;
+
+  /// No description provided for @accueilAjouterEntree.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ajouter une entrée'**
+  String get accueilAjouterEntree;
+
+  /// No description provided for @accueilRecents.
+  ///
+  /// In fr, this message translates to:
+  /// **'Récents'**
+  String get accueilRecents;
+
+  /// No description provided for @toutVoir.
+  ///
+  /// In fr, this message translates to:
+  /// **'Tout voir'**
+  String get toutVoir;
+
+  /// No description provided for @accueilRecentsVide.
+  ///
+  /// In fr, this message translates to:
+  /// **'Aucune opération ce mois-ci. Touche + pour commencer.'**
+  String get accueilRecentsVide;
+
+  /// No description provided for @accueilChoisirMois.
+  ///
+  /// In fr, this message translates to:
+  /// **'Choisir un mois'**
+  String get accueilChoisirMois;
+
+  /// No description provided for @serieJoursCourt.
+  ///
+  /// In fr, this message translates to:
+  /// **'{nombre, plural, =1{1 jour} other{{nombre} jours}}'**
+  String serieJoursCourt(int nombre);
+
+  /// No description provided for @journalRechercher.
+  ///
+  /// In fr, this message translates to:
+  /// **'Rechercher'**
+  String get journalRechercher;
+
+  /// No description provided for @journalRechercheIndice.
+  ///
+  /// In fr, this message translates to:
+  /// **'Note, catégorie, compte, montant…'**
+  String get journalRechercheIndice;
+
+  /// No description provided for @moisPrecedent.
+  ///
+  /// In fr, this message translates to:
+  /// **'Mois précédent'**
+  String get moisPrecedent;
+
+  /// No description provided for @moisSuivant.
+  ///
+  /// In fr, this message translates to:
+  /// **'Mois suivant'**
+  String get moisSuivant;
+
+  /// No description provided for @filtreTout.
+  ///
+  /// In fr, this message translates to:
+  /// **'Tout'**
+  String get filtreTout;
+
+  /// No description provided for @filtres.
+  ///
+  /// In fr, this message translates to:
+  /// **'Filtres'**
+  String get filtres;
+
+  /// No description provided for @journalVide.
+  ///
+  /// In fr, this message translates to:
+  /// **'Rien ce mois-ci. Touche + pour noter une opération.'**
+  String get journalVide;
+
+  /// No description provided for @journalAucunResultat.
+  ///
+  /// In fr, this message translates to:
+  /// **'Aucun résultat'**
+  String get journalAucunResultat;
+
+  /// No description provided for @periodeMois.
+  ///
+  /// In fr, this message translates to:
+  /// **'Mois'**
+  String get periodeMois;
+
+  /// No description provided for @periode6Mois.
+  ///
+  /// In fr, this message translates to:
+  /// **'6 mois'**
+  String get periode6Mois;
+
+  /// No description provided for @periodeAnnee.
+  ///
+  /// In fr, this message translates to:
+  /// **'Année'**
+  String get periodeAnnee;
+
+  /// No description provided for @projectionSurtitre.
+  ///
+  /// In fr, this message translates to:
+  /// **'Projection'**
+  String get projectionSurtitre;
+
+  /// No description provided for @projectionEnCours.
+  ///
+  /// In fr, this message translates to:
+  /// **'Au rythme actuel, tu termineras {mois} à environ '**
+  String projectionEnCours(String mois);
+
+  /// No description provided for @projectionPasse.
+  ///
+  /// In fr, this message translates to:
+  /// **'En {mois}, tu as dépensé '**
+  String projectionPasse(String mois);
+
+  /// No description provided for @projectionDeDepenses.
+  ///
+  /// In fr, this message translates to:
+  /// **' de dépenses'**
+  String get projectionDeDepenses;
+
+  /// No description provided for @projectionSoit.
+  ///
+  /// In fr, this message translates to:
+  /// **', soit '**
+  String get projectionSoit;
+
+  /// No description provided for @projectionSansDepense.
+  ///
+  /// In fr, this message translates to:
+  /// **'Aucune dépense en {mois} pour l\'instant.'**
+  String projectionSansDepense(String mois);
+
+  /// No description provided for @entreesEtDepenses.
+  ///
+  /// In fr, this message translates to:
+  /// **'Entrées et dépenses'**
+  String get entreesEtDepenses;
+
+  /// No description provided for @ouVaLArgent.
+  ///
+  /// In fr, this message translates to:
+  /// **'Où va l\'argent · {periode}'**
+  String ouVaLArgent(String periode);
+
+  /// No description provided for @semaineCourte.
+  ///
+  /// In fr, this message translates to:
+  /// **'S{numero}'**
+  String semaineCourte(int numero);
+
+  /// No description provided for @analyseJoursCouteux.
+  ///
+  /// In fr, this message translates to:
+  /// **'Les jours qui coûtent'**
+  String get analyseJoursCouteux;
+
+  /// No description provided for @analyseVide.
+  ///
+  /// In fr, this message translates to:
+  /// **'Note quelques opérations pour voir tes tendances ici.'**
+  String get analyseVide;
+
+  /// No description provided for @didacticielPlusTitre.
+  ///
+  /// In fr, this message translates to:
+  /// **'Le bouton +'**
+  String get didacticielPlusTitre;
+
+  /// No description provided for @didacticielPlusTexte.
+  ///
+  /// In fr, this message translates to:
+  /// **'Touche-le pour noter une dépense ou une entrée. Garde le doigt appuyé pour aller droit à une dépense.'**
+  String get didacticielPlusTexte;
 }
 
 class _AppLocalizationsDelegate

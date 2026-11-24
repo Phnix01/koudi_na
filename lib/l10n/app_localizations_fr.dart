@@ -659,7 +659,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get didacticielSoldeTexte =>
-      'Entrées moins dépenses, mis à jour à chaque saisie. Vert tant que tu restes dans le positif.';
+      'Entrées moins dépenses du mois, mis à jour à chaque opération.';
 
   @override
   String get didacticielSerieTitre => 'Ta série';
@@ -676,11 +676,11 @@ class AppLocalizationsFr extends AppLocalizations {
       'Tes tendances sur 12 mois, la règle 40/25/35, une astuce par jour.';
 
   @override
-  String get didacticielMoisTitre => 'Le mois';
+  String get didacticielMoisTitre => 'Journal';
 
   @override
   String get didacticielMoisTexte =>
-      'Toutes tes saisies du mois, à filtrer, corriger ou supprimer.';
+      'Toutes tes opérations, mois par mois, à rechercher, filtrer ou corriger.';
 
   @override
   String get didacticielReglagesTitre => 'Réglages';
@@ -691,4 +691,245 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get reglagesRevoirDidacticiel => 'Revoir la visite guidée';
+
+  @override
+  String get ongletAccueil => 'Accueil';
+
+  @override
+  String get ongletJournal => 'Journal';
+
+  @override
+  String get boutonAjouterSemantique => 'Ajouter une dépense ou une entrée';
+
+  @override
+  String get nouvelleOperation => 'Nouvelle opération';
+
+  @override
+  String get operationDepenseSousTitre => 'Repas, transport, data, famille…';
+
+  @override
+  String get operationEntreeSousTitre => 'Salaire, freelance, don reçu…';
+
+  @override
+  String get fermer => 'Fermer';
+
+  @override
+  String saisieDate(String date) {
+    return 'Date : $date';
+  }
+
+  @override
+  String get aujourdhui => 'Aujourd\'hui';
+
+  @override
+  String get saisieResteAvant => 'il te restera ';
+
+  @override
+  String get saisieResteApres => '';
+
+  @override
+  String get saisieNote => 'Note';
+
+  @override
+  String get saisieNoteAjouter => 'Ajouter une note';
+
+  @override
+  String get saisieNoteIndice => 'Ex. Déjeuner, taxi, marché…';
+
+  @override
+  String saisieEnregistrerMontant(String montant) {
+    return 'Enregistrer $montant';
+  }
+
+  @override
+  String get saisieEnregistrerModifs => 'Enregistrer les modifications';
+
+  @override
+  String get saisieMontantVide => 'Saisis un montant';
+
+  @override
+  String get saisieEffacer => 'Effacer le dernier chiffre';
+
+  @override
+  String get saisiePlus => 'Plus';
+
+  @override
+  String get saisieToutesCategories => 'Toutes les catégories';
+
+  @override
+  String get saisieDepenseEnregistree => 'Dépense enregistrée';
+
+  @override
+  String get saisieEntreeEnregistree => 'Entrée enregistrée';
+
+  @override
+  String get saisieOperationModifiee => 'Opération modifiée';
+
+  @override
+  String accueilRythmeDepense(int pourcent) {
+    return '$pourcent % des entrées dépensées';
+  }
+
+  @override
+  String accueilRythmeJour(int jour, int total) {
+    return 'jour $jour / $total';
+  }
+
+  @override
+  String get accueilEnAvance => 'tu es en avance';
+
+  @override
+  String get accueilAttentionRythme => 'attention au rythme';
+
+  @override
+  String get accueilMoisTermine => 'mois terminé';
+
+  @override
+  String get accueilFinDeMois => 'Fin de mois';
+
+  @override
+  String accueilSousEntrees(String montant) {
+    return '$montant sous tes entrées';
+  }
+
+  @override
+  String accueilAuDessusEntrees(String montant) {
+    return '$montant au-dessus de tes entrées';
+  }
+
+  @override
+  String get accueilSansEntree => 'pas encore d\'entrée';
+
+  @override
+  String get accueilMoyenneJour => 'Moyenne par jour';
+
+  @override
+  String accueilHorsEpargne(String montant) {
+    return '$montant hors épargne';
+  }
+
+  @override
+  String get accueilEnveloppes => 'Enveloppes';
+
+  @override
+  String get accueilReste => 'reste';
+
+  @override
+  String get accueilDepasseDe => 'dépassé de';
+
+  @override
+  String get accueilEnveloppesVide =>
+      'Ajoute ta première entrée du mois pour activer la règle 40 · 25 · 35';
+
+  @override
+  String get accueilAjouterEntree => 'Ajouter une entrée';
+
+  @override
+  String get accueilRecents => 'Récents';
+
+  @override
+  String get toutVoir => 'Tout voir';
+
+  @override
+  String get accueilRecentsVide =>
+      'Aucune opération ce mois-ci. Touche + pour commencer.';
+
+  @override
+  String get accueilChoisirMois => 'Choisir un mois';
+
+  @override
+  String serieJoursCourt(int nombre) {
+    String _temp0 = intl.Intl.pluralLogic(
+      nombre,
+      locale: localeName,
+      other: '$nombre jours',
+      one: '1 jour',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get journalRechercher => 'Rechercher';
+
+  @override
+  String get journalRechercheIndice => 'Note, catégorie, compte, montant…';
+
+  @override
+  String get moisPrecedent => 'Mois précédent';
+
+  @override
+  String get moisSuivant => 'Mois suivant';
+
+  @override
+  String get filtreTout => 'Tout';
+
+  @override
+  String get filtres => 'Filtres';
+
+  @override
+  String get journalVide =>
+      'Rien ce mois-ci. Touche + pour noter une opération.';
+
+  @override
+  String get journalAucunResultat => 'Aucun résultat';
+
+  @override
+  String get periodeMois => 'Mois';
+
+  @override
+  String get periode6Mois => '6 mois';
+
+  @override
+  String get periodeAnnee => 'Année';
+
+  @override
+  String get projectionSurtitre => 'Projection';
+
+  @override
+  String projectionEnCours(String mois) {
+    return 'Au rythme actuel, tu termineras $mois à environ ';
+  }
+
+  @override
+  String projectionPasse(String mois) {
+    return 'En $mois, tu as dépensé ';
+  }
+
+  @override
+  String get projectionDeDepenses => ' de dépenses';
+
+  @override
+  String get projectionSoit => ', soit ';
+
+  @override
+  String projectionSansDepense(String mois) {
+    return 'Aucune dépense en $mois pour l\'instant.';
+  }
+
+  @override
+  String get entreesEtDepenses => 'Entrées et dépenses';
+
+  @override
+  String ouVaLArgent(String periode) {
+    return 'Où va l\'argent · $periode';
+  }
+
+  @override
+  String semaineCourte(int numero) {
+    return 'S$numero';
+  }
+
+  @override
+  String get analyseJoursCouteux => 'Les jours qui coûtent';
+
+  @override
+  String get analyseVide =>
+      'Note quelques opérations pour voir tes tendances ici.';
+
+  @override
+  String get didacticielPlusTitre => 'Le bouton +';
+
+  @override
+  String get didacticielPlusTexte =>
+      'Touche-le pour noter une dépense ou une entrée. Garde le doigt appuyé pour aller droit à une dépense.';
 }

@@ -62,6 +62,24 @@ class CaptureFormNotifier extends StateNotifier<CaptureFormState> {
         ),
       );
 
+  /// Nouvelle opération de l'écran Saisie : type choisi dans le sheet
+  /// « Nouvelle opération », dernière catégorie et dernier compte de ce
+  /// type déjà sélectionnés (brief §4.3).
+  CaptureFormNotifier.nouvelle({
+    required TypeMouvement type,
+    required String? categorieId,
+    required String compteId,
+  }) : super(
+         CaptureFormState(
+           type: type,
+           montantSaisi: '',
+           categorieId: categorieId,
+           compteId: compteId,
+           note: '',
+           date: DateTime.now(),
+         ),
+       );
+
   /// Pré-remplit le formulaire à partir d'une transaction existante,
   /// pour l'écran d'édition. Le champ `note` de [Transaction] est
   /// `String?` (jamais obligatoire, section 2.3) mais celui du
@@ -90,6 +108,15 @@ class CaptureFormNotifier extends StateNotifier<CaptureFormState> {
     }
     if (state.montantSaisi.length + chiffre.length > _chiffresMax) return;
     state = state.copyWith(montantSaisi: state.montantSaisi + chiffre);
+  }
+
+  void effacerMontant() => state = state.copyWith(montantSaisi: '');
+
+  /// Change de type en présélectionnant la catégorie donnée (la dernière
+  /// utilisée pour ce type), sans perdre le montant déjà tapé.
+  void changerType(TypeMouvement type, String? categorieId) {
+    state = state.copyWith(type: type, effacerCategorie: true);
+    if (categorieId != null) state = state.copyWith(categorieId: categorieId);
   }
 
   void effacerDernierChiffre() {

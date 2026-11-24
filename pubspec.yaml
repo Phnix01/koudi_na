@@ -106,6 +106,10 @@ dependencies:
   timezone: ^0.11.2
   # Résout le nom IANA du fuseau horaire de l'appareil pour `timezone`.
   flutter_timezone: ^5.1.1
+  # Transition « container transform » (package officiel de l'équipe
+  # Flutter, pur Dart) : la ligne Dépense/Entrée du sheet « Nouvelle
+  # opération » s'agrandit jusqu'à devenir l'écran de saisie.
+  animations: ^2.2.0
 
 dev_dependencies:
   flutter_test:

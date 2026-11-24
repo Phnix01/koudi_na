@@ -2,65 +2,67 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 
-import '../../core/theme/app_colors.dart';
+import '../../core/theme/koudi_tokens.dart';
 import '../../l10n/l10n.dart';
 import '../../logic/providers/repositories_providers.dart';
+import '../navigation/route_animee.dart';
+import '../screens/badges_screen.dart';
 
-/// Série de jours actifs, discrète dans l'en-tête de l'écran Capture :
-/// flamme grise au repos, dorée avec le nombre de jours dès qu'une
-/// série existe. Rien d'imposé : un toucher explique ce qu'elle compte.
+/// Pastille de la série en haut de l'Accueil (brief §4.1) : flamme et
+/// nombre de jours consécutifs avec au moins une saisie. Un toucher
+/// ouvre les badges ; le nombre fait un petit « pop » quand il augmente.
 class IndicateurSerie extends ConsumerWidget {
   const IndicateurSerie({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final gamification = ref.watch(gamificationRepositoryProvider);
+    final t = context.tokens;
     final l10n = context.l10n;
+    final gamification = ref.watch(gamificationRepositoryProvider);
 
     return ValueListenableBuilder(
       valueListenable: gamification.listenable(),
       builder: (context, _, _) {
         final serie = gamification.serieCourante;
         final active = serie > 0;
-
-        return Tooltip(
-          message: active ? l10n.serieInfobulle(serie) : l10n.serieInfobulleVide,
-          triggerMode: TooltipTriggerMode.tap,
-          showDuration: const Duration(seconds: 3),
-          child: ConstrainedBox(
-            constraints: const BoxConstraints(minWidth: 48, minHeight: 48),
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                PhosphorIcon(
-                  active ? PhosphorIconsFill.flame : PhosphorIconsRegular.flame,
-                  size: 20,
-                  color: active
-                      ? AppColors.accent
-                      : AppColors.textMuted.withValues(alpha: 0.6),
-                ),
-                if (active) ...[
-                  const SizedBox(width: 4),
-                  // La clé ne fait rejouer le "pop" que quand le nombre
-                  // change, pas à chaque notification de la Box (badges,
-                  // alertes de dépassement y sont aussi stockés).
+        return Semantics(
+          button: true,
+          label: active ? l10n.serieInfobulle(serie) : l10n.serieInfobulleVide,
+          excludeSemantics: true,
+          child: GestureDetector(
+            onTap: () => Navigator.of(context).push(routeAnimee(const BadgesScreen())),
+            child: Container(
+              height: 32,
+              padding: const EdgeInsets.symmetric(horizontal: 11),
+              decoration: BoxDecoration(
+                color: t.surface,
+                borderRadius: BorderRadius.circular(16),
+                border: Border.all(color: t.line),
+              ),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Icon(
+                    active ? PhosphorIconsFill.flame : PhosphorIconsRegular.flame,
+                    size: 15,
+                    color: active ? t.streak : t.muted,
+                  ),
+                  const SizedBox(width: 5),
                   AnimatedSwitcher(
-                    duration: const Duration(milliseconds: 450),
-                    switchInCurve: Curves.elasticOut,
-                    transitionBuilder: (child, animation) =>
-                        ScaleTransition(scale: animation, child: child),
+                    duration: const Duration(milliseconds: 420),
+                    switchInCurve: Curves.easeOutBack,
+                    transitionBuilder: (child, a) => ScaleTransition(scale: a, child: child),
                     child: Text(
-                      '$serie',
+                      l10n.serieJoursCourt(serie),
                       key: ValueKey(serie),
-                      style: Theme.of(context).textTheme.labelLarge?.copyWith(
-                        color: AppColors.accent,
-                        fontWeight: FontWeight.w700,
+                      style: Theme.of(context).textTheme.labelMedium?.copyWith(
+                        fontWeight: FontWeight.w600,
+                        color: active ? t.ink2 : t.muted,
                       ),
                     ),
                   ),
                 ],
-              ],
+              ),
             ),
           ),
         );

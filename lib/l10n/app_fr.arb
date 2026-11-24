@@ -1,8 +1,6 @@
 {
   "@@locale": "fr",
-
   "appTitre": "Koudi Na",
-
   "enregistrer": "Enregistrer",
   "enregistrerModifications": "Enregistrer les modifications",
   "annuler": "Annuler",
@@ -14,7 +12,6 @@
   "nouveau": "Nouveau",
   "total": "Total",
   "objectif": "Objectif",
-
   "depense": "Dépense",
   "entree": "Entrée",
   "depenses": "Dépenses",
@@ -30,22 +27,18 @@
   "libelle": "Libellé",
   "icone": "Icône",
   "couleur": "Couleur",
-
   "pilierEpargne": "Épargne",
   "pilierFamille": "Famille",
   "pilierVie": "Vie",
   "regle402535": "Règle 40/25/35",
   "pilierRegle": "Pilier (règle 40/25/35)",
-
   "typeCompteEspeces": "Espèces",
   "typeCompteBanque": "Banque",
   "typeCompteMobileMoney": "Mobile Money",
   "typeCompteEpargne": "Épargne",
-
   "tooltipAnalyse": "Analyse",
   "tooltipVoirLeMois": "Voir le mois",
   "tooltipReglages": "Réglages",
-
   "aujourdHui": "Aujourd'hui",
   "hier": "Hier",
   "aucuneTransactionFiltres": "Aucune transaction pour ces filtres",
@@ -53,21 +46,20 @@
   "transactionSupprimee": "Transaction supprimée",
   "categorieSupprimee": "Catégorie supprimée",
   "compteSupprime": "Compte supprimé",
-
   "supprimerTransactionTitre": "Supprimer cette transaction ?",
   "actionIrreversible": "Cette action est irréversible.",
-
   "desactivees": "Désactivées",
   "nouvelleCategorie": "Nouvelle catégorie",
   "modifierCategorie": "Modifier la catégorie",
   "active": "Active",
   "actif": "Actif",
   "categorieDesactiveeExplication": "Une catégorie désactivée disparaît de la saisie, sans effacer son historique",
-
   "soldeInitialValeur": "Solde initial : {montant}",
   "@soldeInitialValeur": {
     "placeholders": {
-      "montant": {"type": "String"}
+      "montant": {
+        "type": "String"
+      }
     }
   },
   "nouveauCompte": "Nouveau compte",
@@ -76,13 +68,16 @@
   "objectifEpargne": "Objectif d'épargne (optionnel)",
   "objectifEpargneAide": "Utilisé comme ligne de repère dans le graphique « Trajectoire d'épargne »",
   "compteDesactiveExplication": "Un compte désactivé disparaît de la saisie, sans effacer son historique",
-
   "aucuneRecurrence": "Aucune récurrence pour l'instant",
   "recurrenceSousTitre": "{categorie} · le {jour} de chaque mois",
   "@recurrenceSousTitre": {
     "placeholders": {
-      "categorie": {"type": "String"},
-      "jour": {"type": "int"}
+      "categorie": {
+        "type": "String"
+      },
+      "jour": {
+        "type": "int"
+      }
     }
   },
   "nouvelleRecurrence": "Nouvelle récurrence",
@@ -91,14 +86,15 @@
   "montantChamp": "Montant",
   "jourDuMois": "Jour du mois (1-31)",
   "recurrenceDesactiveeExplication": "Une récurrence désactivée ne génère plus de transaction",
-
   "reglages": "Réglages",
   "donnees": "Données",
   "export": "Export",
   "exportPartageTexte": "Export Koudi Na — {nomFichier}",
   "@exportPartageTexte": {
     "placeholders": {
-      "nomFichier": {"type": "String"}
+      "nomFichier": {
+        "type": "String"
+      }
     }
   },
   "import": "Import",
@@ -109,13 +105,17 @@
   "importResume": "{nombre, plural, =0{Aucune transaction ne sera ajoutée.} =1{1 transaction sera ajoutée.} other{{nombre} transactions seront ajoutées.}}",
   "@importResume": {
     "placeholders": {
-      "nombre": {"type": "int"}
+      "nombre": {
+        "type": "int"
+      }
     }
   },
   "importIgnorees": "{nombre, plural, =1{1 ligne ignorée (catégorie, compte ou montant introuvable).} other{{nombre} lignes ignorées (catégorie, compte ou montant introuvable).}}",
   "@importIgnorees": {
     "placeholders": {
-      "nombre": {"type": "int"}
+      "nombre": {
+        "type": "int"
+      }
     }
   },
   "importDoublonsAvertissement": "Cet import ajoute ces transactions sans vérifier les doublons : réimporter le même fichier deux fois crée deux copies.",
@@ -123,12 +123,13 @@
   "importTermine": "{nombre, plural, =1{1 transaction importée.} other{{nombre} transactions importées.}}",
   "@importTermine": {
     "placeholders": {
-      "nombre": {"type": "int"}
+      "nombre": {
+        "type": "int"
+      }
     }
   },
   "langue": "Langue",
   "langueSysteme": "Système",
-
   "exporterBouton": "Exporter",
   "periode": "Période",
   "periodeMoisCourant": "Ce mois",
@@ -138,18 +139,23 @@
   "plageDatesValeur": "{debut} – {fin}",
   "@plageDatesValeur": {
     "placeholders": {
-      "debut": {"type": "String"},
-      "fin": {"type": "String"}
+      "debut": {
+        "type": "String"
+      },
+      "fin": {
+        "type": "String"
+      }
     }
   },
   "format": "Format",
   "genereLe": "Généré le {date}",
   "@genereLe": {
     "placeholders": {
-      "date": {"type": "String"}
+      "date": {
+        "type": "String"
+      }
     }
   },
-
   "analyse": "Analyse",
   "evolution12Mois": "Évolution sur 12 mois",
   "repartitionDepensesMois": "Répartition des dépenses (ce mois)",
@@ -165,7 +171,9 @@
   "autonomieValeur": "{mois} mois",
   "@autonomieValeur": {
     "placeholders": {
-      "mois": {"type": "String"}
+      "mois": {
+        "type": "String"
+      }
     }
   },
   "autonomieDescription": "Nombre de mois de dépenses moyennes que couvre ton épargne actuelle",
@@ -175,7 +183,6 @@
   "depenseMoyJourHistorique": "Dépense moy. / jour (historique)",
   "projectionFinDeMois": "Projection fin de mois",
   "projectionDepasseEntrees": "Au rythme actuel, tu dépasseras tes entrées ce mois-ci",
-
   "pasAssezDonnees": "Pas assez de données",
   "pasAssezDonneesComparer": "Pas assez de données pour comparer",
   "pasAssezDonnees90Jours": "Pas assez de données sur les 90 derniers jours",
@@ -185,37 +192,44 @@
   "momentApresMidi": "Aprèm",
   "momentSoir": "Soir",
   "momentNuit": "Nuit",
-
   "retirerNote": "Retirer la note",
   "ajouterNote": "Ajouter une note",
   "noteOptionnelle": "Note (optionnel)",
-
   "obsHausse": "Tes dépenses en {categorie} ont augmenté de {pourcent} % ce mois-ci.",
   "@obsHausse": {
     "placeholders": {
-      "categorie": {"type": "String"},
-      "pourcent": {"type": "int"}
+      "categorie": {
+        "type": "String"
+      },
+      "pourcent": {
+        "type": "int"
+      }
     }
   },
   "obsDepassement": "Au rythme actuel, tu dépasseras tes entrées de {montant} d'ici la fin du mois.",
   "@obsDepassement": {
     "placeholders": {
-      "montant": {"type": "String"}
+      "montant": {
+        "type": "String"
+      }
     }
   },
   "obsObjectifEpargne": "{mois, plural, other{Tu as respecté ton objectif d'épargne {mois} mois de suite.}}",
   "@obsObjectifEpargne": {
     "placeholders": {
-      "mois": {"type": "int"}
+      "mois": {
+        "type": "int"
+      }
     }
   },
   "obsAutonomie": "Ton épargne couvre désormais {mois} mois de dépenses.",
   "@obsAutonomie": {
     "placeholders": {
-      "mois": {"type": "String"}
+      "mois": {
+        "type": "String"
+      }
     }
   },
-
   "onboardingSuivant": "Continuer",
   "onboardingCommencer": "Noter ma première dépense",
   "devise": "Devise",
@@ -230,19 +244,22 @@
   "onboardingCorps2": "{montant}, Transport, enregistré : avant que le taxi redémarre. Cash, banque ou mobile money, chaque centime atterrit au bon endroit. Rien à ressaisir le soir.",
   "@onboardingCorps2": {
     "placeholders": {
-      "montant": {"type": "String"}
+      "montant": {
+        "type": "String"
+      }
     }
   },
   "onboardingTitre3": "40/25/35 : ton revenu déjà réparti",
   "onboardingCorps3": "Épargne 40 %, Famille 25 %, Vie 35 % : la répartition est décidée d'avance. Chaque barre compare le réel à l'objectif. Un regard suffit, zéro calcul.",
   "onboardingTitre4": "Tes chiffres restent dans ta poche",
   "onboardingCorps4": "Tout vit sur ton téléphone, sans inscription ni serveur. Ça marche sans réseau, au marché comme au village. Toi seul lis tes chiffres. Ta première dépense t'attend.",
-
   "aPropos": "À propos",
   "aProposVersion": "Version {version}",
   "@aProposVersion": {
     "placeholders": {
-      "version": {"type": "String"}
+      "version": {
+        "type": "String"
+      }
     }
   },
   "aProposPolitiqueConfidentialite": "Politique de confidentialité",
@@ -250,14 +267,15 @@
   "aProposEditeur": "Koudi Na est édité par XNOVA Systems.",
   "aProposHorsLigne": "100 % hors ligne : aucune donnée ne quitte votre téléphone, sauf export CSV initié par vous.",
   "aProposLienIndisponible": "Impossible d'ouvrir ce lien.",
-
   "notificationSectionTitre": "Notifications",
   "notificationRappelQuotidienTitre": "Rappel quotidien",
   "notificationRappelQuotidienSousTitre": "Choisir une heure pour être rappelé d'enregistrer ses dépenses.",
   "notificationRappelHeureChoisie": "Actif à {heure}",
   "@notificationRappelHeureChoisie": {
     "placeholders": {
-      "heure": {"type": "String"}
+      "heure": {
+        "type": "String"
+      }
     }
   },
   "notificationRecapHebdomadaireTitre": "Récap hebdomadaire",
@@ -271,10 +289,11 @@
   "notificationDepassementNotifCorps": "Le pilier {pilier} dépasse son objectif ce mois-ci.",
   "@notificationDepassementNotifCorps": {
     "placeholders": {
-      "pilier": {"type": "String"}
+      "pilier": {
+        "type": "String"
+      }
     }
   },
-
   "badgesTitre": "Badges",
   "badgesEntreeReglages": "Voir mes badges",
   "badgesDeblocageTitre": "Badge débloqué !",
@@ -282,29 +301,36 @@
   "badgesProgression": "{debloques}/{total} badges débloqués",
   "@badgesProgression": {
     "placeholders": {
-      "debloques": {"type": "int"},
-      "total": {"type": "int"}
+      "debloques": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
     }
   },
-
   "astuceDuJourEtiquette": "Astuce du jour",
-
   "serieInfobulle": "{nombre, plural, =1{1 jour de suite avec au moins une saisie} other{{nombre} jours de suite avec au moins une saisie}}",
   "@serieInfobulle": {
     "placeholders": {
-      "nombre": {"type": "int"}
+      "nombre": {
+        "type": "int"
+      }
     }
   },
   "serieInfobulleVide": "Note une dépense aujourd'hui pour allumer ta série",
-
   "didacticielSuivant": "Suivant",
   "didacticielTerminer": "C'est parti",
   "didacticielPasser": "Passer",
   "didacticielEtape": "{numero}/{total}",
   "@didacticielEtape": {
     "placeholders": {
-      "numero": {"type": "int"},
-      "total": {"type": "int"}
+      "numero": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
     }
   },
   "didacticielMontantTitre": "Le montant",
@@ -314,14 +340,176 @@
   "didacticielEnregistrerTitre": "Enregistrer",
   "didacticielEnregistrerTexte": "Montant, catégorie, enregistrer : trois gestes et c'est noté.",
   "didacticielSoldeTitre": "Ton solde du mois",
-  "didacticielSoldeTexte": "Entrées moins dépenses, mis à jour à chaque saisie. Vert tant que tu restes dans le positif.",
+  "didacticielSoldeTexte": "Entrées moins dépenses du mois, mis à jour à chaque opération.",
   "didacticielSerieTitre": "Ta série",
   "didacticielSerieTexte": "Chaque jour où tu notes au moins une dépense, la flamme s'allume et compte les jours. Touche-la pour voir où tu en es.",
   "didacticielAnalyseTitre": "Analyse",
   "didacticielAnalyseTexte": "Tes tendances sur 12 mois, la règle 40/25/35, une astuce par jour.",
-  "didacticielMoisTitre": "Le mois",
-  "didacticielMoisTexte": "Toutes tes saisies du mois, à filtrer, corriger ou supprimer.",
+  "didacticielMoisTitre": "Journal",
+  "didacticielMoisTexte": "Toutes tes opérations, mois par mois, à rechercher, filtrer ou corriger.",
   "didacticielReglagesTitre": "Réglages",
   "didacticielReglagesTexte": "Langue, devise, rappels, badges, export de tes données. Tu peux aussi y revoir cette visite.",
-  "reglagesRevoirDidacticiel": "Revoir la visite guidée"
+  "reglagesRevoirDidacticiel": "Revoir la visite guidée",
+  "ongletAccueil": "Accueil",
+  "ongletJournal": "Journal",
+  "boutonAjouterSemantique": "Ajouter une dépense ou une entrée",
+  "nouvelleOperation": "Nouvelle opération",
+  "operationDepenseSousTitre": "Repas, transport, data, famille…",
+  "operationEntreeSousTitre": "Salaire, freelance, don reçu…",
+  "fermer": "Fermer",
+  "saisieDate": "Date : {date}",
+  "@saisieDate": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "aujourdhui": "Aujourd'hui",
+  "saisieResteAvant": "il te restera ",
+  "saisieResteApres": "",
+  "saisieNote": "Note",
+  "saisieNoteAjouter": "Ajouter une note",
+  "saisieNoteIndice": "Ex. Déjeuner, taxi, marché…",
+  "saisieEnregistrerMontant": "Enregistrer {montant}",
+  "@saisieEnregistrerMontant": {
+    "placeholders": {
+      "montant": {
+        "type": "String"
+      }
+    }
+  },
+  "saisieEnregistrerModifs": "Enregistrer les modifications",
+  "saisieMontantVide": "Saisis un montant",
+  "saisieEffacer": "Effacer le dernier chiffre",
+  "saisiePlus": "Plus",
+  "saisieToutesCategories": "Toutes les catégories",
+  "saisieDepenseEnregistree": "Dépense enregistrée",
+  "saisieEntreeEnregistree": "Entrée enregistrée",
+  "saisieOperationModifiee": "Opération modifiée",
+  "accueilRythmeDepense": "{pourcent} % des entrées dépensées",
+  "@accueilRythmeDepense": {
+    "placeholders": {
+      "pourcent": {
+        "type": "int"
+      }
+    }
+  },
+  "accueilRythmeJour": "jour {jour} / {total}",
+  "@accueilRythmeJour": {
+    "placeholders": {
+      "jour": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "accueilEnAvance": "tu es en avance",
+  "accueilAttentionRythme": "attention au rythme",
+  "accueilMoisTermine": "mois terminé",
+  "accueilFinDeMois": "Fin de mois",
+  "accueilSousEntrees": "{montant} sous tes entrées",
+  "@accueilSousEntrees": {
+    "placeholders": {
+      "montant": {
+        "type": "String"
+      }
+    }
+  },
+  "accueilAuDessusEntrees": "{montant} au-dessus de tes entrées",
+  "@accueilAuDessusEntrees": {
+    "placeholders": {
+      "montant": {
+        "type": "String"
+      }
+    }
+  },
+  "accueilSansEntree": "pas encore d'entrée",
+  "accueilMoyenneJour": "Moyenne par jour",
+  "accueilHorsEpargne": "{montant} hors épargne",
+  "@accueilHorsEpargne": {
+    "placeholders": {
+      "montant": {
+        "type": "String"
+      }
+    }
+  },
+  "accueilEnveloppes": "Enveloppes",
+  "accueilReste": "reste",
+  "accueilDepasseDe": "dépassé de",
+  "accueilEnveloppesVide": "Ajoute ta première entrée du mois pour activer la règle 40 · 25 · 35",
+  "accueilAjouterEntree": "Ajouter une entrée",
+  "accueilRecents": "Récents",
+  "toutVoir": "Tout voir",
+  "accueilRecentsVide": "Aucune opération ce mois-ci. Touche + pour commencer.",
+  "accueilChoisirMois": "Choisir un mois",
+  "serieJoursCourt": "{nombre, plural, =1{1 jour} other{{nombre} jours}}",
+  "@serieJoursCourt": {
+    "placeholders": {
+      "nombre": {
+        "type": "int"
+      }
+    }
+  },
+  "journalRechercher": "Rechercher",
+  "journalRechercheIndice": "Note, catégorie, compte, montant…",
+  "moisPrecedent": "Mois précédent",
+  "moisSuivant": "Mois suivant",
+  "filtreTout": "Tout",
+  "filtres": "Filtres",
+  "journalVide": "Rien ce mois-ci. Touche + pour noter une opération.",
+  "journalAucunResultat": "Aucun résultat",
+  "periodeMois": "Mois",
+  "periode6Mois": "6 mois",
+  "periodeAnnee": "Année",
+  "projectionSurtitre": "Projection",
+  "projectionEnCours": "Au rythme actuel, tu termineras {mois} à environ ",
+  "@projectionEnCours": {
+    "placeholders": {
+      "mois": {
+        "type": "String"
+      }
+    }
+  },
+  "projectionPasse": "En {mois}, tu as dépensé ",
+  "@projectionPasse": {
+    "placeholders": {
+      "mois": {
+        "type": "String"
+      }
+    }
+  },
+  "projectionDeDepenses": " de dépenses",
+  "projectionSoit": ", soit ",
+  "projectionSansDepense": "Aucune dépense en {mois} pour l'instant.",
+  "@projectionSansDepense": {
+    "placeholders": {
+      "mois": {
+        "type": "String"
+      }
+    }
+  },
+  "entreesEtDepenses": "Entrées et dépenses",
+  "ouVaLArgent": "Où va l'argent · {periode}",
+  "@ouVaLArgent": {
+    "placeholders": {
+      "periode": {
+        "type": "String"
+      }
+    }
+  },
+  "semaineCourte": "S{numero}",
+  "@semaineCourte": {
+    "placeholders": {
+      "numero": {
+        "type": "int"
+      }
+    }
+  },
+  "analyseJoursCouteux": "Les jours qui coûtent",
+  "analyseVide": "Note quelques opérations pour voir tes tendances ici.",
+  "didacticielPlusTitre": "Le bouton +",
+  "didacticielPlusTexte": "Touche-le pour noter une dépense ou une entrée. Garde le doigt appuyé pour aller droit à une dépense."
 }

@@ -1,50 +1,126 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
-import '../../core/theme/app_colors.dart';
-import '../../core/theme/app_spacing.dart';
+import '../../core/theme/koudi_tokens.dart';
 
-/// Bascule à options exclusives (2 à 4), en remplacement du
-/// `SegmentedButton` Material 3 par défaut : celui-ci répartit la
-/// largeur entre segments sans jamais empêcher le retour à la ligne, et
-/// un libellé comme « Dépense » se coupe dès qu'une échelle de police
-/// système plus grande est active. Ici chaque segment force une seule
-/// ligne (`maxLines: 1` + ellipsis en dernier recours) quelle que soit
-/// la taille de texte choisie par l'utilisateur.
+/// Bascule à options exclusives (2 à 4), style « pill » de la refonte D :
+/// fond gris, segment actif blanc avec une ombre légère qui **glisse**
+/// d'une option à l'autre. Remplace le `SegmentedButton` Material 3, qui
+/// laissait un libellé comme « Dépense » se couper avec une grande échelle
+/// de police : ici chaque segment force une seule ligne.
 class SegmentedToggle<T> extends StatelessWidget {
   const SegmentedToggle({
     super.key,
     required this.options,
     required this.selectionne,
     required this.onChanged,
+    this.hauteur = 40,
+    this.largeurSegment,
+    this.taillePolice = 14,
   });
 
   final List<SegmentedToggleOption<T>> options;
   final T selectionne;
   final ValueChanged<T> onChanged;
 
+  /// Hauteur d'un segment (hors marge intérieure de 3 px).
+  final double hauteur;
+
+  /// Largeur fixe d'un segment ; sinon les segments se partagent la place.
+  final double? largeurSegment;
+  final double taillePolice;
+
   @override
   Widget build(BuildContext context) {
-    final style = Theme.of(context).textTheme.labelLarge;
+    final t = context.tokens;
+    final index = options.indexWhere((o) => o.valeur == selectionne);
+    final rayon = hauteur * 0.27;
+    final style = Theme.of(context).textTheme.labelLarge?.copyWith(
+      fontSize: taillePolice,
+      fontWeight: FontWeight.w600,
+    );
+
+    Widget piste(double largeur) {
+      final largeurSeg = largeur / options.length;
+      return SizedBox(
+        width: largeur,
+        height: hauteur,
+        child: Stack(
+          children: [
+            if (index >= 0)
+              AnimatedPositioned(
+                duration: const Duration(milliseconds: 260),
+                curve: Curves.easeOutCubic,
+                left: index * largeurSeg,
+                top: 0,
+                bottom: 0,
+                width: largeurSeg,
+                child: DecoratedBox(
+                  decoration: BoxDecoration(
+                    color: t.surface,
+                    borderRadius: BorderRadius.circular(rayon),
+                    boxShadow: const [
+                      BoxShadow(color: Color(0x14000000), blurRadius: 2, offset: Offset(0, 1)),
+                    ],
+                  ),
+                ),
+              ),
+            Row(
+              children: [
+                for (final option in options)
+                  Expanded(
+                    child: Semantics(
+                      button: true,
+                      selected: option.valeur == selectionne,
+                      child: GestureDetector(
+                        behavior: HitTestBehavior.opaque,
+                        onTap: () {
+                          if (option.valeur == selectionne) return;
+                          HapticFeedback.selectionClick();
+                          onChanged(option.valeur);
+                        },
+                        child: Center(
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 6),
+                            child: AnimatedDefaultTextStyle(
+                              duration: const Duration(milliseconds: 200),
+                              style: style!.copyWith(
+                                color: option.valeur == selectionne ? t.ink : t.muted,
+                              ),
+                              child: Text(
+                                option.label,
+                                textAlign: TextAlign.center,
+                                maxLines: 1,
+                                softWrap: false,
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+              ],
+            ),
+          ],
+        ),
+      );
+    }
+
     return Container(
-      padding: const EdgeInsets.all(4),
+      padding: const EdgeInsets.all(3),
       decoration: BoxDecoration(
-        color: AppColors.surfaceHigh,
-        borderRadius: BorderRadius.circular(999),
+        color: t.surfaceMuted,
+        borderRadius: BorderRadius.circular(rayon + 3),
       ),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          for (final option in options)
-            Expanded(
-              child: _Segment(
-                label: option.label,
-                active: option.valeur == selectionne,
-                onTap: () => onChanged(option.valeur),
-                style: style,
+      child: largeurSegment != null
+          ? piste(largeurSegment! * options.length)
+          // Dans une Row (largeur non bornée), chaque segment prend 72 px.
+          : LayoutBuilder(
+              builder: (context, c) => piste(
+                c.maxWidth.isFinite ? c.maxWidth : options.length * 72.0,
               ),
             ),
-        ],
-      ),
     );
   }
 }
@@ -54,52 +130,4 @@ class SegmentedToggleOption<T> {
 
   final T valeur;
   final String label;
-}
-
-class _Segment extends StatelessWidget {
-  const _Segment({
-    required this.label,
-    required this.active,
-    required this.onTap,
-    required this.style,
-  });
-
-  final String label;
-  final bool active;
-  final VoidCallback onTap;
-  final TextStyle? style;
-
-  @override
-  Widget build(BuildContext context) {
-    return Material(
-      color: Colors.transparent,
-      child: InkWell(
-        onTap: onTap,
-        borderRadius: BorderRadius.circular(999),
-        child: AnimatedContainer(
-          duration: const Duration(milliseconds: 200),
-          curve: Curves.easeOut,
-          padding: const EdgeInsets.symmetric(
-            vertical: AppSpacing.s12,
-            horizontal: AppSpacing.s8,
-          ),
-          decoration: BoxDecoration(
-            color: active ? AppColors.primary : Colors.transparent,
-            borderRadius: BorderRadius.circular(999),
-          ),
-          child: Text(
-            label,
-            textAlign: TextAlign.center,
-            maxLines: 1,
-            softWrap: false,
-            overflow: TextOverflow.ellipsis,
-            style: style?.copyWith(
-              color: active ? AppColors.bg : AppColors.textMuted,
-              fontWeight: active ? FontWeight.w600 : FontWeight.w500,
-            ),
-          ),
-        ),
-      ),
-    );
-  }
 }

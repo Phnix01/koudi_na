@@ -140,5 +140,6 @@ class KoudiTokens extends ThemeExtension<KoudiTokens> {
 }
 
 extension KoudiTokensContexte on BuildContext {
-  KoudiTokens get tokens => Theme.of(this).extension<KoudiTokens>()!;
+  KoudiTokens get tokens =>
+      Theme.of(this).extension<KoudiTokens>() ?? KoudiTokens.clair;
 }
