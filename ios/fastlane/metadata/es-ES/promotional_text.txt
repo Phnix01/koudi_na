@@ -1,1 +1,1 @@
-Apunta un gasto en tres toques. Efectivo, banco, ahorro: sabes cuánto queda en cada cuenta. La regla 40/25/35 ordena tu mes. Funciona sin conexión y sin registro.
+Apunta un gasto en tres toques: importe, categoría, cuenta. La regla 40/25/35 ordena tu mes y las barras muestran cómo vas. Sin conexión, sin registro, sin anuncios.

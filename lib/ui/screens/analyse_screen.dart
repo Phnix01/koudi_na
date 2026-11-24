@@ -287,7 +287,7 @@ class _CarteHistogrammeState extends State<_CarteHistogramme> {
               child: sel == null
                   ? const SizedBox.shrink()
                   : Text(
-                      '${_libelle(context, sel)} · ${formaterSigne(sel.entrees, forcerPlus: true)} / ${formaterSigne(-sel.depenses)}',
+                      '${_libelle(context, sel)} · ${formaterSigne(sel.entrees)} / ${formaterSigne(-sel.depenses)}',
                       key: ValueKey(_selection),
                       style: texte.bodySmall?.copyWith(color: t.ink2, fontWeight: FontWeight.w500),
                     ),

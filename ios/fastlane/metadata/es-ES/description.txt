@@ -1,23 +1,23 @@
-¿Dónde se ha ido el dinero este mes? Con Koudi Na lo ves de un vistazo, euro a euro.
+¿A dónde se ha ido el dinero este mes? Con Koudi Na lo ves de un vistazo, euro a euro.
 
-Koudi Na es el cuaderno de cuentas que llevas siempre en el móvil. Apuntas lo que entra y lo que sale, cada cosa en su categoría, y cuando llega fin de mes ya no hay sorpresas: el alquiler, la compra, el abono de transporte, la cena del viernes y los cuarenta euros que apartaste para más adelante.
+Koudi Na es un cuaderno de cuentas que cabe en el móvil. Apuntar un gasto es cuestión de tres toques: el importe en el teclado, la categoría en la cuadrícula y la cuenta. Queda guardado en menos de diez segundos, mientras aún estás en la cola del supermercado. Cada categoría mantiene su sitio en la cuadrícula, y la última categoría y la última cuenta que usaste ya vienen seleccionadas: un gasto habitual se apunta casi sin pensar. Los ingresos se apuntan igual de rápido.
 
-Apuntar un gasto son tres toques. El importe en el teclado, la categoría en la cuadrícula y la cuenta. Queda guardado en menos de diez segundos, antes de salir del supermercado. Las categorías que más usas suben solas a la parte de arriba. Los ingresos se apuntan igual de rápido.
+Tus cuentas, en una sola pantalla. Efectivo, banco, ahorro y dinero móvil (mobile money), cada una con su propio saldo, para que sepas en todo momento cuánto te queda en cada sitio. Koudi Na no está conectada a ningún banco ni a ningún servicio de pago: los saldos los llevas tú.
 
-Tus cuentas, en una sola pantalla. Efectivo, banco, ahorro y mobile money: cada una con su propio saldo, llevado por ti. Así sabes en todo momento cuánto queda en cada sitio. Koudi Na no se conecta a ningún banco ni a ningún servicio de pago, y no mueve dinero: los saldos son los que tú apuntas.
+La regla 40/25/35. Cada mes, tu ingreso se reparte en tres pilares: 40 % Ahorro, 25 % Familia, 35 % Vida. Tres barras comparan lo real con el objetivo. Sin hojas de cálculo que montar ni fórmulas que volver a escribir: la regla ya está en la app.
 
-La regla 40/25/35. Cada mes, tus ingresos se reparten en tres pilares: 40 % Ahorro, 25 % Familia, 35 % Vida. Tres barras comparan lo real con el objetivo. Sin hojas de cálculo que montar ni fórmulas que volver a escribir: la regla ya viene puesta.
+Tu mes, a la vista. Filtra por cuenta o por categoría, corrige un importe mal escrito, deshaz un borrado hecho sin querer. Y los pagos que se repiten cada mes —el alquiler, una suscripción, la cuota del gimnasio— se crean solos.
 
-Tu mes, a la vista. Filtra por cuenta o por categoría, corrige un importe mal escrito y deshaz al momento un borrado por error. Y los pagos que se repiten cada mes —el alquiler, una suscripción o la cuota del gimnasio— se crean solos.
+Tendencias, no solo totales. La pantalla de Análisis dibuja tus últimos 12 meses de entradas y gastos, compara tus cinco categorías con más gasto con las del mes anterior, proyecta cómo acabarás el mes a tu ritmo actual y traza tu línea de ahorro frente al objetivo. Un mapa de calor enseña qué días de la semana te salen más caros. Y la app te va dejando observaciones breves: «Tus gastos en Comida han subido un 32 % este mes». Todo se calcula en el propio móvil, sin IA. Cada día encontrarás además un consejo breve para manejar tu dinero.
 
-Tendencias, no solo totales. La pantalla de análisis dibuja tus últimos 12 meses de ingresos y gastos, compara con el mes anterior las cinco categorías en las que más gastas, proyecta cómo vas a acabar el mes a este ritmo y traza tu línea de ahorro frente al objetivo. Un mapa de calor te enseña qué días de la semana te salen más caros. Y de vez en cuando aparece una observación corta, del tipo «tus gastos en Comida han subido un 32 % este mes». Todo se calcula en el propio móvil, sin inteligencia artificial.
+Para no perder el hábito. Una racha de días seguidos apuntando, insignias que se desbloquean (el primer gasto, rachas de 3, 7, 30 y 100 días, un mes equilibrado, el objetivo de ahorro cumplido) y, si tú quieres, un recordatorio diario a la hora que elijas, un resumen el domingo por la noche y un aviso cuando un pilar supera su objetivo del mes. Son notificaciones locales y todas se pueden desactivar.
 
-Para no perder el hábito, Koudi Na cuenta los días seguidos que llevas apuntando, tiene insignias que se desbloquean y te deja una idea corta al día para organizar tu dinero. Puede avisarte a la hora que elijas, hacerte un resumen el domingo por la noche y alertarte si un pilar se pasa de su objetivo del mes. Son notificaciones locales y las puedes desactivar todas.
+Más de 150 monedas, el euro entre ellas. Eliges la tuya una vez y apuntas en la moneda con la que vives.
 
-Tus números se quedan contigo. Koudi Na funciona 100 % sin conexión: sin cuenta, sin registro, sin servidor, sin anuncios, sin suscripción y sin rastreadores. Nada sale del móvil salvo que tú lo exportes: CSV, informe en PDF o libro de Excel, desde la hoja para compartir del iPhone. También puedes importar un CSV que ya tengas.
+Tus cifras se quedan contigo. Koudi Na funciona 100 % sin conexión, sin cuenta de usuario, sin registro, sin servidor, sin anuncios y sin suscripción. Nada sale del móvil salvo que tú lo exportes: archivo CSV, informe en PDF o libro de Excel desde el menú de compartir. También puedes importar un CSV que ya tengas.
 
-Más de 150 monedas para elegir, empezando por el euro, y también el dólar, la libra, el franco suizo o el franco CFA, por si cobras o viajas en otra moneda.
+El diseño es oscuro y tranquilo, pensado para abrirla varias veces al día sin cansar la vista. Eso sí, la interfaz de la app está en francés y en inglés, no en español.
 
-«Kudi» significa dinero en hausa. Koudi Na está diseñada en Níger por XNOVA Systems, con una interfaz oscura y tranquila, pensada para abrirla varias veces al día sin cansar la vista. La interfaz de la app está solo en francés y en inglés.
+«Kudi» significa dinero en hausa. Koudi Na está diseñada en Níger por XNOVA Systems.
 
-Descarga Koudi Na y apunta tu primer gasto hoy mismo.
+Descarga Koudi Na y apunta tu primer gasto hoy.

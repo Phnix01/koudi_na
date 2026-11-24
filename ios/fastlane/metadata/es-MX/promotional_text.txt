@@ -1,1 +1,1 @@
-Anota un gasto en tres toques. Efectivo, banco, dinero móvil y ahorro, cada uno con su saldo. La regla 40/25/35 ordena tu mes. Funciona sin conexión y sin crear cuenta.
+Anota un gasto en tres toques. Efectivo, banco, ahorro: mira dónde está cada peso. La regla 40/25/35 ordena tu mes. Funciona sin internet y sin crear cuenta.

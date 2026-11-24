@@ -63,9 +63,9 @@ String formaterNombre(int valeur) => NumberFormat.decimalPattern()
     .replaceAll(_espaceFineInsecable, _espaceInsecable);
 
 /// Nombre signe pour les listes : "+350 000", "−2 500". Zero sans signe.
-String formaterSigne(int valeur, {bool forcerPlus = false}) {
+String formaterSigne(int valeur) {
   if (valeur < 0) return '$signeMoins${formaterNombre(valeur)}';
-  if (valeur > 0 || forcerPlus) return '+${formaterNombre(valeur)}';
+  if (valeur > 0) return '+${formaterNombre(valeur)}';
   return formaterNombre(valeur);
 }
 

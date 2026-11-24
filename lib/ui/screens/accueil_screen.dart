@@ -211,7 +211,7 @@ class _EntreesDepenses extends StatelessWidget {
     return IntrinsicHeight(
       child: Row(
         children: [
-          Expanded(child: colonne(l10n.entrees, formaterSigne(tableau.entrees, forcerPlus: true), t.positive)),
+          Expanded(child: colonne(l10n.entrees, formaterSigne(tableau.entrees), t.positive)),
           VerticalDivider(width: 1, thickness: 1, color: t.lineStrong),
           const SizedBox(width: 16),
           Expanded(child: colonne(l10n.depenses, formaterSigne(-tableau.depenses), t.ink)),

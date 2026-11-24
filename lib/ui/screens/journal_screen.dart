@@ -338,7 +338,7 @@ class _JournalScreenState extends ConsumerState<JournalScreen> {
     );
     return Row(
       children: [
-        colonne(l10n.entrees, formaterSigne(totaux.entrees, forcerPlus: true), t.positive, filet: false),
+        colonne(l10n.entrees, formaterSigne(totaux.entrees), t.positive, filet: false),
         colonne(l10n.depenses, formaterSigne(-totaux.depenses), t.ink),
         colonne(l10n.solde, totaux.solde < 0 ? formaterSigne(totaux.solde) : formaterNombre(totaux.solde), t.ink),
       ],

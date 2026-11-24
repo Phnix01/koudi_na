@@ -1,1 +1,1 @@
-presupuesto,finanzas,personales,dinero,cuentas,sin,conexión,offline,privado,ingresos,economía
+presupuesto,ahorro,finanzas,dinero,cuentas,ingresos,sin conexión,contabilidad,doméstica,personales

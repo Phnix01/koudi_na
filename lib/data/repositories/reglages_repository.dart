@@ -11,7 +11,9 @@ class ReglagesRepository {
   static const _cleLangue = 'langue';
   static const _cleDevise = 'devise';
   static const _cleOnboardingTermine = 'onboarding_termine';
-  static const _cleDidacticielVu = 'didacticiel_vu';
+  // Nouvelle clé avec la refonte D : la navigation a changé, ceux qui
+  // avaient vu l'ancienne visite (écran Capture) voient la nouvelle.
+  static const _cleDidacticielVu = 'didacticiel_vu_refonte_d';
   static const _cleRappelQuotidienHeure = 'rappel_quotidien_heure';
   static const _cleRecapHebdomadaireActif = 'recap_hebdomadaire_actif';
 

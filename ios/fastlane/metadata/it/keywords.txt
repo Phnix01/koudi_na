@@ -1,1 +1,1 @@
-risparmio,finanze,soldi,bilancio,entrate,uscite,contanti,conti,mensile,contabilità,offline,gestione
+risparmio,uscite,entrate,finanze,bilancio,risparmiare,conti,offline,gestione,denaro,stipendio,valute
