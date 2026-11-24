@@ -48,3 +48,34 @@ String formaterMontant(int montant) {
 /// Un nombre decimal a une decimale ("2,5" en francais, "2.5" en
 /// anglais), pour l'autonomie financiere exprimee en mois.
 String formaterDecimal(double valeur) => NumberFormat('0.0').format(valeur);
+
+/// Devise choisie dans Reglages, pour les widgets qui dessinent l'unite
+/// a part du nombre (refonte D : unite plus petite, en gris).
+DeviseInfo get deviseCourante => _deviseActuelle;
+
+/// Signe moins typographique (U+2212), plus large et mieux aligne que le
+/// tiret du clavier dans les colonnes de montants.
+const signeMoins = '−';
+
+/// Le nombre seul, sans devise ni signe : "163 500" / "163,500".
+String formaterNombre(int valeur) => NumberFormat.decimalPattern()
+    .format(valeur.abs())
+    .replaceAll(_espaceFineInsecable, _espaceInsecable);
+
+/// Nombre signe pour les listes : "+350 000", "−2 500". Zero sans signe.
+String formaterSigne(int valeur, {bool forcerPlus = false}) {
+  if (valeur < 0) return '$signeMoins${formaterNombre(valeur)}';
+  if (valeur > 0 || forcerPlus) return '+${formaterNombre(valeur)}';
+  return formaterNombre(valeur);
+}
+
+/// Arrondi a 3 chiffres significatifs (212 487 -> 212 000 ; 1 234 -> 1 230) :
+/// "arrondi au millier" convient au FCFA mais pas a l'euro ou au dollar,
+/// dont les montants courants sont mille fois plus petits.
+int arrondiSignificatif(num valeur) {
+  var pas = 1;
+  while (valeur.abs() / pas >= 1000) {
+    pas *= 10;
+  }
+  return (valeur / pas).round() * pas;
+}

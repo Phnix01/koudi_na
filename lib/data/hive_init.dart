@@ -45,6 +45,11 @@ Future<void> initialiserHive() async {
     categories: CategorieRepository(),
     langue: locale.languageCode,
   );
+  await migrerVersRefonteD(
+    comptes: CompteRepository(),
+    categories: CategorieRepository(),
+    langue: locale.languageCode,
+  );
 
   await genererTransactionsRecurrentesSiNecessaire(
     recurrences: RecurrenceRepository(),
