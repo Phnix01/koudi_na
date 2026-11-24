@@ -8,6 +8,7 @@ import '../../logic/providers/repositories_providers.dart';
 import '../widgets/selecteur_couleur.dart';
 import '../widgets/selecteur_icone.dart';
 import '../../l10n/l10n.dart';
+import '../../core/utils/visuels.dart';
 
 /// Création ou modification d'un compte, avec solde initial (section 4,
 /// écran D). `compte` nul → création ; sinon, édition du compte fourni.
@@ -23,7 +24,7 @@ class CompteEditionScreen extends ConsumerStatefulWidget {
 
 class _CompteEditionScreenState extends ConsumerState<CompteEditionScreen> {
   late final _controleurLibelle = TextEditingController(
-    text: widget.compte?.libelle ?? '',
+    text: widget.compte?.nom ?? '',
   );
   late final _controleurSolde = TextEditingController(
     text: '${widget.compte?.soldeInitial ?? 0}',

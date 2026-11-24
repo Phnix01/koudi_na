@@ -12,6 +12,7 @@ import '../navigation/route_animee.dart';
 import '../widgets/segmented_toggle.dart';
 import '../../l10n/l10n.dart';
 import 'categorie_edition_screen.dart';
+import '../../core/utils/visuels.dart';
 
 /// Gestion des catégories (section 4, écran D) : création, modification,
 /// réordonnancement par glisser-déposer, désactivation.
@@ -154,7 +155,7 @@ class _LigneCategorie extends ConsumerWidget {
         ),
       ),
       title: Text(
-        categorie.libelle,
+        categorie.nom,
         style: TextStyle(
           color: categorie.active ? AppColors.textPrimary : AppColors.textMuted,
         ),

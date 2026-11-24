@@ -6,6 +6,7 @@ import '../../data/models/compte.dart';
 import '../../data/models/transaction.dart';
 import '../../data/models/type_mouvement.dart';
 import 'csv_colonnes.dart';
+import '../../core/utils/visuels.dart';
 
 /// Construit le contenu CSV des transactions (section 4, écran D), avec
 /// les en-têtes et les valeurs de type dans la langue demandée (voir
@@ -30,8 +31,8 @@ String genererCsvTransactions(
             ? colonnes.valeurEntree
             : colonnes.valeurDepense,
         transaction.montant,
-        categoriesParId[transaction.categorieId]?.libelle ?? '',
-        comptesParId[transaction.compteId]?.libelle ?? '',
+        categoriesParId[transaction.categorieId]?.nom ?? '',
+        comptesParId[transaction.compteId]?.nom ?? '',
         transaction.note ?? '',
       ],
   ];

@@ -11,6 +11,7 @@ import '../../data/models/compte.dart';
 import '../../data/models/transaction.dart';
 import '../../data/models/type_mouvement.dart';
 import 'csv_colonnes.dart';
+import '../../core/utils/visuels.dart';
 
 /// Rapport PDF brandé XNOVA Systems (section Export, Réglages) : logo +
 /// période en en-tête, bandeau Entrées/Dépenses/Solde, puis le tableau
@@ -156,8 +157,8 @@ Future<Uint8List> genererPdfTransactions({
               ? colonnes.valeurEntree
               : colonnes.valeurDepense,
           formaterMontant(t.montant),
-          categoriesParId[t.categorieId]?.libelle ?? '',
-          comptesParId[t.compteId]?.libelle ?? '',
+          categoriesParId[t.categorieId]?.nom ?? '',
+          comptesParId[t.compteId]?.nom ?? '',
           t.note ?? '',
         ],
     ],

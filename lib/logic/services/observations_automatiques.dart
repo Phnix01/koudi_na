@@ -7,6 +7,7 @@ import '../../l10n/app_localizations.dart';
 import 'calcul_piliers.dart';
 import 'comparaison_mensuelle.dart';
 import 'indicateurs_analyse.dart';
+import '../../core/utils/visuels.dart';
 
 /// Génère de courtes phrases d'observation (section 5.3) : aucune IA,
 /// aucun réseau, juste des comparaisons de seuils sur les calculs déjà
@@ -41,7 +42,7 @@ List<String> genererObservations(
     final plusForteHausse = hausses.first;
     observations.add(
       l10n.obsHausse(
-        plusForteHausse.categorie.libelle,
+        plusForteHausse.categorie.nom,
         plusForteHausse.variationPourcent!.round(),
       ),
     );

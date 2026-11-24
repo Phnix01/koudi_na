@@ -11,6 +11,7 @@ import '../widgets/segmented_toggle.dart';
 import '../widgets/selecteur_couleur.dart';
 import '../widgets/selecteur_icone.dart';
 import '../../l10n/l10n.dart';
+import '../../core/utils/visuels.dart';
 
 /// Création ou modification d'une catégorie (section 4, écran D).
 /// `categorie` nul → création ; sinon, édition de la catégorie fournie.
@@ -32,7 +33,7 @@ class CategorieEditionScreen extends ConsumerStatefulWidget {
 class _CategorieEditionScreenState
     extends ConsumerState<CategorieEditionScreen> {
   late final _controleurLibelle = TextEditingController(
-    text: widget.categorie?.libelle ?? '',
+    text: widget.categorie?.nom ?? '',
   );
   late TypeMouvement _type = widget.categorie?.type ?? widget.typeParDefaut;
   late String _iconeCode = widget.categorie?.iconeCode ?? 'dotsThreeOutline';

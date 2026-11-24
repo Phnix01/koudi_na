@@ -9,6 +9,7 @@ import '../../data/models/compte.dart';
 import '../../data/models/transaction.dart';
 import '../../data/models/type_mouvement.dart';
 import 'csv_colonnes.dart';
+import '../../core/utils/visuels.dart';
 
 /// Classeur Excel (.xlsx) des transactions — même colonnes et même
 /// contrat d'en-têtes que [genererCsvTransactions], pour quelqu'un qui
@@ -44,8 +45,8 @@ Uint8List genererExcelTransactions(
             : colonnes.valeurDepense,
       ),
       TextCellValue(formaterMontant(t.montant)),
-      TextCellValue(categoriesParId[t.categorieId]?.libelle ?? ''),
-      TextCellValue(comptesParId[t.compteId]?.libelle ?? ''),
+      TextCellValue(categoriesParId[t.categorieId]?.nom ?? ''),
+      TextCellValue(comptesParId[t.compteId]?.nom ?? ''),
       TextCellValue(t.note ?? ''),
     ]);
   }

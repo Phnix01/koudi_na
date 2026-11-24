@@ -33,7 +33,8 @@ const _langueSysteme = 'systeme';
 /// Guideline 5.1.1 (i) d'Apple (et équivalent Google Play) : la politique
 /// de confidentialité doit être accessible depuis l'app, pas seulement
 /// depuis la fiche store.
-const _urlPolitiqueConfidentialite = 'https://claude.ai/artifact/Y3yFsKPSZjrWnGNcpFRgis';
+const _urlPolitiqueConfidentialite =
+    'https://claude.ai/artifact/Y3yFsKPSZjrWnGNcpFRgis';
 const _emailContact = 'contact@xnovasystems.com';
 
 /// Écran D (section 4) : langue, gestion des catégories, des comptes et
@@ -226,237 +227,259 @@ class _ReglagesScreenState extends ConsumerState<ReglagesScreen> {
       body: SafeArea(
         bottom: false,
         child: ListView(
-        padding: const EdgeInsets.fromLTRB(20, 8, 20, 32),
-        children: [
-          SizedBox(
-            height: 44,
-            child: Align(
-              alignment: Alignment.centerLeft,
-              child: Text(l10n.reglages, style: Theme.of(context).textTheme.headlineMedium),
-            ),
-          ),
-          const SizedBox(height: 16),
-          Text(l10n.langue, style: Theme.of(context).textTheme.titleMedium),
-          const SizedBox(height: 8),
-          Card(
-            child: Padding(
-              padding: const EdgeInsets.all(12),
-              // Les noms de langues restent dans leur propre langue
-              // (« Français », « English ») : c'est ainsi qu'un
-              // utilisateur perdu dans une langue qu'il ne lit pas
-              // retrouve la sienne.
-              child: SegmentedToggle<String>(
-                options: [
-                  SegmentedToggleOption(
-                    valeur: _langueSysteme,
-                    label: l10n.langueSysteme,
-                  ),
-                  const SegmentedToggleOption(
-                    valeur: 'fr',
-                    label: 'Français',
-                  ),
-                  const SegmentedToggleOption(valeur: 'en', label: 'English'),
-                ],
-                selectionne: langueChoisie,
-                onChanged: (code) => ref
-                    .read(langueProvider.notifier)
-                    .choisir(code == _langueSysteme ? null : code),
+          padding: const EdgeInsets.fromLTRB(20, 8, 20, 32),
+          children: [
+            SizedBox(
+              height: 44,
+              child: Align(
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  l10n.reglages,
+                  style: Theme.of(context).textTheme.headlineMedium,
+                ),
               ),
             ),
-          ),
-          const SizedBox(height: 24),
-          Text(l10n.devise, style: Theme.of(context).textTheme.titleMedium),
-          const SizedBox(height: 8),
-          Card(
-            child: ListTile(
-              leading: const PhosphorIcon(
-                PhosphorIconsRegular.currencyCircleDollar,
+            const SizedBox(height: 16),
+            Text(l10n.langue, style: Theme.of(context).textTheme.titleMedium),
+            const SizedBox(height: 8),
+            Card(
+              child: Padding(
+                padding: const EdgeInsets.all(12),
+                // Les noms de langues restent dans leur propre langue
+                // (« Français », « English ») : c'est ainsi qu'un
+                // utilisateur perdu dans une langue qu'il ne lit pas
+                // retrouve la sienne.
+                child: SegmentedToggle<String>(
+                  options: [
+                    SegmentedToggleOption(
+                      valeur: _langueSysteme,
+                      label: l10n.langueSysteme,
+                    ),
+                    const SegmentedToggleOption(
+                      valeur: 'fr',
+                      label: 'Français',
+                    ),
+                    const SegmentedToggleOption(valeur: 'en', label: 'English'),
+                  ],
+                  selectionne: langueChoisie,
+                  onChanged: (code) => ref
+                      .read(langueProvider.notifier)
+                      .choisir(code == _langueSysteme ? null : code),
+                ),
               ),
-              title: Text(
-                '${deviseChoisie.symbole} · '
-                '${nomDevise(deviseChoisie, Localizations.localeOf(context).languageCode)}',
+            ),
+            const SizedBox(height: 24),
+            Text(l10n.devise, style: Theme.of(context).textTheme.titleMedium),
+            const SizedBox(height: 8),
+            Card(
+              child: ListTile(
+                leading: const PhosphorIcon(
+                  PhosphorIconsRegular.currencyCircleDollar,
+                ),
+                title: Text(
+                  '${deviseChoisie.symbole} · '
+                  '${nomDevise(deviseChoisie, Localizations.localeOf(context).languageCode)}',
+                ),
+                trailing: const PhosphorIcon(PhosphorIconsRegular.caretRight),
+                onTap: () => _choisirDevise(deviseChoisie),
               ),
-              trailing: const PhosphorIcon(PhosphorIconsRegular.caretRight),
-              onTap: () => _choisirDevise(deviseChoisie),
             ),
-          ),
-          const SizedBox(height: 24),
-          Text(
-            l10n.notificationSectionTitre,
-            style: Theme.of(context).textTheme.titleMedium,
-          ),
-          const SizedBox(height: 8),
-          Card(
-            child: Column(
-              children: [
-                SwitchListTile(
-                  secondary: const PhosphorIcon(PhosphorIconsRegular.bell),
-                  title: Text(l10n.notificationRappelQuotidienTitre),
-                  subtitle: Text(
-                    _rappelHeure != null
-                        ? l10n.notificationRappelHeureChoisie(
-                            _rappelHeure!.format(context),
-                          )
-                        : l10n.notificationRappelQuotidienSousTitre,
-                  ),
-                  value: _rappelHeure != null,
-                  onChanged: _basculerRappelQuotidien,
-                ),
-                const Divider(height: 1),
-                SwitchListTile(
-                  secondary: const PhosphorIcon(
-                    PhosphorIconsRegular.calendarCheck,
-                  ),
-                  title: Text(l10n.notificationRecapHebdomadaireTitre),
-                  subtitle: Text(l10n.notificationRecapHebdomadaireSousTitre),
-                  value: _recapActif,
-                  onChanged: _basculerRecapHebdomadaire,
-                ),
-              ],
+            const SizedBox(height: 24),
+            Text(
+              l10n.notificationSectionTitre,
+              style: Theme.of(context).textTheme.titleMedium,
             ),
-          ),
-          const SizedBox(height: 24),
-          Text(l10n.badgesTitre, style: Theme.of(context).textTheme.titleMedium),
-          const SizedBox(height: 8),
-          Card(
-            child: ListTile(
-              leading: const PhosphorIcon(PhosphorIconsRegular.trophy),
-              title: Text(l10n.badgesEntreeReglages),
-              trailing: const PhosphorIcon(PhosphorIconsRegular.caretRight),
-              onTap: () =>
-                  Navigator.of(context).push(routeAnimee(const BadgesScreen())),
-            ),
-          ),
-          const SizedBox(height: 24),
-          Text(l10n.donnees, style: Theme.of(context).textTheme.titleMedium),
-          const SizedBox(height: 8),
-          Card(
-            child: Column(
-              children: [
-                ListTile(
-                  leading: const PhosphorIcon(PhosphorIconsRegular.squaresFour),
-                  title: Text(l10n.categories),
-                  trailing: const PhosphorIcon(PhosphorIconsRegular.caretRight),
-                  onTap: () => Navigator.of(
-                    context,
-                  ).push(routeAnimee(const CategoriesScreen())),
-                ),
-                const Divider(height: 1),
-                ListTile(
-                  leading: const PhosphorIcon(PhosphorIconsRegular.wallet),
-                  title: Text(l10n.comptes),
-                  trailing: const PhosphorIcon(PhosphorIconsRegular.caretRight),
-                  onTap: () => Navigator.of(
-                    context,
-                  ).push(routeAnimee(const ComptesScreen())),
-                ),
-                const Divider(height: 1),
-                ListTile(
-                  leading: const PhosphorIcon(PhosphorIconsRegular.repeat),
-                  title: Text(l10n.recurrences),
-                  trailing: const PhosphorIcon(PhosphorIconsRegular.caretRight),
-                  onTap: () => Navigator.of(
-                    context,
-                  ).push(routeAnimee(const RecurrencesScreen())),
-                ),
-              ],
-            ),
-          ),
-          const SizedBox(height: 24),
-          Text(l10n.export, style: Theme.of(context).textTheme.titleMedium),
-          const SizedBox(height: 8),
-          Card(
-            child: ListTile(
-              leading: const PhosphorIcon(PhosphorIconsRegular.calendarBlank),
-              title: Text(l10n.exporterBouton),
-              trailing: const PhosphorIcon(PhosphorIconsRegular.caretRight),
-              onTap: () =>
-                  Navigator.of(context).push(routeAnimee(const ExportScreen())),
-            ),
-          ),
-          const SizedBox(height: 24),
-          Text(l10n.import, style: Theme.of(context).textTheme.titleMedium),
-          const SizedBox(height: 8),
-          Card(
-            child: ListTile(
-              leading: const PhosphorIcon(PhosphorIconsRegular.uploadSimple),
-              title: Text(l10n.importerCsv),
-              subtitle: Text(l10n.importerCsvSousTitre),
-              trailing: _importEnCours
-                  ? const _IndicateurChargement()
-                  : const PhosphorIcon(PhosphorIconsRegular.caretRight),
-              onTap: _importEnCours ? null : _importer,
-            ),
-          ),
-          const SizedBox(height: 24),
-          Text(l10n.aPropos, style: Theme.of(context).textTheme.titleMedium),
-          const SizedBox(height: 8),
-          Card(
-            child: Column(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(16, 16, 16, 8),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(l10n.aProposEditeur),
-                      const SizedBox(height: 4),
-                      Text(
-                        l10n.aProposHorsLigne,
-                        style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                          color: Theme.of(context).colorScheme.onSurface
-                              .withValues(alpha: 0.7),
-                        ),
-                      ),
-                    ],
+            const SizedBox(height: 8),
+            Card(
+              child: Column(
+                children: [
+                  SwitchListTile(
+                    secondary: const PhosphorIcon(PhosphorIconsRegular.bell),
+                    title: Text(l10n.notificationRappelQuotidienTitre),
+                    subtitle: Text(
+                      _rappelHeure != null
+                          ? l10n.notificationRappelHeureChoisie(
+                              _rappelHeure!.format(context),
+                            )
+                          : l10n.notificationRappelQuotidienSousTitre,
+                    ),
+                    value: _rappelHeure != null,
+                    onChanged: _basculerRappelQuotidien,
                   ),
-                ),
-                const Divider(height: 1),
-                ListTile(
-                  leading: const PhosphorIcon(PhosphorIconsRegular.compass),
-                  title: Text(l10n.reglagesRevoirDidacticiel),
-                  trailing: const PhosphorIcon(PhosphorIconsRegular.caretRight),
-                  onTap: () {
-                    // La visite se joue sur l'écran Capture, toujours à la
-                    // racine de la pile de navigation.
-                    Navigator.of(context).popUntil((route) => route.isFirst);
-                    ref.read(demandeDidacticielProvider.notifier).state++;
-                  },
-                ),
-                const Divider(height: 1),
-                ListTile(
-                  leading: const PhosphorIcon(PhosphorIconsRegular.shieldCheck),
-                  title: Text(l10n.aProposPolitiqueConfidentialite),
-                  trailing: const PhosphorIcon(
-                    PhosphorIconsRegular.arrowSquareOut,
-                    size: 18,
-                  ),
-                  onTap: () =>
-                      _ouvrirLien(Uri.parse(_urlPolitiqueConfidentialite)),
-                ),
-                const Divider(height: 1),
-                ListTile(
-                  leading: const PhosphorIcon(
-                    PhosphorIconsRegular.envelopeSimple,
-                  ),
-                  title: Text(l10n.aProposNousContacter),
-                  subtitle: const Text(_emailContact),
-                  trailing: const PhosphorIcon(
-                    PhosphorIconsRegular.arrowSquareOut,
-                    size: 18,
-                  ),
-                  onTap: () => _ouvrirLien(
-                    Uri(scheme: 'mailto', path: _emailContact),
-                  ),
-                ),
-                if (_version.isNotEmpty) ...[
                   const Divider(height: 1),
-                  ListTile(title: Text(l10n.aProposVersion(_version))),
+                  SwitchListTile(
+                    secondary: const PhosphorIcon(
+                      PhosphorIconsRegular.calendarCheck,
+                    ),
+                    title: Text(l10n.notificationRecapHebdomadaireTitre),
+                    subtitle: Text(l10n.notificationRecapHebdomadaireSousTitre),
+                    value: _recapActif,
+                    onChanged: _basculerRecapHebdomadaire,
+                  ),
                 ],
-              ],
+              ),
             ),
-          ),
-        ],
+            const SizedBox(height: 24),
+            Text(
+              l10n.badgesTitre,
+              style: Theme.of(context).textTheme.titleMedium,
+            ),
+            const SizedBox(height: 8),
+            Card(
+              child: ListTile(
+                leading: const PhosphorIcon(PhosphorIconsRegular.trophy),
+                title: Text(l10n.badgesEntreeReglages),
+                trailing: const PhosphorIcon(PhosphorIconsRegular.caretRight),
+                onTap: () => Navigator.of(
+                  context,
+                ).push(routeAnimee(const BadgesScreen())),
+              ),
+            ),
+            const SizedBox(height: 24),
+            Text(l10n.donnees, style: Theme.of(context).textTheme.titleMedium),
+            const SizedBox(height: 8),
+            Card(
+              child: Column(
+                children: [
+                  ListTile(
+                    leading: const PhosphorIcon(
+                      PhosphorIconsRegular.squaresFour,
+                    ),
+                    title: Text(l10n.categories),
+                    trailing: const PhosphorIcon(
+                      PhosphorIconsRegular.caretRight,
+                    ),
+                    onTap: () => Navigator.of(
+                      context,
+                    ).push(routeAnimee(const CategoriesScreen())),
+                  ),
+                  const Divider(height: 1),
+                  ListTile(
+                    leading: const PhosphorIcon(PhosphorIconsRegular.wallet),
+                    title: Text(l10n.comptes),
+                    trailing: const PhosphorIcon(
+                      PhosphorIconsRegular.caretRight,
+                    ),
+                    onTap: () => Navigator.of(
+                      context,
+                    ).push(routeAnimee(const ComptesScreen())),
+                  ),
+                  const Divider(height: 1),
+                  ListTile(
+                    leading: const PhosphorIcon(PhosphorIconsRegular.repeat),
+                    title: Text(l10n.recurrences),
+                    trailing: const PhosphorIcon(
+                      PhosphorIconsRegular.caretRight,
+                    ),
+                    onTap: () => Navigator.of(
+                      context,
+                    ).push(routeAnimee(const RecurrencesScreen())),
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(height: 24),
+            Text(l10n.export, style: Theme.of(context).textTheme.titleMedium),
+            const SizedBox(height: 8),
+            Card(
+              child: ListTile(
+                leading: const PhosphorIcon(PhosphorIconsRegular.calendarBlank),
+                title: Text(l10n.exporterBouton),
+                trailing: const PhosphorIcon(PhosphorIconsRegular.caretRight),
+                onTap: () => Navigator.of(
+                  context,
+                ).push(routeAnimee(const ExportScreen())),
+              ),
+            ),
+            const SizedBox(height: 24),
+            Text(l10n.import, style: Theme.of(context).textTheme.titleMedium),
+            const SizedBox(height: 8),
+            Card(
+              child: ListTile(
+                leading: const PhosphorIcon(PhosphorIconsRegular.uploadSimple),
+                title: Text(l10n.importerCsv),
+                subtitle: Text(l10n.importerCsvSousTitre),
+                trailing: _importEnCours
+                    ? const _IndicateurChargement()
+                    : const PhosphorIcon(PhosphorIconsRegular.caretRight),
+                onTap: _importEnCours ? null : _importer,
+              ),
+            ),
+            const SizedBox(height: 24),
+            Text(l10n.aPropos, style: Theme.of(context).textTheme.titleMedium),
+            const SizedBox(height: 8),
+            Card(
+              child: Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(16, 16, 16, 8),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(l10n.aProposEditeur),
+                        const SizedBox(height: 4),
+                        Text(
+                          l10n.aProposHorsLigne,
+                          style: Theme.of(context).textTheme.bodySmall
+                              ?.copyWith(
+                                color: Theme.of(
+                                  context,
+                                ).colorScheme.onSurface.withValues(alpha: 0.7),
+                              ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  const Divider(height: 1),
+                  ListTile(
+                    leading: const PhosphorIcon(PhosphorIconsRegular.compass),
+                    title: Text(l10n.reglagesRevoirDidacticiel),
+                    trailing: const PhosphorIcon(
+                      PhosphorIconsRegular.caretRight,
+                    ),
+                    onTap: () {
+                      // La visite se joue sur l'écran Capture, toujours à la
+                      // racine de la pile de navigation.
+                      Navigator.of(context).popUntil((route) => route.isFirst);
+                      ref.read(demandeDidacticielProvider.notifier).state++;
+                    },
+                  ),
+                  const Divider(height: 1),
+                  ListTile(
+                    leading: const PhosphorIcon(
+                      PhosphorIconsRegular.shieldCheck,
+                    ),
+                    title: Text(l10n.aProposPolitiqueConfidentialite),
+                    trailing: const PhosphorIcon(
+                      PhosphorIconsRegular.arrowSquareOut,
+                      size: 18,
+                    ),
+                    onTap: () =>
+                        _ouvrirLien(Uri.parse(_urlPolitiqueConfidentialite)),
+                  ),
+                  const Divider(height: 1),
+                  ListTile(
+                    leading: const PhosphorIcon(
+                      PhosphorIconsRegular.envelopeSimple,
+                    ),
+                    title: Text(l10n.aProposNousContacter),
+                    subtitle: const Text(_emailContact),
+                    trailing: const PhosphorIcon(
+                      PhosphorIconsRegular.arrowSquareOut,
+                      size: 18,
+                    ),
+                    onTap: () =>
+                        _ouvrirLien(Uri(scheme: 'mailto', path: _emailContact)),
+                  ),
+                  if (_version.isNotEmpty) ...[
+                    const Divider(height: 1),
+                    ListTile(title: Text(l10n.aProposVersion(_version))),
+                  ],
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

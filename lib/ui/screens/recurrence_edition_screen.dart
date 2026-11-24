@@ -11,6 +11,7 @@ import '../../logic/providers/repositories_providers.dart';
 import '../widgets/feuille_selection.dart';
 import '../widgets/segmented_toggle.dart';
 import '../../l10n/l10n.dart';
+import '../../core/utils/visuels.dart';
 
 /// Création ou modification d'une transaction récurrente (Phase 4,
 /// section 2.3). `recurrence` nul → création ; sinon, édition.
@@ -65,7 +66,7 @@ class _RecurrenceEditionScreenState
       builder: (context) => FeuilleSelection<Categorie>(
         titre: context.l10n.categorie,
         options: categoriesFiltrees,
-        libelleDe: (c) => c.libelle,
+        libelleDe: (c) => c.nom,
         estSelectionne: (c) => c.id == _categorieId,
         avecOptionTous: false,
       ),
@@ -79,7 +80,7 @@ class _RecurrenceEditionScreenState
       builder: (context) => FeuilleSelection<Compte>(
         titre: context.l10n.compte,
         options: comptes,
-        libelleDe: (c) => c.libelle,
+        libelleDe: (c) => c.nom,
         estSelectionne: (c) => c.id == _compteId,
         avecOptionTous: false,
       ),
@@ -177,14 +178,14 @@ class _RecurrenceEditionScreenState
           ListTile(
             contentPadding: EdgeInsets.zero,
             title: Text(l10n.categorie),
-            subtitle: Text(categorieChoisie?.libelle ?? l10n.aChoisir),
+            subtitle: Text(categorieChoisie?.nom ?? l10n.aChoisir),
             trailing: const PhosphorIcon(PhosphorIconsRegular.caretRight),
             onTap: () => _choisirCategorie(categories),
           ),
           ListTile(
             contentPadding: EdgeInsets.zero,
             title: Text(l10n.compte),
-            subtitle: Text(compteChoisi?.libelle ?? l10n.aChoisir),
+            subtitle: Text(compteChoisi?.nom ?? l10n.aChoisir),
             trailing: const PhosphorIcon(PhosphorIconsRegular.caretRight),
             onTap: () => _choisirCompte(comptes),
           ),

@@ -10,6 +10,7 @@ import '../../logic/providers/repositories_providers.dart';
 import '../navigation/route_animee.dart';
 import '../../l10n/l10n.dart';
 import 'compte_edition_screen.dart';
+import '../../core/utils/visuels.dart';
 
 /// Gestion des comptes, avec solde initial (section 4, écran D). Pas de
 /// réordonnancement ici : le cahier des charges ne le demande que pour
@@ -48,7 +49,7 @@ class ComptesScreen extends ConsumerWidget {
                   ),
                 ),
                 title: Text(
-                  compte.libelle,
+                  compte.nom,
                   style: TextStyle(
                     color: compte.actif
                         ? AppColors.textPrimary

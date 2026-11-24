@@ -6,6 +6,7 @@ import '../../data/models/categorie.dart';
 import '../../data/models/compte.dart';
 import '../../data/models/transaction.dart';
 import '../../data/models/type_mouvement.dart';
+import '../../data/seed/libelles_seed.dart';
 import 'csv_colonnes.dart';
 
 /// Résultat d'une lecture de CSV (section 4, écran D, Phase 4) : les
@@ -40,11 +41,20 @@ ResultatImportCsv parserCsvTransactions(
       ? contenuCsv.substring(1)
       : contenuCsv;
 
+  // Un élément du seed est aussi reconnu sous tous les noms qu'il a pu
+  // porter (FR, EN, avant et après la refonte D) : un export d'une
+  // ancienne version, ou fait dans l'autre langue, se réimporte tel quel.
+  // Le nom stocké passe en dernier, il a donc la priorité.
   final categorieParCle = {
+    for (final c in categories)
+      for (final nom in nomsConnusSeed(c.id))
+        '${c.type.name}|${nom.toLowerCase()}': c,
     for (final c in categories)
       '${c.type.name}|${c.libelle.trim().toLowerCase()}': c,
   };
   final compteParLibelle = {
+    for (final c in comptes)
+      for (final nom in nomsConnusSeed(c.id)) nom.toLowerCase(): c,
     for (final c in comptes) c.libelle.trim().toLowerCase(): c,
   };
   final formatDate = DateFormat('yyyy-MM-dd');

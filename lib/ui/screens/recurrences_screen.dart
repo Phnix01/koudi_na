@@ -8,6 +8,7 @@ import '../../logic/providers/repositories_providers.dart';
 import '../navigation/route_animee.dart';
 import '../../l10n/l10n.dart';
 import 'recurrence_edition_screen.dart';
+import '../../core/utils/visuels.dart';
 
 /// Gestion des transactions récurrentes (Phase 4, section 2.3) :
 /// création, modification, désactivation. Chaque récurrence active
@@ -68,7 +69,7 @@ class RecurrencesScreen extends ConsumerWidget {
                 ),
                 subtitle: Text(
                   context.l10n.recurrenceSousTitre(
-                    categorie?.libelle ?? context.l10n.categorieSupprimee,
+                    categorie?.nom ?? context.l10n.categorieSupprimee,
                     recurrence.jourDuMois,
                   ),
                 ),
