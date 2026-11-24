@@ -42,7 +42,7 @@ void main() {
     await seedSiPremierLancement(comptes: CompteRepository(), categories: CategorieRepository(), langue: 'fr');
   });
 
-  tearDown(() => Hive.deleteFromDisk());
+  tearDown(() => Hive.close());
 
   Future<void> monter(WidgetTester tester, TypeMouvement type) async {
     tester.view.physicalSize = const Size(390, 844) * 3;

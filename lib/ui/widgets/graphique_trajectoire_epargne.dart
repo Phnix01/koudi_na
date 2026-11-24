@@ -53,14 +53,14 @@ class GraphiqueTrajectoireEpargne extends StatelessWidget {
                   horizontalLines: [
                     HorizontalLine(
                       y: trajectoire.objectif.toDouble(),
-                      color: AppColors.accent,
+                      color: AppColors.textMuted,
                       strokeWidth: 1,
                       dashArray: const [6, 4],
                       label: HorizontalLineLabel(
                         show: true,
                         alignment: Alignment.topRight,
                         style: const TextStyle(
-                          color: AppColors.accent,
+                          color: AppColors.textMuted,
                           fontSize: 10,
                         ),
                         labelResolver: (_) => context.l10n.objectif,

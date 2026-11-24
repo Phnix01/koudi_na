@@ -96,7 +96,7 @@ class _EnTeteProgression extends StatelessWidget {
             children: [
               const PhosphorIcon(
                 PhosphorIconsFill.trophy,
-                color: AppColors.accent,
+                color: AppColors.or,
                 size: 18,
               ),
               const SizedBox(width: AppSpacing.s8),
@@ -113,7 +113,7 @@ class _EnTeteProgression extends StatelessWidget {
               value: proportion,
               minHeight: 8,
               backgroundColor: AppColors.surfaceHigh,
-              color: AppColors.accent,
+              color: AppColors.or,
             ),
           ),
         ],
@@ -137,17 +137,17 @@ class _CarteBadge extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: debloque ? AppColors.accent.withValues(alpha: 0.08) : AppColors.surface,
+        color: debloque ? AppColors.or.withValues(alpha: 0.08) : AppColors.surface,
         borderRadius: BorderRadius.circular(AppSpacing.radius),
         border: Border.all(
           color: debloque
-              ? AppColors.accent.withValues(alpha: 0.5)
+              ? AppColors.or.withValues(alpha: 0.5)
               : AppColors.surfaceHigh,
         ),
         boxShadow: debloque
             ? [
                 BoxShadow(
-                  color: AppColors.accent.withValues(alpha: 0.18),
+                  color: AppColors.or.withValues(alpha: 0.18),
                   blurRadius: 14,
                   offset: const Offset(0, 4),
                 ),

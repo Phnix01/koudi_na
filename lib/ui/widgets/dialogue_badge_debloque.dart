@@ -49,7 +49,7 @@ class _CarteDeblocageBadge extends StatelessWidget {
             padding: const EdgeInsets.all(AppSpacing.s24),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(AppSpacing.radius),
-              border: Border.all(color: AppColors.accent.withValues(alpha: 0.5)),
+              border: Border.all(color: AppColors.or.withValues(alpha: 0.5)),
             ),
             child: Column(
               mainAxisSize: MainAxisSize.min,
@@ -61,8 +61,8 @@ class _CarteDeblocageBadge extends StatelessWidget {
                     shape: BoxShape.circle,
                     gradient: RadialGradient(
                       colors: [
-                        AppColors.accent.withValues(alpha: 0.35),
-                        AppColors.accent.withValues(alpha: 0),
+                        AppColors.or.withValues(alpha: 0.35),
+                        AppColors.or.withValues(alpha: 0),
                       ],
                     ),
                   ),
@@ -85,7 +85,7 @@ class _CarteDeblocageBadge extends StatelessWidget {
                 Text(
                   l10n.badgesDeblocageTitre.toUpperCase(),
                   style: Theme.of(context).textTheme.labelMedium?.copyWith(
-                    color: AppColors.accent,
+                    color: AppColors.or,
                     fontWeight: FontWeight.w700,
                     letterSpacing: 0.6,
                   ),

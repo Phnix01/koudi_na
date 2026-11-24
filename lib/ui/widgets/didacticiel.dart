@@ -201,7 +201,7 @@ class _CarteEtape extends StatelessWidget {
         padding: const EdgeInsets.fromLTRB(20, 16, 12, 8),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(AppSpacing.radius),
-          border: Border.all(color: AppColors.accent.withValues(alpha: 0.4)),
+          border: Border.all(color: AppColors.positive.withValues(alpha: 0.4)),
         ),
         child: Column(
           mainAxisSize: MainAxisSize.min,
@@ -210,7 +210,7 @@ class _CarteEtape extends StatelessWidget {
             Text(
               l10n.didacticielEtape(numero, total),
               style: theme.textTheme.labelSmall?.copyWith(
-                color: AppColors.accent,
+                color: AppColors.positive,
                 fontWeight: FontWeight.w700,
                 letterSpacing: 0.6,
               ),
@@ -280,7 +280,7 @@ class _Progression extends StatelessWidget {
             height: 5,
             decoration: BoxDecoration(
               color: i <= numero
-                  ? AppColors.accent
+                  ? AppColors.positive
                   : AppColors.textMuted.withValues(alpha: 0.35),
               borderRadius: BorderRadius.circular(999),
             ),
@@ -317,7 +317,7 @@ class _PeintreProjecteur extends CustomPainter {
       Paint()
         ..style = PaintingStyle.stroke
         ..strokeWidth = 1.5
-        ..color = AppColors.accent.withValues(alpha: 0.85),
+        ..color = AppColors.positive.withValues(alpha: 0.85),
     );
   }
 

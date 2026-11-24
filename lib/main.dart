@@ -69,6 +69,13 @@ class MyApp extends ConsumerWidget {
       theme: AppTheme.clair,
       themeMode: ThemeMode.light,
       debugShowCheckedModeBanner: false,
+      // Icônes de barre d'état sombres partout : les onglets n'ont pas
+      // d'AppBar pour les imposer, et un iPhone en mode sombre les
+      // afficherait en blanc, invisibles sur le fond clair.
+      builder: (context, enfant) => AnnotatedRegion<SystemUiOverlayStyle>(
+        value: SystemUiOverlayStyle.dark.copyWith(statusBarColor: Colors.transparent),
+        child: enfant!,
+      ),
       home: const SplashScreen(),
     );
   }

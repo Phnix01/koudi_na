@@ -16,6 +16,11 @@ import '../navigation/route_animee.dart';
 import '../widgets/devise_selecteur_feuille.dart';
 import '../widgets/segmented_toggle.dart';
 import '../shell/app_shell.dart';
+import '../../core/utils/couleur_utils.dart';
+import '../../core/utils/visuels.dart';
+import '../../data/seed/libelles_seed.dart';
+import '../widgets/koudi/amount_text.dart';
+import '../widgets/koudi/category_tile.dart';
 
 /// Onboarding du tout premier lancement : quatre écrans, une promesse
 /// par écran, puis l'application. Ne s'affiche plus jamais ensuite
@@ -197,7 +202,7 @@ class _PageOnboarding extends StatelessWidget {
         children: [
           SizedBox(height: 180, child: Center(child: visuel)),
           const SizedBox(height: AppSpacing.s32),
-          Text(titre, style: texte.displayMedium),
+          Text(titre, style: texte.displaySmall),
           const SizedBox(height: AppSpacing.s16),
           Text(
             corps,
@@ -253,10 +258,13 @@ class _SelecteurDevise extends ConsumerWidget {
         ),
         const SizedBox(height: AppSpacing.s8),
         Material(
-          color: AppColors.surfaceHigh,
-          borderRadius: BorderRadius.circular(AppSpacing.radius),
+          color: AppColors.surface,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(16),
+            side: const BorderSide(color: Color(0xFFE6E6E1)),
+          ),
           child: InkWell(
-            borderRadius: BorderRadius.circular(AppSpacing.radius),
+            borderRadius: BorderRadius.circular(16),
             onTap: () => _choisir(context, ref, courante),
             child: Padding(
               padding: const EdgeInsets.symmetric(
@@ -307,7 +315,7 @@ class _IndicateurPages extends StatelessWidget {
             width: i == courante ? 24 : 8,
             height: 8,
             decoration: BoxDecoration(
-              color: i == courante ? AppColors.primary : AppColors.surfaceHigh,
+              color: i == courante ? AppColors.textPrimary : const Color(0xFFE4E4DF),
               borderRadius: BorderRadius.circular(4),
             ),
           ),
@@ -335,67 +343,35 @@ class _VisuelCapture extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Les vraies tuiles de la saisie, avec les vrais noms courts : ce que
+    // l'utilisateur verra en touchant « + », Transport choisi.
+    Widget tuile(String id, IconData icone, String couleur, {bool sel = false}) => SizedBox(
+      width: 78,
+      child: CategoryTile(
+        icone: icone,
+        libelle: libelleAffiche(id, libellesSeed[id]!.fr, court: true),
+        couleur: depuisHex(couleur),
+        teinte: teinteDe(couleur),
+        selectionnee: sel,
+        onTap: () {},
+      ),
+    );
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
-        Text(
-          formaterMontant(2500),
-          style: Theme.of(context).textTheme.displayLarge,
-        ),
+        AmountText(2500, style: Theme.of(context).textTheme.displayMedium, tailleUnite: 17),
         const SizedBox(height: AppSpacing.s16),
         Row(
           mainAxisSize: MainAxisSize.min,
-          children: const [
-            _PastilleCategorie(
-              icone: PhosphorIconsFill.bowlFood,
-              couleur: Color(0xFFF5A623),
-            ),
-            SizedBox(width: AppSpacing.s12),
-            // Transport sélectionné : c'est l'exemple que cite le texte.
-            _PastilleCategorie(
-              icone: PhosphorIconsFill.car,
-              couleur: Color(0xFF4A90D9),
-              selectionnee: true,
-            ),
-            SizedBox(width: AppSpacing.s12),
-            _PastilleCategorie(
-              icone: PhosphorIconsFill.deviceMobile,
-              couleur: AppColors.accent,
-            ),
+          children: [
+            tuile('cat-nourriture', PhosphorIconsRegular.bowlFood, '#B45309'),
+            const SizedBox(width: 8),
+            tuile('cat-transport', PhosphorIconsRegular.car, '#2F5BD3', sel: true),
+            const SizedBox(width: 8),
+            tuile('cat-data-telecom', PhosphorIconsRegular.wifiHigh, '#7C4DCC'),
           ],
         ),
       ],
-    );
-  }
-}
-
-class _PastilleCategorie extends StatelessWidget {
-  const _PastilleCategorie({
-    required this.icone,
-    required this.couleur,
-    this.selectionnee = false,
-  });
-
-  final PhosphorIconData icone;
-  final Color couleur;
-  final bool selectionnee;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: 52,
-      height: 52,
-      decoration: BoxDecoration(
-        color: selectionnee ? couleur : couleur.withValues(alpha: 0.18),
-        shape: BoxShape.circle,
-      ),
-      child: Center(
-        child: PhosphorIcon(
-          icone,
-          color: selectionnee ? AppColors.bg : couleur,
-          size: 24,
-        ),
-      ),
     );
   }
 }
@@ -431,7 +407,7 @@ class _VisuelPiliers extends StatelessWidget {
                       height: 22,
                       decoration: BoxDecoration(
                         color: couleursPiliers[entree.key],
-                        borderRadius: BorderRadius.circular(6),
+                        borderRadius: BorderRadius.circular(11),
                       ),
                     ),
                   ),
@@ -467,14 +443,14 @@ class _VisuelConfidentialite extends StatelessWidget {
       width: 140,
       height: 140,
       decoration: BoxDecoration(
-        color: AppColors.primary.withValues(alpha: 0.15),
+        color: Color(0xFFDDEFE5),
         shape: BoxShape.circle,
       ),
       child: const Center(
         child: PhosphorIcon(
-          PhosphorIconsFill.lockKey,
-          color: AppColors.primary,
-          size: 64,
+          PhosphorIconsRegular.lockKey,
+          color: AppColors.positive,
+          size: 60,
         ),
       ),
     );
