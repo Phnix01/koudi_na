@@ -221,11 +221,21 @@ class _ReglagesScreenState extends ConsumerState<ReglagesScreen> {
     final langueChoisie = ref.watch(langueProvider) ?? _langueSysteme;
     final deviseChoisie = ref.watch(deviseProvider);
 
+    // Onglet de la barre du bas : même grand titre que Journal et Analyse.
     return Scaffold(
-      appBar: AppBar(title: Text(l10n.reglages)),
-      body: ListView(
-        padding: const EdgeInsets.all(16),
+      body: SafeArea(
+        bottom: false,
+        child: ListView(
+        padding: const EdgeInsets.fromLTRB(20, 8, 20, 32),
         children: [
+          SizedBox(
+            height: 44,
+            child: Align(
+              alignment: Alignment.centerLeft,
+              child: Text(l10n.reglages, style: Theme.of(context).textTheme.headlineMedium),
+            ),
+          ),
+          const SizedBox(height: 16),
           Text(l10n.langue, style: Theme.of(context).textTheme.titleMedium),
           const SizedBox(height: 8),
           Card(

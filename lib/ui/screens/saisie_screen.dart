@@ -373,7 +373,7 @@ class _CorpsSaisieState extends ConsumerState<_CorpsSaisie> {
                 if (!aujourdhui) TextSpan(text: '${DateFormat.MMMd().format(form.date)} · '),
                 TextSpan(text: '${categorie.nom} · ${l10n.saisieResteAvant}'),
                 TextSpan(
-                  text: formaterSigne(reste),
+                  text: reste >= 0 ? formaterNombre(reste) : formaterSigne(reste),
                   style: TextStyle(
                     color: reste >= 0 ? t.positive : t.streak,
                     fontWeight: FontWeight.w600,
@@ -467,15 +467,18 @@ class _CorpsSaisieState extends ConsumerState<_CorpsSaisie> {
               borderRadius: BorderRadius.circular(12),
               border: Border.all(color: sel ? t.ink : t.lineStrong),
             ),
-            child: Text(
-              c.nom,
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              textScaler: MediaQuery.textScalerOf(context).clamp(maxScaleFactor: 1.15),
-              style: Theme.of(context).textTheme.labelMedium?.copyWith(
-                fontSize: 12,
-                fontWeight: FontWeight.w600,
-                color: sel ? t.onInk : t.ink2,
+            // « Mobile money » rétrécit un peu plutôt que d'être coupé.
+            child: FittedBox(
+              fit: BoxFit.scaleDown,
+              child: Text(
+                c.nom,
+                maxLines: 1,
+                textScaler: MediaQuery.textScalerOf(context).clamp(maxScaleFactor: 1.15),
+                style: Theme.of(context).textTheme.labelMedium?.copyWith(
+                  fontSize: 12,
+                  fontWeight: FontWeight.w600,
+                  color: sel ? t.onInk : t.ink2,
+                ),
               ),
             ),
           ),
