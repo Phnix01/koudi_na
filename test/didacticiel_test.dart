@@ -12,7 +12,7 @@ void main() {
   Future<BuildContext> monter(WidgetTester tester) async {
     await tester.pumpWidget(
       MaterialApp(
-        theme: AppTheme.dark,
+        theme: AppTheme.clair,
         locale: const Locale('fr'),
         localizationsDelegates: AppLocalizations.localizationsDelegates,
         supportedLocales: AppLocalizations.supportedLocales,

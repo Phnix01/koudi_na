@@ -19,19 +19,14 @@ Future<void> main() async {
   // charger les symboles de date) avant runApp().
   WidgetsFlutterBinding.ensureInitialized();
 
-  // Inter et Sora sont embarquées dans assets/google_fonts/ (voir
-  // AppTheme) : l'app reste 100 % hors ligne, aucune police n'est
-  // téléchargée au premier lancement.
+  // Geist est embarquée dans assets/google_fonts/ (voir AppTheme) : l'app
+  // reste 100 % hors ligne, aucune police n'est téléchargée.
   GoogleFonts.config.allowRuntimeFetching = false;
   LicenseRegistry.addLicense(() async* {
-    final interLicense = await rootBundle.loadString(
-      'assets/google_fonts/OFL-Inter.txt',
+    final licence = await rootBundle.loadString(
+      'assets/google_fonts/OFL-Geist.txt',
     );
-    yield LicenseEntryWithLineBreaks(['google_fonts'], interLicense);
-    final soraLicense = await rootBundle.loadString(
-      'assets/google_fonts/OFL-Sora.txt',
-    );
-    yield LicenseEntryWithLineBreaks(['google_fonts'], soraLicense);
+    yield LicenseEntryWithLineBreaks(['google_fonts'], licence);
   });
 
   await initialiserHive();
@@ -69,10 +64,11 @@ class MyApp extends ConsumerWidget {
       locale: locale,
       supportedLocales: AppLocalizations.supportedLocales,
       localizationsDelegates: AppLocalizations.localizationsDelegates,
-      // Sombre par défaut (section 3.1) : le thème clair viendra plus tard.
-      theme: AppTheme.dark,
-      darkTheme: AppTheme.dark,
-      themeMode: ThemeMode.dark,
+      // Refonte D : thème clair uniquement. La variante sombre des jetons
+      // existe (KoudiTokens.sombre) mais n'est pas encore activée.
+      theme: AppTheme.clair,
+      themeMode: ThemeMode.light,
+      debugShowCheckedModeBanner: false,
       home: const SplashScreen(),
     );
   }
