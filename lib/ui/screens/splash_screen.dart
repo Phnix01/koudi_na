@@ -5,7 +5,7 @@ import '../../core/theme/app_colors.dart';
 import '../../core/theme/app_spacing.dart';
 import '../../logic/providers/langue_provider.dart' show reglagesRepositoryProvider;
 import '../navigation/route_animee.dart';
-import 'capture_screen.dart';
+import '../shell/app_shell.dart';
 import 'onboarding_screen.dart';
 
 /// Taille du logo animé, en pixels logiques. Les coordonnées du K ci-
@@ -65,7 +65,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen>
         .onboardingTermine;
     Navigator.of(context).pushReplacement(
       routeAnimee(
-        onboardingTermine ? const CaptureScreen() : const OnboardingScreen(),
+        onboardingTermine ? const AppShell() : const OnboardingScreen(),
       ),
     );
   }

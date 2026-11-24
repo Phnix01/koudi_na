@@ -24,7 +24,7 @@ class GamificationRepository {
       DateTime.tryParse(_box.get(_cleDerniereActivite) ?? '');
 
   /// Persiste la nouvelle série après une saisie active (voir
-  /// `capture_screen.dart`) et met à jour le record si dépassé.
+  /// `progression_utilisateur.dart`) et met à jour le record si dépassé.
   Future<void> enregistrerActivite(DateTime date, int nouvelleSerie) {
     final record = nouvelleSerie > serieRecord ? nouvelleSerie : serieRecord;
     return _box.putAll({

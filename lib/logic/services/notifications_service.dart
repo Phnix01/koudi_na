@@ -100,7 +100,7 @@ class NotificationsService {
       _plugin.cancel(id: _idRecapHebdomadaire);
 
   /// Affichée immédiatement (pas planifiée) : calculée en direct au
-  /// moment où l'app repasse au premier plan, voir `capture_screen.dart`.
+  /// moment où l'app repasse au premier plan, voir `ui/shell/app_shell.dart`.
   Future<void> afficherAlerteDepassement(
     Pilier pilier, {
     required String titre,

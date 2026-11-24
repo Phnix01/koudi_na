@@ -117,11 +117,11 @@ class _PeintreHeatmap extends CustomPainter {
       for (var m = 0; m < moments.length; m++) {
         final montant = grille.montants[j][m];
         final intensite = montant / grille.maxMontant;
-        // Interpole entre "case vide" et "rouge dépense" selon l'intensité :
-        // Color.lerp(a, b, t) mélange deux couleurs, t=0 → a, t=1 → b.
+        // Interpole entre "case vide" et l'encre selon l'intensité (refonte
+        // D : un seul accent, les dépenses sont en encre partout).
         stylePeinture.color = Color.lerp(
           AppColors.surfaceHigh,
-          AppColors.negative,
+          AppColors.textPrimary,
           intensite,
         )!;
 

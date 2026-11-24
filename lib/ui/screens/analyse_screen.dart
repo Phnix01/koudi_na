@@ -1,360 +1,142 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:intl/intl.dart';
+import 'package:phosphor_flutter/phosphor_flutter.dart';
 
 import '../../core/constants/astuces.dart';
-import '../../core/constants/couleurs_piliers.dart';
-import '../../core/theme/app_colors.dart';
-import '../../core/utils/couleur_utils.dart';
+import '../../core/theme/koudi_tokens.dart';
+import '../../core/utils/dates.dart';
 import '../../core/utils/formatters.dart';
-import '../../data/models/pilier.dart';
-import '../../logic/providers/repositories_providers.dart';
-import '../../logic/services/comparaison_mensuelle.dart';
-import '../../logic/services/equilibre_piliers.dart';
-import '../../logic/services/evolution_mensuelle.dart';
-import '../../logic/services/habitudes_hebdomadaires.dart';
-import '../../logic/services/indicateurs_analyse.dart';
-import '../../logic/services/observations_automatiques.dart';
-import '../../logic/services/repartition_categories.dart';
-import '../../logic/services/rythme_mois.dart';
-import '../../logic/services/trajectoire_epargne.dart';
-import '../widgets/graphique_comparaison.dart';
-import '../widgets/graphique_equilibre_piliers.dart';
-import '../widgets/graphique_evolution_mensuelle.dart';
-import '../widgets/graphique_repartition.dart';
-import '../widgets/graphique_rythme.dart';
-import '../widgets/graphique_trajectoire_epargne.dart';
-import '../widgets/astuce_du_jour.dart';
-import '../widgets/heatmap_habitudes.dart';
-import '../widgets/montant_anime.dart';
-import '../widgets/observations_automatiques.dart';
+import '../../core/utils/visuels.dart';
 import '../../l10n/l10n.dart';
+import '../../logic/providers/devise_provider.dart';
+import '../../logic/providers/repositories_providers.dart';
+import '../../logic/services/analyse_periode.dart';
+import '../../logic/services/habitudes_hebdomadaires.dart';
+import '../../logic/services/observations_automatiques.dart';
+import '../../logic/services/tableau_de_bord.dart';
+import '../../logic/services/trajectoire_epargne.dart';
+import '../widgets/astuce_du_jour.dart';
+import '../widgets/graphique_trajectoire_epargne.dart';
+import '../widgets/heatmap_habitudes.dart';
+import '../widgets/segmented_toggle.dart';
 
-/// Écran C (section 5) : les indicateurs calculés (section 5.2), les
-/// sept graphiques (section 5.1) et les observations automatiques
-/// (section 5.3). Le polissage visuel général arrivera dans la
-/// dernière étape de la Phase 3.
-class AnalyseScreen extends ConsumerWidget {
+/// Analyse (brief §4.5) : la projection en une phrase, l'histogramme
+/// entrées/dépenses, où va l'argent — puis les analyses déjà présentes
+/// dans l'app, restylées (observations, trajectoire d'épargne, jours qui
+/// coûtent) et l'astuce du jour.
+class AnalyseScreen extends ConsumerStatefulWidget {
   const AnalyseScreen({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final transactionRepo = ref.watch(transactionRepositoryProvider);
-    final categories = ref.watch(categorieRepositoryProvider).tous();
-    final comptes = ref.watch(compteRepositoryProvider).tous();
+  ConsumerState<AnalyseScreen> createState() => _AnalyseScreenState();
+}
 
-    return Scaffold(
-      appBar: AppBar(title: Text(context.l10n.analyse)),
-      body: ValueListenableBuilder(
-        valueListenable: transactionRepo.listenable(),
+class _AnalyseScreenState extends ConsumerState<AnalyseScreen> {
+  PeriodeAnalyse _periode = PeriodeAnalyse.sixMois;
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = context.l10n;
+    final texte = Theme.of(context).textTheme;
+    final repo = ref.watch(transactionRepositoryProvider);
+    final categoriesRepo = ref.watch(categorieRepositoryProvider);
+    final comptesRepo = ref.watch(compteRepositoryProvider);
+    ref.watch(deviseProvider);
+
+    return SafeArea(
+      bottom: false,
+      child: ValueListenableBuilder(
+        valueListenable: repo.listenable(),
         builder: (context, _, _) {
-          final l10n = context.l10n;
-          final toutesLesTransactions = transactionRepo.tous();
-          final indicateurs = calculerIndicateurs(
-            toutesLesTransactions,
-            categories,
-            comptes,
-          );
-          final evolution = calculerEvolutionMensuelle(toutesLesTransactions);
-          final repartition = calculerRepartitionDepenses(
-            toutesLesTransactions,
-            categories,
-          );
-          final comparaison = calculerComparaisonMensuelle(
-            toutesLesTransactions,
-            categories,
-          );
-          final top5 = comparaison.take(5).toList();
-          final rythme = calculerRythmeMois(toutesLesTransactions);
-          final habitudes = calculerHabitudesHebdomadaires(
-            toutesLesTransactions,
-          );
-          final trajectoire = calculerTrajectoireEpargne(
-            toutesLesTransactions,
-            categories,
-            comptes,
-          );
-          final equilibre = calculerEquilibrePiliers(
-            toutesLesTransactions,
-            categories,
-          );
-          final observations = genererObservations(
-            toutesLesTransactions,
-            categories,
-            comptes,
-            l10n,
-          );
+          final maintenant = DateTime.now();
+          final moisCourant = DateTime(maintenant.year, maintenant.month);
+          final transactions = repo.tous();
+          final categories = categoriesRepo.tous();
+          final comptes = comptesRepo.tous();
+          final tableau = calculerTableauDeBord(transactions, categories, mois: moisCourant);
+          final barres = calculerBarres(transactions, _periode);
+          final parts = calculerRepartitionPeriode(transactions, categories, _periode);
+          final observations = genererObservations(transactions, categories, comptes, l10n);
+          final trajectoire = calculerTrajectoireEpargne(transactions, categories, comptes);
+          final habitudes = calculerHabitudesHebdomadaires(transactions);
+          final vide = transactions.isEmpty;
+
+          final libellePeriode = switch (_periode) {
+            PeriodeAnalyse.mois => nomMois(moisCourant),
+            PeriodeAnalyse.sixMois => l10n.periode6Mois,
+            PeriodeAnalyse.annee => l10n.periodeAnnee.toLowerCase(),
+          };
+
+          final blocs = <Widget>[
+            _Projection(tableau: tableau, mois: moisCourant),
+            _CarteHistogramme(barres: barres, periode: _periode),
+            _OuVaLArgent(parts: parts, titre: l10n.ouVaLArgent(libellePeriode)),
+            if (observations.isNotEmpty) _Observations(observations: observations),
+            if (trajectoire.points.any((p) => p.cumul > 0))
+              _Section(
+                titre: l10n.trajectoireEpargne,
+                enfant: GraphiqueTrajectoireEpargne(trajectoire: trajectoire),
+              ),
+            if (habitudes.maxMontant > 0)
+              _Section(
+                titre: l10n.analyseJoursCouteux,
+                enfant: HeatmapHabitudes(grille: habitudes),
+              ),
+            AstuceDuJour(texte: astuceDuJour(maintenant, Localizations.localeOf(context).languageCode)),
+          ];
 
           return ListView(
-            padding: const EdgeInsets.all(16),
-            children:
-                [
-                      if (observations.isNotEmpty) ...[
-                        ObservationsAutomatiques(observations: observations),
-                        const SizedBox(height: 12),
+            padding: const EdgeInsets.fromLTRB(20, 8, 20, 32),
+            children: [
+              SizedBox(
+                height: 44,
+                child: Row(
+                  children: [
+                    Expanded(child: Text(l10n.analyse, style: texte.headlineMedium)),
+                    SegmentedToggle<PeriodeAnalyse>(
+                      hauteur: 30,
+                      taillePolice: 13,
+                      largeurSegment: 62,
+                      options: [
+                        SegmentedToggleOption(valeur: PeriodeAnalyse.mois, label: l10n.periodeMois),
+                        SegmentedToggleOption(valeur: PeriodeAnalyse.sixMois, label: l10n.periode6Mois),
+                        SegmentedToggleOption(valeur: PeriodeAnalyse.annee, label: l10n.periodeAnnee),
                       ],
-                      AstuceDuJour(
-                        texte: astuceDuJour(
-                          DateTime.now(),
-                          Localizations.localeOf(context).languageCode,
-                        ),
+                      selectionne: _periode,
+                      onChanged: (p) => setState(() => _periode = p),
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 20),
+              if (vide)
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 40),
+                  child: Column(
+                    children: [
+                      Icon(PhosphorIconsRegular.chartBar, size: 32, color: context.tokens.disabled),
+                      const SizedBox(height: 10),
+                      Text(
+                        l10n.analyseVide,
+                        textAlign: TextAlign.center,
+                        style: texte.bodyMedium?.copyWith(color: context.tokens.muted),
                       ),
-                      const SizedBox(height: 12),
-                      Card(
-                        child: Padding(
-                          padding: const EdgeInsets.fromLTRB(8, 16, 16, 8),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.only(left: 8),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      l10n.evolution12Mois,
-                                      style: Theme.of(
-                                        context,
-                                      ).textTheme.titleMedium,
-                                    ),
-                                    const SizedBox(height: 4),
-                                    Row(
-                                      children: [
-                                        _PastilleLegende(
-                                          couleur: AppColors.positive,
-                                          libelle: l10n.entrees,
-                                        ),
-                                        const SizedBox(width: 16),
-                                        _PastilleLegende(
-                                          couleur: AppColors.negative,
-                                          libelle: l10n.depenses,
-                                        ),
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              const SizedBox(height: 12),
-                              GraphiqueEvolutionMensuelle(points: evolution),
-                            ],
-                          ),
-                        ),
-                      ),
-                      const SizedBox(height: 12),
-                      Card(
-                        child: Padding(
-                          padding: const EdgeInsets.all(16),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                l10n.repartitionDepensesMois,
-                                style: Theme.of(context).textTheme.titleMedium,
-                              ),
-                              const SizedBox(height: 12),
-                              GraphiqueRepartition(parts: repartition),
-                            ],
-                          ),
-                        ),
-                      ),
-                      const SizedBox(height: 12),
-                      Card(
-                        child: Padding(
-                          padding: const EdgeInsets.all(16),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                l10n.top5Titre,
-                                style: Theme.of(context).textTheme.titleMedium,
-                              ),
-                              const SizedBox(height: 4),
-                              Row(
-                                children: [
-                                  _PastilleLegende(
-                                    couleur: AppColors.textMuted,
-                                    libelle: l10n.moisDernier,
-                                  ),
-                                  const SizedBox(width: 16),
-                                  Text(
-                                    l10n.ceMoisCouleurCategorie,
-                                    style: Theme.of(context).textTheme.bodySmall
-                                        ?.copyWith(color: AppColors.textMuted),
-                                  ),
-                                ],
-                              ),
-                              const SizedBox(height: 12),
-                              GraphiqueComparaison(comparaisons: top5),
-                              const SizedBox(height: 12),
-                              for (final ligne in top5)
-                                _LigneTop5(comparaison: ligne),
-                            ],
-                          ),
-                        ),
-                      ),
-                      const SizedBox(height: 12),
-                      Card(
-                        child: Padding(
-                          padding: const EdgeInsets.all(16),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                l10n.rythmeDuMois,
-                                style: Theme.of(context).textTheme.titleMedium,
-                              ),
-                              const SizedBox(height: 12),
-                              GraphiqueRythme(rythme: rythme),
-                            ],
-                          ),
-                        ),
-                      ),
-                      const SizedBox(height: 12),
-                      Card(
-                        child: Padding(
-                          padding: const EdgeInsets.all(16),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                l10n.habitudesHebdo90,
-                                style: Theme.of(context).textTheme.titleMedium,
-                              ),
-                              const SizedBox(height: 12),
-                              HeatmapHabitudes(grille: habitudes),
-                            ],
-                          ),
-                        ),
-                      ),
-                      const SizedBox(height: 12),
-                      Card(
-                        child: Padding(
-                          padding: const EdgeInsets.all(16),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                l10n.trajectoireEpargne,
-                                style: Theme.of(context).textTheme.titleMedium,
-                              ),
-                              const SizedBox(height: 12),
-                              GraphiqueTrajectoireEpargne(
-                                trajectoire: trajectoire,
-                              ),
-                              if (trajectoire.objectif == 0) ...[
-                                const SizedBox(height: 8),
-                                Text(
-                                  l10n.aucunObjectifRegle,
-                                  style: Theme.of(context).textTheme.bodySmall
-                                      ?.copyWith(color: AppColors.textMuted),
-                                ),
-                              ],
-                            ],
-                          ),
-                        ),
-                      ),
-                      const SizedBox(height: 12),
-                      Card(
-                        child: Padding(
-                          padding: const EdgeInsets.all(16),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                l10n.equilibrePiliers6Mois,
-                                style: Theme.of(context).textTheme.titleMedium,
-                              ),
-                              const SizedBox(height: 4),
-                              Row(
-                                children: [
-                                  _PastilleLegende(
-                                    couleur: couleursPiliers[Pilier.epargne]!,
-                                    libelle: l10n.pilierEpargne,
-                                  ),
-                                  const SizedBox(width: 12),
-                                  _PastilleLegende(
-                                    couleur: couleursPiliers[Pilier.famille]!,
-                                    libelle: l10n.pilierFamille,
-                                  ),
-                                  const SizedBox(width: 12),
-                                  _PastilleLegende(
-                                    couleur: couleursPiliers[Pilier.vie]!,
-                                    libelle: l10n.pilierVie,
-                                  ),
-                                ],
-                              ),
-                              const SizedBox(height: 12),
-                              GraphiqueEquilibrePiliers(mois: equilibre),
-                            ],
-                          ),
-                        ),
-                      ),
-                      const SizedBox(height: 12),
-                      _CarteIndicateur(
-                        titre: l10n.autonomieFinanciere,
-                        valeur: l10n.autonomieValeur(
-                          formaterDecimal(indicateurs.autonomieFinanciereMois),
-                        ),
-                        description: l10n.autonomieDescription,
-                        accent: true,
-                      ),
-                      const SizedBox(height: 12),
-                      Row(
-                        children: [
-                          Expanded(
-                            child: _CarteIndicateur(
-                              titre: l10n.tauxEpargne,
-                              valeur:
-                                  '${(indicateurs.tauxEpargne * 100).round()} %',
-                            ),
-                          ),
-                          const SizedBox(width: 12),
-                          Expanded(
-                            child: _CarteIndicateur(
-                              titre: l10n.joursSansDepense,
-                              valeur: '${indicateurs.joursSansDepense}',
-                            ),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 12),
-                      Row(
-                        children: [
-                          Expanded(
-                            child: _CarteIndicateur(
-                              titre: l10n.depenseMoyJourMois,
-                              valeurMontant:
-                                  indicateurs.depenseMoyenneJournaliereMois,
-                            ),
-                          ),
-                          const SizedBox(width: 12),
-                          Expanded(
-                            child: _CarteIndicateur(
-                              titre: l10n.depenseMoyJourHistorique,
-                              valeurMontant: indicateurs
-                                  .depenseMoyenneJournaliereHistorique,
-                            ),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 12),
-                      _CarteIndicateur(
-                        titre: l10n.projectionFinDeMois,
-                        valeurMontant: indicateurs.projectionFinDeMois,
-                        description: indicateurs.projectionDepasseEntrees
-                            ? l10n.projectionDepasseEntrees
-                            : null,
-                        alerte: indicateurs.projectionDepasseEntrees,
-                      ),
-                      // Cascade d'entrée (section 3.2) : chaque carte apparaît
-                      // 40 ms après la précédente plutôt que toutes en même
-                      // temps — .animate(interval:) répète la même chaîne
-                      // d'effets sur chaque enfant de la liste, en décalant
-                      // son départ à chaque fois.
-                    ]
-                    .animate(interval: 40.ms)
-                    .fadeIn(duration: 300.ms)
-                    .slideY(begin: 0.06, end: 0, curve: Curves.easeOut),
+                    ],
+                  ),
+                )
+              else
+                for (var i = 0; i < blocs.length; i++)
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 20),
+                    child: blocs[i]
+                        .animate(delay: (40 * i).ms)
+                        .fadeIn(duration: 260.ms)
+                        .slideY(begin: 0.04, end: 0, curve: Curves.easeOut),
+                  ),
+            ],
           );
         },
       ),
@@ -362,150 +144,405 @@ class AnalyseScreen extends ConsumerWidget {
   }
 }
 
-class _CarteIndicateur extends StatelessWidget {
-  const _CarteIndicateur({
-    required this.titre,
-    this.valeur,
-    this.valeurMontant,
-    this.description,
-    this.accent = false,
-    this.alerte = false,
-  }) : assert(
-         valeur != null || valeurMontant != null,
-         'fournir valeur ou valeurMontant',
-       );
+class _Projection extends StatelessWidget {
+  const _Projection({required this.tableau, required this.mois});
 
-  final String titre;
-
-  /// Pour un texte déjà formaté (pourcentage, "X mois", nombre de jours).
-  final String? valeur;
-
-  /// Pour un montant FCFA brut : passe par [MontantAnime], qui défile de
-  /// 0 à sa valeur (section 3.2) — réservé aux "montants agrégés",
-  /// contrairement à [valeur] qui peut représenter autre chose qu'une
-  /// somme d'argent.
-  final int? valeurMontant;
-  final String? description;
-  final bool accent;
-  final bool alerte;
+  final TableauDeBord tableau;
+  final DateTime mois;
 
   @override
   Widget build(BuildContext context) {
-    final couleurValeur = alerte
-        ? AppColors.negative
-        : (accent ? AppColors.accent : AppColors.textPrimary);
-    final styleValeur = Theme.of(context).textTheme.displaySmall?.copyWith(
-      color: couleurValeur,
-      fontSize: accent ? 28 : 22,
+    final t = context.tokens;
+    final l10n = context.l10n;
+    final texte = Theme.of(context).textTheme;
+    final montant = formaterMontant(tableau.projectionFinDeMois);
+    final ecart = tableau.entrees - tableau.projectionFinDeMois;
+    final phrase = texte.headlineSmall?.copyWith(
+      fontWeight: FontWeight.w500,
+      height: 1.35,
+      letterSpacing: -0.3,
     );
-    return Card(
-      shape: accent
-          ? RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(20),
-              side: const BorderSide(color: AppColors.accent),
-            )
-          : null,
-      child: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Row(
           children: [
+            Icon(PhosphorIconsBold.trendUp, size: 14, color: t.positive),
+            const SizedBox(width: 6),
             Text(
-              titre,
-              style: Theme.of(
-                context,
-              ).textTheme.bodySmall?.copyWith(color: AppColors.textMuted),
-            ),
-            const SizedBox(height: 6),
-            valeurMontant != null
-                ? MontantAnime(valeur: valeurMontant!, style: styleValeur)
-                : Text(valeur!, style: styleValeur),
-            if (description != null) ...[
-              const SizedBox(height: 6),
-              Text(
-                description!,
-                style: Theme.of(
-                  context,
-                ).textTheme.bodySmall?.copyWith(color: AppColors.textMuted),
+              l10n.projectionSurtitre.toUpperCase(),
+              style: texte.bodySmall?.copyWith(
+                color: t.positive,
+                fontWeight: FontWeight.w600,
+                letterSpacing: 0.6,
               ),
-            ],
+            ),
           ],
+        ),
+        const SizedBox(height: 8),
+        if (tableau.depenses == 0)
+          Text(l10n.projectionSansDepense(nomMois(mois)), style: phrase)
+        else
+          Text.rich(
+            TextSpan(
+              style: phrase,
+              children: [
+                TextSpan(text: l10n.projectionEnCours(nomMois(mois))),
+                TextSpan(text: montant, style: const TextStyle(fontWeight: FontWeight.w600)),
+                TextSpan(text: l10n.projectionDeDepenses),
+                if (tableau.entrees > 0) ...[
+                  TextSpan(text: l10n.projectionSoit),
+                  TextSpan(
+                    text: ecart >= 0
+                        ? l10n.accueilSousEntrees(formaterNombre(ecart))
+                        : l10n.accueilAuDessusEntrees(formaterNombre(ecart)),
+                    style: TextStyle(
+                      color: ecart >= 0 ? t.positive : t.streak,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                ],
+                const TextSpan(text: '.'),
+              ],
+            ),
+          ),
+      ],
+    );
+  }
+}
+
+/// Histogramme groupé (brief §4.5, remplace la courbe 12 mois qui passait
+/// sous zéro) : entrées en gris clair, dépenses en encre, période courante
+/// en vert. Toucher une barre affiche ses montants.
+class _CarteHistogramme extends StatefulWidget {
+  const _CarteHistogramme({required this.barres, required this.periode});
+
+  final List<BarrePeriode> barres;
+  final PeriodeAnalyse periode;
+
+  @override
+  State<_CarteHistogramme> createState() => _CarteHistogrammeState();
+}
+
+class _CarteHistogrammeState extends State<_CarteHistogramme> {
+  int? _selection;
+
+  @override
+  void didUpdateWidget(_CarteHistogramme ancien) {
+    super.didUpdateWidget(ancien);
+    if (ancien.periode != widget.periode) _selection = null;
+  }
+
+  String _libelle(BuildContext context, BarrePeriode b) => b.semaine > 0
+      ? context.l10n.semaineCourte(b.semaine)
+      : (widget.barres.length > 6
+            ? DateFormat.MMM().format(b.debut).substring(0, 1).toUpperCase()
+            : _capitaliser(DateFormat.MMM().format(b.debut)));
+
+  static String _capitaliser(String s) => s.isEmpty ? s : s[0].toUpperCase() + s.substring(1);
+
+  @override
+  Widget build(BuildContext context) {
+    final t = context.tokens;
+    final l10n = context.l10n;
+    final texte = Theme.of(context).textTheme;
+    final barres = widget.barres;
+    final max = barres.fold<int>(1, (m, b) => [m, b.entrees, b.depenses].reduce((a, c) => a > c ? a : c));
+    final largeurBarre = barres.length > 6 ? 8.0 : 14.0;
+    final sel = _selection == null ? null : barres[_selection!];
+
+    Widget legende(Color c, String l) => Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Container(width: 8, height: 8, decoration: BoxDecoration(color: c, borderRadius: BorderRadius.circular(2))),
+        const SizedBox(width: 5),
+        Text(l, style: texte.bodySmall),
+      ],
+    );
+
+    return Container(
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: t.surface,
+        borderRadius: BorderRadius.circular(20),
+        border: Border.all(color: t.line),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Row(
+            children: [
+              Expanded(child: Text(l10n.entreesEtDepenses, style: texte.titleMedium)),
+              legende(t.handle, l10n.entrees),
+              const SizedBox(width: 12),
+              legende(t.ink, l10n.depenses),
+            ],
+          ),
+          const SizedBox(height: 8),
+          SizedBox(
+            height: 20,
+            child: AnimatedSwitcher(
+              duration: const Duration(milliseconds: 150),
+              child: sel == null
+                  ? const SizedBox.shrink()
+                  : Text(
+                      '${_libelle(context, sel)} · ${formaterSigne(sel.entrees, forcerPlus: true)} / ${formaterSigne(-sel.depenses)}',
+                      key: ValueKey(_selection),
+                      style: texte.bodySmall?.copyWith(color: t.ink2, fontWeight: FontWeight.w500),
+                    ),
+            ),
+          ),
+          const SizedBox(height: 6),
+          Container(
+            height: 140,
+            decoration: BoxDecoration(border: Border(bottom: BorderSide(color: t.line))),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                for (var i = 0; i < barres.length; i++)
+                  Expanded(
+                    child: GestureDetector(
+                      behavior: HitTestBehavior.opaque,
+                      onTap: () {
+                        HapticFeedback.selectionClick();
+                        setState(() => _selection = _selection == i ? null : i);
+                      },
+                      child: Opacity(
+                        opacity: _selection == null || _selection == i ? 1 : 0.45,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          children: [
+                            _Barre(hauteur: 130 * barres[i].entrees / max, largeur: largeurBarre, couleur: t.handle),
+                            SizedBox(width: largeurBarre > 10 ? 4 : 2),
+                            _Barre(
+                              hauteur: 130 * barres[i].depenses / max,
+                              largeur: largeurBarre,
+                              couleur: barres[i].courante ? t.positive : t.ink,
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+              ],
+            ),
+          ),
+          const SizedBox(height: 6),
+          Row(
+            children: [
+              for (final b in barres)
+                Expanded(
+                  child: Text(
+                    _libelle(context, b),
+                    textAlign: TextAlign.center,
+                    maxLines: 1,
+                    style: texte.bodySmall?.copyWith(
+                      color: b.courante ? t.ink : t.muted,
+                      fontWeight: b.courante ? FontWeight.w600 : FontWeight.w400,
+                    ),
+                  ),
+                ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _Barre extends StatelessWidget {
+  const _Barre({required this.hauteur, required this.largeur, required this.couleur});
+
+  final double hauteur;
+  final double largeur;
+  final Color couleur;
+
+  @override
+  Widget build(BuildContext context) {
+    return TweenAnimationBuilder<double>(
+      tween: Tween(begin: 0, end: hauteur),
+      duration: const Duration(milliseconds: 650),
+      curve: Curves.easeOutCubic,
+      builder: (context, h, _) => Container(
+        width: largeur,
+        height: h,
+        decoration: BoxDecoration(
+          color: couleur,
+          borderRadius: const BorderRadius.vertical(top: Radius.circular(4)),
         ),
       ),
     );
   }
 }
 
-class _PastilleLegende extends StatelessWidget {
-  const _PastilleLegende({required this.couleur, required this.libelle});
+class _OuVaLArgent extends StatelessWidget {
+  const _OuVaLArgent({required this.parts, required this.titre});
 
-  final Color couleur;
-  final String libelle;
+  final List<PartPeriode> parts;
+  final String titre;
+
+  void _toutVoir(BuildContext context) {
+    showModalBottomSheet<void>(
+      context: context,
+      isScrollControlled: true,
+      builder: (context) => SafeArea(
+        child: ConstrainedBox(
+          constraints: BoxConstraints(maxHeight: MediaQuery.sizeOf(context).height * 0.75),
+          child: ListView(
+            shrinkWrap: true,
+            padding: const EdgeInsets.fromLTRB(20, 20, 20, 16),
+            children: [
+              Text(titre, style: Theme.of(context).textTheme.titleLarge),
+              const SizedBox(height: 8),
+              for (final p in parts) _LignePart(part: p, max: parts.first.montant),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisSize: MainAxisSize.min,
+    final l10n = context.l10n;
+    final texte = Theme.of(context).textTheme;
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        Container(
-          width: 10,
-          height: 10,
-          decoration: BoxDecoration(color: couleur, shape: BoxShape.circle),
+        Row(
+          children: [
+            Expanded(child: Text(titre, style: texte.titleMedium)),
+            if (parts.length > 4)
+              TextButton(onPressed: () => _toutVoir(context), child: Text(l10n.toutVoir)),
+          ],
         ),
-        const SizedBox(width: 6),
-        Text(
-          libelle,
-          style: Theme.of(
-            context,
-          ).textTheme.bodySmall?.copyWith(color: AppColors.textMuted),
-        ),
+        if (parts.isEmpty)
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 8),
+            child: Text(l10n.pasAssezDonneesComparer, style: texte.bodyMedium?.copyWith(color: context.tokens.muted)),
+          ),
+        for (final p in parts.take(4)) _LignePart(part: p, max: parts.first.montant),
       ],
     );
   }
 }
 
-class _LigneTop5 extends StatelessWidget {
-  const _LigneTop5({required this.comparaison});
+class _LignePart extends StatelessWidget {
+  const _LignePart({required this.part, required this.max});
 
-  final ComparaisonCategorie comparaison;
+  final PartPeriode part;
+  final int max;
 
   @override
   Widget build(BuildContext context) {
-    final couleurCategorie = depuisHex(comparaison.categorie.couleurHex);
-    final variation = comparaison.variationPourcent;
-    // Pour une dépense, une hausse est un signal négatif (rouge), une
-    // baisse un signal positif (vert) — l'inverse de ce qu'on ferait
-    // pour une entrée.
-    final couleurVariation = variation == null
-        ? AppColors.textMuted
-        : (variation > 0 ? AppColors.negative : AppColors.positive);
-    final texteVariation = variation == null
-        ? context.l10n.nouveau
-        : '${variation > 0 ? '+' : ''}${variation.round()} %';
-
+    final t = context.tokens;
+    final texte = Theme.of(context).textTheme;
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 6),
-      child: Row(
+      padding: const EdgeInsets.symmetric(vertical: 8),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Container(
-            width: 10,
-            height: 10,
-            decoration: BoxDecoration(
-              color: couleurCategorie,
-              shape: BoxShape.circle,
+          Row(
+            children: [
+              Expanded(
+                child: Text(part.categorie.nom, maxLines: 1, overflow: TextOverflow.ellipsis, style: texte.bodyMedium),
+              ),
+              Text.rich(
+                TextSpan(
+                  style: texte.bodyMedium,
+                  children: [
+                    TextSpan(text: formaterNombre(part.montant), style: const TextStyle(fontWeight: FontWeight.w600)),
+                    TextSpan(text: ' · ${(part.part * 100).round()} %', style: TextStyle(color: t.muted, fontWeight: FontWeight.w400)),
+                  ],
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 6),
+          ClipRRect(
+            borderRadius: BorderRadius.circular(3),
+            child: SizedBox(
+              height: 6,
+              child: Stack(
+                children: [
+                  Container(color: const Color(0xFFE8E8E3)),
+                  TweenAnimationBuilder<double>(
+                    tween: Tween(begin: 0, end: max == 0 ? 0 : part.montant / max),
+                    duration: const Duration(milliseconds: 600),
+                    curve: Curves.easeOutCubic,
+                    builder: (context, v, _) => FractionallySizedBox(
+                      widthFactor: v,
+                      child: Container(
+                        decoration: BoxDecoration(color: t.ink, borderRadius: BorderRadius.circular(3)),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
-          const SizedBox(width: 8),
-          Expanded(child: Text(comparaison.categorie.libelle)),
-          Text(formaterMontant(comparaison.moisCourant)),
-          const SizedBox(width: 12),
-          Text(
-            texteVariation,
-            style: TextStyle(
-              color: couleurVariation,
-              fontWeight: FontWeight.w600,
+        ],
+      ),
+    );
+  }
+}
+
+class _Observations extends StatelessWidget {
+  const _Observations({required this.observations});
+
+  final List<String> observations;
+
+  @override
+  Widget build(BuildContext context) {
+    final t = context.tokens;
+    final texte = Theme.of(context).textTheme;
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        for (final o in observations)
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 6),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(top: 2),
+                  child: Icon(PhosphorIconsRegular.sparkle, size: 16, color: t.positive),
+                ),
+                const SizedBox(width: 10),
+                Expanded(child: Text(o, style: texte.bodyMedium?.copyWith(color: t.ink2, height: 1.4))),
+              ],
             ),
           ),
+      ],
+    );
+  }
+}
+
+class _Section extends StatelessWidget {
+  const _Section({required this.titre, required this.enfant});
+
+  final String titre;
+  final Widget enfant;
+
+  @override
+  Widget build(BuildContext context) {
+    final t = context.tokens;
+    return Container(
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: t.surface,
+        borderRadius: BorderRadius.circular(20),
+        border: Border.all(color: t.line),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Text(titre, style: Theme.of(context).textTheme.titleMedium),
+          const SizedBox(height: 14),
+          enfant,
         ],
       ),
     );

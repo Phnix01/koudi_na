@@ -15,7 +15,7 @@ import '../../logic/providers/langue_provider.dart';
 import '../navigation/route_animee.dart';
 import '../widgets/devise_selecteur_feuille.dart';
 import '../widgets/segmented_toggle.dart';
-import 'capture_screen.dart';
+import '../shell/app_shell.dart';
 
 /// Onboarding du tout premier lancement : quatre écrans, une promesse
 /// par écran, puis l'application. Ne s'affiche plus jamais ensuite
@@ -51,7 +51,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
   Future<void> _terminer() async {
     await ref.read(reglagesRepositoryProvider).marquerOnboardingTermine();
     if (!mounted) return;
-    Navigator.of(context).pushReplacement(routeAnimee(const CaptureScreen()));
+    Navigator.of(context).pushReplacement(routeAnimee(const AppShell()));
   }
 
   void _suivant() {
