@@ -71,11 +71,13 @@ bool _anglais() => (Intl.defaultLocale ?? Intl.getCurrentLocale()).startsWith('e
 
 /// Nom à afficher : la traduction de la langue courante pour un élément
 /// du seed resté tel quel, le nom choisi par l'utilisateur sinon.
-String libelleAffiche(String id, String libelleStocke, {bool court = false}) {
+///
+/// [langue] force la langue (exports) ; sinon celle de l'app.
+String libelleAffiche(String id, String libelleStocke, {bool court = false, String? langue}) {
   final s = libellesSeed[id];
   if (s == null || !nomsConnusSeed(id).contains(libelleStocke.trim())) {
     return libelleStocke;
   }
-  if (_anglais()) return court ? s.enCourt : s.en;
+  if (langue != null ? langue == 'en' : _anglais()) return court ? s.enCourt : s.en;
   return court ? s.frCourt : s.fr;
 }

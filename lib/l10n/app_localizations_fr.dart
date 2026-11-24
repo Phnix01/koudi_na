@@ -15,9 +15,6 @@ class AppLocalizationsFr extends AppLocalizations {
   String get enregistrer => 'Enregistrer';
 
   @override
-  String get enregistrerModifications => 'Enregistrer les modifications';
-
-  @override
   String get annuler => 'Annuler';
 
   @override
@@ -28,9 +25,6 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get tous => 'Tous';
-
-  @override
-  String get reinitialiser => 'Réinitialiser';
 
   @override
   String get aChoisir => 'À choisir';
@@ -99,9 +93,6 @@ class AppLocalizationsFr extends AppLocalizations {
   String get pilierVie => 'Vie';
 
   @override
-  String get regle402535 => 'Règle 40/25/35';
-
-  @override
   String get pilierRegle => 'Pilier (règle 40/25/35)';
 
   @override
@@ -117,25 +108,10 @@ class AppLocalizationsFr extends AppLocalizations {
   String get typeCompteEpargne => 'Épargne';
 
   @override
-  String get tooltipAnalyse => 'Analyse';
-
-  @override
-  String get tooltipVoirLeMois => 'Voir le mois';
-
-  @override
-  String get tooltipReglages => 'Réglages';
-
-  @override
   String get aujourdHui => 'Aujourd\'hui';
 
   @override
   String get hier => 'Hier';
-
-  @override
-  String get aucuneTransactionFiltres => 'Aucune transaction pour ces filtres';
-
-  @override
-  String get aucuneTransactionMois => 'Aucune transaction ce mois-ci';
 
   @override
   String get transactionSupprimee => 'Transaction supprimée';
@@ -144,13 +120,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get categorieSupprimee => 'Catégorie supprimée';
 
   @override
-  String get compteSupprime => 'Compte supprimé';
-
-  @override
   String get supprimerTransactionTitre => 'Supprimer cette transaction ?';
-
-  @override
-  String get actionIrreversible => 'Cette action est irréversible.';
 
   @override
   String get desactivees => 'Désactivées';
@@ -336,59 +306,13 @@ class AppLocalizationsFr extends AppLocalizations {
   String get analyse => 'Analyse';
 
   @override
-  String get evolution12Mois => 'Évolution sur 12 mois';
-
-  @override
-  String get repartitionDepensesMois => 'Répartition des dépenses (ce mois)';
-
-  @override
-  String get top5Titre => 'Top 5 des catégories (ce mois vs le mois dernier)';
-
-  @override
-  String get moisDernier => 'Mois dernier';
-
-  @override
-  String get ceMoisCouleurCategorie => 'Ce mois : couleur de la catégorie';
-
-  @override
-  String get rythmeDuMois => 'Rythme du mois';
-
-  @override
-  String get habitudesHebdo90 => 'Habitudes hebdomadaires (90 derniers jours)';
-
-  @override
   String get trajectoireEpargne => 'Trajectoire d\'épargne';
-
-  @override
-  String get aucunObjectifRegle =>
-      'Aucun objectif réglé : ouvre Réglages → Comptes → ton compte Épargne pour en fixer un.';
-
-  @override
-  String get equilibrePiliers6Mois => 'Équilibre des piliers (6 mois)';
-
-  @override
-  String get autonomieFinanciere => 'Autonomie financière';
-
-  @override
-  String autonomieValeur(String mois) {
-    return '$mois mois';
-  }
-
-  @override
-  String get autonomieDescription =>
-      'Nombre de mois de dépenses moyennes que couvre ton épargne actuelle';
 
   @override
   String get tauxEpargne => 'Taux d\'épargne';
 
   @override
   String get joursSansDepense => 'Jours sans dépense';
-
-  @override
-  String get depenseMoyJourMois => 'Dépense moy. / jour (ce mois)';
-
-  @override
-  String get depenseMoyJourHistorique => 'Dépense moy. / jour (historique)';
 
   @override
   String get projectionFinDeMois => 'Projection fin de mois';
@@ -398,20 +322,11 @@ class AppLocalizationsFr extends AppLocalizations {
       'Au rythme actuel, tu dépasseras tes entrées ce mois-ci';
 
   @override
-  String get pasAssezDonnees => 'Pas assez de données';
-
-  @override
   String get pasAssezDonneesComparer => 'Pas assez de données pour comparer';
 
   @override
   String get pasAssezDonnees90Jours =>
       'Pas assez de données sur les 90 derniers jours';
-
-  @override
-  String get aucuneDepenseMois => 'Aucune dépense ce mois-ci';
-
-  @override
-  String get entreesDuMois => 'Entrées du mois';
 
   @override
   String get momentMatin => 'Matin';
@@ -424,15 +339,6 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get momentNuit => 'Nuit';
-
-  @override
-  String get retirerNote => 'Retirer la note';
-
-  @override
-  String get ajouterNote => 'Ajouter une note';
-
-  @override
-  String get noteOptionnelle => 'Note (optionnel)';
 
   @override
   String obsHausse(String categorie, int pourcent) {
@@ -632,27 +538,6 @@ class AppLocalizationsFr extends AppLocalizations {
   String didacticielEtape(int numero, int total) {
     return '$numero/$total';
   }
-
-  @override
-  String get didacticielMontantTitre => 'Le montant';
-
-  @override
-  String get didacticielMontantTexte =>
-      'Tape-le sur le pavé juste en dessous. Le sélecteur au-dessus bascule entre dépense et entrée.';
-
-  @override
-  String get didacticielCategorieTitre => 'La catégorie';
-
-  @override
-  String get didacticielCategorieTexte =>
-      'Touche celle qui correspond, puis le compte juste après. Celles que tu utilises le plus remontent toutes seules.';
-
-  @override
-  String get didacticielEnregistrerTitre => 'Enregistrer';
-
-  @override
-  String get didacticielEnregistrerTexte =>
-      'Montant, catégorie, enregistrer : trois gestes et c\'est noté.';
 
   @override
   String get didacticielSoldeTitre => 'Ton solde du mois';
@@ -888,11 +773,6 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String projectionEnCours(String mois) {
     return 'Au rythme actuel, tu termineras $mois à environ ';
-  }
-
-  @override
-  String projectionPasse(String mois) {
-    return 'En $mois, tu as dépensé ';
   }
 
   @override

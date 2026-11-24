@@ -35,6 +35,9 @@ PhosphorIconData iconeDe(String code) => icones[code] ?? PhosphorIconsRegular.do
 extension VisuelCategorie on Categorie {
   String get nom => libelleAffiche(id, libelle);
 
+  /// Nom dans une langue donnée (exports CSV, Excel, PDF).
+  String nomDans(String langue) => libelleAffiche(id, libelle, langue: langue);
+
   /// Pour les tuiles de la grille de saisie (« Repas », « Logement »…).
   String get nomCourt => libelleAffiche(id, libelle, court: true);
   Color get couleur => depuisHex(couleurHex);
@@ -44,5 +47,6 @@ extension VisuelCategorie on Categorie {
 
 extension VisuelCompte on Compte {
   String get nom => libelleAffiche(id, libelle);
+  String nomDans(String langue) => libelleAffiche(id, libelle, langue: langue);
   PhosphorIconData get icone => iconeDe(iconeCode);
 }

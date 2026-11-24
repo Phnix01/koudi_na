@@ -45,8 +45,8 @@ Uint8List genererExcelTransactions(
             : colonnes.valeurDepense,
       ),
       TextCellValue(formaterMontant(t.montant)),
-      TextCellValue(categoriesParId[t.categorieId]?.nom ?? ''),
-      TextCellValue(comptesParId[t.compteId]?.nom ?? ''),
+      TextCellValue(categoriesParId[t.categorieId]?.nomDans(langue) ?? ''),
+      TextCellValue(comptesParId[t.compteId]?.nomDans(langue) ?? ''),
       TextCellValue(t.note ?? ''),
     ]);
   }

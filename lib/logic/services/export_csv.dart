@@ -31,8 +31,8 @@ String genererCsvTransactions(
             ? colonnes.valeurEntree
             : colonnes.valeurDepense,
         transaction.montant,
-        categoriesParId[transaction.categorieId]?.nom ?? '',
-        comptesParId[transaction.compteId]?.nom ?? '',
+        categoriesParId[transaction.categorieId]?.nomDans(langue) ?? '',
+        comptesParId[transaction.compteId]?.nomDans(langue) ?? '',
         transaction.note ?? '',
       ],
   ];

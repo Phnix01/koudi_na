@@ -57,7 +57,9 @@ void main() {
     expect(_texte(lignes[0][0]), 'Date');
     expect(_texte(lignes[0][2]), 'Montant');
     expect(_texte(lignes[1][1]), 'Dépense');
-    expect(_texte(lignes[1][3]), 'Nourriture');
+    // Nom d'origine du seed : exporté sous son nom actuel, dans la langue
+    // de l'export.
+    expect(_texte(lignes[1][3]), 'Alimentation');
     expect(_texte(lignes[1][4]), 'Espèces');
   });
 
@@ -72,5 +74,7 @@ void main() {
     final feuille = classeur.tables[classeur.sheets.keys.first]!;
     expect(_texte(feuille.rows[0][2]), 'Amount');
     expect(_texte(feuille.rows[1][1]), 'Expense');
+    expect(_texte(feuille.rows[1][3]), 'Food');
+    expect(_texte(feuille.rows[1][4]), 'Cash');
   });
 }

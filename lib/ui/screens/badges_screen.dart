@@ -137,22 +137,13 @@ class _CarteBadge extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: debloque ? AppColors.or.withValues(alpha: 0.08) : AppColors.surface,
+        color: debloque ? AppColors.or.withValues(alpha: 0.05) : AppColors.surface,
         borderRadius: BorderRadius.circular(AppSpacing.radius),
         border: Border.all(
           color: debloque
               ? AppColors.or.withValues(alpha: 0.5)
               : AppColors.surfaceHigh,
         ),
-        boxShadow: debloque
-            ? [
-                BoxShadow(
-                  color: AppColors.or.withValues(alpha: 0.18),
-                  blurRadius: 14,
-                  offset: const Offset(0, 4),
-                ),
-              ]
-            : null,
       ),
       child: Padding(
         padding: const EdgeInsets.all(AppSpacing.s16),

@@ -2,7 +2,7 @@ Where did your money go this month? Koudi Na gives you the answer at a glance, o
 
 "Kudi" means money in Hausa. Koudi Na is a ledger that fits in your pocket, built for real life in West Africa: morning bread paid in cash, rent sent from the bank account, phone credit topped up through mobile money, a few notes set aside for later.
 
-Logging an expense takes three taps. The amount on the keypad, the category from the grid, the account. It is saved in under ten seconds, before the taxi pulls away. The categories you use most rise to the top of the grid on their own. Income is logged just as fast as spending.
+Logging an expense takes three taps. The amount on the keypad, the category from the grid, the account. It is saved in under ten seconds, before the taxi pulls away. Every category keeps its place, and your last category and account are already picked: a usual expense takes almost no thought. Income is logged just as fast as spending.
 
 Four accounts, one screen. Cash, bank, mobile money and savings. Mobile money gets its own balance, tracked separately from cash and bank. At any moment you know what is left in each one.
 

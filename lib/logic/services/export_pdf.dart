@@ -34,12 +34,12 @@ Future<Uint8List> genererPdfTransactions({
   required String libelleDepenses,
   required String libelleSolde,
 }) async {
-  final police = await _chargerPolice('assets/google_fonts/Inter-Regular.ttf');
+  final police = await _chargerPolice('assets/google_fonts/Geist-Regular.ttf');
   final policeMoyenne = await _chargerPolice(
-    'assets/google_fonts/Inter-Medium.ttf',
+    'assets/google_fonts/Geist-Medium.ttf',
   );
   final policeTitre = await _chargerPolice(
-    'assets/google_fonts/Sora-Bold.ttf',
+    'assets/google_fonts/Geist-SemiBold.ttf',
   );
   final logo = pw.MemoryImage(
     (await rootBundle.load('assets/icon/app_icon.png')).buffer.asUint8List(),
@@ -157,8 +157,8 @@ Future<Uint8List> genererPdfTransactions({
               ? colonnes.valeurEntree
               : colonnes.valeurDepense,
           formaterMontant(t.montant),
-          categoriesParId[t.categorieId]?.nom ?? '',
-          comptesParId[t.compteId]?.nom ?? '',
+          categoriesParId[t.categorieId]?.nomDans(langue) ?? '',
+          comptesParId[t.compteId]?.nomDans(langue) ?? '',
           t.note ?? '',
         ],
     ],

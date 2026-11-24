@@ -12,7 +12,12 @@ soit la langue. À mettre à jour quand l'app change.
 ## Saisie
 - Une dépense se note en trois touches : montant, catégorie, compte, en moins
   de dix secondes (objectif de conception du parcours de saisie).
-- Les catégories les plus utilisées remontent en haut de la grille.
+- Chaque catégorie garde une place fixe dans la grille (ordre réglable dans
+  Réglages) ; la dernière catégorie et le dernier compte utilisés sont déjà
+  sélectionnés à l'ouverture de la saisie.
+- Navigation par barre d'onglets : Accueil, Journal, Analyse, Réglages, et un
+  bouton + central (appui long : dépense directe). Visite guidée au premier
+  lancement, rejouable dans Réglages.
 - Les revenus se notent aussi vite que les dépenses.
 - Les paiements qui reviennent chaque mois (loyer, abonnement, cotisation…)
   peuvent être créés automatiquement (récurrences).

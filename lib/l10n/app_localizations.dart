@@ -110,12 +110,6 @@ abstract class AppLocalizations {
   /// **'Enregistrer'**
   String get enregistrer;
 
-  /// No description provided for @enregistrerModifications.
-  ///
-  /// In fr, this message translates to:
-  /// **'Enregistrer les modifications'**
-  String get enregistrerModifications;
-
   /// No description provided for @annuler.
   ///
   /// In fr, this message translates to:
@@ -139,12 +133,6 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'Tous'**
   String get tous;
-
-  /// No description provided for @reinitialiser.
-  ///
-  /// In fr, this message translates to:
-  /// **'Réinitialiser'**
-  String get reinitialiser;
 
   /// No description provided for @aChoisir.
   ///
@@ -278,12 +266,6 @@ abstract class AppLocalizations {
   /// **'Vie'**
   String get pilierVie;
 
-  /// No description provided for @regle402535.
-  ///
-  /// In fr, this message translates to:
-  /// **'Règle 40/25/35'**
-  String get regle402535;
-
   /// No description provided for @pilierRegle.
   ///
   /// In fr, this message translates to:
@@ -314,24 +296,6 @@ abstract class AppLocalizations {
   /// **'Épargne'**
   String get typeCompteEpargne;
 
-  /// No description provided for @tooltipAnalyse.
-  ///
-  /// In fr, this message translates to:
-  /// **'Analyse'**
-  String get tooltipAnalyse;
-
-  /// No description provided for @tooltipVoirLeMois.
-  ///
-  /// In fr, this message translates to:
-  /// **'Voir le mois'**
-  String get tooltipVoirLeMois;
-
-  /// No description provided for @tooltipReglages.
-  ///
-  /// In fr, this message translates to:
-  /// **'Réglages'**
-  String get tooltipReglages;
-
   /// No description provided for @aujourdHui.
   ///
   /// In fr, this message translates to:
@@ -343,18 +307,6 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'Hier'**
   String get hier;
-
-  /// No description provided for @aucuneTransactionFiltres.
-  ///
-  /// In fr, this message translates to:
-  /// **'Aucune transaction pour ces filtres'**
-  String get aucuneTransactionFiltres;
-
-  /// No description provided for @aucuneTransactionMois.
-  ///
-  /// In fr, this message translates to:
-  /// **'Aucune transaction ce mois-ci'**
-  String get aucuneTransactionMois;
 
   /// No description provided for @transactionSupprimee.
   ///
@@ -368,23 +320,11 @@ abstract class AppLocalizations {
   /// **'Catégorie supprimée'**
   String get categorieSupprimee;
 
-  /// No description provided for @compteSupprime.
-  ///
-  /// In fr, this message translates to:
-  /// **'Compte supprimé'**
-  String get compteSupprime;
-
   /// No description provided for @supprimerTransactionTitre.
   ///
   /// In fr, this message translates to:
   /// **'Supprimer cette transaction ?'**
   String get supprimerTransactionTitre;
-
-  /// No description provided for @actionIrreversible.
-  ///
-  /// In fr, this message translates to:
-  /// **'Cette action est irréversible.'**
-  String get actionIrreversible;
 
   /// No description provided for @desactivees.
   ///
@@ -668,83 +608,11 @@ abstract class AppLocalizations {
   /// **'Analyse'**
   String get analyse;
 
-  /// No description provided for @evolution12Mois.
-  ///
-  /// In fr, this message translates to:
-  /// **'Évolution sur 12 mois'**
-  String get evolution12Mois;
-
-  /// No description provided for @repartitionDepensesMois.
-  ///
-  /// In fr, this message translates to:
-  /// **'Répartition des dépenses (ce mois)'**
-  String get repartitionDepensesMois;
-
-  /// No description provided for @top5Titre.
-  ///
-  /// In fr, this message translates to:
-  /// **'Top 5 des catégories (ce mois vs le mois dernier)'**
-  String get top5Titre;
-
-  /// No description provided for @moisDernier.
-  ///
-  /// In fr, this message translates to:
-  /// **'Mois dernier'**
-  String get moisDernier;
-
-  /// No description provided for @ceMoisCouleurCategorie.
-  ///
-  /// In fr, this message translates to:
-  /// **'Ce mois : couleur de la catégorie'**
-  String get ceMoisCouleurCategorie;
-
-  /// No description provided for @rythmeDuMois.
-  ///
-  /// In fr, this message translates to:
-  /// **'Rythme du mois'**
-  String get rythmeDuMois;
-
-  /// No description provided for @habitudesHebdo90.
-  ///
-  /// In fr, this message translates to:
-  /// **'Habitudes hebdomadaires (90 derniers jours)'**
-  String get habitudesHebdo90;
-
   /// No description provided for @trajectoireEpargne.
   ///
   /// In fr, this message translates to:
   /// **'Trajectoire d\'épargne'**
   String get trajectoireEpargne;
-
-  /// No description provided for @aucunObjectifRegle.
-  ///
-  /// In fr, this message translates to:
-  /// **'Aucun objectif réglé : ouvre Réglages → Comptes → ton compte Épargne pour en fixer un.'**
-  String get aucunObjectifRegle;
-
-  /// No description provided for @equilibrePiliers6Mois.
-  ///
-  /// In fr, this message translates to:
-  /// **'Équilibre des piliers (6 mois)'**
-  String get equilibrePiliers6Mois;
-
-  /// No description provided for @autonomieFinanciere.
-  ///
-  /// In fr, this message translates to:
-  /// **'Autonomie financière'**
-  String get autonomieFinanciere;
-
-  /// No description provided for @autonomieValeur.
-  ///
-  /// In fr, this message translates to:
-  /// **'{mois} mois'**
-  String autonomieValeur(String mois);
-
-  /// No description provided for @autonomieDescription.
-  ///
-  /// In fr, this message translates to:
-  /// **'Nombre de mois de dépenses moyennes que couvre ton épargne actuelle'**
-  String get autonomieDescription;
 
   /// No description provided for @tauxEpargne.
   ///
@@ -758,18 +626,6 @@ abstract class AppLocalizations {
   /// **'Jours sans dépense'**
   String get joursSansDepense;
 
-  /// No description provided for @depenseMoyJourMois.
-  ///
-  /// In fr, this message translates to:
-  /// **'Dépense moy. / jour (ce mois)'**
-  String get depenseMoyJourMois;
-
-  /// No description provided for @depenseMoyJourHistorique.
-  ///
-  /// In fr, this message translates to:
-  /// **'Dépense moy. / jour (historique)'**
-  String get depenseMoyJourHistorique;
-
   /// No description provided for @projectionFinDeMois.
   ///
   /// In fr, this message translates to:
@@ -782,12 +638,6 @@ abstract class AppLocalizations {
   /// **'Au rythme actuel, tu dépasseras tes entrées ce mois-ci'**
   String get projectionDepasseEntrees;
 
-  /// No description provided for @pasAssezDonnees.
-  ///
-  /// In fr, this message translates to:
-  /// **'Pas assez de données'**
-  String get pasAssezDonnees;
-
   /// No description provided for @pasAssezDonneesComparer.
   ///
   /// In fr, this message translates to:
@@ -799,18 +649,6 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'Pas assez de données sur les 90 derniers jours'**
   String get pasAssezDonnees90Jours;
-
-  /// No description provided for @aucuneDepenseMois.
-  ///
-  /// In fr, this message translates to:
-  /// **'Aucune dépense ce mois-ci'**
-  String get aucuneDepenseMois;
-
-  /// No description provided for @entreesDuMois.
-  ///
-  /// In fr, this message translates to:
-  /// **'Entrées du mois'**
-  String get entreesDuMois;
 
   /// No description provided for @momentMatin.
   ///
@@ -835,24 +673,6 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'Nuit'**
   String get momentNuit;
-
-  /// No description provided for @retirerNote.
-  ///
-  /// In fr, this message translates to:
-  /// **'Retirer la note'**
-  String get retirerNote;
-
-  /// No description provided for @ajouterNote.
-  ///
-  /// In fr, this message translates to:
-  /// **'Ajouter une note'**
-  String get ajouterNote;
-
-  /// No description provided for @noteOptionnelle.
-  ///
-  /// In fr, this message translates to:
-  /// **'Note (optionnel)'**
-  String get noteOptionnelle;
 
   /// No description provided for @obsHausse.
   ///
@@ -1165,42 +985,6 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'{numero}/{total}'**
   String didacticielEtape(int numero, int total);
-
-  /// No description provided for @didacticielMontantTitre.
-  ///
-  /// In fr, this message translates to:
-  /// **'Le montant'**
-  String get didacticielMontantTitre;
-
-  /// No description provided for @didacticielMontantTexte.
-  ///
-  /// In fr, this message translates to:
-  /// **'Tape-le sur le pavé juste en dessous. Le sélecteur au-dessus bascule entre dépense et entrée.'**
-  String get didacticielMontantTexte;
-
-  /// No description provided for @didacticielCategorieTitre.
-  ///
-  /// In fr, this message translates to:
-  /// **'La catégorie'**
-  String get didacticielCategorieTitre;
-
-  /// No description provided for @didacticielCategorieTexte.
-  ///
-  /// In fr, this message translates to:
-  /// **'Touche celle qui correspond, puis le compte juste après. Celles que tu utilises le plus remontent toutes seules.'**
-  String get didacticielCategorieTexte;
-
-  /// No description provided for @didacticielEnregistrerTitre.
-  ///
-  /// In fr, this message translates to:
-  /// **'Enregistrer'**
-  String get didacticielEnregistrerTitre;
-
-  /// No description provided for @didacticielEnregistrerTexte.
-  ///
-  /// In fr, this message translates to:
-  /// **'Montant, catégorie, enregistrer : trois gestes et c\'est noté.'**
-  String get didacticielEnregistrerTexte;
 
   /// No description provided for @didacticielSoldeTitre.
   ///
@@ -1609,12 +1393,6 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'Au rythme actuel, tu termineras {mois} à environ '**
   String projectionEnCours(String mois);
-
-  /// No description provided for @projectionPasse.
-  ///
-  /// In fr, this message translates to:
-  /// **'En {mois}, tu as dépensé '**
-  String projectionPasse(String mois);
 
   /// No description provided for @projectionDeDepenses.
   ///

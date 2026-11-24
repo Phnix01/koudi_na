@@ -14,7 +14,7 @@ Déjà fait dans le dépôt :
 - `ios/Runner/PrivacyInfo.xcprivacy` ajouté à la cible Runner (référencé dans `project.pbxproj` : groupe Runner + Resources build phase). Vérifier dans Xcode → Target Membership que la case « Runner » reste cochée après toute manipulation manuelle du projet.
 - **iPhone uniquement** : `TARGETED_DEVICE_FAMILY = 1` dans les 3 configurations du pbxproj. Plus de captures iPad obligatoires.
 - **Portrait uniquement** : `UISupportedInterfaceOrientations` dans `Info.plist` ne contient plus que `UIInterfaceOrientationPortrait` ; les entrées `~ipad` ont été supprimées. Même choix côté Android (`android:screenOrientation="portrait"`).
-- **Google Fonts embarquées hors ligne** : Inter (Regular, Medium) et Sora (SemiBold, Bold) dans `assets/google_fonts/`, déclarées dans `pubspec.yaml`, `GoogleFonts.config.allowRuntimeFetching = false` dans `main()`, licences OFL enregistrées dans `LicenseRegistry`. Plus aucun appel réseau au premier lancement.
+- **Google Fonts embarquées hors ligne** : Geist (Regular, Medium, SemiBold, Bold) dans `assets/google_fonts/`, déclarées dans `pubspec.yaml`, `GoogleFonts.config.allowRuntimeFetching = false` dans `main()`, licences OFL enregistrées dans `LicenseRegistry`. Plus aucun appel réseau au premier lancement.
 - **Politique de confidentialité accessible dans l'app** : section « À propos » dans Réglages (`lib/ui/screens/reglages_screen.dart`), avec lien vers la politique et un contact. Voir section 4 ci-dessous pour l'URL et l'e-mail à finaliser.
 - Bundle ID iOS `com.xnovasystems.koudiNa` ↔ Bundle ID Android `com.xnovasystems.koudi_na` : confirmés et inchangés (Apple interdit le `_`, d'où la différence volontaire entre les deux plateformes).
 
@@ -60,7 +60,7 @@ Obligatoire depuis mai 2024 pour les **API à motif requis** (horodatage de fich
 L'app n'est donc **pas tenue** d'avoir son propre manifeste. Par sécurité (et pour que le rapport de confidentialité généré par Xcode soit propre), `ios/Runner/PrivacyInfo.xcprivacy` existe avec quatre sections vides. Si un jour l'app lit `UserDefaults` (ex. `shared_preferences`), ajouter la catégorie `NSPrivacyAccessedAPICategoryUserDefaults` avec le motif `CA92.1`. Contrôle : Xcode → Organizer → archive → **Generate Privacy Report** ; aucun avertissement `ITMS-91053` ne doit arriver par mail après l'upload.
 
 ### Google Fonts : appel réseau supprimé (fait)
-`Inter-Regular.ttf`, `Inter-Medium.ttf`, `Sora-SemiBold.ttf`, `Sora-Bold.ttf` (seuls poids utilisés par `AppTheme`) sont embarqués dans `assets/google_fonts/`, déclarés dans `pubspec.yaml`. `main()` pose `GoogleFonts.config.allowRuntimeFetching = false` avant tout usage et enregistre les licences OFL (`OFL-Inter.txt`, `OFL-Sora.txt`) dans `LicenseRegistry`. Plus aucune requête réseau au premier lancement.
+`Geist-Regular.ttf`, `Geist-Medium.ttf`, `Geist-SemiBold.ttf`, `Geist-Bold.ttf` (seuls poids utilisés par `AppTheme`) sont embarqués dans `assets/google_fonts/`, déclarés dans `pubspec.yaml`. `main()` pose `GoogleFonts.config.allowRuntimeFetching = false` avant tout usage et enregistre les licences OFL (`OFL-Geist.txt`) dans `LicenseRegistry`. Plus aucune requête réseau au premier lancement.
 
 ### App Transport Security
 Rien à ajouter : aucune connexion réseau, donc aucune exception `NSAppTransportSecurity`. Ne pas en ajouter « au cas où » (cela déclenche une question de review).
@@ -151,7 +151,7 @@ xcrun altool --upload-package build/ios/ipa/koudi_na.ipa --type ios \
 
 ## 6. Checklist finale avant « Soumettre »
 
-1. Polices Inter/Sora embarquées, `allowRuntimeFetching = false`, test en mode avion OK. **(fait)**
+1. Police Geist embarquée, `allowRuntimeFetching = false`, test en mode avion OK. **(fait)**
 2. `Podfile` → `platform :ios, '15.0'` ; `IPHONEOS_DEPLOYMENT_TARGET = 15.0` ; `TARGETED_DEVICE_FAMILY = 1`. **(fait)**
 3. `Info.plist` : `ITSAppUsesNonExemptEncryption=false`, `CFBundleLocalizations` fr/en, orientation portrait uniquement. **(fait)**
 4. `ios/Runner/PrivacyInfo.xcprivacy` ajouté à la cible Runner **(fait, vérifié dans le pbxproj)** ; contrôler quand même le rapport de confidentialité Xcode (Organizer → Generate Privacy Report) sans avertissement avant la première soumission.

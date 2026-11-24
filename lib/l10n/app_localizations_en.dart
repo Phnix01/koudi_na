@@ -15,9 +15,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get enregistrer => 'Save';
 
   @override
-  String get enregistrerModifications => 'Save changes';
-
-  @override
   String get annuler => 'Cancel';
 
   @override
@@ -28,9 +25,6 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get tous => 'All';
-
-  @override
-  String get reinitialiser => 'Reset';
 
   @override
   String get aChoisir => 'Choose';
@@ -99,9 +93,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get pilierVie => 'Living';
 
   @override
-  String get regle402535 => '40/25/35 rule';
-
-  @override
   String get pilierRegle => 'Pillar (40/25/35 rule)';
 
   @override
@@ -117,25 +108,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get typeCompteEpargne => 'Savings';
 
   @override
-  String get tooltipAnalyse => 'Insights';
-
-  @override
-  String get tooltipVoirLeMois => 'View month';
-
-  @override
-  String get tooltipReglages => 'Settings';
-
-  @override
   String get aujourdHui => 'Today';
 
   @override
   String get hier => 'Yesterday';
-
-  @override
-  String get aucuneTransactionFiltres => 'No transactions match these filters';
-
-  @override
-  String get aucuneTransactionMois => 'No transactions this month';
 
   @override
   String get transactionSupprimee => 'Transaction deleted';
@@ -144,13 +120,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get categorieSupprimee => 'Deleted category';
 
   @override
-  String get compteSupprime => 'Deleted account';
-
-  @override
   String get supprimerTransactionTitre => 'Delete this transaction?';
-
-  @override
-  String get actionIrreversible => 'This cannot be undone.';
 
   @override
   String get desactivees => 'Disabled';
@@ -334,59 +304,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get analyse => 'Insights';
 
   @override
-  String get evolution12Mois => '12-month trend';
-
-  @override
-  String get repartitionDepensesMois => 'Spending breakdown (this month)';
-
-  @override
-  String get top5Titre => 'Top 5 categories (this month vs last month)';
-
-  @override
-  String get moisDernier => 'Last month';
-
-  @override
-  String get ceMoisCouleurCategorie => 'This month: category color';
-
-  @override
-  String get rythmeDuMois => 'Monthly pace';
-
-  @override
-  String get habitudesHebdo90 => 'Weekly habits (last 90 days)';
-
-  @override
   String get trajectoireEpargne => 'Savings trajectory';
-
-  @override
-  String get aucunObjectifRegle =>
-      'No goal set: open Settings → Accounts → your Savings account to set one.';
-
-  @override
-  String get equilibrePiliers6Mois => 'Pillar balance (6 months)';
-
-  @override
-  String get autonomieFinanciere => 'Financial runway';
-
-  @override
-  String autonomieValeur(String mois) {
-    return '$mois months';
-  }
-
-  @override
-  String get autonomieDescription =>
-      'Number of months of average spending your current savings cover';
 
   @override
   String get tauxEpargne => 'Savings rate';
 
   @override
   String get joursSansDepense => 'No-spend days';
-
-  @override
-  String get depenseMoyJourMois => 'Avg. spend / day (this month)';
-
-  @override
-  String get depenseMoyJourHistorique => 'Avg. spend / day (all time)';
 
   @override
   String get projectionFinDeMois => 'End-of-month projection';
@@ -396,19 +320,10 @@ class AppLocalizationsEn extends AppLocalizations {
       'At the current pace, you will exceed your income this month';
 
   @override
-  String get pasAssezDonnees => 'Not enough data';
-
-  @override
   String get pasAssezDonneesComparer => 'Not enough data to compare';
 
   @override
   String get pasAssezDonnees90Jours => 'Not enough data over the last 90 days';
-
-  @override
-  String get aucuneDepenseMois => 'No expenses this month';
-
-  @override
-  String get entreesDuMois => 'Month\'s income';
 
   @override
   String get momentMatin => 'Morning';
@@ -421,15 +336,6 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get momentNuit => 'Night';
-
-  @override
-  String get retirerNote => 'Remove note';
-
-  @override
-  String get ajouterNote => 'Add a note';
-
-  @override
-  String get noteOptionnelle => 'Note (optional)';
 
   @override
   String obsHausse(String categorie, int pourcent) {
@@ -629,27 +535,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String didacticielEtape(int numero, int total) {
     return '$numero/$total';
   }
-
-  @override
-  String get didacticielMontantTitre => 'The amount';
-
-  @override
-  String get didacticielMontantTexte =>
-      'Type it on the keypad just below. The switch above toggles between expense and income.';
-
-  @override
-  String get didacticielCategorieTitre => 'The category';
-
-  @override
-  String get didacticielCategorieTexte =>
-      'Tap the right one, then the account just after. The ones you use most rise to the top on their own.';
-
-  @override
-  String get didacticielEnregistrerTitre => 'Save';
-
-  @override
-  String get didacticielEnregistrerTexte =>
-      'Amount, category, save: three taps and it\'s logged.';
 
   @override
   String get didacticielSoldeTitre => 'Your monthly balance';
@@ -883,11 +768,6 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String projectionEnCours(String mois) {
     return 'At this pace, you\'ll end $mois with about ';
-  }
-
-  @override
-  String projectionPasse(String mois) {
-    return 'In $mois, you spent ';
   }
 
   @override
