@@ -1,32 +1,31 @@
 import 'package:flutter/material.dart';
 
-/// Jetons de couleur de KUDI (section 3.1 du cahier des charges).
-///
-/// Regrouper les couleurs ici plutôt que de les écrire "en dur" dans
-/// chaque écran permet de changer l'identité visuelle en un seul endroit.
+import 'koudi_tokens.dart';
+
+/// Alias hérités de l'ancien thème sombre, remappés sur la palette claire
+/// de la refonte D (voir [KoudiTokens]) pour que les écrans pas encore
+/// refondus restent cohérents. Le nouveau code lit `context.tokens`.
 abstract final class AppColors {
-  static const bg = Color(0xFF0B0F14);
-  static const surface = Color(0xFF151B23);
-  static const surfaceHigh = Color(0xFF1E2732);
+  static const _t = KoudiTokens.clair;
 
-  static const primary = Color(0xFF00C2A8);
-  static const accent = Color(0xFFC9971E);
+  static const bg = Color(0xFFF5F5F2);
+  static const surface = Color(0xFFFFFFFF);
+  static const surfaceHigh = Color(0xFFEAEAE5);
 
-  // Rose et bleu du monogramme (assets/icon/app_icon.svg) : jusqu'ici
-  // seul le teal apparaissait dans l'interface (le logo, lui, est
-  // multicolore). Utilisés pour les actions secondaires (ex. le bouton
-  // d'ajout flottant) afin que l'identité de marque dépasse l'écran
-  // d'accueil.
-  static const accentRose = Color(0xFFEC7FA9);
-  static const accentBleu = Color(0xFF3498DB);
+  /// L'ancien teal : devient l'accent unique de la refonte (vert).
+  static const primary = Color(0xFF0E7A4F);
 
-  static const positive = Color(0xFF2ECC71);
-  static const negative = Color(0xFFE74C3C);
-  // Pas dans les tokens de la section 3.1 : ajouté pour l'état "proche
-  // de la cible" des barres 40/25/35 (section 4, écran B), entre le vert
-  // et le rouge.
-  static const avertissement = Color(0xFFF2994A);
+  /// L'ancien or : flamme de la série, badges, mises en avant chaudes.
+  static const accent = Color(0xFFC2410C);
+  static const accentRose = Color(0xFFBE3A78);
+  static const accentBleu = Color(0xFF2F5BD3);
 
-  static const textPrimary = Color(0xFFF2F5F8);
-  static const textMuted = Color(0xFF8A97A6);
+  static const positive = Color(0xFF0E7A4F);
+  static const negative = Color(0xFFC2410C);
+  static const avertissement = Color(0xFFC2410C);
+
+  static const textPrimary = Color(0xFF111113);
+  static const textMuted = Color(0xFF6E6E73);
+
+  static Color get ink => _t.ink;
 }
