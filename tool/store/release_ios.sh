@@ -77,7 +77,7 @@ if [[ $LANE == release ]]; then
   # après un lancement sur simulateur, l'IPA embarquerait la version
   # simulateur et planterait au démarrage sur tout iPhone réel.
   rm -rf build/native_assets/ios
-  flutter build ipa --release --export-method app-store-connect
+  flutter build ipa --release --export-method app-store
   fw=build/ios/archive/Runner.xcarchive/Products/Applications/Runner.app/Frameworks/objective_c.framework/objective_c
   if [[ -f "$fw" ]] && ! xcrun vtool -show-build "$fw" | grep -qE "platform IOS$"; then
     echo "objective_c.framework n'est pas compilé pour iPhone dans l'archive : envoi annulé."

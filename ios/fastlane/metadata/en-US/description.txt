@@ -1,21 +1,44 @@
-Where did your money go this month? Koudi Na gives you the answer at a glance, one franc at a time.
+Where did your money go this month? Koudi Na shows you at a glance: what came in, what went out, and what is left.
 
-"Kudi" means money in Hausa. Koudi Na is a ledger that fits in your pocket, built for real life in West Africa: morning bread paid in cash, rent sent from the bank account, phone credit topped up through mobile money, a few notes set aside for later.
+"Kudi" means money in Hausa. Koudi Na is a pocket cashbook, designed in Niamey for everyday life: morning bread paid in cash, rent paid from the bank, phone credit topped up with mobile money, a savings-club contribution, the money you set aside for later.
 
-Logging an expense takes three taps. The amount on the keypad, the category from the grid, the account. It is saved in under ten seconds, before the taxi pulls away. Every category keeps its place, and your last category and account are already picked: a usual expense takes almost no thought. Income is logged just as fast as spending.
+LOG IT WITHOUT THE HASSLE
+• Tap +, then pick Expense or Income. Long-press + to go straight to a new expense.
+• One screen, no scrolling: the amount on the keypad, the category from the grid, the account.
+• Every category keeps its place, and your last category and account are already selected.
+• Add a note or change the date when you need to. Made a mistake? Edit the entry, or undo a deletion right away.
+• Payments that come back every month (rent, a subscription, a savings club) are created for you.
 
-Four accounts, one screen. Cash, bank, mobile money and savings. Mobile money gets its own balance, tracked separately from cash and bank. At any moment you know what is left in each one.
+YOUR MONTH ON ONE SCREEN
+• Your monthly balance, your spending pace and an estimate of where the month will end.
+• Your average spending per day.
+• Your latest entries, and a quick switch from one month to the next.
 
-The 40/25/35 rule. Each month, your income is split into three pillars: 40% Savings, 25% Family, 35% Living. Three bars show the real figure against the target. No table to build, no formula to retype: the rule is already in the app.
+THE 40/25/35 RULE
+Each month, your income is split into three envelopes: 40% Savings, 25% Family, 35% Living. For each one you see what was planned, what was spent and what is left. An alert lets you know when an envelope goes over.
 
-Your month, in plain view. Filter by account or category, fix a typo, undo a deletion made by mistake. Payments that come back every month, rent, a subscription, a tontine contribution, are created for you automatically.
+CASH, BANK, MOBILE MONEY, VAULT
+Four starter accounts, each with its own balance. Add your own, rename them, change their icon and colour. Your categories can be customised too. Koudi Na is not connected to any bank or mobile operator: you log the numbers, and the app never touches your money.
 
-Trends, not just totals. The Insights screen draws your year across 12 months, compares your five biggest categories with last month, projects where you will land at your current pace, and plots your savings line against your goal. A weekly heatmap shows which days of the week cost the most. And the app leaves short notes along the way: "Your Food spending is up 32% this month."
+THE JOURNAL
+Every entry, day by day. Search by note, category, account or amount, and filter by account or category.
 
-Your numbers stay with you. Koudi Na works fully offline, with no sign-up, no server, no ads and no subscription. Nothing leaves your phone unless you choose to export your data as a CSV file to send or archive. You can import an existing CSV file too.
+INSIGHTS
+• Month, 6 months or year: income and spending side by side.
+• Where the money goes: your biggest categories and their share.
+• Your savings path against your goal.
+• The days of the week that cost you the most.
+• Short notes such as "Your Food spending is up 32% this month", plus a money tip every day.
 
-Available in French and English, in a dark, calm interface designed to be opened several times a day without wearing you out.
+STAY ON TRACK
+A streak counts the days you log at least one entry, and badges mark your progress. A daily reminder at the time you choose and a weekly recap, all of which can be turned off.
 
-Koudi Na is made in Niger by XNOVA Systems, for West Africa and the CFA franc.
+150+ CURRENCIES
+CFA franc (XOF, XAF), naira, cedi, euro, dollar, pound, Swiss franc, Canadian dollar, dirham and many more.
 
-Download Koudi Na and log your first expense today.
+YOUR DATA STAYS WITH YOU
+Koudi Na works 100% offline: no sign-up, no account, no server, no ads, no trackers. Nothing leaves your phone unless you choose to export your data as CSV, PDF or Excel. You can also import a CSV file.
+
+The app interface is available in English and French.
+
+Koudi Na is made in Niger by XNOVA Systems.

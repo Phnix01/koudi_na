@@ -10,43 +10,61 @@ soit la langue. À mettre à jour quand l'app change.
 - Application de suivi de budget personnel pour iPhone.
 
 ## Saisie
-- Une dépense se note en trois touches : montant, catégorie, compte, en moins
-  de dix secondes (objectif de conception du parcours de saisie).
+- Saisie sur un seul écran, sans défilement : clavier numérique, grille de
+  catégories, choix du compte, puis « Enregistrer ». Ne jamais annoncer un
+  nombre de touches ni un temps chiffré.
 - Chaque catégorie garde une place fixe dans la grille (ordre réglable dans
   Réglages) ; la dernière catégorie et le dernier compte utilisés sont déjà
   sélectionnés à l'ouverture de la saisie.
 - Navigation par barre d'onglets : Accueil, Journal, Analyse, Réglages, et un
-  bouton + central (appui long : dépense directe). Visite guidée au premier
-  lancement, rejouable dans Réglages.
-- Les revenus se notent aussi vite que les dépenses.
+  bouton + central (appui : choisir Dépense ou Entrée ; appui long : dépense
+  directe). Visite guidée au premier lancement, rejouable dans Réglages.
+- Une note et une date peuvent être ajoutées à chaque opération.
+- Catégories et comptes personnalisables (nom, icône, couleur, ordre),
+  désactivables sans perdre l'historique.
+- Les revenus (entrées) se notent sur le même écran : salaire, prestations,
+  freelance, business, don reçu, autre entrée.
 - Les paiements qui reviennent chaque mois (loyer, abonnement, cotisation…)
   peuvent être créés automatiquement (récurrences).
 
-## Vue du mois
-- Liste des transactions du mois, filtrable par compte et par catégorie.
-- Une saisie se corrige après coup ; une suppression faite par erreur
-  s'annule juste après.
+## Accueil
+- Solde du mois (entrées moins dépenses), rythme du mois (jour X sur N),
+  estimation de fin de mois au rythme actuel, moyenne de dépense par jour.
+- Les trois enveloppes 40/25/35 (prévu, dépensé, reste) et les dernières
+  opérations. Navigation d'un mois à l'autre.
+
+## Journal
+- Toutes les opérations, mois par mois, groupées par jour.
+- Recherche (note, catégorie, compte, montant) et filtres par compte et par
+  catégorie.
+- Une saisie se corrige après coup ; une suppression (glisser) s'annule juste
+  après.
 
 ## Interface
-- Interface sombre et calme, pensée pour être ouverte plusieurs fois par jour.
+- Interface claire et sobre, typographie lisible, chiffres alignés ; pensée
+  pour être ouverte plusieurs fois par jour.
 
 ## Comptes
-- Quatre types de comptes suivis par l'utilisateur lui-même : espèces (cash),
-  banque, mobile money, épargne. Chaque compte a son propre solde.
+- Quatre comptes de départ suivis par l'utilisateur lui-même : Espèces (cash),
+  Banque, Mobile money, Coffre (épargne mise de côté). Chaque compte a son
+  propre solde ; on peut en ajouter, renommer ou désactiver.
 - L'app ne détient, ne transfère et ne reçoit aucun argent. Elle n'est reliée
   à aucune banque, aucun opérateur de mobile money, aucun service de paiement.
 
 ## Méthode 40/25/35
 - Le revenu du mois se répartit en trois piliers : 40 % Épargne, 25 % Famille,
-  35 % Vie. Trois barres comparent le réel à l'objectif.
+  35 % Vie. Sur l'Accueil, trois enveloppes montrent le prévu, le dépensé
+  et le reste ; une alerte prévient quand une enveloppe est dépassée.
 
 ## Analyse
-- Évolution sur 12 mois (entrées et dépenses).
-- Comparaison des 5 plus grosses catégories avec le mois précédent.
+- Trois périodes au choix : Mois (barres par semaine), 6 mois, Année
+  (barres par mois), entrées et dépenses côte à côte.
+- « Où va l'argent » : les 4 plus grosses catégories de la période avec leur
+  part en %, liste complète sur demande.
 - Projection de fin de mois au rythme actuel.
 - Trajectoire d'épargne face à l'objectif.
 - Carte de chaleur des jours de la semaine les plus coûteux.
-- Courtes observations automatiques (ex. « Tes dépenses en Nourriture ont
+- Courtes observations automatiques (ex. « Tes dépenses en Alimentation ont
   augmenté de 32 % ce mois-ci »), calculées sur le téléphone, sans IA.
 - Une astuce de gestion d'argent par jour.
 

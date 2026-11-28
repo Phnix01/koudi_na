@@ -1,1 +1,1 @@
-savings,fcfa,mobile money,tracker,spending,finance,offline,niger,africa,cfa,income,cash
+tracker,spending,planner,finance,offline,cash,mobile money,fcfa,cfa,africa,niger,nigeria,income

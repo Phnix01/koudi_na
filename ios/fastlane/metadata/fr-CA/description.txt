@@ -1,0 +1,44 @@
+Où est passé ton argent ce mois-ci ? Koudi Na te le montre d'un coup d'œil : ce qui est entré, ce qui est sorti, et ce qu'il te reste.
+
+« Kudi », c'est l'argent en haoussa. Koudi Na est un carnet de comptes de poche, conçu à Niamey pour la vie de tous les jours : le pain du matin payé en espèces, le loyer réglé par la banque, le crédit téléphone passé par mobile money, la cotisation de tontine, l'argent mis de côté pour plus tard.
+
+NOTER UNE OPÉRATION, SANS EFFORT
+• Touche +, puis choisis Dépense ou Entrée. Un appui long sur + ouvre directement une dépense.
+• Un seul écran, sans défilement : le montant au clavier, la catégorie dans la grille, le compte.
+• Chaque catégorie garde sa place, et ta dernière catégorie et ton dernier compte sont déjà sélectionnés.
+• Ajoute une note ou change la date si besoin. Une erreur ? Corrige l'opération, ou annule une suppression juste après.
+• Les paiements qui reviennent chaque mois (loyer, abonnement, tontine) se créent tout seuls.
+
+TON MOIS EN UN ÉCRAN
+• Le solde du mois, le rythme de tes dépenses et une estimation de ta fin de mois.
+• Ta moyenne de dépense par jour.
+• Tes dernières opérations, et le passage d'un mois à l'autre.
+
+LA RÈGLE 40/25/35
+Chaque mois, ton revenu se répartit en trois enveloppes : 40 % Épargne, 25 % Famille, 35 % Vie. Pour chacune, tu vois le prévu, le dépensé et le reste. Une alerte te prévient quand une enveloppe est dépassée.
+
+ESPÈCES, BANQUE, MOBILE MONEY, COFFRE
+Quatre comptes de départ, chacun avec son propre solde. Ajoute les tiens, renomme-les, change leur icône et leur couleur. Tes catégories aussi se personnalisent. Koudi Na n'est relié à aucune banque ni à aucun opérateur : c'est toi qui notes, l'app ne touche jamais à ton argent.
+
+LE JOURNAL
+Toutes tes opérations, jour par jour. Recherche par note, catégorie, compte ou montant, et filtre par compte ou par catégorie.
+
+L'ANALYSE
+• Mois, 6 mois ou année : entrées et dépenses côte à côte.
+• Où va l'argent : tes plus grosses catégories et leur part.
+• Ta trajectoire d'épargne face à ton objectif.
+• Les jours de la semaine qui te coûtent le plus.
+• De courtes observations, comme « Tes dépenses en Alimentation ont augmenté de 32 % ce mois-ci », et une astuce par jour.
+
+RESTER RÉGULIER
+Une série compte les jours où tu notes au moins une opération, et des badges saluent tes progrès. Rappel quotidien à l'heure de ton choix et récap de la semaine, tous désactivables.
+
+PLUS DE 150 DEVISES
+Dollar canadien, dollar US, euro, franc CFA (XOF, XAF), franc suisse, naira, cedi, dirham et bien d'autres.
+
+TES DONNÉES RESTENT CHEZ TOI
+Koudi Na fonctionne à 100 % hors ligne : pas d'inscription, pas de compte, pas de serveur, pas de publicité, aucun traceur. Rien ne quitte ton téléphone, sauf si tu choisis d'exporter tes données en CSV, PDF ou Excel. Tu peux aussi importer un fichier CSV.
+
+L'interface de l'app est disponible en français et en anglais.
+
+Koudi Na est conçu au Niger par XNOVA Systems.

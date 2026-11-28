@@ -1,1 +1,1 @@
-épargne,fcfa,mobile money,argent,finances,budget,hors ligne,niger,afrique,cfa,suivi,dépenses
+comptes,carnet,fcfa,cfa,mobile money,tontine,niger,niamey,afrique,hors ligne,suivi,finances,cash

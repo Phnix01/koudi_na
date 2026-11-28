@@ -31,6 +31,6 @@ platform :ios do
 
   desc "Envoie l'IPA construit par flutter build ipa, puis la fiche"
   lane :release do
-    deliver(ipa: "../build/ios/ipa/koudi_na.ipa", **OPTIONS_FICHE)
+    deliver(ipa: Dir["../build/ios/ipa/*.ipa"].max_by { |f| File.mtime(f) }, **OPTIONS_FICHE)
   end
 end
