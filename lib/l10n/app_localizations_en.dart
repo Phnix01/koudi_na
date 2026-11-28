@@ -757,7 +757,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get periodeMois => 'Month';
 
   @override
-  String get periode6Mois => '6 months';
+  String get periode6Mois => '6 mo';
 
   @override
   String get periodeAnnee => 'Year';
