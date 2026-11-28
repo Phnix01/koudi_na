@@ -55,7 +55,7 @@ Résultat : `build/app/outputs/bundle/release/app-release.aab`.
 | Description complète | Présence sur le Store | voir FICHE_STORE.md (4000 car. max) |
 | Catégorie | Présence sur le Store | **Finance** |
 | Coordonnées (e-mail) | Présence sur le Store | `contact@xnovasystems.com` — **à remplacer par une boîte réellement surveillée avant soumission** |
-| URL politique de confidentialité | Présence sur le Store | Même URL que côté iOS, voir DEPLOIEMENT_IOS.md section 4 : `https://claude.ai/artifact/Y3yFsKPSZjrWnGNcpFRgis` (provisoire, à migrer vers un domaine XNOVA) |
+| URL politique de confidentialité | Présence sur le Store | Même URL que côté iOS, voir DEPLOIEMENT_IOS.md section 4 : `https://xnovasystems.com/apps/koudi-na/privacy.html` (provisoire, à migrer vers un domaine XNOVA) |
 | Icône | Présence sur le Store | PNG 512×512, 32 bits, générée par `flutter_launcher_icons` (reprendre `assets/icon/app_icon.png` à l'export) |
 | Image de présentation (feature graphic) | Présence sur le Store | **Obligatoire**, 1024×500 PNG/JPEG, pas de texte essentiel (recadrée selon l'appareil) — à créer, aucun équivalent requis côté Apple |
 | Captures d'écran téléphone | Présence sur le Store | **2 minimum, 8 max** recommandées ; JPEG/PNG 24 bits, chaque côté entre 320 px et 3840 px, ratio entre 16:9 et 9:16. Les captures iPhone ne sont pas réutilisables (ratio différent) : en prendre des nouvelles sur un émulateur/téléphone Android, FR et EN. |

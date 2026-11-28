@@ -2,7 +2,8 @@
 // vrai code de l'app avec des données de démonstration.
 //
 // Ce n'est pas un test de non-régression : il ne tourne que sur demande.
-//   tool/store/../ → voir test/store_screenshots/generer.sh
+//   test/store_screenshots/generer.sh
+// ignore_for_file: depend_on_referenced_packages
 @Tags(['captures'])
 library;
 
@@ -17,7 +18,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hive_ce_flutter/hive_flutter.dart';
 import 'package:intl/date_symbol_data_local.dart';
-import 'package:intl/intl.dart';
+import 'package:intl/intl.dart' show Intl;
 import 'package:koudi_na/core/constants/devises.dart';
 import 'package:koudi_na/core/constants/hive_boxes.dart';
 import 'package:koudi_na/core/theme/app_theme.dart';
@@ -74,6 +75,11 @@ class Capture {
 }
 
 Future<void> main() async {
+  // Lancé seulement par generer.sh : un `flutter test` ordinaire l'ignore.
+  if (!bool.hasEnvironment('LANGUE_CAPTURES')) {
+    test('captures store (generer.sh)', () {}, skip: 'lancer test/store_screenshots/generer.sh');
+    return;
+  }
   TestWidgetsFlutterBinding.ensureInitialized();
   final dossierHive = Directory('.dart_tool/_hive_captures_$langue');
   if (dossierHive.existsSync()) dossierHive.deleteSync(recursive: true);
