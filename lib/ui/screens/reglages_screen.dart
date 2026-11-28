@@ -32,9 +32,11 @@ const _langueSysteme = 'systeme';
 
 /// Guideline 5.1.1 (i) d'Apple (et équivalent Google Play) : la politique
 /// de confidentialité doit être accessible depuis l'app, pas seulement
-/// depuis la fiche store.
-const _urlPolitiqueConfidentialite =
-    'https://claude.ai/artifact/Y3yFsKPSZjrWnGNcpFRgis';
+/// depuis la fiche store. Même page que les fiches App Store et Google
+/// Play, servie en anglais sous `/en/`.
+String _urlPolitiqueConfidentialite(String langue) => langue == 'fr'
+    ? 'https://xnovasystems.com/apps/koudi-na/privacy.html'
+    : 'https://xnovasystems.com/en/apps/koudi-na/privacy.html';
 const _emailContact = 'contact@xnovasystems.com';
 
 /// Écran D (section 4) : langue, gestion des catégories, des comptes et
@@ -454,8 +456,13 @@ class _ReglagesScreenState extends ConsumerState<ReglagesScreen> {
                       PhosphorIconsRegular.arrowSquareOut,
                       size: 18,
                     ),
-                    onTap: () =>
-                        _ouvrirLien(Uri.parse(_urlPolitiqueConfidentialite)),
+                    onTap: () => _ouvrirLien(
+                      Uri.parse(
+                        _urlPolitiqueConfidentialite(
+                          Localizations.localeOf(context).languageCode,
+                        ),
+                      ),
+                    ),
                   ),
                   const Divider(height: 1),
                   ListTile(
