@@ -1,21 +1,34 @@
-¿A dónde se fue tu dinero este mes? Con Koudi Na tienes la respuesta de un vistazo, peso por peso.
+¿A dónde se fue tu dinero este mes? Koudi Na te lo muestra de un vistazo: lo que entró, lo que salió y lo que te queda.
 
-Koudi Na es una libreta de cuentas que cabe en tu celular, hecha para la vida de todos los días: el café de la mañana pagado en efectivo, la renta que sale del banco, la recarga del celular, los billetes que apartas para después. “Kudi” quiere decir dinero en hausa; la app fue diseñada en Níger por XNOVA Systems y trabaja con más de 150 monedas, entre ellas el peso mexicano, el argentino, el colombiano y el chileno, el sol peruano y el real brasileño.
+“Kudi” quiere decir dinero en hausa. Koudi Na nació en Niamey, Níger, como una libreta de cuentas de bolsillo para la vida de todos los días: el desayuno pagado en efectivo, la renta que sale del banco, la recarga del celular, la tanda con la familia, el guardadito para más adelante.
 
-Anotar un gasto toma tres toques: el monto en el teclado, la categoría en la cuadrícula, la cuenta. Queda guardado en menos de diez segundos, antes de que arranque el autobús. Cada categoría conserva su lugar y la última categoría y la última cuenta que usaste ya vienen seleccionadas, así que un gasto de siempre se anota casi sin pensarlo. Los ingresos se registran igual de rápido.
+ANOTAR UN MOVIMIENTO, SIN COMPLICARSE
+Toca el botón +, luego elige Gasto o Ingreso; si lo mantienes presionado, pasas directo a un gasto nuevo. Todo cabe en una sola pantalla, sin desplazarte: el monto en el teclado, la categoría en la cuadrícula, la cuenta. Cada categoría guarda su lugar, y tu última categoría y tu última cuenta ya vienen seleccionadas. Agrega una nota o cambia la fecha cuando lo necesites. ¿Te equivocaste? Edita el movimiento o deshaz un borrado enseguida. Los pagos que se repiten cada mes, como la renta, los servicios o una suscripción, se crean solos.
 
-Cuatro cuentas, una sola pantalla: efectivo, banco, dinero móvil y ahorro. Cada una lleva su propio saldo, así que en cualquier momento sabes cuánto queda en cada cuenta. Los saldos los llevas tú: Koudi Na no está conectada a ningún banco ni a ningún servicio de pagos, y no mueve ni recibe dinero.
+TU MES EN UNA PANTALLA
+El saldo del mes, el ritmo de tus gastos y una estimación de cómo vas a cerrar el mes. Tu promedio de gasto por día. Tus últimos movimientos, y puedes moverte de un mes a otro.
 
-La regla 40/25/35. Cada mes tu ingreso se reparte en tres pilares: 40 % Ahorro, 25 % Familia, 35 % Vida. Tres barras comparan lo real con la meta. No hay hoja de cálculo que armar ni fórmula que volver a escribir: la regla ya viene en la app.
+LA REGLA 40/25/35
+Cada mes tu ingreso se reparte en tres sobres: 40 % Ahorro, 25 % Familia, 35 % Vida. En cada uno ves lo previsto, lo gastado y lo que queda. Una alerta te avisa cuando te pasas de un sobre.
 
-Tu mes, a la vista. Filtra por cuenta o por categoría, corrige un registro y deshaz un borrado accidental. Los pagos que se repiten cada mes, como la renta, los servicios, una suscripción o la cuota de la tanda, se crean solos.
+EFECTIVO, BANCO, DINERO MÓVIL Y GUARDADITO
+Cuatro cuentas para empezar, cada una con su propio saldo. Agrega las tuyas, cámbiales el nombre, el icono y el color; tus categorías también se personalizan, y puedes desactivar las que no uses sin perder el historial. Koudi Na no está conectada a ningún banco ni a ninguna operadora: tú anotas las cifras y la app nunca toca tu dinero.
 
-Tendencias, no nada más totales. La pantalla de Análisis dibuja tus últimos 12 meses de entradas y salidas, compara tus cinco categorías más grandes con el mes pasado, proyecta cómo vas a cerrar el mes al ritmo actual y traza tu línea de ahorro frente a tu meta. Un mapa de calor muestra qué días de la semana te salen más caros. Y de vez en cuando aparece una observación corta: “Tus gastos en Comida subieron 32 % este mes”. Todo se calcula en el teléfono, sin inteligencia artificial. Cada día encontrarás además una idea breve para ordenar tu dinero.
+EL DIARIO
+Todos tus movimientos, día por día. Busca por nota, categoría, cuenta o monto, y filtra por cuenta o por categoría.
 
-Para no perder el ritmo, una racha cuenta los días seguidos con al menos un registro, hay insignias que se desbloquean y puedes recibir un recordatorio diario a la hora que elijas, un resumen el domingo por la noche y un aviso cuando un pilar se pasa de su meta del mes. Son notificaciones locales y todas se pueden apagar.
+ANÁLISIS
+Mes, 6 meses o año: ingresos y gastos uno al lado del otro. A dónde va el dinero: tus categorías más grandes y el porcentaje que se llevan. Tu trayectoria de ahorro frente a tu meta. Los días de la semana que te cuestan más. Observaciones breves como “Tus gastos en Alimentación subieron 32 % este mes”, y un consejo para manejar tu dinero cada día. Todo se calcula en tu celular.
 
-Tus números se quedan contigo. Koudi Na funciona 100 % sin conexión: no hay que crear cuenta ni registrarse, no hay servidor, no hay publicidad, no hay suscripción ni rastreadores. Nada sale de tu celular, salvo cuando tú decides exportar: archivo CSV, reporte en PDF o libro de Excel. También puedes importar un CSV que ya tengas.
+NO PERDER EL HILO
+Una racha cuenta los días en que anotas al menos un movimiento, y hay insignias que marcan tu avance. Recordatorio diario a la hora que elijas y resumen de la semana el domingo por la noche; todo se puede desactivar.
 
-Una nota honesta: la interfaz de la app está disponible solo en francés y en inglés. La interfaz es oscura y tranquila, pensada para abrirla varias veces al día.
+MÁS DE 150 MONEDAS
+Peso mexicano, peso argentino, peso colombiano, peso chileno, sol peruano, dólar, euro, real brasileño, franco CFA y muchas más.
 
-Descarga Koudi Na y anota tu primer gasto hoy.
+TUS DATOS SE QUEDAN CONTIGO
+Koudi Na funciona 100 % sin conexión: sin registro, sin cuenta, sin servidor, sin anuncios, sin rastreadores. Nada sale de tu celular, a menos que tú mismo decidas exportar tus datos en CSV, PDF o Excel. También puedes importar un archivo CSV.
+
+La interfaz de la app está disponible únicamente en francés y en inglés.
+
+Koudi Na está hecha en Níger por XNOVA Systems.

@@ -1,1 +1,1 @@
-haushaltsbuch,finanzen,sparen,kosten,geld,offline,einnahmen,finanzplaner,sparziel,bargeld,tracker
+finanzen,kostenkontrolle,einnahmen,geldtagebuch,kassenbuch,offline,bargeld,euro,franken,finanzplaner

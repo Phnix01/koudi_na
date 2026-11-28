@@ -69,6 +69,13 @@ String formaterSigne(int valeur) {
   return formaterNombre(valeur);
 }
 
+/// Pourcentage selon la langue : « 69 % » en francais (espace
+/// insecable), « 69% » en anglais.
+String formaterPourcent(int valeur) =>
+    (Intl.defaultLocale ?? Intl.getCurrentLocale()).startsWith('fr')
+        ? '$valeur$_espaceInsecable%'
+        : '$valeur%';
+
 /// Arrondi a 3 chiffres significatifs (212 487 -> 212 000 ; 1 234 -> 1 230) :
 /// "arrondi au millier" convient au FCFA mais pas a l'euro ou au dollar,
 /// dont les montants courants sont mille fois plus petits.

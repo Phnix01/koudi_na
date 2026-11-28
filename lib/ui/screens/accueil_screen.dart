@@ -442,7 +442,7 @@ class _Enveloppes extends StatelessWidget {
                           children: [
                             TextSpan(text: l10n.libellePilier(e.pilier)),
                             TextSpan(
-                              text: ' · ${(e.progression * 100).round()} %',
+                              text: ' · ${formaterPourcent((e.progression * 100).round())}',
                               style: TextStyle(color: t.muted, fontWeight: FontWeight.w400),
                             ),
                           ],

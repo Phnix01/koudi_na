@@ -417,7 +417,7 @@ class _VisuelPiliers extends StatelessWidget {
               SizedBox(
                 width: 40,
                 child: Text(
-                  '${entree.value} %',
+                  formaterPourcent(entree.value),
                   textAlign: TextAlign.right,
                   style: Theme.of(
                     context,

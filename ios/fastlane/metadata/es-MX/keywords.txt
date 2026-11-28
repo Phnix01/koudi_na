@@ -1,1 +1,1 @@
-presupuesto,ahorro,finanzas,personales,dinero,cuentas,ingresos,efectivo,quincena,sin internet,pagos
+dinero,finanzas,cuentas,efectivo,offline,libreta,sueldo,quincena,ingresos,peso,tanda,mensual

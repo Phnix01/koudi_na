@@ -1,1 +1,1 @@
-Registri una spesa in tre tocchi. Contanti, banca, risparmi: sai dov'è ogni euro. La regola 40/25/35 ordina il mese. Tutto offline, senza registrazione.
+Segna spese ed entrate in un'unica schermata, guarda il saldo del mese e segui la regola 40/25/35. Contanti, banca, risparmi. 100% offline, senza registrazione.

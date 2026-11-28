@@ -28,6 +28,7 @@ if [[ $GENERER == 1 ]]; then
     echo "Les langues validées sont écrites ; relance avec --locales pour réessayer les autres."
     exit 1
   fi
+  echo "Avant de relancer sur simulateur : flutter clean (le cache contient la version iPhone)."
 fi
 
 echo

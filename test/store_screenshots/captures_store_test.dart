@@ -4,8 +4,6 @@
 // Ce n'est pas un test de non-régression : il ne tourne que sur demande.
 //   test/store_screenshots/generer.sh
 // ignore_for_file: depend_on_referenced_packages
-@Tags(['captures'])
-library;
 
 import 'dart:io';
 import 'dart:ui' as ui;
@@ -33,6 +31,7 @@ import 'package:koudi_na/logic/providers/navigation_provider.dart';
 import 'package:koudi_na/ui/screens/badges_screen.dart';
 import 'package:koudi_na/ui/screens/saisie_screen.dart';
 import 'package:koudi_na/ui/shell/app_shell.dart';
+import 'package:koudi_na/ui/widgets/devise_selecteur_feuille.dart';
 import 'package:koudi_na/ui/widgets/koudi/numeric_keypad.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:path_provider_platform_interface/path_provider_platform_interface.dart';
@@ -76,7 +75,7 @@ class Capture {
 
 Future<void> main() async {
   // Lancé seulement par generer.sh : un `flutter test` ordinaire l'ignore.
-  if (!bool.hasEnvironment('LANGUE_CAPTURES')) {
+  if (!const bool.hasEnvironment('LANGUE_CAPTURES')) {
     test('captures store (generer.sh)', () {}, skip: 'lancer test/store_screenshots/generer.sh');
     return;
   }
@@ -90,6 +89,13 @@ Future<void> main() async {
   await _police('packages/phosphor_flutter/PhosphorRegular', 'packages/phosphor_flutter/lib/fonts/Phosphor.ttf');
   await _police('packages/phosphor_flutter/PhosphorBold', 'packages/phosphor_flutter/lib/fonts/Phosphor-Bold.ttf');
   await _police('packages/phosphor_flutter/PhosphorFill', 'packages/phosphor_flutter/lib/fonts/Phosphor-Fill.ttf');
+
+  // Geist chargée avant le premier rendu : sinon la première image est
+  // dessinée avec la police de test, plus large, et déborde.
+  for (final graisse in [FontWeight.w400, FontWeight.w500, FontWeight.w600, FontWeight.w700]) {
+    GoogleFonts.geist(fontWeight: graisse);
+  }
+  await GoogleFonts.pendingFonts();
 
   await initialiserHive();
   final reglages = ReglagesRepository();
@@ -111,11 +117,11 @@ Future<void> main() async {
     Capture('02_saisie', 'Note une dépense\nen quelques secondes', 'Montant, catégorie, compte. C’est noté.',
         () => const SaisieScreen.nouvelle(type: TypeMouvement.depense),
         preparer: (t) => _taper(t, '2500')),
-    Capture('03_journal', 'Cash, banque,\nmobile money', 'Tous tes comptes au même endroit', () => const AppShell(), onglet: 1),
-    Capture('04_analyse', 'Vois où part\nton argent', 'Semaine par semaine, catégorie par catégorie', () => const AppShell(), onglet: 2),
-    Capture('05_ajout', 'Dépense ou entrée :\nun seul geste', 'Appui long sur + : dépense directe', () => const AppShell(),
-        onglet: 0, preparer: (t) => _ouvrirPlus(t, 'Ajouter une dépense ou une entrée')),
-    Capture('06_serie', 'Garde le rythme,\ngagne des médailles', '100 % hors ligne · sans inscription · sans pub',
+    Capture('03_analyse', 'Vois où part\nton argent', 'Mois par mois, catégorie par catégorie', () => const AppShell(), onglet: 2),
+    Capture('04_journal', 'Cash, banque,\nmobile money', 'Tous tes comptes au même endroit', () => const AppShell(), onglet: 1),
+    Capture('05_devises', 'Plus de 150 devises,\nla tienne aussi', 'Franc CFA, euro, dollar, dirham…',
+        () => const _AvecSelecteurDevise(child: AppShell()), onglet: 3),
+    Capture('06_serie', 'Garde le rythme,\ngagne des médailles', '100\u00A0% hors ligne · sans inscription · sans pub',
         () => const BadgesScreen()),
   ];
   final capturesEn = <Capture>[
@@ -123,10 +129,10 @@ Future<void> main() async {
     Capture('02_entry', 'Log an expense\nin seconds', 'Amount, category, account. Done.',
         () => const SaisieScreen.nouvelle(type: TypeMouvement.depense),
         preparer: (t) => _taper(t, '14')),
-    Capture('03_journal', 'Cash, bank,\nmobile money', 'Every account in one place', () => const AppShell(), onglet: 1),
-    Capture('04_insights', 'See where your\nmoney goes', 'Week by week, category by category', () => const AppShell(), onglet: 2),
-    Capture('05_add', 'Expense or income:\none tap away', 'Long-press + to log an expense', () => const AppShell(),
-        onglet: 0, preparer: (t) => _ouvrirPlus(t, 'Add an expense or income')),
+    Capture('03_insights', 'See where your\nmoney goes', 'Month by month, category by category', () => const AppShell(), onglet: 2),
+    Capture('04_journal', 'Cash, bank,\nmobile money', 'Every account in one place', () => const AppShell(), onglet: 1),
+    Capture('05_currencies', '150+ currencies,\nyours included', 'Dollar, euro, pound, CFA franc…',
+        () => const _AvecSelecteurDevise(child: AppShell()), onglet: 3),
     Capture('06_streak', 'Keep your streak,\nearn medals', '100% offline · no sign-up · no ads', () => const BadgesScreen()),
   ];
 
@@ -150,6 +156,13 @@ Future<void> _stabiliser(WidgetTester tester) async {
   await tester.runAsync(() => GoogleFonts.pendingFonts());
   await tester.pump(const Duration(seconds: 2));
   await tester.pumpAndSettle();
+  // Les images (médailles) se décodent hors de l'horloge simulée du test.
+  await tester.runAsync(() async {
+    for (final element in find.byType(Image).evaluate()) {
+      await precacheImage((element.widget as Image).image, element);
+    }
+  });
+  await tester.pumpAndSettle();
 }
 
 Future<void> _taper(WidgetTester tester, String chiffres) async {
@@ -159,8 +172,27 @@ Future<void> _taper(WidgetTester tester, String chiffres) async {
   }
 }
 
-Future<void> _ouvrirPlus(WidgetTester tester, String semantique) async {
-  await tester.tap(find.bySemanticsLabel(semantique));
+/// Ouvre la feuille de choix de devise par-dessus l'écran, comme depuis
+/// Réglages.
+class _AvecSelecteurDevise extends StatefulWidget {
+  const _AvecSelecteurDevise({required this.child});
+  final Widget child;
+
+  @override
+  State<_AvecSelecteurDevise> createState() => _AvecSelecteurDeviseState();
+}
+
+class _AvecSelecteurDeviseState extends State<_AvecSelecteurDevise> {
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback(
+      (_) => ouvrirSelecteurDevise(context, actuelle: deviseCourante),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) => widget.child;
 }
 
 /// Pixels bruts RGBA : generer.sh les écrit en PNG RGB (sans alpha).
@@ -453,38 +485,34 @@ Future<void> _donneesDemo() async {
   for (final (m, dep) in [(5, 0.86), (4, 0.94), (3, 0.81), (2, 0.97), (1, 0.89)]) {
     await t(j(1, m), 350000, 4200, 'cat-salaire', 'compte-banque', 'Salaire', 'Salary', entree: true);
     await t(j(1, m), 80000, 800, 'cat-epargne', 'compte-epargne', 'Virement au coffre', 'Transfer to vault');
-    await t(j(2, m), 85000, 1100, 'cat-loyer-charges', 'compte-banque', 'Loyer', 'Rent');
+    await t(j(2, m), 50000, 750, 'cat-loyer-charges', 'compte-banque', 'Loyer', 'Rent');
     await t(j(9, m), (70000 * dep).round(), (520 * dep).round(), 'cat-nourriture', 'compte-especes', 'Courses du mois', 'Groceries');
     await t(j(15, m), (25000 * dep).round(), (180 * dep).round(), 'cat-transport', 'compte-especes', 'Carburant', 'Fuel');
     await t(j(20, m), 40000, 300, 'cat-soutien-familial', 'compte-mobile-money', 'Envoi à maman', 'Sent to mom');
     await t(j(24, m), (20000 * dep).round(), (160 * dep).round(), 'cat-divers', 'compte-especes', 'Divers', 'Misc');
   }
 
-  // Mois courant.
+  // Mois courant : enveloppes sous l'objectif, comptes variés.
   await t(j(1), 350000, 4200, 'cat-salaire', 'compte-banque', 'Salaire', 'Salary', entree: true);
-  await t(j(1), 100000, 800, 'cat-epargne', 'compte-epargne', 'Virement au coffre', 'Transfer to vault');
-  await t(j(2), 85000, 1100, 'cat-loyer-charges', 'compte-banque', 'Loyer de novembre', 'Rent');
-  await t(j(4), 12500, 95, 'cat-loyer-charges', 'compte-mobile-money', 'Facture NIGELEC', 'Electricity bill');
+  await t(j(1), 115000, 1400, 'cat-epargne', 'compte-epargne', 'Virement au coffre', 'Transfer to vault');
+  await t(j(2), 50000, 750, 'cat-loyer-charges', 'compte-banque', 'Loyer de novembre', 'Rent');
+  await t(j(4), 9500, 95, 'cat-loyer-charges', 'compte-mobile-money', 'Facture NIGELEC', 'Electricity bill');
   await t(j(5), 25000, 200, 'cat-epargne', 'compte-mobile-money', 'Cotisation tontine', 'Savings club');
-  await t(j(6), 5000, 30, 'cat-data-telecom', 'compte-mobile-money', 'Forfait internet', 'Phone plan');
-  await t(j(8), 32000, 240, 'cat-nourriture', 'compte-especes', 'Courses au marché', 'Groceries');
+  await t(j(8), 25000, 240, 'cat-nourriture', 'compte-especes', 'Courses au marché', 'Groceries');
   await t(j(12), 75000, 650, 'cat-freelance', 'compte-mobile-money', 'Site web client', 'Website project', entree: true);
-  await t(j(13), 15000, 120, 'cat-habillement', 'compte-especes', 'Tissu pour la fête', 'New shoes');
   await t(j(14), 2000, 20, 'cat-sadaqa-deen', 'compte-especes', 'Sadaqa du vendredi', 'Charity');
   await t(j(15), 20000, 150, 'cat-don-recu', 'compte-especes', 'Cadeau de tonton', 'Birthday gift', entree: true);
-  await t(j(16), 10000, 45, 'cat-transport', 'compte-especes', 'Carburant moto', 'Fuel');
+  await t(j(16), 7500, 45, 'cat-transport', 'compte-especes', 'Carburant moto', 'Fuel');
   await t(j(18), 3500, 25, 'cat-sante', 'compte-especes', 'Pharmacie', 'Pharmacy');
-  await t(j(20), 40000, 300, 'cat-soutien-familial', 'compte-mobile-money', 'Envoi à maman', 'Sent to mom');
   await t(j(21), 2000, 20, 'cat-sadaqa-deen', 'compte-especes', 'Sadaqa du vendredi', 'Charity');
-  await t(j(22), 18500, 135, 'cat-nourriture', 'compte-especes', 'Courses au marché', 'Groceries');
-  await t(j(23), 7500, 18, 'cat-formation-livres', 'compte-especes', 'Livre', 'Book');
+  await t(j(23), 5000, 18, 'cat-formation-livres', 'compte-banque', 'Livre', 'Book');
   await t(j(25), 1500, 6, 'cat-transport', 'compte-especes', 'Taxi', 'Bus fare');
-  await t(j(26), 3000, 9, 'cat-divers', 'compte-especes', 'Crédit téléphone', 'Coffee');
+  await t(j(26), 40000, 500, 'cat-soutien-familial', 'compte-mobile-money', 'Envoi à maman', 'Sent to mom');
   final hier = now.subtract(const Duration(days: 1));
-  await t(DateTime(hier.year, hier.month, hier.day, 19), 6500, 48, 'cat-nourriture', 'compte-especes', 'Courses du soir', 'Groceries');
+  await t(DateTime(hier.year, hier.month, hier.day, 19), 12000, 135, 'cat-nourriture', 'compte-banque', 'Supermarché', 'Supermarket');
   await t(DateTime(hier.year, hier.month, hier.day, 8), 1000, 12, 'cat-transport', 'compte-especes', 'Taxi', 'Taxi');
   final ce = DateTime(now.year, now.month, now.day);
   await t(ce.add(const Duration(hours: 8)), 500, 4, 'cat-nourriture', 'compte-especes', 'Pain du matin', 'Breakfast');
-  await t(ce.add(const Duration(hours: 9)), 1000, 12, 'cat-transport', 'compte-especes', 'Taxi', 'Taxi');
+  await t(ce.add(const Duration(hours: 10)), 5000, 30, 'cat-data-telecom', 'compte-mobile-money', 'Forfait internet', 'Phone plan');
   await t(ce.add(const Duration(hours: 13)), 2500, 14, 'cat-nourriture', 'compte-especes', 'Déjeuner', 'Lunch');
 }

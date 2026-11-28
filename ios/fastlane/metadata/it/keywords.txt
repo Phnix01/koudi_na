@@ -1,1 +1,1 @@
-risparmio,uscite,entrate,finanze,bilancio,risparmiare,conti,offline,gestione,denaro,stipendio,valute
+uscite,entrate,risparmio,finanze,personali,bilancio,conti,familiare,offline,contabilità,prima nota

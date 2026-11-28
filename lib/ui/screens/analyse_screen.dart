@@ -454,7 +454,7 @@ class _LignePart extends StatelessWidget {
                   style: texte.bodyMedium,
                   children: [
                     TextSpan(text: formaterNombre(part.montant), style: const TextStyle(fontWeight: FontWeight.w600)),
-                    TextSpan(text: ' · ${(part.part * 100).round()} %', style: TextStyle(color: t.muted, fontWeight: FontWeight.w400)),
+                    TextSpan(text: ' · ${formaterPourcent((part.part * 100).round())}', style: TextStyle(color: t.muted, fontWeight: FontWeight.w400)),
                   ],
                 ),
               ),
